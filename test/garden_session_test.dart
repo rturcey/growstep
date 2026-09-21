@@ -67,4 +67,43 @@ void main() {
       expect((await reopened.refreshSteps()).waterDoses, 2);
     },
   );
+
+  test('une nouvelle journée crédite ses pas après redémarrage', () async {
+    final directory = await Directory.systemTemp.createTemp('growstep-day-');
+    addTearDown(() => directory.delete(recursive: true));
+    final file = File('${directory.path}/garden.sqlite');
+    var now = DateTime(2026, 9, 21, 23, 55);
+    DateTime clock() => now;
+    final steps = FakeStepProvider(now: clock);
+
+    final firstDatabase = GardenDatabase(NativeDatabase(file));
+    final first = GardenSession(
+      database: firstDatabase,
+      stepProvider: steps,
+      now: clock,
+    );
+    await first.load();
+    steps.addSteps(900);
+    expect((await first.refreshSteps()).waterDoses, 3);
+    await firstDatabase.close();
+
+    now = DateTime(2026, 9, 22, 0, 5);
+    final reopenedDatabase = GardenDatabase(NativeDatabase(file));
+    addTearDown(reopenedDatabase.close);
+    final reopened = GardenSession(
+      database: reopenedDatabase,
+      stepProvider: steps,
+      now: clock,
+    );
+    final restored = await reopened.load();
+    expect(restored.waterDoses, 3);
+    expect(restored.creditedDay, '2026-09-21');
+    expect(steps.currentSteps, 0);
+
+    await reopened.refreshSteps();
+    steps.addSteps(300);
+    expect((await reopened.refreshSteps()).waterDoses, 4);
+    expect((await reopened.refreshSteps()).waterDoses, 4);
+    expect(reopened.snapshot.creditedDay, '2026-09-22');
+  });
 }

@@ -51,15 +51,26 @@ class $GardenRecordsTable extends GardenRecords
     type: DriftSqlType.int,
     requiredDuringInsert: true,
   );
-  static const VerificationMeta _creditedWaterUnitsMeta =
-      const VerificationMeta('creditedWaterUnits');
+  static const VerificationMeta _creditedStepWaterDosesMeta =
+      const VerificationMeta('creditedStepWaterDoses');
   @override
-  late final GeneratedColumn<int> creditedWaterUnits = GeneratedColumn<int>(
-    'credited_water_units',
+  late final GeneratedColumn<int> creditedStepWaterDoses = GeneratedColumn<int>(
+    'credited_step_water_doses',
     aliasedName,
     false,
     type: DriftSqlType.int,
     requiredDuringInsert: true,
+  );
+  static const VerificationMeta _creditedDayMeta = const VerificationMeta(
+    'creditedDay',
+  );
+  @override
+  late final GeneratedColumn<String> creditedDay = GeneratedColumn<String>(
+    'credited_day',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
   );
   @override
   List<GeneratedColumn> get $columns => [
@@ -67,7 +78,8 @@ class $GardenRecordsTable extends GardenRecords
     plantStage,
     waterDoses,
     waterProgress,
-    creditedWaterUnits,
+    creditedStepWaterDoses,
+    creditedDay,
   ];
   @override
   String get aliasedName => _alias ?? actualTableName;
@@ -109,16 +121,25 @@ class $GardenRecordsTable extends GardenRecords
     } else if (isInserting) {
       context.missing(_waterProgressMeta);
     }
-    if (data.containsKey('credited_water_units')) {
+    if (data.containsKey('credited_step_water_doses')) {
       context.handle(
-        _creditedWaterUnitsMeta,
-        creditedWaterUnits.isAcceptableOrUnknown(
-          data['credited_water_units']!,
-          _creditedWaterUnitsMeta,
+        _creditedStepWaterDosesMeta,
+        creditedStepWaterDoses.isAcceptableOrUnknown(
+          data['credited_step_water_doses']!,
+          _creditedStepWaterDosesMeta,
         ),
       );
     } else if (isInserting) {
-      context.missing(_creditedWaterUnitsMeta);
+      context.missing(_creditedStepWaterDosesMeta);
+    }
+    if (data.containsKey('credited_day')) {
+      context.handle(
+        _creditedDayMeta,
+        creditedDay.isAcceptableOrUnknown(
+          data['credited_day']!,
+          _creditedDayMeta,
+        ),
+      );
     }
     return context;
   }
@@ -145,10 +166,14 @@ class $GardenRecordsTable extends GardenRecords
         DriftSqlType.int,
         data['${effectivePrefix}water_progress'],
       )!,
-      creditedWaterUnits: attachedDatabase.typeMapping.read(
+      creditedStepWaterDoses: attachedDatabase.typeMapping.read(
         DriftSqlType.int,
-        data['${effectivePrefix}credited_water_units'],
+        data['${effectivePrefix}credited_step_water_doses'],
       )!,
+      creditedDay: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}credited_day'],
+      ),
     );
   }
 
@@ -163,13 +188,15 @@ class GardenRecord extends DataClass implements Insertable<GardenRecord> {
   final String? plantStage;
   final int waterDoses;
   final int waterProgress;
-  final int creditedWaterUnits;
+  final int creditedStepWaterDoses;
+  final String? creditedDay;
   const GardenRecord({
     required this.id,
     this.plantStage,
     required this.waterDoses,
     required this.waterProgress,
-    required this.creditedWaterUnits,
+    required this.creditedStepWaterDoses,
+    this.creditedDay,
   });
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
@@ -180,7 +207,10 @@ class GardenRecord extends DataClass implements Insertable<GardenRecord> {
     }
     map['water_doses'] = Variable<int>(waterDoses);
     map['water_progress'] = Variable<int>(waterProgress);
-    map['credited_water_units'] = Variable<int>(creditedWaterUnits);
+    map['credited_step_water_doses'] = Variable<int>(creditedStepWaterDoses);
+    if (!nullToAbsent || creditedDay != null) {
+      map['credited_day'] = Variable<String>(creditedDay);
+    }
     return map;
   }
 
@@ -192,7 +222,10 @@ class GardenRecord extends DataClass implements Insertable<GardenRecord> {
           : Value(plantStage),
       waterDoses: Value(waterDoses),
       waterProgress: Value(waterProgress),
-      creditedWaterUnits: Value(creditedWaterUnits),
+      creditedStepWaterDoses: Value(creditedStepWaterDoses),
+      creditedDay: creditedDay == null && nullToAbsent
+          ? const Value.absent()
+          : Value(creditedDay),
     );
   }
 
@@ -206,7 +239,10 @@ class GardenRecord extends DataClass implements Insertable<GardenRecord> {
       plantStage: serializer.fromJson<String?>(json['plantStage']),
       waterDoses: serializer.fromJson<int>(json['waterDoses']),
       waterProgress: serializer.fromJson<int>(json['waterProgress']),
-      creditedWaterUnits: serializer.fromJson<int>(json['creditedWaterUnits']),
+      creditedStepWaterDoses: serializer.fromJson<int>(
+        json['creditedStepWaterDoses'],
+      ),
+      creditedDay: serializer.fromJson<String?>(json['creditedDay']),
     );
   }
   @override
@@ -217,7 +253,8 @@ class GardenRecord extends DataClass implements Insertable<GardenRecord> {
       'plantStage': serializer.toJson<String?>(plantStage),
       'waterDoses': serializer.toJson<int>(waterDoses),
       'waterProgress': serializer.toJson<int>(waterProgress),
-      'creditedWaterUnits': serializer.toJson<int>(creditedWaterUnits),
+      'creditedStepWaterDoses': serializer.toJson<int>(creditedStepWaterDoses),
+      'creditedDay': serializer.toJson<String?>(creditedDay),
     };
   }
 
@@ -226,13 +263,16 @@ class GardenRecord extends DataClass implements Insertable<GardenRecord> {
     Value<String?> plantStage = const Value.absent(),
     int? waterDoses,
     int? waterProgress,
-    int? creditedWaterUnits,
+    int? creditedStepWaterDoses,
+    Value<String?> creditedDay = const Value.absent(),
   }) => GardenRecord(
     id: id ?? this.id,
     plantStage: plantStage.present ? plantStage.value : this.plantStage,
     waterDoses: waterDoses ?? this.waterDoses,
     waterProgress: waterProgress ?? this.waterProgress,
-    creditedWaterUnits: creditedWaterUnits ?? this.creditedWaterUnits,
+    creditedStepWaterDoses:
+        creditedStepWaterDoses ?? this.creditedStepWaterDoses,
+    creditedDay: creditedDay.present ? creditedDay.value : this.creditedDay,
   );
   GardenRecord copyWithCompanion(GardenRecordsCompanion data) {
     return GardenRecord(
@@ -246,9 +286,12 @@ class GardenRecord extends DataClass implements Insertable<GardenRecord> {
       waterProgress: data.waterProgress.present
           ? data.waterProgress.value
           : this.waterProgress,
-      creditedWaterUnits: data.creditedWaterUnits.present
-          ? data.creditedWaterUnits.value
-          : this.creditedWaterUnits,
+      creditedStepWaterDoses: data.creditedStepWaterDoses.present
+          ? data.creditedStepWaterDoses.value
+          : this.creditedStepWaterDoses,
+      creditedDay: data.creditedDay.present
+          ? data.creditedDay.value
+          : this.creditedDay,
     );
   }
 
@@ -259,7 +302,8 @@ class GardenRecord extends DataClass implements Insertable<GardenRecord> {
           ..write('plantStage: $plantStage, ')
           ..write('waterDoses: $waterDoses, ')
           ..write('waterProgress: $waterProgress, ')
-          ..write('creditedWaterUnits: $creditedWaterUnits')
+          ..write('creditedStepWaterDoses: $creditedStepWaterDoses, ')
+          ..write('creditedDay: $creditedDay')
           ..write(')'))
         .toString();
   }
@@ -270,7 +314,8 @@ class GardenRecord extends DataClass implements Insertable<GardenRecord> {
     plantStage,
     waterDoses,
     waterProgress,
-    creditedWaterUnits,
+    creditedStepWaterDoses,
+    creditedDay,
   );
   @override
   bool operator ==(Object other) =>
@@ -280,7 +325,8 @@ class GardenRecord extends DataClass implements Insertable<GardenRecord> {
           other.plantStage == this.plantStage &&
           other.waterDoses == this.waterDoses &&
           other.waterProgress == this.waterProgress &&
-          other.creditedWaterUnits == this.creditedWaterUnits);
+          other.creditedStepWaterDoses == this.creditedStepWaterDoses &&
+          other.creditedDay == this.creditedDay);
 }
 
 class GardenRecordsCompanion extends UpdateCompanion<GardenRecord> {
@@ -288,37 +334,42 @@ class GardenRecordsCompanion extends UpdateCompanion<GardenRecord> {
   final Value<String?> plantStage;
   final Value<int> waterDoses;
   final Value<int> waterProgress;
-  final Value<int> creditedWaterUnits;
+  final Value<int> creditedStepWaterDoses;
+  final Value<String?> creditedDay;
   const GardenRecordsCompanion({
     this.id = const Value.absent(),
     this.plantStage = const Value.absent(),
     this.waterDoses = const Value.absent(),
     this.waterProgress = const Value.absent(),
-    this.creditedWaterUnits = const Value.absent(),
+    this.creditedStepWaterDoses = const Value.absent(),
+    this.creditedDay = const Value.absent(),
   });
   GardenRecordsCompanion.insert({
     this.id = const Value.absent(),
     this.plantStage = const Value.absent(),
     required int waterDoses,
     required int waterProgress,
-    required int creditedWaterUnits,
+    required int creditedStepWaterDoses,
+    this.creditedDay = const Value.absent(),
   }) : waterDoses = Value(waterDoses),
        waterProgress = Value(waterProgress),
-       creditedWaterUnits = Value(creditedWaterUnits);
+       creditedStepWaterDoses = Value(creditedStepWaterDoses);
   static Insertable<GardenRecord> custom({
     Expression<int>? id,
     Expression<String>? plantStage,
     Expression<int>? waterDoses,
     Expression<int>? waterProgress,
-    Expression<int>? creditedWaterUnits,
+    Expression<int>? creditedStepWaterDoses,
+    Expression<String>? creditedDay,
   }) {
     return RawValuesInsertable({
       if (id != null) 'id': id,
       if (plantStage != null) 'plant_stage': plantStage,
       if (waterDoses != null) 'water_doses': waterDoses,
       if (waterProgress != null) 'water_progress': waterProgress,
-      if (creditedWaterUnits != null)
-        'credited_water_units': creditedWaterUnits,
+      if (creditedStepWaterDoses != null)
+        'credited_step_water_doses': creditedStepWaterDoses,
+      if (creditedDay != null) 'credited_day': creditedDay,
     });
   }
 
@@ -327,14 +378,17 @@ class GardenRecordsCompanion extends UpdateCompanion<GardenRecord> {
     Value<String?>? plantStage,
     Value<int>? waterDoses,
     Value<int>? waterProgress,
-    Value<int>? creditedWaterUnits,
+    Value<int>? creditedStepWaterDoses,
+    Value<String?>? creditedDay,
   }) {
     return GardenRecordsCompanion(
       id: id ?? this.id,
       plantStage: plantStage ?? this.plantStage,
       waterDoses: waterDoses ?? this.waterDoses,
       waterProgress: waterProgress ?? this.waterProgress,
-      creditedWaterUnits: creditedWaterUnits ?? this.creditedWaterUnits,
+      creditedStepWaterDoses:
+          creditedStepWaterDoses ?? this.creditedStepWaterDoses,
+      creditedDay: creditedDay ?? this.creditedDay,
     );
   }
 
@@ -353,8 +407,13 @@ class GardenRecordsCompanion extends UpdateCompanion<GardenRecord> {
     if (waterProgress.present) {
       map['water_progress'] = Variable<int>(waterProgress.value);
     }
-    if (creditedWaterUnits.present) {
-      map['credited_water_units'] = Variable<int>(creditedWaterUnits.value);
+    if (creditedStepWaterDoses.present) {
+      map['credited_step_water_doses'] = Variable<int>(
+        creditedStepWaterDoses.value,
+      );
+    }
+    if (creditedDay.present) {
+      map['credited_day'] = Variable<String>(creditedDay.value);
     }
     return map;
   }
@@ -366,7 +425,8 @@ class GardenRecordsCompanion extends UpdateCompanion<GardenRecord> {
           ..write('plantStage: $plantStage, ')
           ..write('waterDoses: $waterDoses, ')
           ..write('waterProgress: $waterProgress, ')
-          ..write('creditedWaterUnits: $creditedWaterUnits')
+          ..write('creditedStepWaterDoses: $creditedStepWaterDoses, ')
+          ..write('creditedDay: $creditedDay')
           ..write(')'))
         .toString();
   }
@@ -389,7 +449,8 @@ typedef $$GardenRecordsTableCreateCompanionBuilder =
       Value<String?> plantStage,
       required int waterDoses,
       required int waterProgress,
-      required int creditedWaterUnits,
+      required int creditedStepWaterDoses,
+      Value<String?> creditedDay,
     });
 typedef $$GardenRecordsTableUpdateCompanionBuilder =
     GardenRecordsCompanion Function({
@@ -397,7 +458,8 @@ typedef $$GardenRecordsTableUpdateCompanionBuilder =
       Value<String?> plantStage,
       Value<int> waterDoses,
       Value<int> waterProgress,
-      Value<int> creditedWaterUnits,
+      Value<int> creditedStepWaterDoses,
+      Value<String?> creditedDay,
     });
 
 class $$GardenRecordsTableFilterComposer
@@ -429,8 +491,13 @@ class $$GardenRecordsTableFilterComposer
     builder: (column) => ColumnFilters(column),
   );
 
-  ColumnFilters<int> get creditedWaterUnits => $composableBuilder(
-    column: $table.creditedWaterUnits,
+  ColumnFilters<int> get creditedStepWaterDoses => $composableBuilder(
+    column: $table.creditedStepWaterDoses,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get creditedDay => $composableBuilder(
+    column: $table.creditedDay,
     builder: (column) => ColumnFilters(column),
   );
 }
@@ -464,8 +531,13 @@ class $$GardenRecordsTableOrderingComposer
     builder: (column) => ColumnOrderings(column),
   );
 
-  ColumnOrderings<int> get creditedWaterUnits => $composableBuilder(
-    column: $table.creditedWaterUnits,
+  ColumnOrderings<int> get creditedStepWaterDoses => $composableBuilder(
+    column: $table.creditedStepWaterDoses,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get creditedDay => $composableBuilder(
+    column: $table.creditedDay,
     builder: (column) => ColumnOrderings(column),
   );
 }
@@ -497,8 +569,13 @@ class $$GardenRecordsTableAnnotationComposer
     builder: (column) => column,
   );
 
-  GeneratedColumn<int> get creditedWaterUnits => $composableBuilder(
-    column: $table.creditedWaterUnits,
+  GeneratedColumn<int> get creditedStepWaterDoses => $composableBuilder(
+    column: $table.creditedStepWaterDoses,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get creditedDay => $composableBuilder(
+    column: $table.creditedDay,
     builder: (column) => column,
   );
 }
@@ -540,13 +617,15 @@ class $$GardenRecordsTableTableManager
                 Value<String?> plantStage = const Value.absent(),
                 Value<int> waterDoses = const Value.absent(),
                 Value<int> waterProgress = const Value.absent(),
-                Value<int> creditedWaterUnits = const Value.absent(),
+                Value<int> creditedStepWaterDoses = const Value.absent(),
+                Value<String?> creditedDay = const Value.absent(),
               }) => GardenRecordsCompanion(
                 id: id,
                 plantStage: plantStage,
                 waterDoses: waterDoses,
                 waterProgress: waterProgress,
-                creditedWaterUnits: creditedWaterUnits,
+                creditedStepWaterDoses: creditedStepWaterDoses,
+                creditedDay: creditedDay,
               ),
           createCompanionCallback:
               ({
@@ -554,13 +633,15 @@ class $$GardenRecordsTableTableManager
                 Value<String?> plantStage = const Value.absent(),
                 required int waterDoses,
                 required int waterProgress,
-                required int creditedWaterUnits,
+                required int creditedStepWaterDoses,
+                Value<String?> creditedDay = const Value.absent(),
               }) => GardenRecordsCompanion.insert(
                 id: id,
                 plantStage: plantStage,
                 waterDoses: waterDoses,
                 waterProgress: waterProgress,
-                creditedWaterUnits: creditedWaterUnits,
+                creditedStepWaterDoses: creditedStepWaterDoses,
+                creditedDay: creditedDay,
               ),
           withReferenceMapper: (p0) => p0
               .map(

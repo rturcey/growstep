@@ -4,10 +4,15 @@ import 'garden_state.dart';
 export 'garden_state.dart' show GardenSnapshot, PlantStage;
 
 class GardenSession {
-  GardenSession({required GardenStore database, required this.stepProvider})
-    : _store = database;
+  GardenSession({
+    required GardenStore database,
+    required this.stepProvider,
+    DateTime Function()? now,
+  }) : _store = database,
+       _now = now ?? DateTime.now;
 
   final GardenStore _store;
+  final DateTime Function() _now;
   final StepProvider stepProvider;
   GardenSnapshot snapshot = GardenSnapshot.empty;
 
@@ -18,14 +23,19 @@ class GardenSession {
 
   Future<GardenSnapshot> refreshSteps() async {
     final steps = await stepProvider.stepsToday();
-    final earnedUnits = steps ~/ 300;
-    final newUnits = earnedUnits - snapshot.creditedWaterUnits;
-    if (newUnits <= 0) return snapshot;
+    final today = localDayKey(_now());
+    final earnedUnits = steps ~/ stepsPerWaterDose;
+    final previouslyCredited = snapshot.creditedDay == today
+        ? snapshot.creditedStepWaterDoses
+        : 0;
+    final newUnits = earnedUnits - previouslyCredited;
+    if (newUnits <= 0 && snapshot.creditedDay == today) return snapshot;
     snapshot = GardenSnapshot(
       plantStage: snapshot.plantStage,
-      waterDoses: snapshot.waterDoses + newUnits,
+      waterDoses: snapshot.waterDoses + (newUnits > 0 ? newUnits : 0),
       waterProgress: snapshot.waterProgress,
-      creditedWaterUnits: earnedUnits,
+      creditedStepWaterDoses: earnedUnits,
+      creditedDay: today,
     );
     await _store.save(snapshot);
     return snapshot;
@@ -37,7 +47,8 @@ class GardenSession {
       plantStage: PlantStage.pousse,
       waterDoses: snapshot.waterDoses,
       waterProgress: 0,
-      creditedWaterUnits: snapshot.creditedWaterUnits,
+      creditedStepWaterDoses: snapshot.creditedStepWaterDoses,
+      creditedDay: snapshot.creditedDay,
     );
     await _store.save(snapshot);
     return snapshot;
@@ -52,7 +63,8 @@ class GardenSession {
       plantStage: completed ? PlantStage.jeunePlante : PlantStage.pousse,
       waterDoses: snapshot.waterDoses - 1,
       waterProgress: completed ? 0 : snapshot.waterProgress + 1,
-      creditedWaterUnits: snapshot.creditedWaterUnits,
+      creditedStepWaterDoses: snapshot.creditedStepWaterDoses,
+      creditedDay: snapshot.creditedDay,
     );
     await _store.save(snapshot);
     return snapshot;

@@ -10,7 +10,8 @@ class GardenRecords extends Table {
   TextColumn get plantStage => text().nullable()();
   IntColumn get waterDoses => integer()();
   IntColumn get waterProgress => integer()();
-  IntColumn get creditedWaterUnits => integer()();
+  IntColumn get creditedStepWaterDoses => integer()();
+  TextColumn get creditedDay => text().nullable()();
 
   @override
   Set<Column> get primaryKey => {id};
@@ -36,7 +37,8 @@ class GardenDatabase extends _$GardenDatabase implements GardenStore {
           : PlantStage.values.byName(row.plantStage!),
       waterDoses: row.waterDoses,
       waterProgress: row.waterProgress,
-      creditedWaterUnits: row.creditedWaterUnits,
+      creditedStepWaterDoses: row.creditedStepWaterDoses,
+      creditedDay: row.creditedDay,
     );
   }
 
@@ -48,7 +50,8 @@ class GardenDatabase extends _$GardenDatabase implements GardenStore {
         plantStage: Value(snapshot.plantStage?.name),
         waterDoses: snapshot.waterDoses,
         waterProgress: snapshot.waterProgress,
-        creditedWaterUnits: snapshot.creditedWaterUnits,
+        creditedStepWaterDoses: snapshot.creditedStepWaterDoses,
+        creditedDay: Value(snapshot.creditedDay),
       ),
     );
   }

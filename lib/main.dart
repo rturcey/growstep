@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'garden/garden_database.dart';
 import 'garden/garden_game.dart';
 import 'garden/garden_session.dart';
+import 'garden/garden_state.dart' show localDayKey, stepsPerWaterDose;
 import 'steps/fake_step_provider.dart';
 
 void main() {
@@ -63,7 +64,9 @@ class _GardenPageState extends State<GardenPage> {
 
   Future<GardenSnapshot> _loadGarden() async {
     final saved = await _garden.load();
-    widget.steps.restoreCreditedSteps(saved.creditedWaterUnits);
+    if (saved.creditedDay == localDayKey(DateTime.now())) {
+      widget.steps.restoreCreditedSteps(saved.creditedStepWaterDoses);
+    }
     return _garden.refreshSteps();
   }
 
@@ -175,11 +178,11 @@ class _GardenPageState extends State<GardenPage> {
                   onPressed: _busy
                       ? null
                       : () {
-                          widget.steps.addSteps(300);
+                          widget.steps.addSteps(stepsPerWaterDose);
                           _perform(_garden.refreshSteps);
                         },
                   icon: const Icon(Icons.add),
-                  label: const Text('Ajouter 300 pas simulés'),
+                  label: const Text('Ajouter $stepsPerWaterDose pas simulés'),
                 ),
                 const SizedBox(height: 8),
                 Text(
