@@ -91,5 +91,15 @@ class GardenGame extends FlameGame {
             ? const Color(0xFFF4D16D)
             : const Color(0xFF7BC579),
     );
+    if (plant.tier == GrowthTier.brillante) {
+      canvas.drawCircle(
+        tip,
+        height / 4 + 4,
+        Paint()
+          ..color = const Color(0xFFFFF5C2)
+          ..style = PaintingStyle.stroke
+          ..strokeWidth = 2,
+      );
+    }
   }
 }

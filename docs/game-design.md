@@ -29,6 +29,8 @@ La plante mûre attend un clic pour être récoltée. La récolte accorde ses r�
 
 Chaque récolte garantit une graine de la même espèce ordinaire ; les graines supplémentaires sont plus probables pour les espèces communes. Une plante brillante garantit une graine ordinaire de son espèce et donne, en plus, une graine brillante avec une chance de test de 5 %, identique pour chaque espèce. Les probabilités de graines supplémentaires sont affichées. Les graines excédentaires peuvent être conservées ou supprimées, sans conversion en florins.
 
+Pour cette première implémentation, la chance de recevoir une deuxième graine ordinaire est de 50 % pour une plante commune, 30 % pour une peu commune et 10 % pour une rare. Les huit espèces de départ étant communes, leur variante brillante garde la chance de 50 % pour cette deuxième graine ordinaire. Le gain de chaque plante est tiré et sauvegardé dès qu'elle devient récoltable, pour que l'aperçu d'une récolte groupée annonce le nombre exact de graines avant confirmation.
+
 Un engrais accélère le compteur à partir de son application, jusqu'à la fin du cycle en cours. Un seul engrais peut être actif sur une plante à la fois. Les multiplicateurs de test sont ×1,25 (basique), ×1,5 (super) et ×2 (méga). Il n'y a plus de ressource « eau ».
 
 ## Récompenses de la marche

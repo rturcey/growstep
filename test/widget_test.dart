@@ -1,6 +1,7 @@
 import 'package:drift/native.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:growstep/garden/garden_database.dart';
+import 'package:growstep/garden/garden_state.dart';
 import 'package:growstep/main.dart';
 import 'package:growstep/steps/fake_step_provider.dart';
 
@@ -32,5 +33,43 @@ void main() {
     }
     expect(find.text('Tomate · Jeune plant'), findsOneWidget);
     expect(find.text('300/700 pas'), findsOneWidget);
+  });
+
+  testWidgets('la récolte groupée montre le gain exact avant confirmation', (
+    tester,
+  ) async {
+    final database = GardenDatabase(NativeDatabase.memory());
+    final initial = GardenSnapshot.initial();
+    final zones = {
+      for (final entry in initial.zones.entries) entry.key: [...entry.value],
+    };
+    zones[ZoneType.potager]![0] = const Plant(
+      species: Species.tomate,
+      progressSteps: 1000,
+      pendingHarvest: HarvestReward(ordinarySeeds: 2),
+    );
+    zones[ZoneType.jardinFleuri]![0] = const Plant(
+      species: Species.tulipe,
+      tier: GrowthTier.brillante,
+      progressSteps: 15000,
+      pendingHarvest: HarvestReward(ordinarySeeds: 1, brilliantSeeds: 1),
+    );
+    await database.save(initial.copyWith(zones: zones));
+    await tester.pumpWidget(
+      GrowstepApp(database: database, steps: FakeStepProvider()),
+    );
+    await tester.pump(const Duration(milliseconds: 200));
+
+    await tester.ensureVisible(find.text('Récolter 2 plantes'));
+    await tester.tap(find.text('Récolter 2 plantes'));
+    await tester.pump(const Duration(milliseconds: 200));
+    expect(find.textContaining('Tomate ×2'), findsWidgets);
+    expect(find.textContaining('Tulipe brillante ×1'), findsWidgets);
+
+    await tester.tap(find.text('Confirmer la récolte'));
+    await tester.pump(const Duration(milliseconds: 200));
+    expect(find.text('Récolter 2 plantes'), findsNothing);
+    expect(find.textContaining('Tomate ×2'), findsWidgets);
+    expect(find.textContaining('Tulipe brillante ×1'), findsWidgets);
   });
 }

@@ -244,4 +244,148 @@ void main() {
     expect(garden.legacyArchive?['waterDoses'], 2);
     expect((await database.load()).legacyArchive?['waterProgress'], 1);
   });
+
+  test(
+    'la récolte attend le clic et chaque cycle utilise de nouveaux pas',
+    () async {
+      final database = GardenDatabase(NativeDatabase.memory());
+      addTearDown(database.close);
+      final steps = FakeStepProvider();
+      final garden = GardenSession(
+        database: database,
+        stepProvider: steps,
+        roll: () => 0.2,
+      );
+      await garden.load();
+      await garden.chooseStarterSeed(Species.tomate);
+      await garden.plantSeed(ZoneType.potager, 0, Species.tomate);
+
+      steps.addSteps(1400);
+      await garden.refreshSteps();
+      await garden.refreshSteps();
+      expect(garden.snapshot.zones[ZoneType.potager]![0]!.progressSteps, 1000);
+      expect(garden.previewReadyHarvests().ordinarySeeds[Species.tomate], 2);
+      expect(garden.snapshot.seeds[Species.tomate], 0);
+
+      await garden.harvestPlant(ZoneType.potager, 0);
+      expect(garden.snapshot.seeds[Species.tomate], 2);
+      expect(garden.snapshot.zones[ZoneType.potager]![0]!.completedCycles, 1);
+      expect(garden.snapshot.zones[ZoneType.potager]![0]!.progressSteps, 0);
+      expect(
+        garden.snapshot.zones[ZoneType.potager]![0]!.stage,
+        PlantStage.mature,
+      );
+      await garden.harvestPlant(ZoneType.potager, 0);
+      expect(garden.snapshot.seeds[Species.tomate], 2);
+
+      steps.addSteps(499);
+      await garden.refreshSteps();
+      expect(garden.previewReadyHarvests().count, 0);
+      steps.addSteps(1);
+      await garden.refreshSteps();
+      expect(garden.previewReadyHarvests().count, 1);
+      await garden.harvestPlant(ZoneType.potager, 0);
+      expect(garden.snapshot.seeds[Species.tomate], 4);
+      expect(garden.snapshot.zones[ZoneType.potager]![0]!.completedCycles, 2);
+
+      final reopened = GardenSession(database: database, stepProvider: steps);
+      await reopened.load();
+      await reopened.harvestPlant(ZoneType.potager, 0);
+      expect(reopened.snapshot.seeds[Species.tomate], 4);
+      expect(reopened.snapshot.zones[ZoneType.potager]![0]!.completedCycles, 2);
+    },
+  );
+
+  test(
+    'la récolte groupée annonce ses graines exactes, dont une brillante',
+    () async {
+      final directory = await Directory.systemTemp.createTemp(
+        'growstep-harvest-',
+      );
+      addTearDown(() => directory.delete(recursive: true));
+      final file = File('${directory.path}/garden.sqlite');
+      final database = GardenDatabase(NativeDatabase(file));
+      final initial = GardenSnapshot.initial();
+      final zones = {
+        for (final entry in initial.zones.entries) entry.key: [...entry.value],
+      };
+      zones[ZoneType.potager]![0] = const Plant(
+        species: Species.tomate,
+        progressSteps: 1000,
+      );
+      zones[ZoneType.jardinFleuri]![0] = const Plant(
+        species: Species.tournesol,
+        tier: GrowthTier.brillante,
+        progressSteps: 15000,
+      );
+      await database.save(initial.copyWith(zones: zones));
+      final draws = [0.8, 0.8, 0.04];
+      final garden = GardenSession(
+        database: database,
+        stepProvider: FakeStepProvider(),
+        roll: () => draws.removeAt(0),
+      );
+      await garden.load();
+      final preview = garden.previewReadyHarvests();
+      expect(preview.count, 2);
+      expect(preview.ordinarySeeds, {Species.tomate: 1, Species.tournesol: 1});
+      expect(preview.brilliantSeeds, {Species.tournesol: 1});
+      await database.close();
+
+      final reopenedDatabase = GardenDatabase(NativeDatabase(file));
+      addTearDown(reopenedDatabase.close);
+      final reopened = GardenSession(
+        database: reopenedDatabase,
+        stepProvider: FakeStepProvider(),
+        roll: () => throw StateError('La récompense ne doit pas être retirée'),
+      );
+      await reopened.load();
+      expect(
+        reopened.previewReadyHarvests().brilliantSeeds,
+        preview.brilliantSeeds,
+      );
+      await reopened.harvestAll(preview.locations);
+      expect(reopened.snapshot.seeds[Species.tomate], 1);
+      expect(reopened.snapshot.seeds[Species.tournesol], 1);
+      expect(reopened.snapshot.brilliantSeeds[Species.tournesol], 1);
+      await reopened.harvestAll(preview.locations);
+      expect(reopened.snapshot.brilliantSeeds[Species.tournesol], 1);
+
+      await reopened.plantSeed(
+        ZoneType.jardinFleuri,
+        1,
+        Species.tournesol,
+        brilliant: true,
+      );
+      expect(reopened.snapshot.brilliantSeeds[Species.tournesol], 0);
+      expect(
+        reopened.snapshot.zones[ZoneType.jardinFleuri]![1]!.tier,
+        GrowthTier.brillante,
+      );
+    },
+  );
+
+  test(
+    'une plante supprimée avant ou après maturité ne donne pas de graines',
+    () async {
+      final database = GardenDatabase(NativeDatabase.memory());
+      addTearDown(database.close);
+      final steps = FakeStepProvider();
+      final garden = GardenSession(database: database, stepProvider: steps);
+      await garden.load();
+      await garden.chooseStarterSeed(Species.tomate);
+      await garden.plantSeed(ZoneType.potager, 0, Species.tomate);
+      await garden.removePlant(ZoneType.potager, 0);
+      expect(garden.snapshot.seeds[Species.tomate], 0);
+
+      await garden.chooseStarterSeed(Species.tournesol);
+      await garden.plantSeed(ZoneType.jardinFleuri, 0, Species.tournesol);
+      steps.addSteps(1000);
+      await garden.refreshSteps();
+      expect(garden.previewReadyHarvests().count, 1);
+      await garden.removePlant(ZoneType.jardinFleuri, 0);
+      expect(garden.previewReadyHarvests().count, 0);
+      expect(garden.snapshot.seeds[Species.tournesol], 0);
+    },
+  );
 }

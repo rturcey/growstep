@@ -39,12 +39,38 @@ enum GrowthTier {
   const GrowthTier(this.stepsToMature);
 
   final int stepsToMature;
+
+  // All initial brilliant variants belong to common species.
+  double get extraOrdinarySeedChance => switch (this) {
+    GrowthTier.commune || GrowthTier.brillante => 0.5,
+    GrowthTier.peuCommune => 0.3,
+    GrowthTier.rare => 0.1,
+  };
 }
+
+const brilliantSeedChance = 0.05;
 
 enum FertilizerType { basique, superEngrais, mega }
 
 String localDayKey(DateTime date) =>
     '${date.year.toString().padLeft(4, '0')}-${date.month.toString().padLeft(2, '0')}-${date.day.toString().padLeft(2, '0')}';
+
+class HarvestReward {
+  const HarvestReward({required this.ordinarySeeds, this.brilliantSeeds = 0});
+
+  final int ordinarySeeds;
+  final int brilliantSeeds;
+
+  Map<String, int> toJson() => {
+    'ordinarySeeds': ordinarySeeds,
+    'brilliantSeeds': brilliantSeeds,
+  };
+
+  factory HarvestReward.fromJson(Map<String, dynamic> json) => HarvestReward(
+    ordinarySeeds: json['ordinarySeeds'] as int,
+    brilliantSeeds: json['brilliantSeeds'] as int? ?? 0,
+  );
+}
 
 class Plant {
   const Plant({
@@ -52,16 +78,20 @@ class Plant {
     this.tier = GrowthTier.commune,
     this.progressSteps = 0,
     this.completedCycles = 0,
+    this.pendingHarvest,
   });
 
   final Species species;
   final GrowthTier tier;
   final int progressSteps;
   final int completedCycles;
+  final HarvestReward? pendingHarvest;
 
   int get targetSteps => completedCycles == 0
       ? tier.stepsToMature
       : (tier.stepsToMature / 2).ceil();
+
+  bool get isReadyToHarvest => progressSteps >= targetSteps;
 
   List<int> get stageThresholds => [
     (targetSteps * 3 / 10).ceil(),
@@ -96,13 +126,26 @@ class Plant {
     tier: tier,
     progressSteps: min(progressSteps + steps, targetSteps),
     completedCycles: completedCycles,
+    pendingHarvest: pendingHarvest,
   );
 
-  Map<String, Object> toJson() => {
+  Plant withPendingHarvest(HarvestReward reward) => Plant(
+    species: species,
+    tier: tier,
+    progressSteps: progressSteps,
+    completedCycles: completedCycles,
+    pendingHarvest: reward,
+  );
+
+  Plant nextCycle() =>
+      Plant(species: species, tier: tier, completedCycles: completedCycles + 1);
+
+  Map<String, Object?> toJson() => {
     'species': species.name,
     'tier': tier.name,
     'progressSteps': progressSteps,
     'completedCycles': completedCycles,
+    'pendingHarvest': pendingHarvest?.toJson(),
   };
 
   factory Plant.fromJson(Map<String, dynamic> json) => Plant(
@@ -112,6 +155,11 @@ class Plant {
     ),
     progressSteps: json['progressSteps'] as int,
     completedCycles: json['completedCycles'] as int? ?? 0,
+    pendingHarvest: json['pendingHarvest'] == null
+        ? null
+        : HarvestReward.fromJson(
+            json['pendingHarvest'] as Map<String, dynamic>,
+          ),
   );
 }
 
@@ -119,6 +167,7 @@ class GardenSnapshot {
   const GardenSnapshot({
     required this.zones,
     required this.seeds,
+    this.brilliantSeeds = const {},
     required this.starterChoices,
     required this.creditedDay,
     required this.creditedSteps,
@@ -134,6 +183,7 @@ class GardenSnapshot {
         zone: List<Plant?>.filled(zone.initialSlots, null),
     },
     seeds: {},
+    brilliantSeeds: {},
     starterChoices: {},
     creditedDay: null,
     creditedSteps: 0,
@@ -144,6 +194,7 @@ class GardenSnapshot {
 
   final Map<ZoneType, List<Plant?>> zones;
   final Map<Species, int> seeds;
+  final Map<Species, int> brilliantSeeds;
   final Set<ZoneType> starterChoices;
   final String? creditedDay;
   final int creditedSteps;
@@ -158,6 +209,7 @@ class GardenSnapshot {
   GardenSnapshot copyWith({
     Map<ZoneType, List<Plant?>>? zones,
     Map<Species, int>? seeds,
+    Map<Species, int>? brilliantSeeds,
     Set<ZoneType>? starterChoices,
     String? creditedDay,
     int? creditedSteps,
@@ -168,6 +220,7 @@ class GardenSnapshot {
   }) => GardenSnapshot(
     zones: zones ?? this.zones,
     seeds: seeds ?? this.seeds,
+    brilliantSeeds: brilliantSeeds ?? this.brilliantSeeds,
     starterChoices: starterChoices ?? this.starterChoices,
     creditedDay: creditedDay ?? this.creditedDay,
     creditedSteps: creditedSteps ?? this.creditedSteps,
@@ -183,6 +236,9 @@ class GardenSnapshot {
         zone.name: zones[zone]!.map((plant) => plant?.toJson()).toList(),
     },
     'seeds': {for (final entry in seeds.entries) entry.key.name: entry.value},
+    'brilliantSeeds': {
+      for (final entry in brilliantSeeds.entries) entry.key.name: entry.value,
+    },
     'starterChoices': starterChoices.map((zone) => zone.name).toList(),
     'creditedDay': creditedDay,
     'creditedSteps': creditedSteps,
@@ -197,6 +253,8 @@ class GardenSnapshot {
   factory GardenSnapshot.fromJson(Map<String, dynamic> json) {
     final rawZones = json['zones'] as Map<String, dynamic>;
     final rawSeeds = json['seeds'] as Map<String, dynamic>;
+    final rawBrilliantSeeds =
+        json['brilliantSeeds'] as Map<String, dynamic>? ?? {};
     final rawFertilizers = json['fertilizers'] as Map<String, dynamic>;
     return GardenSnapshot(
       zones: {
@@ -211,6 +269,10 @@ class GardenSnapshot {
       },
       seeds: {
         for (final entry in rawSeeds.entries)
+          Species.values.byName(entry.key): entry.value as int,
+      },
+      brilliantSeeds: {
+        for (final entry in rawBrilliantSeeds.entries)
           Species.values.byName(entry.key): entry.value as int,
       },
       starterChoices: (json['starterChoices'] as List<dynamic>)

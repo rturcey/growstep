@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'garden/garden_database.dart';
 import 'garden/garden_game.dart';
 import 'garden/garden_session.dart';
-import 'garden/garden_state.dart' show localDayKey;
+import 'garden/garden_state.dart' show brilliantSeedChance, localDayKey;
 import 'steps/fake_step_provider.dart';
 
 void main() {
@@ -118,9 +118,53 @@ class _GardenPageState extends State<GardenPage> {
     }
   }
 
+  Future<void> _confirmGroupHarvest() async {
+    final preview = _garden.previewReadyHarvests();
+    if (preview.count < 2) return;
+    final ordinary = _formatSeeds(preview.ordinarySeeds);
+    final brilliant = _formatSeeds(preview.brilliantSeeds, brilliant: true);
+    final confirmed = await showDialog<bool>(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text('Récolter ${preview.count} plantes ?'),
+        content: Text(
+          'Gain confirmé :\nGraines ordinaires : $ordinary'
+          '${brilliant.isEmpty ? '' : '\nGraines brillantes : $brilliant'}',
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context, false),
+            child: const Text('Annuler'),
+          ),
+          FilledButton(
+            onPressed: () => Navigator.pop(context, true),
+            child: const Text('Confirmer la récolte'),
+          ),
+        ],
+      ),
+    );
+    if (confirmed == true) {
+      await _perform(() => _garden.harvestAll(preview.locations));
+    }
+  }
+
+  String _formatSeeds(
+    Map<Species, int> seeds, {
+    bool brilliant = false,
+  }) => seeds.entries
+      .where((entry) => entry.value > 0)
+      .map(
+        (entry) =>
+            '${entry.key.label}${brilliant ? ' brillante' : ''} ×${entry.value}',
+      )
+      .join(', ');
+
   @override
   Widget build(BuildContext context) {
     final snapshot = _snapshot;
+    final readyHarvests = snapshot == null
+        ? 0
+        : _garden.previewReadyHarvests().count;
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
@@ -178,6 +222,14 @@ class _GardenPageState extends State<GardenPage> {
                     ),
                   ),
                 ),
+                if (readyHarvests > 1) ...[
+                  const SizedBox(height: 12),
+                  FilledButton.icon(
+                    onPressed: _busy ? null : _confirmGroupHarvest,
+                    icon: const Icon(Icons.grass),
+                    label: Text('Récolter $readyHarvests plantes'),
+                  ),
+                ],
                 if (snapshot.needsFirstPlanting) ...[
                   const SizedBox(height: 12),
                   const Text(
@@ -199,6 +251,18 @@ class _GardenPageState extends State<GardenPage> {
 
   Widget _zoneCard(GardenSnapshot snapshot, ZoneType zone) {
     final zoneSpecies = Species.values.where((species) => species.zone == zone);
+    final inventory = [
+      _formatSeeds({
+        for (final species in zoneSpecies)
+          if ((snapshot.seeds[species] ?? 0) > 0)
+            species: snapshot.seeds[species]!,
+      }),
+      _formatSeeds({
+        for (final species in zoneSpecies)
+          if ((snapshot.brilliantSeeds[species] ?? 0) > 0)
+            species: snapshot.brilliantSeeds[species]!,
+      }, brilliant: true),
+    ].where((label) => label.isNotEmpty).join(', ');
     return Card(
       margin: const EdgeInsets.only(top: 16),
       child: Padding(
@@ -211,6 +275,7 @@ class _GardenPageState extends State<GardenPage> {
               '${snapshot.zones[zone]!.length}/${zone.maxSlots} emplacements',
               style: Theme.of(context).textTheme.bodySmall,
             ),
+            if (inventory.isNotEmpty) Text('Graines : $inventory'),
             if (!snapshot.starterChoices.contains(zone)) ...[
               const SizedBox(height: 10),
               const Text('Choisis ta graine offerte :'),
@@ -247,11 +312,18 @@ class _GardenPageState extends State<GardenPage> {
                 species.zone == zone && (snapshot.seeds[species] ?? 0) > 0,
           )
           .toList();
+      final brilliantAvailable = Species.values
+          .where(
+            (species) =>
+                species.zone == zone &&
+                (snapshot.brilliantSeeds[species] ?? 0) > 0,
+          )
+          .toList();
       return ListTile(
         contentPadding: EdgeInsets.zero,
         leading: const Icon(Icons.add_circle_outline),
         title: Text('Emplacement ${slot + 1} · libre'),
-        subtitle: available.isEmpty
+        subtitle: available.isEmpty && brilliantAvailable.isEmpty
             ? const Text('Aucune graine disponible')
             : Wrap(
                 spacing: 8,
@@ -263,6 +335,20 @@ class _GardenPageState extends State<GardenPage> {
                           ? null
                           : () => _perform(
                               () => _garden.plantSeed(zone, slot, species),
+                            ),
+                    ),
+                  for (final species in brilliantAvailable)
+                    ActionChip(
+                      label: Text('Planter ${species.label} brillante'),
+                      onPressed: _busy
+                          ? null
+                          : () => _perform(
+                              () => _garden.plantSeed(
+                                zone,
+                                slot,
+                                species,
+                                brilliant: true,
+                              ),
                             ),
                     ),
                 ],
@@ -278,7 +364,9 @@ class _GardenPageState extends State<GardenPage> {
     };
     return ListTile(
       contentPadding: EdgeInsets.zero,
-      title: Text('${plant.species.label} · $stage'),
+      title: Text(
+        '${plant.species.label}${plant.tier == GrowthTier.brillante ? ' brillante' : ''} · $stage',
+      ),
       subtitle: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -286,6 +374,18 @@ class _GardenPageState extends State<GardenPage> {
           LinearProgressIndicator(
             value: plant.progressSteps / plant.nextThreshold,
           ),
+          Text(
+            'Graine ordinaire garantie · bonus ${(plant.tier.extraOrdinarySeedChance * 100).round()} %'
+            '${plant.tier == GrowthTier.brillante ? ' · graine brillante ${(brilliantSeedChance * 100).round()} %' : ''}',
+          ),
+          if (plant.isReadyToHarvest)
+            TextButton.icon(
+              onPressed: _busy
+                  ? null
+                  : () => _perform(() => _garden.harvestPlant(zone, slot)),
+              icon: const Icon(Icons.spa),
+              label: const Text('Récolter'),
+            ),
         ],
       ),
       trailing: IconButton(
