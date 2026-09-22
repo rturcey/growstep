@@ -1,5 +1,3 @@
-import 'dart:math';
-
 enum ZoneType {
   potager('Potager', 4, 8),
   jardinFleuri('Jardin fleuri', 4, 8),
@@ -46,11 +44,33 @@ enum GrowthTier {
     GrowthTier.peuCommune => 0.3,
     GrowthTier.rare => 0.1,
   };
+
+  int get florinsPerHarvest => switch (this) {
+    GrowthTier.commune => 5,
+    GrowthTier.peuCommune => 8,
+    GrowthTier.rare || GrowthTier.brillante => 12,
+  };
 }
 
 const brilliantSeedChance = 0.05;
+const dailyHarvestFlorinLimit = 20;
 
-enum FertilizerType { basique, superEngrais, mega }
+enum FertilizerType {
+  basique('Basique', 5),
+  superEngrais('Super', 6),
+  mega('Méga', 8);
+
+  const FertilizerType(this.label, this.quarterStepMultiplier);
+
+  final String label;
+  final int quarterStepMultiplier;
+
+  String get multiplierLabel => switch (this) {
+    FertilizerType.basique => '×1,25',
+    FertilizerType.superEngrais => '×1,5',
+    FertilizerType.mega => '×2',
+  };
+}
 
 String localDayKey(DateTime date) =>
     '${date.year.toString().padLeft(4, '0')}-${date.month.toString().padLeft(2, '0')}-${date.day.toString().padLeft(2, '0')}';
@@ -79,6 +99,8 @@ class Plant {
     this.progressSteps = 0,
     this.completedCycles = 0,
     this.pendingHarvest,
+    this.activeFertilizer,
+    this.growthRemainderQuarters = 0,
   });
 
   final Species species;
@@ -86,6 +108,8 @@ class Plant {
   final int progressSteps;
   final int completedCycles;
   final HarvestReward? pendingHarvest;
+  final FertilizerType? activeFertilizer;
+  final int growthRemainderQuarters;
 
   int get targetSteps => completedCycles == 0
       ? tier.stepsToMature
@@ -121,12 +145,32 @@ class Plant {
     return targetSteps;
   }
 
-  Plant withSteps(int steps) => Plant(
+  Plant withSteps(int steps) {
+    if (isReadyToHarvest || steps <= 0) return this;
+    final gainedQuarters =
+        steps * (activeFertilizer?.quarterStepMultiplier ?? 4);
+    final totalQuarters =
+        progressSteps * 4 + growthRemainderQuarters + gainedQuarters;
+    final finished = totalQuarters >= targetSteps * 4;
+    return Plant(
+      species: species,
+      tier: tier,
+      progressSteps: finished ? targetSteps : totalQuarters ~/ 4,
+      completedCycles: completedCycles,
+      pendingHarvest: pendingHarvest,
+      activeFertilizer: finished ? null : activeFertilizer,
+      growthRemainderQuarters: finished ? 0 : totalQuarters % 4,
+    );
+  }
+
+  Plant withFertilizer(FertilizerType type) => Plant(
     species: species,
     tier: tier,
-    progressSteps: min(progressSteps + steps, targetSteps),
+    progressSteps: progressSteps,
     completedCycles: completedCycles,
     pendingHarvest: pendingHarvest,
+    activeFertilizer: type,
+    growthRemainderQuarters: growthRemainderQuarters,
   );
 
   Plant withPendingHarvest(HarvestReward reward) => Plant(
@@ -135,6 +179,8 @@ class Plant {
     progressSteps: progressSteps,
     completedCycles: completedCycles,
     pendingHarvest: reward,
+    activeFertilizer: activeFertilizer,
+    growthRemainderQuarters: growthRemainderQuarters,
   );
 
   Plant nextCycle() =>
@@ -146,6 +192,8 @@ class Plant {
     'progressSteps': progressSteps,
     'completedCycles': completedCycles,
     'pendingHarvest': pendingHarvest?.toJson(),
+    'activeFertilizer': activeFertilizer?.name,
+    'growthRemainderQuarters': growthRemainderQuarters,
   };
 
   factory Plant.fromJson(Map<String, dynamic> json) => Plant(
@@ -160,6 +208,10 @@ class Plant {
         : HarvestReward.fromJson(
             json['pendingHarvest'] as Map<String, dynamic>,
           ),
+    activeFertilizer: json['activeFertilizer'] == null
+        ? null
+        : FertilizerType.values.byName(json['activeFertilizer'] as String),
+    growthRemainderQuarters: json['growthRemainderQuarters'] as int? ?? 0,
   );
 }
 
@@ -173,6 +225,9 @@ class GardenSnapshot {
     required this.creditedSteps,
     required this.florins,
     required this.fertilizers,
+    this.harvestFlorinsDay,
+    this.harvestFlorinsClaimed = 0,
+    this.starterFertilizerGranted = false,
     required this.decorations,
     this.legacyArchive,
   });
@@ -189,6 +244,9 @@ class GardenSnapshot {
     creditedSteps: 0,
     florins: 0,
     fertilizers: {},
+    harvestFlorinsDay: null,
+    harvestFlorinsClaimed: 0,
+    starterFertilizerGranted: false,
     decorations: const [],
   );
 
@@ -200,6 +258,9 @@ class GardenSnapshot {
   final int creditedSteps;
   final int florins;
   final Map<FertilizerType, int> fertilizers;
+  final String? harvestFlorinsDay;
+  final int harvestFlorinsClaimed;
+  final bool starterFertilizerGranted;
   final List<String> decorations;
   final Map<String, dynamic>? legacyArchive;
 
@@ -215,6 +276,9 @@ class GardenSnapshot {
     int? creditedSteps,
     int? florins,
     Map<FertilizerType, int>? fertilizers,
+    String? harvestFlorinsDay,
+    int? harvestFlorinsClaimed,
+    bool? starterFertilizerGranted,
     List<String>? decorations,
     Map<String, dynamic>? legacyArchive,
   }) => GardenSnapshot(
@@ -226,6 +290,10 @@ class GardenSnapshot {
     creditedSteps: creditedSteps ?? this.creditedSteps,
     florins: florins ?? this.florins,
     fertilizers: fertilizers ?? this.fertilizers,
+    harvestFlorinsDay: harvestFlorinsDay ?? this.harvestFlorinsDay,
+    harvestFlorinsClaimed: harvestFlorinsClaimed ?? this.harvestFlorinsClaimed,
+    starterFertilizerGranted:
+        starterFertilizerGranted ?? this.starterFertilizerGranted,
     decorations: decorations ?? this.decorations,
     legacyArchive: legacyArchive ?? this.legacyArchive,
   );
@@ -246,6 +314,9 @@ class GardenSnapshot {
     'fertilizers': {
       for (final entry in fertilizers.entries) entry.key.name: entry.value,
     },
+    'harvestFlorinsDay': harvestFlorinsDay,
+    'harvestFlorinsClaimed': harvestFlorinsClaimed,
+    'starterFertilizerGranted': starterFertilizerGranted,
     'decorations': decorations,
     'legacyArchive': legacyArchive,
   };
@@ -285,6 +356,10 @@ class GardenSnapshot {
         for (final entry in rawFertilizers.entries)
           FertilizerType.values.byName(entry.key): entry.value as int,
       },
+      harvestFlorinsDay: json['harvestFlorinsDay'] as String?,
+      harvestFlorinsClaimed: json['harvestFlorinsClaimed'] as int? ?? 0,
+      starterFertilizerGranted:
+          json['starterFertilizerGranted'] as bool? ?? false,
       decorations: (json['decorations'] as List<dynamic>).cast<String>(),
       legacyArchive: json['legacyArchive'] as Map<String, dynamic>?,
     );

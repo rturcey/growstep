@@ -33,6 +33,8 @@ Pour cette première implémentation, la chance de recevoir une deuxième graine
 
 Un engrais accélère le compteur à partir de son application, jusqu'à la fin du cycle en cours. Un seul engrais peut être actif sur une plante à la fois. Les multiplicateurs de test sont ×1,25 (basique), ×1,5 (super) et ×2 (méga). Il n'y a plus de ressource « eau ».
 
+Un engrais basique est offert une fois au joueur lors de son premier chargement, y compris lors de la reprise d'une sauvegarde créée avant l'arrivée des engrais. Son attribution est mémorisée pour éviter tout doublon.
+
 ## Récompenses de la marche
 
 Les paliers quotidiens de test sont 1 000, 3 000, 6 000 et 10 000 pas. Les quatre lots du jour sont tirés au début de la journée et affichés avant la marche. Leur valeur minimale est respectivement commune, peu commune, peu commune avec un lot plus généreux, puis rare. Un lot peut contenir des florins, graines, engrais ou certains décors ; « rare » qualifie la valeur du lot et ne signifie pas nécessairement une graine rare. Certains jours, le premier palier ne donne aucun florin. Les pas arrivés en retard créditent le lot du jour où ils ont été effectués si son palier était atteint.

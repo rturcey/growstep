@@ -128,7 +128,8 @@ class _GardenPageState extends State<GardenPage> {
       builder: (context) => AlertDialog(
         title: Text('Récolter ${preview.count} plantes ?'),
         content: Text(
-          'Gain confirmé :\nGraines ordinaires : $ordinary'
+          'Gain confirmé : +${preview.florins} florins\n'
+          'Graines ordinaires : $ordinary'
           '${brilliant.isEmpty ? '' : '\nGraines brillantes : $brilliant'}',
         ),
         actions: [
@@ -165,6 +166,12 @@ class _GardenPageState extends State<GardenPage> {
     final readyHarvests = snapshot == null
         ? 0
         : _garden.previewReadyHarvests().count;
+    final fertilizerStock = snapshot == null
+        ? ''
+        : FertilizerType.values
+              .where((type) => (snapshot.fertilizers[type] ?? 0) > 0)
+              .map((type) => '${type.label} ×${snapshot.fertilizers[type]}')
+              .join(', ');
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
@@ -217,6 +224,23 @@ class _GardenPageState extends State<GardenPage> {
                                   _perform(_garden.refreshSteps);
                                 },
                           child: const Text('+100'),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                Card(
+                  child: Padding(
+                    padding: const EdgeInsets.all(16),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text('Florins : ${snapshot.florins}'),
+                        Text(
+                          'Récoltes aujourd’hui : ${_garden.harvestFlorinsToday}/${_garden.harvestFlorinLimit} florins',
+                        ),
+                        Text(
+                          'Engrais en stock : ${fertilizerStock.isEmpty ? 'aucun' : fertilizerStock}',
                         ),
                       ],
                     ),
@@ -378,6 +402,28 @@ class _GardenPageState extends State<GardenPage> {
             'Graine ordinaire garantie · bonus ${(plant.tier.extraOrdinarySeedChance * 100).round()} %'
             '${plant.tier == GrowthTier.brillante ? ' · graine brillante ${(brilliantSeedChance * 100).round()} %' : ''}',
           ),
+          if (plant.activeFertilizer != null)
+            Text(
+              'Engrais actif : ${plant.activeFertilizer!.label} ${plant.activeFertilizer!.multiplierLabel}',
+            )
+          else if (!plant.isReadyToHarvest)
+            Wrap(
+              spacing: 8,
+              children: [
+                for (final type in FertilizerType.values)
+                  if ((snapshot.fertilizers[type] ?? 0) > 0)
+                    ActionChip(
+                      label: Text(
+                        'Engrais ${type.name} ×${snapshot.fertilizers[type]}',
+                      ),
+                      onPressed: _busy
+                          ? null
+                          : () => _perform(
+                              () => _garden.applyFertilizer(zone, slot, type),
+                            ),
+                    ),
+              ],
+            ),
           if (plant.isReadyToHarvest)
             TextButton.icon(
               onPressed: _busy

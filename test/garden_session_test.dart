@@ -388,4 +388,169 @@ void main() {
       expect(garden.snapshot.seeds[Species.tournesol], 0);
     },
   );
+
+  test(
+    'le quota des florins suit le jour du clic et laisse les graines',
+    () async {
+      final directory = await Directory.systemTemp.createTemp(
+        'growstep-quota-',
+      );
+      addTearDown(() => directory.delete(recursive: true));
+      final file = File('${directory.path}/garden.sqlite');
+      final database = GardenDatabase(NativeDatabase(file));
+      final initial = GardenSnapshot.initial();
+      final zones = {
+        for (final entry in initial.zones.entries) entry.key: [...entry.value],
+      };
+      for (var slot = 0; slot < 4; slot++) {
+        zones[ZoneType.potager]![slot] = const Plant(
+          species: Species.tomate,
+          tier: GrowthTier.rare,
+          progressSteps: 6000,
+          pendingHarvest: HarvestReward(ordinarySeeds: 1),
+        );
+      }
+      await database.save(initial.copyWith(zones: zones, florins: 100));
+      var now = DateTime(2026, 9, 22, 23, 59);
+      final garden = GardenSession(
+        database: database,
+        stepProvider: FakeStepProvider(),
+        now: () => now,
+      );
+      await garden.load();
+
+      await garden.harvestPlant(ZoneType.potager, 0);
+      expect(garden.snapshot.florins, 112);
+      expect(garden.harvestFlorinsToday, 12);
+      final remaining = garden.previewReadyHarvests();
+      expect(remaining.florins, 8);
+      await garden.harvestAll(remaining.locations.take(2).toList());
+      expect(garden.snapshot.florins, 120);
+      expect(garden.snapshot.seeds[Species.tomate], 3);
+      expect(garden.harvestFlorinsToday, 20);
+      expect(garden.previewReadyHarvests().florins, 0);
+      await garden.harvestPlant(ZoneType.potager, 0);
+      expect(garden.snapshot.florins, 120);
+
+      await database.close();
+      final reopenedDatabase = GardenDatabase(NativeDatabase(file));
+      addTearDown(reopenedDatabase.close);
+      final reopened = GardenSession(
+        database: reopenedDatabase,
+        stepProvider: FakeStepProvider(),
+        now: () => now,
+      );
+      await reopened.load();
+      expect(reopened.harvestFlorinsToday, 20);
+      expect(reopened.snapshot.florins, 120);
+
+      now = DateTime(2026, 9, 23, 0, 1);
+      expect(reopened.harvestFlorinsToday, 0);
+      await reopened.harvestPlant(ZoneType.potager, 3);
+      expect(reopened.snapshot.florins, 132);
+      expect(reopened.harvestFlorinsToday, 12);
+      expect(reopened.snapshot.seeds[Species.tomate], 4);
+    },
+  );
+
+  test(
+    'l’engrais accélère seulement les nouveaux pas du cycle courant',
+    () async {
+      final directory = await Directory.systemTemp.createTemp(
+        'growstep-fertilizer-',
+      );
+      addTearDown(() => directory.delete(recursive: true));
+      final file = File('${directory.path}/garden.sqlite');
+      final database = GardenDatabase(NativeDatabase(file));
+      final steps = FakeStepProvider();
+      final garden = GardenSession(database: database, stepProvider: steps);
+      await garden.load();
+      expect(garden.snapshot.fertilizers[FertilizerType.basique], 1);
+      await garden.chooseStarterSeed(Species.tomate);
+      await garden.plantSeed(ZoneType.potager, 0, Species.tomate);
+      steps.addSteps(200);
+      await garden.applyFertilizer(ZoneType.potager, 0, FertilizerType.basique);
+      expect(garden.snapshot.zones[ZoneType.potager]![0]!.progressSteps, 200);
+      expect(garden.snapshot.fertilizers[FertilizerType.basique], 0);
+      await garden.applyFertilizer(ZoneType.potager, 0, FertilizerType.basique);
+      expect(garden.snapshot.fertilizers[FertilizerType.basique], 0);
+
+      steps.addSteps(3);
+      await garden.refreshSteps();
+      expect(garden.snapshot.zones[ZoneType.potager]![0]!.progressSteps, 203);
+      await database.close();
+      final reopenedDatabase = GardenDatabase(NativeDatabase(file));
+      addTearDown(reopenedDatabase.close);
+      final reopened = GardenSession(
+        database: reopenedDatabase,
+        stepProvider: steps,
+      );
+      await reopened.load();
+      expect(reopened.snapshot.fertilizers[FertilizerType.basique], 0);
+      expect(
+        reopened.snapshot.zones[ZoneType.potager]![0]!.activeFertilizer,
+        FertilizerType.basique,
+      );
+      steps.addSteps(1);
+      await reopened.refreshSteps();
+      expect(reopened.snapshot.zones[ZoneType.potager]![0]!.progressSteps, 205);
+
+      steps.addSteps(636);
+      await reopened.refreshSteps();
+      final mature = reopened.snapshot.zones[ZoneType.potager]![0]!;
+      expect(mature.progressSteps, 1000);
+      expect(mature.activeFertilizer, isNull);
+      await reopened.harvestPlant(ZoneType.potager, 0);
+      steps.addSteps(100);
+      await reopened.refreshSteps();
+      expect(reopened.snapshot.zones[ZoneType.potager]![0]!.progressSteps, 100);
+    },
+  );
+
+  test('les trois engrais conservent chacun leur multiplicateur', () async {
+    final database = GardenDatabase(NativeDatabase.memory());
+    addTearDown(database.close);
+    final initial = GardenSnapshot.initial();
+    final zones = {
+      for (final entry in initial.zones.entries) entry.key: [...entry.value],
+    };
+    for (var slot = 0; slot < 3; slot++) {
+      zones[ZoneType.potager]![slot] = const Plant(species: Species.tomate);
+    }
+    await database.save(
+      initial.copyWith(
+        zones: zones,
+        fertilizers: {
+          FertilizerType.basique: 1,
+          FertilizerType.superEngrais: 1,
+          FertilizerType.mega: 1,
+        },
+      ),
+    );
+    final steps = FakeStepProvider();
+    final garden = GardenSession(database: database, stepProvider: steps);
+    await garden.load();
+    await garden.applyFertilizer(ZoneType.potager, 0, FertilizerType.basique);
+    await garden.applyFertilizer(
+      ZoneType.potager,
+      0,
+      FertilizerType.superEngrais,
+    );
+    expect(garden.snapshot.fertilizers[FertilizerType.superEngrais], 1);
+    await garden.applyFertilizer(
+      ZoneType.potager,
+      1,
+      FertilizerType.superEngrais,
+    );
+    await garden.applyFertilizer(ZoneType.potager, 2, FertilizerType.mega);
+    steps.addSteps(4);
+    await garden.refreshSteps();
+    expect(
+      [
+        for (final plant in garden.snapshot.zones[ZoneType.potager]!.take(3))
+          plant!.progressSteps,
+      ],
+      [5, 6, 8],
+    );
+  });
 }

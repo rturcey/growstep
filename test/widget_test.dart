@@ -65,11 +65,48 @@ void main() {
     await tester.pump(const Duration(milliseconds: 200));
     expect(find.textContaining('Tomate ×2'), findsWidgets);
     expect(find.textContaining('Tulipe brillante ×1'), findsWidgets);
+    expect(find.textContaining('17 florins'), findsOneWidget);
 
     await tester.tap(find.text('Confirmer la récolte'));
     await tester.pump(const Duration(milliseconds: 200));
     expect(find.text('Récolter 2 plantes'), findsNothing);
     expect(find.textContaining('Tomate ×2'), findsWidgets);
     expect(find.textContaining('Tulipe brillante ×1'), findsWidgets);
+    expect(find.textContaining('Florins : 17'), findsOneWidget);
+  });
+
+  testWidgets('le joueur applique un engrais et voit le compteur accélérer', (
+    tester,
+  ) async {
+    final database = GardenDatabase(NativeDatabase.memory());
+    final initial = GardenSnapshot.initial();
+    final zones = {
+      for (final entry in initial.zones.entries) entry.key: [...entry.value],
+    };
+    zones[ZoneType.potager]![0] = const Plant(species: Species.tomate);
+    await database.save(
+      initial.copyWith(
+        zones: zones,
+        starterFertilizerGranted: true,
+        fertilizers: {FertilizerType.basique: 1},
+      ),
+    );
+    await tester.pumpWidget(
+      GrowstepApp(database: database, steps: FakeStepProvider()),
+    );
+    await tester.pump(const Duration(milliseconds: 200));
+
+    await tester.ensureVisible(find.text('Engrais basique ×1'));
+    await tester.tap(find.text('Engrais basique ×1'));
+    await tester.pump(const Duration(milliseconds: 200));
+    expect(
+      find.textContaining('Engrais actif : Basique ×1,25'),
+      findsOneWidget,
+    );
+
+    await tester.ensureVisible(find.text('+100'));
+    await tester.tap(find.text('+100'));
+    await tester.pump(const Duration(milliseconds: 200));
+    expect(find.text('125/300 pas'), findsOneWidget);
   });
 }
