@@ -1,31 +1,42 @@
 # Jardin de marche
 
-Une application iPhone dans laquelle la marche fait progresser un jardin virtuel.
+Une application iPhone où la marche fait grandir et embellir un jardin virtuel. Les règles et valeurs de test figurent dans [le game design](docs/game-design.md).
 
 ## Language
 
-**Jardin** : espace virtuel contenant quatre parcelles et les plantes du joueur.
+**Jardin** : espace virtuel du joueur comprenant un potager, un jardin fleuri et un verger.
 
-**Parcelle** : emplacement du jardin dans lequel le joueur peut planter une graine.
+**Zone** : partie du jardin dédiée à une famille de plantes : légumes, fleurs ou arbres fruitiers.
 
-**Graine** : choix gratuit et disponible sans limite qui permet de démarrer une plante dans une parcelle ; cinq espèces sont proposées.
+**Emplacement de plantation** : place d'une zone pouvant accueillir une plante.
+_Avoid_ : Parcelle
 
-**Plante** : végétal issu d'une graine plantée dans une parcelle ; les cinq espèces disponibles sont le tournesol, la tulipe, la tomate, la lavande et le petit arbre.
+**Graine** : ressource d'une espèce donnée qui permet de démarrer une plante dans un emplacement.
 
-**Étape de croissance** : état visible d'une plante entre sa plantation et sa forme finale ; chaque espèce en compte trois : pousse, jeune plante et plante mature. Trois doses d'eau font passer à l'étape suivante.
+**Plante** : végétal issu d'une graine, qui grandit avec les pas du joueur.
 
-**Dose d'eau** : ressource obtenue par tranche complète de 300 pas dans une journée et attribuée par le joueur à une plante pour contribuer à sa prochaine étape de croissance ; le reliquat de pas repart à zéro le lendemain, mais les doses non utilisées se conservent sans plafond.
+**Étape de croissance** : forme visible d'une plante entre sa germination et sa maturité.
 
-**Plante mature** : plante ayant atteint sa dernière étape de croissance ; le joueur peut la conserver ou la remplacer dans sa parcelle. Une plante encore en croissance ne peut pas être remplacée.
+**Plante mature** : plante arrivée à sa forme finale, qui peut être récoltée puis produire à nouveau tout en gardant sa taille.
 
-**Palier quotidien** : nombre de pas atteint dans une journée qui accorde une dose d'engrais ; les paliers sont de 1 500 et 3 000 pas chaque jour.
+**Cycle de production** : période pendant laquelle une plante mature accumule de nouveaux pas jusqu'à pouvoir être récoltée de nouveau.
 
-**Dose d'engrais** : ressource gagnée à un palier quotidien et attribuée par le joueur à une plante pour terminer immédiatement une étape de croissance sans dépenser d'eau. Les doses non utilisées se conservent sans plafond.
+**Récolte** : action du joueur qui reçoit les récompenses d'une plante prête et lance son éventuel cycle suivant sans retirer la plante.
 
-**Invitation à marcher** : proposition de pause marche à une heure choisie, répétée chaque jour ; elle peut être supprimée si au moins 50 pas ont été détectés pendant les 30 minutes précédentes.
+**Variante brillante** : apparence très rare d'une espèce, plus longue à faire pousser que sa forme ordinaire.
 
-**Pause marche** : marche commencée volontairement, depuis une invitation ou directement dans le jardin ; sa réussite dépend d'un objectif de pas mesuré pendant la pause.
+**Florin** : monnaie unique du jardin, gagnée grâce à la marche ou achetée avec des euros.
 
-**Objectif de pause** : nombre de pas à atteindre dans les quinze minutes d'une pause marche ; sa valeur initiale est de 300 pas et le joueur peut la régler jusqu'à 1 000 par incréments de 50 pas.
+**Quota quotidien de florins des plantes** : maximum de florins que les récoltes peuvent accorder au cours d'une journée.
 
-**Dose d'eau bonus** : dose d'eau accordée après une pause marche réussie, en plus des doses issues des pas quotidiens.
+**Palier quotidien** : seuil de pas d'une journée qui accorde un lot annoncé à l'avance.
+
+**Palier d'embellissement** : transformation permanente du terrain débloquée par les pas cumulés du joueur.
+
+**Engrais** : ressource appliquée à une plante pour accélérer sa croissance ou son cycle de production en cours.
+
+**Décor** : objet permanent que le joueur peut placer et déplacer dans son jardin.
+
+**Invitation à marcher** : rappel qui propose au joueur de lancer une pause marche.
+
+**Pause marche** : marche volontaire dont la réussite dépend d'un objectif de pas à atteindre dans un délai donné.

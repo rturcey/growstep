@@ -25,9 +25,8 @@ class FakeStepProvider implements StepProvider {
     return _steps;
   }
 
-  void restoreCreditedSteps(int creditedStepWaterDoses) {
+  void restoreCreditedSteps(int creditedSteps) {
     _refreshDay();
-    final creditedSteps = creditedStepWaterDoses * stepsPerWaterDose;
     if (_steps < creditedSteps) _steps = creditedSteps;
   }
 
@@ -35,6 +34,12 @@ class FakeStepProvider implements StepProvider {
     if (count < 0) throw ArgumentError.value(count, 'count');
     _refreshDay();
     _steps += count;
+  }
+
+  void setSteps(int count) {
+    if (count < 0) throw ArgumentError.value(count, 'count');
+    _refreshDay();
+    _steps = count;
   }
 
   @override

@@ -1,0 +1,3 @@
+# Faire pousser les plantes directement avec les pas
+
+La croissance par doses d'eau demandait au joueur de convertir ses pas en ressource puis de l'attribuer à une plante. Les nouveaux pas font désormais progresser simultanément toutes les plantes présentes, avec un compteur visible jusqu'à leur prochaine étape ; l'eau disparaît et l'engrais accélère temporairement une plante. Ce choix rend le lien entre marcher et voir le jardin grandir immédiat, au prix d'une économie où plusieurs plantes peuvent mûrir grâce aux mêmes pas. Le quota de florins des récoltes encadre cette conséquence sans retirer les graines gagnées.

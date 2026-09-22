@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'garden/garden_database.dart';
 import 'garden/garden_game.dart';
 import 'garden/garden_session.dart';
-import 'garden/garden_state.dart' show localDayKey, stepsPerWaterDose;
+import 'garden/garden_state.dart' show localDayKey;
 import 'steps/fake_step_provider.dart';
 
 void main() {
@@ -65,7 +65,7 @@ class _GardenPageState extends State<GardenPage> {
   Future<GardenSnapshot> _loadGarden() async {
     final saved = await _garden.load();
     if (saved.creditedDay == localDayKey(DateTime.now())) {
-      widget.steps.restoreCreditedSteps(saved.creditedStepWaterDoses);
+      widget.steps.restoreCreditedSteps(saved.creditedSteps);
     }
     return _garden.refreshSteps();
   }
@@ -95,6 +95,29 @@ class _GardenPageState extends State<GardenPage> {
     super.dispose();
   }
 
+  Future<void> _confirmRemoval(ZoneType zone, int slot) async {
+    final remove = await showDialog<bool>(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('Supprimer cette plante ?'),
+        content: const Text('La graine utilisée ne sera pas rendue.'),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context, false),
+            child: const Text('Annuler'),
+          ),
+          FilledButton(
+            onPressed: () => Navigator.pop(context, true),
+            child: const Text('Supprimer'),
+          ),
+        ],
+      ),
+    );
+    if (remove == true) {
+      await _perform(() => _garden.removePlant(zone, slot));
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final snapshot = _snapshot;
@@ -111,10 +134,10 @@ class _GardenPageState extends State<GardenPage> {
               ),
               const SizedBox(height: 4),
               const Text('Un pas après l’autre, ton jardin prend vie.'),
-              const SizedBox(height: 24),
+              const SizedBox(height: 20),
               ClipRRect(
                 borderRadius: BorderRadius.circular(24),
-                child: SizedBox(height: 300, child: GameWidget(game: _game)),
+                child: SizedBox(height: 230, child: GameWidget(game: _game)),
               ),
               const SizedBox(height: 20),
               if (_error != null)
@@ -130,64 +153,41 @@ class _GardenPageState extends State<GardenPage> {
               else if (snapshot == null)
                 const Center(child: CircularProgressIndicator())
               else ...[
-                Row(
-                  children: [
-                    Expanded(
-                      child: _InfoCard(
-                        title: 'Eau disponible',
-                        value: '${snapshot.waterDoses}',
-                        icon: Icons.water_drop_outlined,
-                      ),
+                Card(
+                  child: Padding(
+                    padding: const EdgeInsets.all(16),
+                    child: Row(
+                      children: [
+                        const Icon(Icons.directions_walk),
+                        const SizedBox(width: 12),
+                        Expanded(
+                          child: Text(
+                            '${widget.steps.currentSteps} pas simulés aujourd’hui',
+                          ),
+                        ),
+                        OutlinedButton(
+                          onPressed: _busy
+                              ? null
+                              : () {
+                                  widget.steps.addSteps(100);
+                                  _perform(_garden.refreshSteps);
+                                },
+                          child: const Text('+100'),
+                        ),
+                      ],
                     ),
-                    const SizedBox(width: 12),
-                    Expanded(
-                      child: _InfoCard(
-                        title: 'Pas simulés',
-                        value: '${widget.steps.currentSteps}',
-                        icon: Icons.directions_walk,
-                      ),
-                    ),
-                  ],
+                  ),
                 ),
-                const SizedBox(height: 20),
-                Text(
-                  snapshot.plantStage == null
-                      ? 'La parcelle attend sa première graine.'
-                      : snapshot.plantStage == PlantStage.pousse
-                      ? 'Tournesol · pousse · ${snapshot.waterProgress}/3 doses'
-                      : 'Tournesol · jeune plante',
-                  style: Theme.of(context).textTheme.titleMedium,
-                ),
+                if (snapshot.needsFirstPlanting) ...[
+                  const SizedBox(height: 12),
+                  const Text(
+                    'Choisis une graine offerte, puis plante-la dans un emplacement.',
+                  ),
+                ],
+                for (final zone in ZoneType.values) _zoneCard(snapshot, zone),
                 const SizedBox(height: 12),
-                if (snapshot.plantStage == null)
-                  FilledButton.icon(
-                    onPressed: _busy ? null : () => _perform(_garden.plantSeed),
-                    icon: const Icon(Icons.spa_outlined),
-                    label: const Text('Semer un tournesol'),
-                  ),
-                if (snapshot.plantStage == PlantStage.pousse)
-                  FilledButton.icon(
-                    onPressed: _busy || snapshot.waterDoses == 0
-                        ? null
-                        : () => _perform(_garden.waterPlant),
-                    icon: const Icon(Icons.water_drop),
-                    label: const Text('Arroser la pousse'),
-                  ),
-                const SizedBox(height: 8),
-                OutlinedButton.icon(
-                  onPressed: _busy
-                      ? null
-                      : () {
-                          widget.steps.addSteps(stepsPerWaterDose);
-                          _perform(_garden.refreshSteps);
-                        },
-                  icon: const Icon(Icons.add),
-                  label: const Text('Ajouter $stepsPerWaterDose pas simulés'),
-                ),
-                const SizedBox(height: 8),
-                Text(
-                  'Cette première tranche utilise des pas simulés. Les vrais pas arriveront avec le fournisseur iOS.',
-                  style: Theme.of(context).textTheme.bodySmall,
+                const Text(
+                  'Cette tranche utilise des pas simulés. La lecture des pas iPhone arrivera ensuite.',
                 ),
               ],
             ],
@@ -196,34 +196,103 @@ class _GardenPageState extends State<GardenPage> {
       ),
     );
   }
-}
 
-class _InfoCard extends StatelessWidget {
-  const _InfoCard({
-    required this.title,
-    required this.value,
-    required this.icon,
-  });
+  Widget _zoneCard(GardenSnapshot snapshot, ZoneType zone) {
+    final zoneSpecies = Species.values.where((species) => species.zone == zone);
+    return Card(
+      margin: const EdgeInsets.only(top: 16),
+      child: Padding(
+        padding: const EdgeInsets.all(16),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(zone.label, style: Theme.of(context).textTheme.titleLarge),
+            Text(
+              '${snapshot.zones[zone]!.length}/${zone.maxSlots} emplacements',
+              style: Theme.of(context).textTheme.bodySmall,
+            ),
+            if (!snapshot.starterChoices.contains(zone)) ...[
+              const SizedBox(height: 10),
+              const Text('Choisis ta graine offerte :'),
+              Wrap(
+                spacing: 8,
+                children: [
+                  for (final species in zoneSpecies)
+                    OutlinedButton(
+                      onPressed: _busy
+                          ? null
+                          : () => _perform(
+                              () => _garden.chooseStarterSeed(species),
+                            ),
+                      child: Text(species.label),
+                    ),
+                ],
+              ),
+            ],
+            const SizedBox(height: 8),
+            for (var slot = 0; slot < snapshot.zones[zone]!.length; slot++)
+              _slotRow(snapshot, zone, slot),
+          ],
+        ),
+      ),
+    );
+  }
 
-  final String title;
-  final String value;
-  final IconData icon;
+  Widget _slotRow(GardenSnapshot snapshot, ZoneType zone, int slot) {
+    final plant = snapshot.zones[zone]![slot];
+    if (plant == null) {
+      final available = Species.values
+          .where(
+            (species) =>
+                species.zone == zone && (snapshot.seeds[species] ?? 0) > 0,
+          )
+          .toList();
+      return ListTile(
+        contentPadding: EdgeInsets.zero,
+        leading: const Icon(Icons.add_circle_outline),
+        title: Text('Emplacement ${slot + 1} · libre'),
+        subtitle: available.isEmpty
+            ? const Text('Aucune graine disponible')
+            : Wrap(
+                spacing: 8,
+                children: [
+                  for (final species in available)
+                    ActionChip(
+                      label: Text('Planter ${species.label}'),
+                      onPressed: _busy
+                          ? null
+                          : () => _perform(
+                              () => _garden.plantSeed(zone, slot, species),
+                            ),
+                    ),
+                ],
+              ),
+      );
+    }
 
-  @override
-  Widget build(BuildContext context) => Container(
-    padding: const EdgeInsets.all(16),
-    decoration: BoxDecoration(
-      color: const Color(0xFF1B3526),
-      borderRadius: BorderRadius.circular(18),
-    ),
-    child: Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Icon(icon, color: const Color(0xFF9AD6A2)),
-        const SizedBox(height: 10),
-        Text(value, style: Theme.of(context).textTheme.headlineSmall),
-        Text(title, style: Theme.of(context).textTheme.bodySmall),
-      ],
-    ),
-  );
+    final stage = switch (plant.stage) {
+      PlantStage.graineGermee => 'Graine germée',
+      PlantStage.jeunePlant => 'Jeune plant',
+      PlantStage.presqueMature => 'Presque mature',
+      PlantStage.mature => 'Mature',
+    };
+    return ListTile(
+      contentPadding: EdgeInsets.zero,
+      title: Text('${plant.species.label} · $stage'),
+      subtitle: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text('${plant.progressSteps}/${plant.nextThreshold} pas'),
+          LinearProgressIndicator(
+            value: plant.progressSteps / plant.nextThreshold,
+          ),
+        ],
+      ),
+      trailing: IconButton(
+        tooltip: 'Supprimer ${plant.species.label}',
+        onPressed: _busy ? null : () => _confirmRemoval(zone, slot),
+        icon: const Icon(Icons.close),
+      ),
+    );
+  }
 }
