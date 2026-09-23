@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<title>Proposition 5 — Terrasse Méditerranéenne</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: #2a2118; display: flex; justify-content: center; align-items: center; min-height: 100vh; }
+  svg { max-width: 100%; height: auto; }
+</style>
+</head>
+<body>
+<svg viewBox="0 0 900 550" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <!-- Mediterranean sky gradient -->
+    <linearGradient id="medSky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#5B9EC9"/>
+      <stop offset="40%" stop-color="#8BC4E0"/>
+      <stop offset="70%" stop-color="#C4E0ED"/>
+      <stop offset="100%" stop-color="#E8F0F5"/>
+    </linearGradient>
+    <!-- Sun glow -->
+    <radialGradient id="sunGlow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#FFE5A0" stop-opacity="0.6"/>
+      <stop offset="50%" stop-color="#FFD980" stop-opacity="0.2"/>
+      <stop offset="100%" stop-color="#FFD980" stop-opacity="0"/>
+    </radialGradient>
+    <!-- Stone texture -->
+    <filter id="stoneTex" x="0" y="0" width="100%" height="100%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.05" numOctaves="3" seed="4"/>
+      <feColorMatrix values="0 0 0 0 0.7  0 0 0 0 0.62  0 0 0 0 0.5  0 0 0 0.15 0"/>
+      <feComposite in2="SourceGraphic" operator="in"/>
+    </filter>
+    <!-- Soft shadow -->
+    <filter id="softShadow">
+      <feGaussianBlur in="SourceAlpha" stdDeviation="3"/>
+      <feOffset dx="3" dy="4"/>
+      <feComponentTransfer><feFuncA type="linear" slope="0.3"/></feComponentTransfer>
+      <feMerge><feMergeNode/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <!-- Terra cotta gradient -->
+    <linearGradient id="terracotta" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#C66B3D"/>
+      <stop offset="100%" stop-color="#9E5028"/>
+    </linearGradient>
+    <linearGradient id="terracottaSide" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#9E5028"/>
+      <stop offset="100%" stop-color="#7A3E1E"/>
+    </linearGradient>
+    <!-- Stone -->
+    <radialGradient id="stone" cx="40%" cy="30%" r="80%">
+      <stop offset="0%" stop-color="#D4C4A8"/>
+      <stop offset="60%" stop-color="#B8A682"/>
+      <stop offset="100%" stop-color="#968868"/>
+    </radialGradient>
+    <!-- Earth -->
+    <radialGradient id="medEarth" cx="50%" cy="30%" r="80%">
+      <stop offset="0%" stop-color="#A07B52"/>
+      <stop offset="100%" stop-color="#6B4A26"/>
+    </radialGradient>
+    <!-- Gradients for plants -->
+    <radialGradient id="leafGreen" cx="50%" cy="30%" r="70%">
+      <stop offset="0%" stop-color="#7AB068"/>
+      <stop offset="100%" stop-color="#4A8B3E"/>
+    </radialGradient>
+    <radialGradient id="deepLeaf" cx="50%" cy="30%" r="70%">
+      <stop offset="0%" stop-color="#5F9E58"/>
+      <stop offset="100%" stop-color="#2D5C24"/>
+    </radialGradient>
+    <!-- Olive tree gradient -->
+    <radialGradient id="oliveCanopy" cx="50%" cy="30%" r="70%">
+      <stop offset="0%" stop-color="#8BA868"/>
+      <stop offset="100%" stop-color="#4A6B32"/>
+    </radialGradient>
+  </defs>
+
+  <!-- Sky -->
+  <rect width="900" height="380" fill="url(#medSky)"/>
+
+  <!-- Sun -->
+  <circle cx="720" cy="120" r="80" fill="url(#sunGlow)"/>
+  <circle cx="720" cy="120" r="30" fill="#FFE5A0" opacity="0.9"/>
+  <circle cx="720" cy="120" r="22" fill="#FFF5C2"/>
+
+  <!-- Distant sea -->
+  <rect x="0" y="290" width="900" height="30" fill="#4A8BB5" opacity="0.7"/>
+  <rect x="0" y="295" width="900" height="2" fill="#8BC4E0" opacity="0.5"/>
+  <rect x="0" y="300" width="900" height="1" fill="#C4E0ED" opacity="0.4"/>
+
+  <!-- Distant hills -->
+  <path d="M 0,310 Q 100,270 200,290 Q 300,275 400,295 Q 500,280 600,300 Q 700,285 800,295 Q 850,290 900,300 L 900,320 L 0,320 Z" fill="#8BA8A0" opacity="0.5"/>
+  <path d="M 0,315 Q 150,290 300,305 Q 450,295 600,310 Q 750,300 900,310 L 900,330 L 0,330 Z" fill="#6B8B82" opacity="0.4"/>
+
+  <!-- Stone terrace ground -->
+  <rect y="320" width="900" height="230" fill="#C4B496"/>
+  <rect y="320" width="900" height="230" fill="url(#stone)" filter="url(#stoneTex)" opacity="0.6"/>
+
+  <!-- Stone tile lines -->
+  <line x1="0" y1="350" x2="900" y2="350" stroke="#A68B68" stroke-width="0.5" opacity="0.4"/>
+  <line x1="0" y1="385" x2="900" y2="385" stroke="#A68B68" stroke-width="0.5" opacity="0.4"/>
+  <line x1="0" y1="420" x2="900" y2="420" stroke="#A68B68" stroke-width="0.5" opacity="0.4"/>
+  <line x1="0" y1="460" x2="900" y2="460" stroke="#A68B68" stroke-width="0.5" opacity="0.4"/>
+  <line x1="120" y1="320" x2="120" y2="480" stroke="#A68B68" stroke-width="0.5" opacity="0.3"/>
+  <line x1="300" y1="320" x2="300" y2="480" stroke="#A68B68" stroke-width="0.5" opacity="0.3"/>
+  <line x1="500" y1="320" x2="500" y2="480" stroke="#A68B68" stroke-width="0.5" opacity="0.3"/>
+  <line x1="700" y1="320" x2="700" y2="480" stroke="#A68B68" stroke-width="0.5" opacity="0.3"/>
+
+  <!-- Terrace edge -->
+  <rect y="475" width="900" height="8" fill="#968868"/>
+  <rect y="483" width="900" height="4" fill="#6B6352" opacity="0.5"/>
+
+  <!-- ZONE 1: POTAGER - Terra cotta planter -->
+  <g filter="url(#softShadow)">
+    <!-- Planter box (isometric) -->
+    <polygon points="190,380 290,355 390,380 290,405" fill="url(#medEarth)"/>
+    <!-- Box rim -->
+    <polygon points="185,375 290,348 395,375 290,400" fill="url(#terracotta)" stroke="#7A3E1E" stroke-width="1"/>
+    <polygon points="185,375 185,385 290,412 290,400" fill="url(#terracottaSide)"/>
+    <polygon points="290,400 290,412 395,385 395,375" fill="#8B4A20"/>
+    <!-- Box highlight -->
+    <polygon points="190,375 290,350 285,352 195,377" fill="#D4793D" opacity="0.5"/>
+    <!-- Soil on top -->
+    <polygon points="195,378 290,356 385,378 290,400" fill="url(#medEarth)" opacity="0.8"/>
+  </g>
+
+  <!-- Plant 1: graine germee -->
+  <g transform="translate(235, 370)">
+    <line x1="0" y1="0" x2="0" y2="-7" stroke="#4A8B3E" stroke-width="2"/>
+    <ellipse cx="-3" cy="-7" rx="3" ry="2.5" fill="url(#leafGreen)"/>
+    <ellipse cx="3" cy="-7" rx="3" ry="2.5" fill="url(#leafGreen)"/>
+  </g>
+
+  <!-- Plant 2: jeune plant -->
+  <g transform="translate(280, 362)">
+    <line x1="0" y1="0" x2="0" y2="-14" stroke="#4A8B3E" stroke-width="2.5"/>
+    <ellipse cx="-5" cy="-10" rx="5" ry="4" fill="url(#leafGreen)"/>
+    <ellipse cx="5" cy="-10" rx="5" ry="4" fill="url(#leafGreen)"/>
+    <ellipse cx="0" cy="-14" rx="3" ry="2.5" fill="#7AB068"/>
+  </g>
+
+  <!-- Plant 3: presque mature (tomato) -->
+  <g transform="translate(330, 370)">
+    <line x1="0" y1="0" x2="0" y2="-24" stroke="#4A8B3E" stroke-width="2.5"/>
+    <ellipse cx="-7" cy="-15" rx="7" ry="5" fill="url(#leafGreen)"/>
+    <ellipse cx="7" cy="-15" rx="7" ry="5" fill="url(#leafGreen)"/>
+    <ellipse cx="0" cy="-24" rx="5" ry="4" fill="#7AB068"/>
+    <!-- Tomatoes -->
+    <circle cx="-8" cy="-11" r="3.5" fill="#E8623D" stroke="#C44A2A" stroke-width="0.5"/>
+    <circle cx="-8" cy="-11" r="2" fill="#FF6B47" opacity="0.6"/>
+    <circle cx="6" cy="-17" r="3" fill="#E8623D" stroke="#C44A2A" stroke-width="0.5"/>
+    <circle cx="6" cy="-17" r="1.5" fill="#FF6B47" opacity="0.6"/>
+  </g>
+
+  <!-- Plant 4: mature (carrot) -->
+  <g transform="translate(370, 375)">
+    <line x1="0" y1="0" x2="0" y2="-30" stroke="#4A8B3E" stroke-width="2.5"/>
+    <ellipse cx="-7" cy="-18" rx="7" ry="5" fill="url(#leafGreen)"/>
+    <ellipse cx="7" cy="-18" rx="7" ry="5" fill="url(#leafGreen)"/>
+    <ellipse cx="0" cy="-30" rx="5" ry="4" fill="#7AB068"/>
+    <!-- Carrot flowers -->
+    <circle cx="-3" cy="-33" r="2.5" fill="#F5C842" stroke="#D4A831" stroke-width="0.5"/>
+    <circle cx="3" cy="-33" r="2.5" fill="#F5C842" stroke="#D4A831" stroke-width="0.5"/>
+  </g>
+
+  <!-- Empty slot -->
+  <circle cx="220" cy="375" r="4" fill="#4A3018" opacity="0.4"/>
+
+  <!-- Zone label: stone plaque -->
+  <g transform="translate(220, 420)" filter="url(#softShadow)">
+    <rect width="120" height="30" rx="4" fill="url(#stone)" stroke="#968868" stroke-width="1"/>
+    <text x="60" y="20" text-anchor="middle" font-family="Georgia, serif" font-size="13" fill="#5C4A30">Potager · 4/8</text>
+  </g>
+
+  <!-- ZONE 2: JARDIN FLEURI - Stone raised bed -->
+  <g filter="url(#softShadow)">
+    <polygon points="415,380 515,355 615,380 515,405" fill="url(#medEarth)" opacity="0.6"/>
+    <polygon points="410,375 515,348 620,375 515,400" fill="url(#stone)" stroke="#968868" stroke-width="1"/>
+    <polygon points="410,375 410,385 515,412 515,400" fill="#968868"/>
+    <polygon points="515,400 515,412 620,385 620,375" fill="#7A7262"/>
+    <polygon points="415,378 515,352 510,354 420,380" fill="#D4C4A8" opacity="0.5"/>
+    <polygon points="420,378 515,356 610,378 515,400" fill="#6B9B5A" opacity="0.7"/>
+  </g>
+
+  <!-- Plant 1: graine germee -->
+  <g transform="translate(460, 370)">
+    <line x1="0" y1="0" x2="0" y2="-7" stroke="#4A8B3E" stroke-width="2"/>
+    <ellipse cx="-2.5" cy="-7" rx="2.5" ry="2" fill="url(#leafGreen)"/>
+    <ellipse cx="2.5" cy="-7" rx="2.5" ry="2" fill="url(#leafGreen)"/>
+  </g>
+
+  <!-- Plant 2: BRILLIANT mature sunflower -->
+  <g transform="translate(510, 360)">
+    <!-- Warm sunlight glow -->
+    <circle cx="0" cy="-40" r="20" fill="#FFE5A0" opacity="0.2"/>
+    <circle cx="0" cy="-40" r="14" fill="#FFD980" opacity="0.15"/>
+    <line x1="0" y1="0" x2="0" y2="-36" stroke="#4A8B3E" stroke-width="2.5"/>
+    <ellipse cx="-6" cy="-20" rx="6" ry="4" fill="url(#leafGreen)"/>
+    <ellipse cx="6" cy="-20" rx="6" ry="4" fill="url(#leafGreen)"/>
+    <!-- Sunflower -->
+    <circle cx="0" cy="-40" r="8" fill="#FFD700" stroke="#D4AF37" stroke-width="0.8"/>
+    <circle cx="0" cy="-40" r="5" fill="#8B6914" stroke="#6B4226" stroke-width="0.5"/>
+    <ellipse cx="-11" cy="-40" rx="5" ry="2" fill="#FFD700" stroke="#D4AF37" stroke-width="0.5"/>
+    <ellipse cx="11" cy="-40" rx="5" ry="2" fill="#FFD700" stroke="#D4AF37" stroke-width="0.5"/>
+    <ellipse cx="0" cy="-49" rx="2" ry="5" fill="#FFD700" stroke="#D4AF37" stroke-width="0.5"/>
+    <ellipse cx="0" cy="-31" rx="2" ry="5" fill="#FFD700" stroke="#D4AF37" stroke-width="0.5"/>
+    <!-- Sun-kissed highlight -->
+    <ellipse cx="-3" cy="-42" rx="3" ry="2" fill="#FFF5C2" opacity="0.6"/>
+    <!-- Sparkle -->
+    <path d="M 3,-48 L 4,-45 L 7,-44 L 4,-43 L 3,-40 L 2,-43 L -1,-44 L 2,-45 Z" fill="#FFFFFF" opacity="0.8"/>
+  </g>
+
+  <!-- Plant 3: presque mature tulipe -->
+  <g transform="translate(560, 372)">
+    <line x1="0" y1="0" x2="0" y2="-20" stroke="#4A8B3E" stroke-width="2"/>
+    <ellipse cx="-4" cy="-12" rx="4" ry="3" fill="url(#leafGreen)"/>
+    <ellipse cx="4" cy="-12" rx="4" ry="3" fill="url(#leafGreen)"/>
+    <path d="M -4,-24 Q 0,-30 4,-24 L 2,-20 Q 0,-18 -2,-20 Z" fill="#E8623D" stroke="#C44A2A" stroke-width="0.5"/>
+  </g>
+
+  <!-- Plant 4: mature lavande -->
+  <g transform="translate(600, 375)">
+    <line x1="0" y1="0" x2="0" y2="-22" stroke="#4A8B3E" stroke-width="2"/>
+    <ellipse cx="-5" cy="-14" rx="5" ry="3" fill="url(#leafGreen)"/>
+    <ellipse cx="5" cy="-14" rx="5" ry="3" fill="url(#leafGreen)"/>
+    <rect x="-3" y="-28" width="1.5" height="6" rx="0.5" fill="#9B7BCF"/>
+    <rect x="0" y="-30" width="1.5" height="8" rx="0.5" fill="#9B7BCF"/>
+    <rect x="2.5" y="-27" width="1.5" height="5" rx="0.5" fill="#9B7BCF"/>
+  </g>
+
+  <!-- Zone label -->
+  <g transform="translate(445, 420)" filter="url(#softShadow)">
+    <rect width="130" height="30" rx="4" fill="url(#stone)" stroke="#968868" stroke-width="1"/>
+    <text x="65" y="20" text-anchor="middle" font-family="Georgia, serif" font-size="13" fill="#4A6B32">Jardin fleuri · 4/8</text>
+  </g>
+
+  <!-- ZONE 3: VERGER - Large stone planter -->
+  <g filter="url(#softShadow)">
+    <polygon points="640,380 750,352 860,380 750,408" fill="url(#medEarth)" opacity="0.5"/>
+    <polygon points="635,377 750,348 865,377 750,405" fill="url(#stone)" stroke="#968868" stroke-width="1"/>
+    <polygon points="635,377 635,387 750,416 750,405" fill="#968868"/>
+    <polygon points="750,405 750,416 865,387 865,377" fill="#7A7262"/>
+    <polygon points="640,380 750,353 745,355 645,382" fill="#D4C4A8" opacity="0.5"/>
+    <polygon points="645,380 750,358 855,380 750,405" fill="url(#deepLeaf)" opacity="0.6"/>
+  </g>
+
+  <!-- Plant 1: jeune plant pommier -->
+  <g transform="translate(700, 372)">
+    <rect x="-2" y="-16" width="4" height="16" fill="#5C3A21" rx="1"/>
+    <circle cx="0" cy="-20" r="9" fill="url(#deepLeaf)"/>
+    <circle cx="-3" cy="-23" r="4" fill="#7AB068"/>
+    <circle cx="4" cy="-18" r="4" fill="#7AB068"/>
+  </g>
+
+  <!-- Plant 2: mature pommier (olive tree style) -->
+  <g transform="translate(770, 365)">
+    <!-- Shadow -->
+    <ellipse cx="0" cy="3" rx="22" ry="6" fill="#000000" opacity="0.2"/>
+    <!-- Trunk -->
+    <rect x="-3" y="-30" width="6" height="33" fill="#5C3A21" rx="1"/>
+    <rect x="-2" y="-28" width="2" height="28" fill="#6B4226"/>
+    <!-- Branches -->
+    <line x1="-2" y1="-25" x2="-16" y2="-32" stroke="#5C3A21" stroke-width="2.5"/>
+    <line x1="2" y1="-22" x2="15" y2="-28" stroke="#5C3A21" stroke-width="2.5"/>
+    <!-- Canopy (Mediterranean olive style) -->
+    <circle cx="0" cy="-40" r="18" fill="url(#oliveCanopy)"/>
+    <circle cx="-9" cy="-44" r="10" fill="#6B8B52" opacity="0.8"/>
+    <circle cx="9" cy="-38" r="10" fill="#6B8B52" opacity="0.8"/>
+    <circle cx="0" cy="-48" r="8" fill="#8BA868" opacity="0.7"/>
+    <!-- Sun-kissed highlights -->
+    <ellipse cx="-6" cy="-46" rx="4" ry="3" fill="#A8C582" opacity="0.6"/>
+    <!-- Apples -->
+    <circle cx="-11" cy="-38" r="3" fill="#E8623D" stroke="#C44A2A" stroke-width="0.5"/>
+    <circle cx="-11" cy="-38" r="1.5" fill="#FF6B47" opacity="0.6"/>
+    <circle cx="6" cy="-46" r="3" fill="#E8623D" stroke="#C44A2A" stroke-width="0.5"/>
+    <circle cx="6" cy="-46" r="1.5" fill="#FF6B47" opacity="0.6"/>
+    <circle cx="2" cy="-34" r="2.5" fill="#E8623D" stroke="#C44A2A" stroke-width="0.5"/>
+  </g>
+
+  <!-- Empty slots -->
+  <circle cx="660" cy="378" r="4" fill="#5C5040" opacity="0.4"/>
+  <circle cx="830" cy="378" r="4" fill="#5C5040" opacity="0.4"/>
+
+  <!-- Zone label -->
+  <g transform="translate(685, 420)" filter="url(#softShadow)">
+    <rect width="120" height="30" rx="4" fill="url(#stone)" stroke="#968868" stroke-width="1"/>
+    <text x="60" y="20" text-anchor="middle" font-family="Georgia, serif" font-size="13" fill="#3D6B3A">Verger · 1/3</text>
+  </g>
+
+  <!-- Decorative: clay amphora -->
+  <g transform="translate(820, 440)" filter="url(#softShadow)">
+    <ellipse cx="0" cy="0" rx="14" ry="4" fill="#7A3E1E" opacity="0.3"/>
+    <path d="M -10,-25 Q -12,-20 -10,-15 Q -14,-5 -12,5 Q -8,15 0,15 Q 8,15 12,5 Q 14,-5 10,-15 Q 12,-20 10,-25 Q 5,-28 0,-28 Q -5,-28 -10,-25 Z" fill="url(#terracotta)" stroke="#7A3E1E" stroke-width="1"/>
+    <ellipse cx="0" cy="-25" rx="10" ry="3" fill="#9E5028"/>
+  </g>
+
+  <!-- UI: Mediterranean-style resource cards -->
+  <g transform="translate(30, 30)" filter="url(#softShadow)">
+    <rect width="180" height="40" rx="20" fill="#FFFFFF" opacity="0.85" stroke="#C4B496"/>
+    <circle cx="22" cy="20" r="6" fill="#FFD980"/>
+    <text x="40" y="25" font-family="Georgia, serif" font-size="14" fill="#5C4A30">3 247 pas aujourd'hui</text>
+  </g>
+
+  <g transform="translate(30, 470)" filter="url(#softShadow)">
+    <rect width="130" height="50" rx="8" fill="#FFFFFF" opacity="0.85" stroke="#C4B496"/>
+    <text x="65" y="18" text-anchor="middle" font-family="Georgia, serif" font-size="11" fill="#8B7355">Florins</text>
+    <text x="65" y="40" text-anchor="middle" font-family="Georgia, serif" font-size="20" fill="#9E5028" font-weight="bold">45</text>
+  </g>
+  <g transform="translate(175, 470)" filter="url(#softShadow)">
+    <rect width="150" height="50" rx="8" fill="#FFFFFF" opacity="0.85" stroke="#C4B496"/>
+    <text x="75" y="18" text-anchor="middle" font-family="Georgia, serif" font-size="11" fill="#8B7355">Récoltes du jour</text>
+    <text x="75" y="40" text-anchor="middle" font-family="Georgia, serif" font-size="15" fill="#5C4A30">12 / 20 florins</text>
+  </g>
+  <g transform="translate(340, 470)" filter="url(#softShadow)">
+    <rect width="160" height="50" rx="8" fill="#FFFFFF" opacity="0.85" stroke="#C4B496"/>
+    <text x="80" y="18" text-anchor="middle" font-family="Georgia, serif" font-size="11" fill="#8B7355">Engrais</text>
+    <text x="80" y="40" text-anchor="middle" font-family="Georgia, serif" font-size="13" fill="#4A8B3E">Basique x2 · Super x1</text>
+  </g>
+
+  <!-- Cypress trees in background -->
+  <g transform="translate(80, 250)" opacity="0.4">
+    <path d="M 0,80 Q -4,40 -2,20 Q 0,0 2,20 Q 4,40 0,80 Z" fill="#2D5C24"/>
+  </g>
+  <g transform="translate(860, 240)" opacity="0.4">
+    <path d="M 0,90 Q -5,45 -3,22 Q 0,0 3,22 Q 5,45 0,90 Z" fill="#2D5C24"/>
+  </g>
+</svg>
+</body>
+</html>

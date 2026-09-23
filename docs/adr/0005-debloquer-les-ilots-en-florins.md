@@ -1,0 +1,5 @@
+# Débloquer les îlots en florins
+
+Le potager est ouvert dès le départ. Le jardin fleuri et le verger s'acquièrent de façon permanente uniquement avec des florins, aux prix de test de 100 et 250 florins. Leur ordre d'achat est libre : un joueur peut choisir le verger en premier. Les pas cumulés et les connexions n'ouvrent pas directement ces îlots. Les florins peuvent être gagnés en jouant et achetés avec des euros : l'ouverture est accessible sans paiement, mais peut être accélérée par paiement. Un îlot déjà utilisé dans une ancienne sauvegarde reste ouvert lors de la migration.
+
+Ce choix fait des nouveaux îlots des objectifs d'épargne visibles et laisse le joueur décider quand les acheter. Il accroît aussi la concurrence avec les achats de graines, d'emplacements et de décors ; leur prix devra être fixé après simulation de l'économie. Des seuils de pas auraient mieux relié l'ouverture directement à la marche mais réduit ce choix de dépense ; des récompenses de connexion auraient pu ouvrir du contenu sans marcher. Le déblocage suit la monnaie unique existante, sans créer de « jetons » supplémentaires.

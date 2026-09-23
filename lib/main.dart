@@ -27,10 +27,10 @@ class GrowstepApp extends StatelessWidget {
     theme: ThemeData(
       useMaterial3: true,
       colorScheme: ColorScheme.fromSeed(
-        seedColor: const Color(0xFF79B68A),
-        brightness: Brightness.dark,
+        seedColor: const Color(0xFF63845B),
+        brightness: Brightness.light,
       ),
-      scaffoldBackgroundColor: const Color(0xFF10221A),
+      scaffoldBackgroundColor: const Color(0xFFFBF8F0),
     ),
     home: GardenPage(database: database, steps: steps),
   );
@@ -55,6 +55,31 @@ class _GardenPageState extends State<GardenPage> {
   GardenSnapshot? _snapshot;
   bool _busy = false;
   String? _error;
+  ZoneType _selectedZone = ZoneType.potager;
+  int? _selectedSlot;
+  bool _showTouchTargets = false;
+  final _scrollController = ScrollController();
+  final _zoneKeys = {for (final zone in ZoneType.values) zone: GlobalKey()};
+
+  void _openCurrentZone() {
+    final target = _zoneKeys[_selectedZone]!.currentContext;
+    if (target != null) {
+      Scrollable.ensureVisible(
+        target,
+        duration: const Duration(milliseconds: 350),
+        curve: Curves.easeInOut,
+        alignment: 0.08,
+      );
+    }
+  }
+
+  void _tapGarden(TapDownDetails details) {
+    final slot = _game.hitTestSlot(details.localPosition);
+    setState(() {
+      _selectedSlot = slot;
+      _game.selectedSlot = slot;
+    });
+  }
 
   @override
   void initState() {
@@ -91,6 +116,7 @@ class _GardenPageState extends State<GardenPage> {
 
   @override
   void dispose() {
+    _scrollController.dispose();
     widget.database.close();
     super.dispose();
   }
@@ -163,6 +189,10 @@ class _GardenPageState extends State<GardenPage> {
   @override
   Widget build(BuildContext context) {
     final snapshot = _snapshot;
+    final worldHeight = (MediaQuery.sizeOf(context).height - 274.0).clamp(
+      430.0,
+      570.0,
+    );
     final readyHarvests = snapshot == null
         ? 0
         : _garden.previewReadyHarvests().count;
@@ -173,24 +203,176 @@ class _GardenPageState extends State<GardenPage> {
               .map((type) => '${type.label} ×${snapshot.fertilizers[type]}')
               .join(', ');
     return Scaffold(
+      bottomNavigationBar: SafeArea(
+        top: false,
+        child: Container(
+          height: 64,
+          decoration: const BoxDecoration(
+            color: Color(0xFFFFFCF5),
+            border: Border(top: BorderSide(color: Color(0xFFE9E7DB))),
+          ),
+          child: Row(
+            children: [
+              for (final zone in GardenGame.zonesInViewOrder)
+                Expanded(
+                  child: TextButton(
+                    onPressed: () => setState(() {
+                      _selectedZone = zone;
+                      _selectedSlot = null;
+                      _game.moveTo(zone);
+                    }),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(
+                          switch (zone) {
+                            ZoneType.jardinFleuri =>
+                              Icons.local_florist_outlined,
+                            ZoneType.potager => Icons.spa_outlined,
+                            ZoneType.verger => Icons.park_outlined,
+                          },
+                          size: 22,
+                          color: zone == _selectedZone
+                              ? const Color(0xFF52764F)
+                              : const Color(0xFF8A9585),
+                        ),
+                        Text(
+                          zone.label,
+                          maxLines: 1,
+                          style: TextStyle(
+                            fontSize: 11,
+                            color: zone == _selectedZone
+                                ? const Color(0xFF385A3C)
+                                : const Color(0xFF777E71),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+            ],
+          ),
+        ),
+      ),
       body: SafeArea(
         child: SingleChildScrollView(
-          padding: const EdgeInsets.fromLTRB(20, 24, 20, 32),
+          controller: _scrollController,
+          padding: const EdgeInsets.only(top: 12, bottom: 32),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              Text(
-                'Growstep',
-                style: Theme.of(context).textTheme.headlineLarge,
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'Growstep',
+                          style: Theme.of(context).textTheme.titleSmall
+                              ?.copyWith(
+                                color: const Color(0xFF63845B),
+                                fontWeight: FontWeight.w700,
+                              ),
+                        ),
+                        Text(
+                          _selectedZone.label,
+                          style: Theme.of(context).textTheme.headlineMedium
+                              ?.copyWith(
+                                fontWeight: FontWeight.w700,
+                                color: const Color(0xFF2F4633),
+                              ),
+                        ),
+                      ],
+                    ),
+                    Container(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 12,
+                        vertical: 9,
+                      ),
+                      decoration: BoxDecoration(
+                        color: const Color(0xFFE9F0E1),
+                        borderRadius: BorderRadius.circular(18),
+                      ),
+                      child: Row(
+                        children: [
+                          const Icon(Icons.directions_walk, size: 18),
+                          const SizedBox(width: 4),
+                          Text('${widget.steps.currentSteps} pas'),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
               ),
-              const SizedBox(height: 4),
-              const Text('Un pas après l’autre, ton jardin prend vie.'),
-              const SizedBox(height: 20),
+              const SizedBox(height: 8),
               ClipRRect(
                 borderRadius: BorderRadius.circular(24),
-                child: SizedBox(height: 230, child: GameWidget(game: _game)),
+                child: SizedBox(
+                  key: const Key('garden-viewport'),
+                  height: worldHeight,
+                  child: Stack(
+                    children: [
+                      Positioned.fill(
+                        child: GestureDetector(
+                          behavior: HitTestBehavior.opaque,
+                          onTapDown: _tapGarden,
+                          child: GameWidget(game: _game),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
               ),
-              const SizedBox(height: 20),
+              Padding(
+                padding: const EdgeInsets.fromLTRB(20, 10, 20, 0),
+                child: Container(
+                  padding: const EdgeInsets.all(12),
+                  decoration: BoxDecoration(
+                    color: const Color(0xFFFFFCF5),
+                    borderRadius: BorderRadius.circular(22),
+                    boxShadow: const [
+                      BoxShadow(
+                        color: Color(0x16000000),
+                        blurRadius: 14,
+                        offset: Offset(0, 4),
+                      ),
+                    ],
+                  ),
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              _selectedSlot == null
+                                  ? 'Votre ${_selectedZone.label.toLowerCase()}'
+                                  : 'Emplacement ${_selectedSlot! + 1}',
+                              style: Theme.of(context).textTheme.titleMedium
+                                  ?.copyWith(fontWeight: FontWeight.w700),
+                            ),
+                            const SizedBox(height: 3),
+                            Text(
+                              _selectedSlot == null
+                                  ? 'Touchez une parcelle pour commencer'
+                                  : 'Gérez vos plantes et vos graines',
+                              style: Theme.of(context).textTheme.bodySmall,
+                            ),
+                          ],
+                        ),
+                      ),
+                      FilledButton(
+                        onPressed: snapshot == null ? null : _openCurrentZone,
+                        child: const Text('Gérer'),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              const SizedBox(height: 12),
               if (_error != null)
                 Text(
                   _error!,
@@ -260,10 +442,27 @@ class _GardenPageState extends State<GardenPage> {
                     'Choisis une graine offerte, puis plante-la dans un emplacement.',
                   ),
                 ],
-                for (final zone in ZoneType.values) _zoneCard(snapshot, zone),
+                for (final zone in ZoneType.values)
+                  KeyedSubtree(
+                    key: _zoneKeys[zone],
+                    child: _zoneCard(snapshot, zone),
+                  ),
                 const SizedBox(height: 12),
                 const Text(
                   'Cette tranche utilise des pas simulés. La lecture des pas iPhone arrivera ensuite.',
+                ),
+                ExpansionTile(
+                  title: const Text('Outils de contrôle visuel'),
+                  children: [
+                    SwitchListTile.adaptive(
+                      title: const Text('Afficher les cibles tactiles'),
+                      value: _showTouchTargets,
+                      onChanged: (value) => setState(() {
+                        _showTouchTargets = value;
+                        _game.showTouchTargets = value;
+                      }),
+                    ),
+                  ],
                 ),
               ],
             ],

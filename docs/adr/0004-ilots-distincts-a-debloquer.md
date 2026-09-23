@@ -1,0 +1,5 @@
+# Trois îlots distincts à débloquer
+
+Le potager, le jardin fleuri et le verger occupent chacun un îlot complet et séparé. Seul le potager est ouvert au lancement ; les deux autres îlots deviennent des récompenses de progression. Le joueur ouvre un îlot disponible par son nom dans l'interface. Changer d'îlot remplace la vue du monde, sans déplacement de caméra entre terrains ni raccord de bordures. Chaque îlot garde la même projection et la même échelle apparente.
+
+Un seul grand îlot mêlant les trois familles aurait permis une scène unique, mais les 19 emplacements possibles et les grands arbres auraient compromis la lisibilité sur téléphone à échelle constante, ou imposé une caméra mobile. Trois îlots attenants auraient conservé cette échelle, mais leur raccord et leur cadrage empêchaient chaque vue de présenter un contour fini proche de la référence. Les îlots séparés préservent les catégories et les emplacements des sauvegardes existantes, au prix de trois compositions de terrain à produire et d'une règle de déblocage supplémentaire.

@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<title>Proposition 2 — Diorama Vitrine</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: #0a0a0f; display: flex; justify-content: center; align-items: center; min-height: 100vh; }
+  svg { max-width: 100%; height: auto; }
+</style>
+</head>
+<body>
+<svg viewBox="0 0 900 550" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <!-- Dark night background -->
+    <radialGradient id="nightBg" cx="50%" cy="35%" r="80%">
+      <stop offset="0%" stop-color="#1E2D3F"/>
+      <stop offset="40%" stop-color="#141B28"/>
+      <stop offset="100%" stop-color="#0A0E16"/>
+    </radialGradient>
+    <!-- Warm light pool -->
+    <radialGradient id="lightPool" cx="50%" cy="40%" r="50%">
+      <stop offset="0%" stop-color="#FFD980" stop-opacity="0.25"/>
+      <stop offset="50%" stop-color="#F4A960" stop-opacity="0.1"/>
+      <stop offset="100%" stop-color="#000000" stop-opacity="0"/>
+    </radialGradient>
+    <!-- Bokeh filter -->
+    <filter id="bokeh">
+      <feGaussianBlur stdDeviation="3"/>
+    </filter>
+    <filter id="softGlow">
+      <feGaussianBlur stdDeviation="6" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="plantGlow">
+      <feGaussianBlur stdDeviation="8" result="glow"/>
+      <feMerge><feMergeNode in="glow"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="depthBlur1"><feGaussianBlur stdDeviation="1"/></filter>
+    <filter id="depthBlur2"><feGaussianBlur stdDeviation="2.5"/></filter>
+    <filter id="depthBlur3"><feGaussianBlur stdDeviation="5"/></filter>
+    <!-- Light beam -->
+    <linearGradient id="beam" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#FFD980" stop-opacity="0.12"/>
+      <stop offset="100%" stop-color="#FFD980" stop-opacity="0"/>
+    </linearGradient>
+    <!-- Earth gradient -->
+    <linearGradient id="earth" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#6B4226"/>
+      <stop offset="100%" stop-color="#3D2410"/>
+    </linearGradient>
+    <radialGradient id="grass" cx="50%" cy="30%" r="70%">
+      <stop offset="0%" stop-color="#6BA85E"/>
+      <stop offset="100%" stop-color="#3D6B3A"/>
+    </radialGradient>
+    <radialGradient id="deepGrass" cx="50%" cy="30%" r="70%">
+      <stop offset="0%" stop-color="#4E8B42"/>
+      <stop offset="100%" stop-color="#2A5024"/>
+    </radialGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="900" height="550" fill="url(#nightBg)"/>
+  <rect width="900" height="550" fill="url(#lightPool)"/>
+
+  <!-- Light beams from above -->
+  <polygon points="420,0 480,0 520,300 380,300" fill="url(#beam)"/>
+  <polygon points="200,0 240,0 300,300 260,300" fill="url(#beam)" opacity="0.5"/>
+  <polygon points="660,0 700,0 740,300 700,300" fill="url(#beam)" opacity="0.5"/>
+
+  <!-- Far background: distant hills (very blurred) -->
+  <ellipse cx="150" cy="380" rx="200" ry="60" fill="#1A2A35" filter="url(#depthBlur3)" opacity="0.6"/>
+  <ellipse cx="750" cy="390" rx="180" ry="50" fill="#1A2A35" filter="url(#depthBlur3)" opacity="0.6"/>
+  <ellipse cx="450" cy="400" rx="250" ry="70" fill="#152025" filter="url(#depthBlur3)" opacity="0.5"/>
+
+  <!-- Mid background: misty layer -->
+  <rect x="0" y="280" width="900" height="100" fill="#1E2D3F" filter="url(#depthBlur2)" opacity="0.3"/>
+
+  <!-- Bokeh particles (floating dust) -->
+  <circle cx="120" cy="150" r="8" fill="#FFD980" opacity="0.08" filter="url(#bokeh)"/>
+  <circle cx="250" cy="100" r="5" fill="#F4A960" opacity="0.06" filter="url(#bokeh)"/>
+  <circle cx="400" cy="180" r="10" fill="#FFD980" opacity="0.1" filter="url(#bokeh)"/>
+  <circle cx="580" cy="120" r="6" fill="#F4A960" opacity="0.07" filter="url(#bokeh)"/>
+  <circle cx="720" cy="160" r="9" fill="#FFD980" opacity="0.08" filter="url(#bokeh)"/>
+  <circle cx="820" cy="200" r="5" fill="#F4A960" opacity="0.06" filter="url(#bokeh)"/>
+  <circle cx="60" cy="250" r="7" fill="#FFD980" opacity="0.06" filter="url(#bokeh)"/>
+  <circle cx="850" cy="100" r="8" fill="#F4A960" opacity="0.07" filter="url(#bokeh)"/>
+  <circle cx="180" cy="220" r="4" fill="#FFD980" opacity="0.05" filter="url(#bokeh)"/>
+  <circle cx="660" cy="250" r="6" fill="#FFD980" opacity="0.06" filter="url(#bokeh)"/>
+
+  <!-- Foreground bokeh (slightly more visible) -->
+  <circle cx="30" cy="320" r="12" fill="#FFD980" opacity="0.05" filter="url(#bokeh)"/>
+  <circle cx="880" cy="340" r="14" fill="#F4A960" opacity="0.06" filter="url(#bokeh)"/>
+
+  <!-- ZONE 1: POTAGER (diorama base) -->
+  <!-- Shadow under the plot -->
+  <ellipse cx="325" cy="350" rx="120" ry="20" fill="#000000" opacity="0.4" filter="url(#bokeh)"/>
+  <!-- Plot base (isometric) with side depth -->
+  <polygon points="225,310 325,275 425,310 325,345" fill="url(#earth)" stroke="#2A1808" stroke-width="0.5"/>
+  <polygon points="225,310 225,322 325,357 325,345" fill="#2D1A0C"/>
+  <polygon points="325,345 325,357 425,322 425,310" fill="#1F1208"/>
+  <!-- Soil highlights -->
+  <polygon points="235,308 325,278 315,280 230,310" fill="#5C3A21" opacity="0.5"/>
+  <!-- Small rocks -->
+  <ellipse cx="245" cy="315" rx="4" ry="2" fill="#4A3828" opacity="0.7"/>
+  <ellipse cx="400" cy="320" rx="5" ry="2.5" fill="#4A3828" opacity="0.7"/>
+
+  <!-- Potager plants -->
+  <!-- Plant 1: graine germee -->
+  <g transform="translate(260, 300)">
+    <line x1="0" y1="0" x2="0" y2="-8" stroke="#5D8B6E" stroke-width="2"/>
+    <ellipse cx="-3" cy="-8" rx="3" ry="2" fill="#7BC579" filter="url(#softGlow)"/>
+    <ellipse cx="3" cy="-8" rx="3" ry="2" fill="#7BC579" filter="url(#softGlow)"/>
+  </g>
+
+  <!-- Plant 2: presque mature tomato with glow -->
+  <g transform="translate(310, 290)">
+    <line x1="0" y1="0" x2="0" y2="-22" stroke="#376944" stroke-width="2.5"/>
+    <ellipse cx="-6" cy="-14" rx="6" ry="4" fill="#5D8B6E" filter="url(#depthBlur1)"/>
+    <ellipse cx="6" cy="-14" rx="6" ry="4" fill="#5D8B6E" filter="url(#depthBlur1)"/>
+    <ellipse cx="0" cy="-22" rx="4" ry="3" fill="#7BC579"/>
+    <!-- Glowing tomatoes -->
+    <circle cx="-7" cy="-11" r="3" fill="#E8623D" filter="url(#softGlow)"/>
+    <circle cx="-7" cy="-11" r="2" fill="#FF6B47"/>
+    <circle cx="5" cy="-16" r="2.5" fill="#E8623D" filter="url(#softGlow)"/>
+    <circle cx="5" cy="-16" r="1.5" fill="#FF6B47"/>
+  </g>
+
+  <!-- Plant 3: mature carrot -->
+  <g transform="translate(365, 298)">
+    <line x1="0" y1="0" x2="0" y2="-28" stroke="#376944" stroke-width="2.5"/>
+    <ellipse cx="-7" cy="-18" rx="7" ry="5" fill="#5D8B6E" filter="url(#depthBlur1)"/>
+    <ellipse cx="7" cy="-18" rx="7" ry="5" fill="#5D8B6E" filter="url(#depthBlur1)"/>
+    <ellipse cx="0" cy="-28" rx="5" ry="4" fill="#7BC579"/>
+    <!-- Carrot flowers glowing -->
+    <circle cx="-3" cy="-31" r="2.5" fill="#F5C842" filter="url(#softGlow)"/>
+    <circle cx="3" cy="-31" r="2.5" fill="#F5C842" filter="url(#softGlow)"/>
+  </g>
+
+  <!-- Plant 4: young plant -->
+  <g transform="translate(400, 305)">
+    <line x1="0" y1="0" x2="0" y2="-12" stroke="#376944" stroke-width="2"/>
+    <ellipse cx="-3" cy="-12" rx="3" ry="2.5" fill="#7BC579" filter="url(#softGlow)"/>
+    <ellipse cx="3" cy="-12" rx="3" ry="2.5" fill="#7BC579" filter="url(#softGlow)"/>
+  </g>
+
+  <!-- ZONE 2: JARDIN FLEURI (center) -->
+  <ellipse cx="550" cy="350" rx="120" ry="20" fill="#000000" opacity="0.4" filter="url(#bokeh)"/>
+  <polygon points="450,310 550,275 650,310 550,345" fill="url(#grass)" stroke="#2A5024" stroke-width="0.5"/>
+  <polygon points="450,310 450,322 550,357 550,345" fill="#3D6B3A"/>
+  <polygon points="550,345 550,357 650,322 650,310" fill="#2A5024"/>
+  <!-- Grass highlights -->
+  <polygon points="460,308 550,278 540,280 455,310" fill="#7BC579" opacity="0.3"/>
+
+  <!-- Plant 1: graine germee -->
+  <g transform="translate(490, 300)">
+    <line x1="0" y1="0" x2="0" y2="-7" stroke="#376944" stroke-width="1.5"/>
+    <ellipse cx="-2.5" cy="-7" rx="2.5" ry="2" fill="#7BC579" filter="url(#softGlow)"/>
+    <ellipse cx="2.5" cy="-7" rx="2.5" ry="2" fill="#7BC579" filter="url(#softGlow)"/>
+  </g>
+
+  <!-- Plant 2: BRILLIANT mature sunflower - bioluminescent -->
+  <g transform="translate(530, 285)">
+    <!-- Inner glow halo -->
+    <circle cx="0" cy="-38" r="18" fill="#FFF5C2" opacity="0.15" filter="url(#plantGlow)"/>
+    <circle cx="0" cy="-38" r="12" fill="#FFD700" opacity="0.2" filter="url(#plantGlow)"/>
+    <!-- Stem -->
+    <line x1="0" y1="0" x2="0" y2="-34" stroke="#376944" stroke-width="2.5"/>
+    <!-- Leaves -->
+    <ellipse cx="-6" cy="-18" rx="6" ry="4" fill="#5D8B6E" filter="url(#depthBlur1)"/>
+    <ellipse cx="6" cy="-18" rx="6" ry="4" fill="#5D8B6E" filter="url(#depthBlur1)"/>
+    <!-- Glowing flower head -->
+    <circle cx="0" cy="-38" r="8" fill="#FFD700" filter="url(#softGlow)"/>
+    <circle cx="0" cy="-38" r="5" fill="#FFA500" filter="url(#softGlow)"/>
+    <circle cx="0" cy="-38" r="3" fill="#8B4500"/>
+    <!-- Radiating petals -->
+    <ellipse cx="-11" cy="-38" rx="5" ry="2" fill="#FFD700" filter="url(#softGlow)"/>
+    <ellipse cx="11" cy="-38" rx="5" ry="2" fill="#FFD700" filter="url(#softGlow)"/>
+    <ellipse cx="0" cy="-47" rx="2" ry="5" fill="#FFD700" filter="url(#softGlow)"/>
+    <ellipse cx="0" cy="-29" rx="2" ry="5" fill="#FFD700" filter="url(#softGlow)"/>
+    <ellipse cx="-8" cy="-44" rx="4" ry="2" fill="#FFD700" filter="url(#softGlow)" transform="rotate(-45, -8, -44)"/>
+    <ellipse cx="8" cy="-44" rx="4" ry="2" fill="#FFD700" filter="url(#softGlow)" transform="rotate(45, 8, -44)"/>
+    <ellipse cx="-8" cy="-32" rx="4" ry="2" fill="#FFD700" filter="url(#softGlow)" transform="rotate(45, -8, -32)"/>
+    <ellipse cx="8" cy="-32" rx="4" ry="2" fill="#FFD700" filter="url(#softGlow)" transform="rotate(-45, 8, -32)"/>
+    <!-- Sparkle -->
+    <path d="M 2,-46 L 3,-43 L 6,-42 L 3,-41 L 2,-38 L 1,-41 L -2,-42 L 1,-43 Z" fill="#FFFFFF" opacity="0.9"/>
+  </g>
+
+  <!-- Plant 3: presque mature tulipe -->
+  <g transform="translate(580, 300)">
+    <line x1="0" y1="0" x2="0" y2="-20" stroke="#376944" stroke-width="2"/>
+    <ellipse cx="-4" cy="-12" rx="4" ry="3" fill="#5D8B6E" filter="url(#depthBlur1)"/>
+    <ellipse cx="4" cy="-12" rx="4" ry="3" fill="#5D8B6E" filter="url(#depthBlur1)"/>
+    <path d="M -4,-24 Q 0,-30 4,-24 L 2,-20 Q 0,-18 -2,-20 Z" fill="#E8623D" filter="url(#softGlow)"/>
+  </g>
+
+  <!-- Plant 4: mature lavande -->
+  <g transform="translate(620, 305)">
+    <line x1="0" y1="0" x2="0" y2="-22" stroke="#376944" stroke-width="2"/>
+    <ellipse cx="-5" cy="-14" rx="5" ry="3" fill="#5D8B6E" filter="url(#depthBlur1)"/>
+    <ellipse cx="5" cy="-14" rx="5" ry="3" fill="#5D8B6E" filter="url(#depthBlur1)"/>
+    <!-- Lavender stalks -->
+    <rect x="-3" y="-28" width="1.5" height="6" rx="0.5" fill="#9B7BCF" filter="url(#softGlow)"/>
+    <rect x="0" y="-30" width="1.5" height="8" rx="0.5" fill="#9B7BCF" filter="url(#softGlow)"/>
+    <rect x="2.5" y="-27" width="1.5" height="5" rx="0.5" fill="#9B7BCF" filter="url(#softGlow)"/>
+  </g>
+
+  <!-- ZONE 3: VERGER (right) -->
+  <ellipse cx="775" cy="350" rx="110" ry="18" fill="#000000" opacity="0.4" filter="url(#bokeh)"/>
+  <polygon points="675,310 775,275 875,310 775,345" fill="url(#deepGrass)" stroke="#1A3815" stroke-width="0.5"/>
+  <polygon points="675,310 675,322 775,357 775,345" fill="#2A5024"/>
+  <polygon points="775,345 775,357 875,322 875,310" fill="#1A3815"/>
+
+  <!-- Plant 1: jeune plant pommier -->
+  <g transform="translate(730, 295)">
+    <line x1="0" y1="0" x2="0" y2="-14" stroke="#5C3A21" stroke-width="3"/>
+    <circle cx="0" cy="-18" r="9" fill="#4E8B42" filter="url(#softGlow)"/>
+    <circle cx="-3" cy="-21" r="4" fill="#6BA85E" filter="url(#depthBlur1)"/>
+    <circle cx="4" cy="-16" r="4" fill="#6BA85E" filter="url(#depthBlur1)"/>
+  </g>
+
+  <!-- Plant 2: mature pommier -->
+  <g transform="translate(800, 285)">
+    <!-- Shadow -->
+    <ellipse cx="0" cy="2" rx="20" ry="5" fill="#000000" opacity="0.3"/>
+    <!-- Trunk -->
+    <rect x="-3" y="-30" width="6" height="32" fill="#3D2410"/>
+    <!-- Branches -->
+    <line x1="-2" y1="-25" x2="-15" y2="-32" stroke="#3D2410" stroke-width="2"/>
+    <line x1="2" y1="-22" x2="14" y2="-28" stroke="#3D2410" stroke-width="2"/>
+    <!-- Canopy layers -->
+    <circle cx="0" cy="-40" r="18" fill="#4E8B42" filter="url(#depthBlur1)"/>
+    <circle cx="-8" cy="-44" r="10" fill="#6BA85E" filter="url(#softGlow)"/>
+    <circle cx="8" cy="-38" r="10" fill="#6BA85E" filter="url(#softGlow)"/>
+    <circle cx="0" cy="-48" r="8" fill="#7BC579" filter="url(#softGlow)"/>
+    <!-- Glowing apples -->
+    <circle cx="-10" cy="-38" r="3" fill="#E8623D" filter="url(#softGlow)"/>
+    <circle cx="-10" cy="-38" r="2" fill="#FF6B47"/>
+    <circle cx="6" cy="-46" r="3" fill="#E8623D" filter="url(#softGlow)"/>
+    <circle cx="6" cy="-46" r="2" fill="#FF6B47"/>
+    <circle cx="2" cy="-34" r="2.5" fill="#E8623D" filter="url(#softGlow)"/>
+    <circle cx="2" cy="-34" r="1.5" fill="#FF6B47"/>
+  </g>
+
+  <!-- Empty slots -->
+  <ellipse cx="700" cy="305" rx="4" ry="2" fill="#1A3815" opacity="0.5"/>
+  <ellipse cx="850" cy="305" rx="4" ry="2" fill="#1A3815" opacity="0.5"/>
+
+  <!-- UI: glowing labels -->
+  <g transform="translate(30, 25)">
+    <rect width="180" height="36" rx="18" fill="#1A2332" stroke="#FFD980" stroke-width="0.5" opacity="0.8"/>
+    <circle cx="20" cy="18" r="4" fill="#FFD980" filter="url(#softGlow)"/>
+    <text x="40" y="23" font-family="system-ui" font-size="14" fill="#FFD980">3 247 pas · Diorama Vitrine</text>
+  </g>
+
+  <!-- Resource cards: dark glass style -->
+  <g transform="translate(30, 430)">
+    <rect width="130" height="50" rx="8" fill="#141B28" stroke="#2A3540" stroke-width="1" opacity="0.9"/>
+    <text x="65" y="20" text-anchor="middle" font-family="system-ui" font-size="11" fill="#8B9DAF">Florins</text>
+    <text x="65" y="40" text-anchor="middle" font-family="system-ui" font-size="18" fill="#FFD980" font-weight="600">45</text>
+  </g>
+  <g transform="translate(175, 430)">
+    <rect width="150" height="50" rx="8" fill="#141B28" stroke="#2A3540" stroke-width="1" opacity="0.9"/>
+    <text x="75" y="20" text-anchor="middle" font-family="system-ui" font-size="11" fill="#8B9DAF">Récoltes du jour</text>
+    <text x="75" y="40" text-anchor="middle" font-family="system-ui" font-size="14" fill="#F4A960">12 / 20 florins</text>
+  </g>
+  <g transform="translate(340, 430)">
+    <rect width="160" height="50" rx="8" fill="#141B28" stroke="#2A3540" stroke-width="1" opacity="0.9"/>
+    <text x="80" y="20" text-anchor="middle" font-family="system-ui" font-size="11" fill="#8B9DAF">Engrais</text>
+    <text x="80" y="40" text-anchor="middle" font-family="system-ui" font-size="13" fill="#7BC579">Basique x2 · Super x1</text>
+  </g>
+
+  <!-- Floating particle on brilliant plant -->
+  <circle cx="532" cy="250" r="2" fill="#FFFFFF" opacity="0.6"/>
+  <circle cx="525" cy="240" r="1.5" fill="#FFF5C2" opacity="0.4"/>
+  <circle cx="538" cy="245" r="1" fill="#FFFFFF" opacity="0.5"/>
+</svg>
+</body>
+</html>

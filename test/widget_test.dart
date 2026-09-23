@@ -1,4 +1,5 @@
 import 'package:drift/native.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:growstep/garden/garden_database.dart';
 import 'package:growstep/garden/garden_state.dart';
@@ -6,6 +7,28 @@ import 'package:growstep/main.dart';
 import 'package:growstep/steps/fake_step_provider.dart';
 
 void main() {
+  testWidgets('le jardin tient dans une fenêtre de référence portrait', (
+    tester,
+  ) async {
+    tester.view.devicePixelRatio = 1;
+    addTearDown(tester.view.resetDevicePixelRatio);
+    await tester.binding.setSurfaceSize(const Size(390, 844));
+    addTearDown(() => tester.binding.setSurfaceSize(null));
+    final database = GardenDatabase(NativeDatabase.memory());
+    await tester.pumpWidget(
+      GrowstepApp(database: database, steps: FakeStepProvider()),
+    );
+    await tester.pump(const Duration(milliseconds: 200));
+
+    final viewport = tester.getSize(find.byKey(const Key('garden-viewport')));
+    expect(viewport.width, 390);
+    expect(viewport.height, greaterThanOrEqualTo(560));
+    expect(find.text('Growstep'), findsOneWidget);
+    expect(find.text('Gérer'), findsOneWidget);
+    expect(tester.getBottomLeft(find.text('Gérer')).dy, lessThan(780));
+    expect(tester.takeException(), isNull);
+  });
+
   testWidgets('le joueur choisit sa graine offerte et la plante', (
     tester,
   ) async {

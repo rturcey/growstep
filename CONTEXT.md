@@ -8,10 +8,18 @@ Une application iPhone où la marche fait grandir et embellir un jardin virtuel.
 
 **Zone** : partie du jardin dédiée à une famille de plantes : légumes, fleurs ou arbres fruitiers.
 
+**Îlot** : terrain visible d'une seule zone. Le potager, le jardin fleuri et le verger occupent chacun un îlot distinct ; leurs terrains ne se touchent pas.
+
+**Déblocage d'îlot** : acquisition permanente, en florins, du droit de visiter et cultiver un îlot autre que le potager.
+
 **Emplacement de plantation** : place d'une zone pouvant accueillir une plante.
 _Avoid_ : Parcelle
 
+**Platebande** : support de terre surélevé qui matérialise un emplacement de plantation du potager ou du jardin fleuri. Un emplacement du verger n'a pas de platebande.
+
 **Graine** : ressource d'une espèce donnée qui permet de démarrer une plante dans un emplacement.
+
+**État semé** : état d'un emplacement contenant une graine plantée avant l'apparition de la première pousse visible.
 
 **Plante** : végétal issu d'une graine, qui grandit avec les pas du joueur.
 

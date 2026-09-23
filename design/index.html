@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Growstep — Design 2.5D</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: #0d1117; color: #c9d1d9; font-family: -apple-system, system-ui, sans-serif; padding: 24px; }
+  h1 { font-size: 28px; margin-bottom: 8px; }
+  .subtitle { color: #8b949e; margin-bottom: 32px; }
+  .gallery { display: flex; flex-direction: column; gap: 40px; }
+  .proposal { border: 1px solid #30363d; border-radius: 12px; overflow: hidden; }
+  .proposal-header { padding: 16px 20px; background: #161b22; border-bottom: 1px solid #30363d; }
+  .proposal-header h2 { font-size: 20px; margin-bottom: 4px; }
+  .proposal-header p { color: #8b949e; font-size: 14px; line-height: 1.6; }
+  .proposal-header .palette { display: flex; gap: 8px; margin-top: 10px; flex-wrap: wrap; }
+  .swatch { width: 28px; height: 28px; border-radius: 6px; border: 1px solid #30363d; cursor: pointer; position: relative; }
+  .swatch:hover::after { content: attr(data-color); position: absolute; bottom: -22px; left: 0; font-size: 10px; white-space: nowrap; color: #8b949e; }
+  .proposal svg { display: block; width: 100%; height: auto; }
+  .tags { display: flex; gap: 6px; margin-top: 8px; flex-wrap: wrap; }
+  .tag { font-size: 11px; padding: 2px 8px; border-radius: 10px; background: #21262d; color: #8b949e; border: 1px solid #30363d; }
+</style>
+</head>
+<body>
+<h1>Growstep — 5 propositions de design 2.5D</h1>
+<p class="subtitle">Clique sur une proposition pour l'ouvrir en plein écran. Chaque mockup illustre les trois zones (potager, jardin fleuri, verger) avec des plantes à différents stades.</p>
+<div class="gallery">
+
+  <div class="proposal">
+    <div class="proposal-header">
+      <h2>1. Jardin de Papiers</h2>
+      <p>Pop-up book artisanal. Couches de papier découpé, ombres douces entre les strates, bords déchirés. Chaque stade de croissance ajoute une couche. La variante brillante a un vernis doré.</p>
+      <div class="palette">
+        <span class="swatch" data-color="#F4E8D0" style="background:#F4E8D0"></span>
+        <span class="swatch" data-color="#8B5E3C" style="background:#8B5E3C"></span>
+        <span class="swatch" data-color="#6B9B5A" style="background:#6B9B5A"></span>
+        <span class="swatch" data-color="#4A7C3F" style="background:#4A7C3F"></span>
+        <span class="swatch" data-color="#E8623D" style="background:#E8623D"></span>
+        <span class="swatch" data-color="#F5C842" style="background:#F5C842"></span>
+        <span class="swatch" data-color="#FFD700" style="background:#FFD700"></span>
+      </div>
+      <div class="tags"><span class="tag">Craft</span><span class="tag">Cozy</span><span class="tag">Isométrique</span><span class="tag">Couches</span></div>
+    </div>
+    <iframe src="01-paper-craft.html" width="100%" height="580" style="border:none" loading="lazy"></iframe>
+  </div>
+
+  <div class="proposal">
+    <div class="proposal-header">
+      <h2>2. Diorama Vitrine</h2>
+      <p>Miniature vivant vu à travers une vitre. Profondeur via parallaxe et bokeh, particules dorées flottantes. La plante brillante est bioluminescente. Ambiance nocturne magique.</p>
+      <div class="palette">
+        <span class="swatch" data-color="#0A0E16" style="background:#0A0E16"></span>
+        <span class="swatch" data-color="#1E2D3F" style="background:#1E2D3F"></span>
+        <span class="swatch" data-color="#FFD980" style="background:#FFD980"></span>
+        <span class="swatch" data-color="#F4A960" style="background:#F4A960"></span>
+        <span class="swatch" data-color="#7BC579" style="background:#7BC579"></span>
+        <span class="swatch" data-color="#FFD700" style="background:#FFD700"></span>
+      </div>
+      <div class="tags"><span class="tag">Onirique</span><span class="tag">Sombre</span><span class="tag">Parallaxe</span><span class="tag">Glow</span></div>
+    </div>
+    <iframe src="02-diorama.html" width="100%" height="580" style="border:none" loading="lazy"></iframe>
+  </div>
+
+  <div class="proposal">
+    <div class="proposal-header">
+      <h2>3. Aquarelle</h2>
+      <p>Jardin peint à l'aquarelle sur papier_texturé. Couleurs qui bavent et fusionnent, bords organiques irréguliers. Les étiquettes sont manuscrites. La variante brillante a un lavis doré qui diffuse.</p>
+      <div class="palette">
+        <span class="swatch" data-color="#FAF6EE" style="background:#FAF6EE"></span>
+        <span class="swatch" data-color="#8B5E3C" style="background:#8B5E3C"></span>
+        <span class="swatch" data-color="#6B9B5A" style="background:#6B9B5A"></span>
+        <span class="swatch" data-color="#E8623D" style="background:#E8623D"></span>
+        <span class="swatch" data-color="#F5C842" style="background:#F5C842"></span>
+        <span class="swatch" data-color="#9B7BCF" style="background:#9B7BCF"></span>
+      </div>
+      <div class="tags"><span class="tag">Peinture</span><span class="tag">Organique</span><span class="tag">Doux</span><span class="tag">Manuel</span></div>
+    </div>
+    <iframe src="03-watercolor.html" width="100%" height="580" style="border:none" loading="lazy"></iframe>
+  </div>
+
+  <div class="proposal">
+    <div class="proposal-header">
+      <h2>4. Pixel Cozy</h2>
+      <p>Pixel art rétro avec scanner CRT. Soir étoilée, sprites nets en escalier. La variante brillante scintille en pixels dorés. UI en monospace façon console vintage.</p>
+      <div class="palette">
+        <span class="swatch" data-color="#2C1B47" style="background:#2C1B47"></span>
+        <span class="swatch" data-color="#5E3A6B" style="background:#5E3A6B"></span>
+        <span class="swatch" data-color="#6B4226" style="background:#6B4226"></span>
+        <span class="swatch" data-color="#4A8B3E" style="background:#4A8B3E"></span>
+        <span class="swatch" data-color="#E8623D" style="background:#E8623D"></span>
+        <span class="swatch" data-color="#FFD700" style="background:#FFD700"></span>
+        <span class="swatch" data-color="#FFF5C2" style="background:#FFF5C2"></span>
+      </div>
+      <div class="tags"><span class="tag">Pixel art</span><span class="tag">Rétro</span><span class="tag">CRT</span><span class="tag">Nostalgie</span></div>
+    </div>
+    <iframe src="04-pixel-cozy.html" width="100%" height="580" style="border:none" loading="lazy"></iframe>
+  </div>
+
+  <div class="proposal">
+    <div class="proposal-header">
+      <h2>5. Terrasse Méditerranéenne</h2>
+      <p>Terrasse en pierre naturelle baignée de soleil. Bacs en terre cuite, ciel bleu, mer lointaine, cyprès. La variante brillante capte la lumière dorée du soleil. Ambiance estivale chaleureuse.</p>
+      <div class="palette">
+        <span class="swatch" data-color="#5B9EC9" style="background:#5B9EC9"></span>
+        <span class="swatch" data-color="#C4B496" style="background:#C4B496"></span>
+        <span class="swatch" data-color="#C66B3D" style="background:#C66B3D"></span>
+        <span class="swatch" data-color="#6B9B5A" style="background:#6B9B5A"></span>
+        <span class="swatch" data-color="#FFE5A0" style="background:#FFE5A0"></span>
+        <span class="swatch" data-color="#8BA868" style="background:#8BA868"></span>
+      </div>
+      <div class="tags"><span class="tag">Solaire</span><span class="tag">Pierre</span><span class="tag">Terrasse</span><span class="tag">Chaud</span></div>
+    </div>
+    <iframe src="05-terrace-med.html" width="100%" height="580" style="border:none" loading="lazy"></iframe>
+  </div>
+
+</div>
+</body>
+</html>

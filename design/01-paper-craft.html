@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<title>Proposition 1 — Jardin de Papiers</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: #2a2118; display: flex; justify-content: center; align-items: center; min-height: 100vh; }
+  svg { max-width: 100%; height: auto; }
+</style>
+</head>
+<body>
+<svg viewBox="0 0 900 550" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <!-- Paper texture noise -->
+    <filter id="paperNoise" x="0" y="0" width="100%" height="100%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.04" numOctaves="5" seed="2"/>
+      <feColorMatrix values="0 0 0 0 0.96  0 0 0 0 0.91  0 0 0 0 0.82  0 0 0 0.08 0"/>
+      <feComposite in2="SourceGraphic" operator="in"/>
+    </filter>
+    <!-- Soft drop shadow for paper layers -->
+    <filter id="paperShadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur in="SourceAlpha" stdDeviation="4"/>
+      <feOffset dx="3" dy="5"/>
+      <feComponentTransfer><feFuncA type="linear" slope="0.35"/></feComponentTransfer>
+      <feMerge><feMergeNode/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <!-- Torn edge mask for paper -->
+    <filter id="torn">
+      <feTurbulence type="fractalNoise" baseFrequency="0.15" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="6"/>
+    </filter>
+    <!-- Kraft paper background gradient -->
+    <radialGradient id="kraftBg" cx="50%" cy="40%" r="70%">
+      <stop offset="0%" stop-color="#F4E8D0"/>
+      <stop offset="100%" stop-color="#E5D5B8"/>
+    </radialGradient>
+    <!-- Paper edge gradient (thickness) -->
+    <linearGradient id="edgeBrown" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#C4A26D"/>
+      <stop offset="100%" stop-color="#9E8048"/>
+    </linearGradient>
+    <linearGradient id="edgeGreen" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#7AAB6E"/>
+      <stop offset="100%" stop-color="#5A8B4E"/>
+    </linearGradient>
+    <linearGradient id="edgeDeepGreen" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#5F9E58"/>
+      <stop offset="100%" stop-color="#3D7236"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Background: kraft paper -->
+  <rect width="900" height="550" fill="url(#kraftBg)"/>
+  <rect width="900" height="550" fill="url(#kraftBg)" filter="url(#paperNoise)" opacity="0.6"/>
+
+  <!-- Subtle paper folds -->
+  <line x1="150" y1="0" x2="150" y2="550" stroke="#D4C4A0" stroke-width="0.5" opacity="0.3"/>
+  <line x1="450" y1="0" x2="450" y2="550" stroke="#D4C4A0" stroke-width="0.5" opacity="0.3"/>
+  <line x1="750" y1="0" x2="750" y2="550" stroke="#D4C4A0" stroke-width="0.5" opacity="0.3"/>
+
+  <!-- Title label (paper tag) -->
+  <g transform="translate(30, 25)" filter="url(#paperShadow)">
+    <rect width="200" height="36" rx="4" fill="#E8D5B0" stroke="#C4A26D" stroke-width="1"/>
+    <text x="100" y="24" text-anchor="middle" font-family="Georgia, serif" font-size="16" fill="#5C4A30" font-weight="bold">Jardin de Papiers</text>
+  </g>
+
+  <!-- Step counter label (paper sticker) -->
+  <g transform="translate(700, 25)" filter="url(#paperShadow)">
+    <rect width="170" height="36" rx="4" fill="#FFF5E0" stroke="#D4B889" stroke-width="1"/>
+    <text x="85" y="24" text-anchor="middle" font-family="Georgia, serif" font-size="14" fill="#5C4A30">3 247 pas aujourd'hui</text>
+  </g>
+
+  <!-- ZONE 1: POTAGER (left) -->
+  <!-- Paper thickness edge -->
+  <g filter="url(#paperShadow)">
+    <!-- Earth plot - paper cutout isometric diamond -->
+    <polygon points="225,300 325,260 425,300 325,340" fill="#8B5E3C" stroke="#6B4226" stroke-width="2"/>
+    <!-- Paper edge (thickness) -->
+    <polygon points="225,300 225,308 325,348 325,340" fill="url(#edgeBrown)"/>
+    <polygon points="325,340 325,348 425,308 425,300" fill="url(#edgeBrown)"/>
+    <!-- Soil texture lines -->
+    <line x1="250" y1="294" x2="310" y2="278" stroke="#6B4226" stroke-width="0.8" opacity="0.4"/>
+    <line x1="340" y1="278" x2="400" y2="294" stroke="#6B4226" stroke-width="0.8" opacity="0.4"/>
+    <line x1="260" y1="310" x2="320" y2="294" stroke="#6B4226" stroke-width="0.8" opacity="0.4"/>
+    <line x1="330" y1="294" x2="390" y2="310" stroke="#6B4226" stroke-width="0.8" opacity="0.4"/>
+  </g>
+
+  <!-- Potager plants -->
+  <!-- Plant 1: graine germee (small sprout) -->
+  <g transform="translate(260, 285)" filter="url(#paperShadow)">
+    <rect x="-2" y="-6" width="4" height="8" fill="#6B9B5A"/>
+    <ellipse cx="-4" cy="-6" rx="4" ry="3" fill="#7AB068" stroke="#5A8B4E" stroke-width="0.5"/>
+    <ellipse cx="4" cy="-6" rx="4" ry="3" fill="#7AB068" stroke="#5A8B4E" stroke-width="0.5"/>
+  </g>
+
+  <!-- Plant 2: jeune plant (tomato) -->
+  <g transform="translate(310, 275)" filter="url(#paperShadow)">
+    <rect x="-1.5" y="-14" width="3" height="16" fill="#4A8B3E"/>
+    <ellipse cx="-5" cy="-10" rx="5" ry="4" fill="#6B9B5A" stroke="#4A8B3E" stroke-width="0.5"/>
+    <ellipse cx="5" cy="-10" rx="5" ry="4" fill="#6B9B5A" stroke="#4A8B3E" stroke-width="0.5"/>
+    <ellipse cx="0" cy="-14" rx="3" ry="2.5" fill="#7AB068" stroke="#4A8B3E" stroke-width="0.5"/>
+  </g>
+
+  <!-- Plant 3: presque mature (tomato with fruit) -->
+  <g transform="translate(360, 290)" filter="url(#paperShadow)">
+    <rect x="-2" y="-22" width="4" height="24" fill="#4A8B3E"/>
+    <ellipse cx="-6" cy="-16" rx="6" ry="5" fill="#6B9B5A" stroke="#4A8B3E" stroke-width="0.5"/>
+    <ellipse cx="6" cy="-16" rx="6" ry="5" fill="#6B9B5A" stroke="#4A8B3E" stroke-width="0.5"/>
+    <ellipse cx="0" cy="-22" rx="4" ry="3.5" fill="#7AB068" stroke="#4A8B3E" stroke-width="0.5"/>
+    <!-- Tomato fruit -->
+    <circle cx="-7" cy="-12" r="3" fill="#E8623D" stroke="#C44A2A" stroke-width="0.5"/>
+    <circle cx="5" cy="-14" r="2.5" fill="#E8623D" stroke="#C44A2A" stroke-width="0.5"/>
+  </g>
+
+  <!-- Plant 4: mature (carrot) -->
+  <g transform="translate(395, 295)" filter="url(#paperShadow)">
+    <rect x="-2" y="-28" width="4" height="30" fill="#4A8B3E"/>
+    <ellipse cx="-7" cy="-22" rx="7" ry="6" fill="#6B9B5A" stroke="#4A8B3E" stroke-width="0.5"/>
+    <ellipse cx="7" cy="-22" rx="7" ry="6" fill="#6B9B5A" stroke="#4A8B3E" stroke-width="0.5"/>
+    <ellipse cx="0" cy="-28" rx="5" ry="4" fill="#7AB068" stroke="#4A8B3E" stroke-width="0.5"/>
+    <!-- Carrot top flowers -->
+    <circle cx="-3" cy="-30" r="2" fill="#F5C842" stroke="#D4A831" stroke-width="0.5"/>
+    <circle cx="3" cy="-30" r="2" fill="#F5C842" stroke="#D4A831" stroke-width="0.5"/>
+  </g>
+
+  <!-- Empty slot -->
+  <circle cx="240" cy="295" r="4" fill="#4B382B" opacity="0.6"/>
+
+  <!-- Zone label -->
+  <g transform="translate(260, 360)" filter="url(#paperShadow)">
+    <rect width="130" height="22" rx="3" fill="#8B5E3C" stroke="#6B4226" stroke-width="1"/>
+    <text x="65" y="16" text-anchor="middle" font-family="Georgia, serif" font-size="12" fill="#F4E8D0">Potager · 4/8</text>
+  </g>
+
+  <!-- ZONE 2: JARDIN FLEURI (center) -->
+  <g filter="url(#paperShadow)">
+    <polygon points="450,300 550,260 650,300 550,340" fill="#6B9B5A" stroke="#4A8B3E" stroke-width="2"/>
+    <polygon points="450,300 450,308 550,348 550,340" fill="url(#edgeGreen)"/>
+    <polygon points="550,340 550,348 650,308 650,300" fill="url(#edgeGreen)"/>
+    <!-- Grass tufts -->
+    <line x1="480" y1="293" x2="478" y2="287" stroke="#4A8B3E" stroke-width="1"/>
+    <line x1="485" y1="292" x2="486" y2="286" stroke="#4A8B3E" stroke-width="1"/>
+    <line x1="570" y1="290" x2="568" y2="284" stroke="#4A8B3E" stroke-width="1"/>
+    <line x1="610" y1="293" x2="612" y2="287" stroke="#4A8B3E" stroke-width="1"/>
+  </g>
+
+  <!-- Jardin fleuri plants -->
+  <!-- Plant 1: graine germee -->
+  <g transform="translate(490, 285)" filter="url(#paperShadow)">
+    <rect x="-2" y="-6" width="4" height="8" fill="#5A8B4E"/>
+    <ellipse cx="-3" cy="-6" rx="3" ry="2.5" fill="#7AB068" stroke="#5A8B4E" stroke-width="0.5"/>
+    <ellipse cx="3" cy="-6" rx="3" ry="2.5" fill="#7AB068" stroke="#5A8B4E" stroke-width="0.5"/>
+  </g>
+
+  <!-- Plant 2: mature tournesol -->
+  <g transform="translate(530, 272)" filter="url(#paperShadow)">
+    <rect x="-2" y="-32" width="4" height="34" fill="#4A8B3E"/>
+    <ellipse cx="-5" cy="-20" rx="5" ry="4" fill="#6B9B5A" stroke="#4A8B3E" stroke-width="0.5"/>
+    <ellipse cx="5" cy="-20" rx="5" ry="4" fill="#6B9B5A" stroke="#4A8B3E" stroke-width="0.5"/>
+    <!-- Sunflower head -->
+    <circle cx="0" cy="-36" r="7" fill="#F5C842" stroke="#D4A831" stroke-width="0.8"/>
+    <circle cx="0" cy="-36" r="4" fill="#8B6914" stroke="#6B4226" stroke-width="0.5"/>
+    <!-- Petals -->
+    <ellipse cx="-9" cy="-36" rx="4" ry="2" fill="#F5C842" stroke="#D4A831" stroke-width="0.5"/>
+    <ellipse cx="9" cy="-36" rx="4" ry="2" fill="#F5C842" stroke="#D4A831" stroke-width="0.5"/>
+    <ellipse cx="0" cy="-44" rx="2" ry="4" fill="#F5C842" stroke="#D4A831" stroke-width="0.5"/>
+    <ellipse cx="0" cy="-28" rx="2" ry="4" fill="#F5C842" stroke="#D4A831" stroke-width="0.5"/>
+  </g>
+
+  <!-- Plant 3: presque mature tulipe -->
+  <g transform="translate(575, 285)" filter="url(#paperShadow)">
+    <rect x="-1.5" y="-20" width="3" height="22" fill="#4A8B3E"/>
+    <ellipse cx="-4" cy="-14" rx="4" ry="3" fill="#6B9B5A" stroke="#4A8B3E" stroke-width="0.5"/>
+    <ellipse cx="4" cy="-14" rx="4" ry="3" fill="#6B9B5A" stroke="#4A8B3E" stroke-width="0.5"/>
+    <!-- Tulip bud -->
+    <path d="M -4,-24 Q 0,-30 4,-24 L 2,-20 Q 0,-18 -2,-20 Z" fill="#E8623D" stroke="#C44A2A" stroke-width="0.5"/>
+  </g>
+
+  <!-- Plant 4: BRILLANTE mature tournesol -->
+  <g transform="translate(615, 283)" filter="url(#paperShadow)">
+    <rect x="-2" y="-32" width="4" height="34" fill="#4A8B3E"/>
+    <ellipse cx="-5" cy="-20" rx="5" ry="4" fill="#6B9B5A" stroke="#4A8B3E" stroke-width="0.5"/>
+    <ellipse cx="5" cy="-20" rx="5" ry="4" fill="#6B9B5A" stroke="#4A8B3E" stroke-width="0.5"/>
+    <!-- Brilliant sunflower: golden glow -->
+    <circle cx="0" cy="-36" r="10" fill="#FFF5C2" opacity="0.3"/>
+    <circle cx="0" cy="-36" r="7" fill="#FFD700" stroke="#D4AF37" stroke-width="0.8"/>
+    <circle cx="0" cy="-36" r="4" fill="#B8860B" stroke="#8B6914" stroke-width="0.5"/>
+    <ellipse cx="-9" cy="-36" rx="4" ry="2" fill="#FFD700" stroke="#D4AF37" stroke-width="0.5"/>
+    <ellipse cx="9" cy="-36" rx="4" ry="2" fill="#FFD700" stroke="#D4AF37" stroke-width="0.5"/>
+    <ellipse cx="0" cy="-44" rx="2" ry="4" fill="#FFD700" stroke="#D4AF37" stroke-width="0.5"/>
+    <!-- Sparkle -->
+    <path d="M 2,-42 L 3,-39 L 6,-38 L 3,-37 L 2,-34 L 1,-37 L -2,-38 L 1,-39 Z" fill="#FFFFFF" opacity="0.8"/>
+  </g>
+
+  <!-- Zone label -->
+  <g transform="translate(485, 360)" filter="url(#paperShadow)">
+    <rect width="130" height="22" rx="3" fill="#6B9B5A" stroke="#4A8B3E" stroke-width="1"/>
+    <text x="65" y="16" text-anchor="middle" font-family="Georgia, serif" font-size="12" fill="#F4E8D0">Jardin fleuri · 4/8</text>
+  </g>
+
+  <!-- ZONE 3: VERGER (right) -->
+  <g filter="url(#paperShadow)">
+    <polygon points="675,300 775,260 875,300 775,340" fill="#4A7C3F" stroke="#2D5C24" stroke-width="2"/>
+    <polygon points="675,300 675,308 775,348 775,340" fill="url(#edgeDeepGreen)"/>
+    <polygon points="775,340 775,348 875,308 875,300" fill="url(#edgeDeepGreen)"/>
+    <line x1="710" y1="292" x2="710" y2="286" stroke="#2D5C24" stroke-width="1"/>
+    <line x1="840" y1="292" x2="840" y2="286" stroke="#2D5C24" stroke-width="1"/>
+  </g>
+
+  <!-- Verger plants -->
+  <!-- Plant 1: jeune plant pommier -->
+  <g transform="translate(730, 275)" filter="url(#paperShadow)">
+    <rect x="-2" y="-16" width="4" height="18" fill="#5C3A21"/>
+    <circle cx="0" cy="-20" r="8" fill="#5F9E58" stroke="#3D7236" stroke-width="0.8"/>
+    <circle cx="-3" cy="-22" r="3" fill="#7AB068" stroke="#3D7236" stroke-width="0.5"/>
+    <circle cx="3" cy="-18" r="3" fill="#7AB068" stroke="#3D7236" stroke-width="0.5"/>
+  </g>
+
+  <!-- Plant 2: mature pommier -->
+  <g transform="translate(790, 270)" filter="url(#paperShadow)">
+    <rect x="-3" y="-28" width="6" height="30" fill="#5C3A21"/>
+    <rect x="-18" y="-24" width="16" height="4" rx="2" fill="#5C3A21"/>
+    <rect x="2" y="-20" width="14" height="4" rx="2" fill="#5C3A21"/>
+    <circle cx="0" cy="-38" r="16" fill="#5F9E58" stroke="#3D7236" stroke-width="0.8"/>
+    <circle cx="-6" cy="-42" r="6" fill="#7AB068" stroke="#3D7236" stroke-width="0.5"/>
+    <circle cx="7" cy="-36" r="6" fill="#7AB068" stroke="#3D7236" stroke-width="0.5"/>
+    <circle cx="-2" cy="-32" r="5" fill="#7AB068" stroke="#3D7236" stroke-width="0.5"/>
+    <!-- Apples -->
+    <circle cx="-8" cy="-36" r="2.5" fill="#E8623D" stroke="#C44A2A" stroke-width="0.5"/>
+    <circle cx="5" cy="-44" r="2.5" fill="#E8623D" stroke="#C44A2A" stroke-width="0.5"/>
+    <circle cx="3" cy="-30" r="2.5" fill="#E8623D" stroke="#C44A2A" stroke-width="0.5"/>
+  </g>
+
+  <!-- Empty slots -->
+  <circle cx="710" cy="298" r="4" fill="#2D5C24" opacity="0.6"/>
+  <circle cx="850" cy="298" r="4" fill="#2D5C24" opacity="0.6"/>
+
+  <!-- Zone label -->
+  <g transform="translate(710, 360)" filter="url(#paperShadow)">
+    <rect width="130" height="22" rx="3" fill="#4A7C3F" stroke="#2D5C24" stroke-width="1"/>
+    <text x="65" y="16" text-anchor="middle" font-family="Georgia, serif" font-size="12" fill="#F4E8D0">Verger · 1/3</text>
+  </g>
+
+  <!-- Bottom UI: resources as paper cards -->
+  <g transform="translate(30, 430)" filter="url(#paperShadow)">
+    <rect width="120" height="50" rx="4" fill="#FFF5E0" stroke="#D4B889" stroke-width="1"/>
+    <text x="60" y="20" text-anchor="middle" font-family="Georgia, serif" font-size="11" fill="#8B6914">Florins</text>
+    <text x="60" y="40" text-anchor="middle" font-family="Georgia, serif" font-size="18" fill="#5C4A30" font-weight="bold">45</text>
+  </g>
+
+  <g transform="translate(165, 430)" filter="url(#paperShadow)">
+    <rect width="140" height="50" rx="4" fill="#FFF5E0" stroke="#D4B889" stroke-width="1"/>
+    <text x="70" y="20" text-anchor="middle" font-family="Georgia, serif" font-size="11" fill="#8B6914">Récoltes du jour</text>
+    <text x="70" y="40" text-anchor="middle" font-family="Georgia, serif" font-size="14" fill="#5C4A30">12 / 20 florins</text>
+  </g>
+
+  <g transform="translate(320, 430)" filter="url(#paperShadow)">
+    <rect width="150" height="50" rx="4" fill="#FFF5E0" stroke="#D4B889" stroke-width="1"/>
+    <text x="75" y="20" text-anchor="middle" font-family="Georgia, serif" font-size="11" fill="#8B6914">Engrais</text>
+    <text x="75" y="40" text-anchor="middle" font-family="Georgia, serif" font-size="13" fill="#5C4A30">Basique x2 · Super x1</text>
+  </g>
+
+  <!-- Decorative border: paper cutout ribbon -->
+  <g transform="translate(0, 510)" opacity="0.5">
+    <rect width="900" height="30" fill="#E5D5B8"/>
+    <path d="M 0,0 L 20,15 L 40,0 L 60,15 L 80,0 L 100,15 L 120,0 L 140,15 L 160,0 L 180,15 L 200,0 L 220,15 L 240,0 L 260,15 L 280,0 L 300,15 L 320,0 L 340,15 L 360,0 L 380,15 L 400,0 L 420,15 L 440,0 L 460,15 L 480,0 L 500,15 L 520,0 L 540,15 L 560,0 L 580,15 L 600,0 L 620,15 L 640,0 L 660,15 L 680,0 L 700,15 L 720,0 L 740,15 L 760,0 L 780,15 L 800,0 L 820,15 L 840,0 L 860,15 L 880,0 L 900,15" fill="none" stroke="#C4A26D" stroke-width="1"/>
+  </g>
+</svg>
+</body>
+</html>
