@@ -114,6 +114,28 @@ class GardenSession {
     return snapshot;
   }
 
+  Future<GardenSnapshot> buyIsland(ZoneType zone) async {
+    if (zone == ZoneType.potager || snapshot.ownedZones.contains(zone)) {
+      return snapshot;
+    }
+    if (snapshot.florins < zone.purchasePrice) {
+      throw StateError('Not enough florins to buy ${zone.label}');
+    }
+    final ownedZones = {...snapshot.ownedZones, zone};
+    final zones = {
+      for (final entry in snapshot.zones.entries) entry.key: [...entry.value],
+    };
+    zones[zone] = List<Plant?>.filled(zone.initialSlots, null);
+    final next = snapshot.copyWith(
+      zones: zones,
+      florins: snapshot.florins - zone.purchasePrice,
+      ownedZones: ownedZones,
+    );
+    await _store.save(next);
+    snapshot = next;
+    return snapshot;
+  }
+
   Future<GardenSnapshot> plantSeed(
     ZoneType zone,
     int slot,

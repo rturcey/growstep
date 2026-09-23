@@ -81,6 +81,67 @@ class _GardenPageState extends State<GardenPage> {
     });
   }
 
+  void _onZoneSelected(ZoneType zone, GardenSnapshot snapshot) {
+    if (snapshot.ownedZones.contains(zone)) {
+      setState(() {
+        _selectedZone = zone;
+        _selectedSlot = null;
+        _game.moveTo(zone);
+      });
+    } else {
+      _showPurchaseDialog(zone, snapshot);
+    }
+  }
+
+  void _showPurchaseDialog(ZoneType zone, GardenSnapshot snapshot) {
+    final species = Species.values
+        .where((species) => species.zone == zone)
+        .map((species) => species.label)
+        .join(', ');
+    final canAfford = snapshot.florins >= zone.purchasePrice;
+    showDialog<void>(
+      context: context,
+      builder: (dialogContext) => AlertDialog(
+        title: Text('Acheter ${zone.label} ?'),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text('Prix : ${zone.purchasePrice} florins'),
+            Text('Espèces : $species'),
+            Text('${zone.initialSlots} emplacements initiaux'),
+            const SizedBox(height: 8),
+            Text(
+              canAfford
+                  ? 'Il vous reste ${snapshot.florins - zone.purchasePrice} florins après l’achat.'
+                  : 'Solde insuffisant : ${snapshot.florins} florins disponibles.',
+              style: TextStyle(
+                color: canAfford
+                    ? const Color(0xFF52764F)
+                    : Colors.orangeAccent,
+              ),
+            ),
+          ],
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(dialogContext),
+            child: const Text('Annuler'),
+          ),
+          FilledButton(
+            onPressed: canAfford && !_busy
+                ? () {
+                    Navigator.pop(dialogContext);
+                    _perform(() => _garden.buyIsland(zone));
+                  }
+                : null,
+            child: const Text('Acheter'),
+          ),
+        ],
+      ),
+    );
+  }
+
   @override
   void initState() {
     super.initState();
@@ -205,8 +266,8 @@ class _GardenPageState extends State<GardenPage> {
     return Scaffold(
       bottomNavigationBar: SafeArea(
         top: false,
-        child: Container(
-          height: 64,
+          child: Container(
+            height: 72,
           decoration: const BoxDecoration(
             color: Color(0xFFFFFCF5),
             border: Border(top: BorderSide(color: Color(0xFFE9E7DB))),
@@ -216,11 +277,9 @@ class _GardenPageState extends State<GardenPage> {
               for (final zone in GardenGame.zonesInViewOrder)
                 Expanded(
                   child: TextButton(
-                    onPressed: () => setState(() {
-                      _selectedZone = zone;
-                      _selectedSlot = null;
-                      _game.moveTo(zone);
-                    }),
+                    onPressed: snapshot != null
+                        ? () => _onZoneSelected(zone, snapshot)
+                        : null,
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
@@ -246,6 +305,16 @@ class _GardenPageState extends State<GardenPage> {
                                 : const Color(0xFF777E71),
                           ),
                         ),
+                        if (snapshot != null &&
+                            !snapshot.ownedZones.contains(zone))
+                          Text(
+                            '${zone.purchasePrice} florins',
+                            maxLines: 1,
+                            style: const TextStyle(
+                              fontSize: 9,
+                              color: Color(0xFF8A9585),
+                            ),
+                          ),
                       ],
                     ),
                   ),

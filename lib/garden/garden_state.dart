@@ -1,13 +1,14 @@
 enum ZoneType {
-  potager('Potager', 4, 8),
-  jardinFleuri('Jardin fleuri', 4, 8),
-  verger('Verger', 1, 3);
+  potager('Potager', 4, 8, 0),
+  jardinFleuri('Jardin fleuri', 4, 8, 100),
+  verger('Verger', 1, 3, 250);
 
-  const ZoneType(this.label, this.initialSlots, this.maxSlots);
+  const ZoneType(this.label, this.initialSlots, this.maxSlots, this.purchasePrice);
 
   final String label;
   final int initialSlots;
   final int maxSlots;
+  final int purchasePrice;
 }
 
 enum Species {
