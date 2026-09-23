@@ -16,22 +16,22 @@ void main() {
 
     await garden.chooseStarterSeed(Species.tomate);
     await garden.chooseStarterSeed(Species.tournesol);
-    await garden.plantSeed(ZoneType.potager, 0, Species.tomate);
+    await garden.plantSeed(ZoneType.potager, 2, Species.tomate);
     await garden.plantSeed(ZoneType.jardinFleuri, 0, Species.tournesol);
 
-    expect(garden.snapshot.zones[ZoneType.potager]![0]!.progressSteps, 0);
+    expect(garden.snapshot.zones[ZoneType.potager]![2]!.progressSteps, 0);
     expect(garden.snapshot.zones[ZoneType.jardinFleuri]![0]!.progressSteps, 0);
 
     steps.addSteps(299);
     await garden.refreshSteps();
     expect(
-      garden.snapshot.zones[ZoneType.potager]![0]!.stage,
+      garden.snapshot.zones[ZoneType.potager]![2]!.stage,
       PlantStage.graineGermee,
     );
     steps.addSteps(1);
     await garden.refreshSteps();
     expect(
-      garden.snapshot.zones[ZoneType.potager]![0]!.stage,
+      garden.snapshot.zones[ZoneType.potager]![2]!.stage,
       PlantStage.jeunePlant,
     );
     expect(
@@ -42,13 +42,13 @@ void main() {
     steps.addSteps(400);
     await garden.refreshSteps();
     expect(
-      garden.snapshot.zones[ZoneType.potager]![0]!.stage,
+      garden.snapshot.zones[ZoneType.potager]![2]!.stage,
       PlantStage.presqueMature,
     );
     steps.addSteps(300);
     await garden.refreshSteps();
     expect(
-      garden.snapshot.zones[ZoneType.potager]![0]!.stage,
+      garden.snapshot.zones[ZoneType.potager]![2]!.stage,
       PlantStage.mature,
     );
     expect(
@@ -176,17 +176,17 @@ void main() {
     final garden = GardenSession(database: database, stepProvider: steps);
     await garden.load();
     await garden.chooseStarterSeed(Species.tomate);
-    await garden.plantSeed(ZoneType.potager, 0, Species.tomate);
+    await garden.plantSeed(ZoneType.potager, 2, Species.tomate);
 
     steps.setSteps(300);
     await garden.refreshSteps();
     steps.setSteps(200);
     await garden.refreshSteps();
-    expect(garden.snapshot.zones[ZoneType.potager]![0]!.progressSteps, 300);
+    expect(garden.snapshot.zones[ZoneType.potager]![2]!.progressSteps, 300);
 
     steps.setSteps(350);
     await garden.refreshSteps();
-    expect(garden.snapshot.zones[ZoneType.potager]![0]!.progressSteps, 350);
+    expect(garden.snapshot.zones[ZoneType.potager]![2]!.progressSteps, 350);
   });
 
   test(
@@ -197,26 +197,26 @@ void main() {
       final steps = FakeStepProvider();
       final garden = GardenSession(database: database, stepProvider: steps);
       await garden.load();
-      await garden.chooseStarterSeed(Species.tomate);
-      await garden.chooseStarterSeed(Species.tulipe);
-      await garden.plantSeed(ZoneType.potager, 0, Species.tomate);
+    await garden.chooseStarterSeed(Species.tomate);
+    await garden.chooseStarterSeed(Species.tulipe);
+    await garden.plantSeed(ZoneType.potager, 2, Species.tomate);
 
-      steps.addSteps(300);
-      await garden.refreshSteps();
-      await garden.plantSeed(ZoneType.jardinFleuri, 0, Species.tulipe);
-      expect(garden.snapshot.zones[ZoneType.potager]![0]!.progressSteps, 300);
-      expect(
-        garden.snapshot.zones[ZoneType.jardinFleuri]![0]!.progressSteps,
-        0,
-      );
+    steps.addSteps(300);
+    await garden.refreshSteps();
+    await garden.plantSeed(ZoneType.jardinFleuri, 0, Species.tulipe);
+    expect(garden.snapshot.zones[ZoneType.potager]![2]!.progressSteps, 300);
+    expect(
+      garden.snapshot.zones[ZoneType.jardinFleuri]![0]!.progressSteps,
+      0,
+    );
 
-      steps.addSteps(100);
-      await garden.refreshSteps();
-      expect(garden.snapshot.zones[ZoneType.potager]![0]!.progressSteps, 400);
-      expect(
-        garden.snapshot.zones[ZoneType.jardinFleuri]![0]!.progressSteps,
-        100,
-      );
+    steps.addSteps(100);
+    await garden.refreshSteps();
+    expect(garden.snapshot.zones[ZoneType.potager]![2]!.progressSteps, 400);
+    expect(
+      garden.snapshot.zones[ZoneType.jardinFleuri]![0]!.progressSteps,
+      100,
+    );
     },
   );
 
@@ -250,6 +250,12 @@ void main() {
     () async {
       final database = GardenDatabase(NativeDatabase.memory());
       addTearDown(database.close);
+      await database.save(GardenSnapshot.initial().copyWith(
+        zones: {
+          for (final zone in ZoneType.values)
+            zone: List<Plant?>.filled(zone.initialSlots, null),
+        },
+      ));
       final steps = FakeStepProvider();
       final garden = GardenSession(
         database: database,
@@ -370,6 +376,12 @@ void main() {
     () async {
       final database = GardenDatabase(NativeDatabase.memory());
       addTearDown(database.close);
+      await database.save(GardenSnapshot.initial().copyWith(
+        zones: {
+          for (final zone in ZoneType.values)
+            zone: List<Plant?>.filled(zone.initialSlots, null),
+        },
+      ));
       final steps = FakeStepProvider();
       final garden = GardenSession(database: database, stepProvider: steps);
       await garden.load();
@@ -462,6 +474,12 @@ void main() {
       addTearDown(() => directory.delete(recursive: true));
       final file = File('${directory.path}/garden.sqlite');
       final database = GardenDatabase(NativeDatabase(file));
+      await database.save(GardenSnapshot.initial().copyWith(
+        zones: {
+          for (final zone in ZoneType.values)
+            zone: List<Plant?>.filled(zone.initialSlots, null),
+        },
+      ));
       final steps = FakeStepProvider();
       final garden = GardenSession(database: database, stepProvider: steps);
       await garden.load();

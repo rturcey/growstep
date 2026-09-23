@@ -69,6 +69,11 @@ class GardenDatabase extends _$GardenDatabase implements GardenStore {
     final zones = {
       for (final entry in initial.zones.entries) entry.key: [...entry.value],
     };
+    zones[ZoneType.potager] = List<Plant?>.filled(
+      ZoneType.potager.initialSlots,
+      null,
+    );
+    final ownedZones = <ZoneType>{ZoneType.potager};
     final starterChoices = <ZoneType>{};
     if (old.plantStage != null) {
       final progress = old.plantStage == 'jeunePlante'
@@ -79,6 +84,7 @@ class GardenDatabase extends _$GardenDatabase implements GardenStore {
         progressSteps: progress,
       );
       starterChoices.add(ZoneType.jardinFleuri);
+      ownedZones.add(ZoneType.jardinFleuri);
     }
     final migrated = initial.copyWith(
       zones: zones,
@@ -93,6 +99,7 @@ class GardenDatabase extends _$GardenDatabase implements GardenStore {
         'creditedStepWaterDoses': old.creditedStepWaterDoses,
         'creditedDay': old.creditedDay,
       },
+      ownedZones: ownedZones,
     );
     await save(migrated);
     return migrated;

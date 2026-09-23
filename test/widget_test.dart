@@ -106,7 +106,12 @@ void main() {
     final zones = {
       for (final entry in initial.zones.entries) entry.key: [...entry.value],
     };
-    zones[ZoneType.potager]![0] = const Plant(species: Species.tomate);
+    zones[ZoneType.potager] = [
+      const Plant(species: Species.tomate),
+      null,
+      null,
+      null,
+    ];
     await database.save(
       initial.copyWith(
         zones: zones,

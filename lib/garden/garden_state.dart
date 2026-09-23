@@ -230,12 +230,22 @@ class GardenSnapshot {
     this.starterFertilizerGranted = false,
     required this.decorations,
     this.legacyArchive,
+    this.ownedZones = const {},
   });
 
   factory GardenSnapshot.initial() => GardenSnapshot(
     zones: {
-      for (final zone in ZoneType.values)
-        zone: List<Plant?>.filled(zone.initialSlots, null),
+      ZoneType.potager: [
+        Plant(species: Species.tomate, progressSteps: 700),
+        Plant(species: Species.carotte, progressSteps: 300),
+        null,
+        null,
+      ],
+      ZoneType.jardinFleuri: List<Plant?>.filled(
+        ZoneType.jardinFleuri.initialSlots,
+        null,
+      ),
+      ZoneType.verger: List<Plant?>.filled(ZoneType.verger.initialSlots, null),
     },
     seeds: {},
     brilliantSeeds: {},
@@ -248,6 +258,7 @@ class GardenSnapshot {
     harvestFlorinsClaimed: 0,
     starterFertilizerGranted: false,
     decorations: const [],
+    ownedZones: {ZoneType.potager},
   );
 
   final Map<ZoneType, List<Plant?>> zones;
@@ -263,9 +274,11 @@ class GardenSnapshot {
   final bool starterFertilizerGranted;
   final List<String> decorations;
   final Map<String, dynamic>? legacyArchive;
+  final Set<ZoneType> ownedZones;
 
   bool get needsFirstPlanting =>
-      zones.values.every((slots) => slots.every((plant) => plant == null));
+      !starterChoices.contains(ZoneType.potager) &&
+      zones[ZoneType.potager]!.any((plant) => plant == null);
 
   GardenSnapshot copyWith({
     Map<ZoneType, List<Plant?>>? zones,
@@ -281,6 +294,7 @@ class GardenSnapshot {
     bool? starterFertilizerGranted,
     List<String>? decorations,
     Map<String, dynamic>? legacyArchive,
+    Set<ZoneType>? ownedZones,
   }) => GardenSnapshot(
     zones: zones ?? this.zones,
     seeds: seeds ?? this.seeds,
@@ -296,6 +310,7 @@ class GardenSnapshot {
         starterFertilizerGranted ?? this.starterFertilizerGranted,
     decorations: decorations ?? this.decorations,
     legacyArchive: legacyArchive ?? this.legacyArchive,
+    ownedZones: ownedZones ?? this.ownedZones,
   );
 
   Map<String, Object?> toJson() => {
@@ -319,6 +334,7 @@ class GardenSnapshot {
     'starterFertilizerGranted': starterFertilizerGranted,
     'decorations': decorations,
     'legacyArchive': legacyArchive,
+    'ownedZones': ownedZones.map((zone) => zone.name).toList(),
   };
 
   factory GardenSnapshot.fromJson(Map<String, dynamic> json) {
@@ -327,17 +343,27 @@ class GardenSnapshot {
     final rawBrilliantSeeds =
         json['brilliantSeeds'] as Map<String, dynamic>? ?? {};
     final rawFertilizers = json['fertilizers'] as Map<String, dynamic>;
+    final zones = <ZoneType, List<Plant?>>{
+      for (final zone in ZoneType.values)
+        zone: (rawZones[zone.name] as List<dynamic>)
+            .map(
+              (item) => item == null
+                  ? null
+                  : Plant.fromJson(item as Map<String, dynamic>),
+            )
+            .toList(),
+    };
+    final rawOwnedZones = json['ownedZones'] as List<dynamic>?;
+    final explicitOwned = rawOwnedZones != null
+        ? rawOwnedZones.map((name) => ZoneType.values.byName(name as String)).toSet()
+        : <ZoneType>{};
+    final ownedZones = <ZoneType>{
+      ...explicitOwned,
+      for (final entry in zones.entries)
+        if (entry.value.any((plant) => plant != null)) entry.key,
+    };
     return GardenSnapshot(
-      zones: {
-        for (final zone in ZoneType.values)
-          zone: (rawZones[zone.name] as List<dynamic>)
-              .map(
-                (item) => item == null
-                    ? null
-                    : Plant.fromJson(item as Map<String, dynamic>),
-              )
-              .toList(),
-      },
+      zones: zones,
       seeds: {
         for (final entry in rawSeeds.entries)
           Species.values.byName(entry.key): entry.value as int,
@@ -362,6 +388,7 @@ class GardenSnapshot {
           json['starterFertilizerGranted'] as bool? ?? false,
       decorations: (json['decorations'] as List<dynamic>).cast<String>(),
       legacyArchive: json['legacyArchive'] as Map<String, dynamic>?,
+      ownedZones: ownedZones,
     );
   }
 }
