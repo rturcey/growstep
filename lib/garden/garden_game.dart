@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 
 import 'garden_state.dart';
 import 'garden_sprites.dart';
+import 'potager_path.dart';
 
 /// Isometric grid engine: every scene position derives from the 80×40 rhombus
 /// lattice with axes u = (40, 20) and v = (-40, 20). Origin is the grid center.
@@ -166,6 +167,7 @@ class GardenGame extends FlameGame {
 
     // Terrain (drawn first, unsorted).
     _drawTerrain(canvas, zone);
+    if (zone == ZoneType.potager) PotagerPath.draw(canvas);
 
     // Environment objects.
     for (final entry in _environmentObjects(zone)) {
@@ -399,9 +401,11 @@ class GardenGame extends FlameGame {
       ZoneType.jardinFleuri => const Color(0xFFE8B0A8),
       ZoneType.verger => const Color(0xFFF5E7D4),
     };
-    for (final bloom in const [
+    for (final bloom in [
       Offset(53, 212), Offset(337, 216), Offset(66, 336),
-      Offset(327, 340), Offset(195, 390),
+      Offset(327, 340),
+      if (zone != ZoneType.potager) Offset(195, 390),
+      if (zone == ZoneType.potager) Offset(235, 390),
     ]) {
       objects.add(_SceneObject(
         bloom.translate(0, 3),
@@ -419,11 +423,6 @@ class GardenGame extends FlameGame {
         const Offset(330, 350).translate(0, 12),
         (c) => _drawNurseryCrate(c, const Offset(330, 350)),
       ));
-      objects.add(_SceneObject(
-        const Offset(195, 370),
-        (c) => _sprites.draw(c, 'commun_chien_idle_ordinaire_00.png',
-            const Offset(195, 370), 48, 42),
-      ));
     } else if (zone == ZoneType.jardinFleuri) {
       objects.add(_SceneObject(
         const Offset(330, 175).translate(0, 4),
@@ -432,11 +431,13 @@ class GardenGame extends FlameGame {
     }
 
     // Path stones — placed after environment so they sort naturally.
-    for (final entry in _pathNodes(zone).asMap().entries) {
-      objects.add(_SceneObject(
-        entry.value,
-        (c) => _drawStone(c, entry.value, entry.key),
-      ));
+    if (zone != ZoneType.potager) {
+      for (final entry in _pathNodes(zone).asMap().entries) {
+        objects.add(_SceneObject(
+          entry.value,
+          (c) => _drawStone(c, entry.value, entry.key),
+        ));
+      }
     }
 
     // Verger bench.
@@ -452,7 +453,8 @@ class GardenGame extends FlameGame {
   }
 
   List<Offset> _pathNodes(ZoneType zone) => switch (zone) {
-    ZoneType.potager || ZoneType.jardinFleuri => const [
+    ZoneType.potager => const [],
+    ZoneType.jardinFleuri => const [
       Offset(195, 388), Offset(195, 355),
       Offset(150, 335), Offset(240, 335),
       Offset(150, 285), Offset(240, 285),
@@ -472,7 +474,7 @@ class GardenGame extends FlameGame {
       _drawTreeBase(canvas, point);
       return;
     }
-    if (_sprites.draw(
+    if (zone != ZoneType.potager && _sprites.draw(
       canvas,
       'commun_parcelle_bois_vide_ordinaire_00.png',
       point.translate(0, 18),
@@ -480,6 +482,13 @@ class GardenGame extends FlameGame {
       58,
     )) {
       return;
+    }
+
+    if (zone == ZoneType.potager) {
+      canvas.save();
+      canvas.clipPath(_islandContour(zone));
+      PotagerPath.drawBedContact(canvas, point);
+      canvas.restore();
     }
 
     // Contact shadow — soft, slightly offset.
@@ -493,7 +502,7 @@ class GardenGame extends FlameGame {
     // Bed dimensions aligned to the 80×40 grid diamond.
     const w = 40.0; // half-width
     const h = 20.0; // half-height
-    const fh = 13.0; // face height
+    final fh = zone == ZoneType.potager ? 10.0 : 13.0;
 
     // Front-left face (darker, shadowed).
     final leftFace = Path()
