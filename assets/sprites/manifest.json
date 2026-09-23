@@ -1,0 +1,17 @@
+{
+  "potager_plante_tomate_jeune_ordinaire_00.png": {
+    "width": 444,
+    "height": 224,
+    "bbox": [
+      137,
+      36,
+      330,
+      187
+    ],
+    "anchor": [
+      225,
+      185
+    ],
+    "shadow": "separate_contact"
+  }
+}

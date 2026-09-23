@@ -2,10 +2,24 @@ import 'package:flame/game.dart';
 import 'package:flutter/material.dart';
 
 import 'garden_state.dart';
+import 'garden_sprites.dart';
 
 /// Flame draws the garden; planting controls and rules live outside the canvas.
 class GardenGame extends FlameGame {
+  final GardenSprites _sprites = GardenSprites();
   GardenSnapshot snapshot = GardenSnapshot.initial();
+
+  @override
+  Future<void> onLoad() async {
+    await super.onLoad();
+    await _sprites.load();
+  }
+
+  @override
+  void onRemove() {
+    _sprites.dispose();
+    super.onRemove();
+  }
 
   @override
   Color backgroundColor() => const Color(0xFF193627);
@@ -75,6 +89,17 @@ class GardenGame extends FlameGame {
       PlantStage.presqueMature => 19.0,
       PlantStage.mature => 25.0,
     };
+    if (plant.species == Species.tomate &&
+        plant.stage == PlantStage.jeunePlant &&
+        _sprites.draw(
+          canvas,
+          'potager_plante_tomate_jeune_ordinaire_00.png',
+          position,
+          48,
+          38,
+        )) {
+      return;
+    }
     final tip = Offset(position.dx, position.dy - height);
     canvas.drawLine(
       position,
