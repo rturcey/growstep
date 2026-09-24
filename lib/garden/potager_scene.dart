@@ -39,8 +39,8 @@ class PotagerPilotScene {
 class PotagerBeds {
   const PotagerBeds._();
 
-  static const _bedWidth = 52.25;
-  static const _bedHeight = 40.5;
+  static const _bedWidth = 80.0;
+  static const _bedHeight = 62.0;
 
   static const _v00 = 'potager_decor_bac_potager_statique_ordinaire_00.png';
 
