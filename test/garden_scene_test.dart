@@ -64,27 +64,20 @@ void main() {
     }
   });
 
-  test(
-    'pilot composition is fixed, distinct, and names known assets',
-    () async {
-      expect(PotagerPilotScene.objects.map((object) => object.id), [
-        'east_upper_rock',
-        'east_barrel',
-      ]);
-      expect(PotagerPilotScene.rock.layer, GardenLayer.depth);
-      expect(PotagerPilotScene.rock.contact, const ui.Offset(355, 150));
-      expect(PotagerPilotScene.barrel.contact, const ui.Offset(355, 230));
-      expect(PotagerPilotScene.rock.asset, contains('rochers_herbe'));
-      expect(PotagerPilotScene.barrel.asset, contains('tonneau_bois'));
-      expect(PotagerPilotScene.objects, same(PotagerPilotScene.objects));
-      final manifest = jsonDecode(
-        await rootBundle.loadString('assets/sprites/manifest.json'),
-      ) as Map<String, dynamic>;
-      for (final object in PotagerPilotScene.objects) {
-        expect(manifest.containsKey(object.asset), isTrue);
-      }
-    },
-  );
+  test('Dart pilot composition keeps the barrel and its known asset', () async {
+    expect(PotagerPilotScene.objects.map((object) => object.id), [
+      'east_barrel',
+    ]);
+    expect(PotagerPilotScene.barrel.contact, const ui.Offset(355, 230));
+    expect(PotagerPilotScene.barrel.asset, contains('tonneau_bois'));
+    expect(PotagerPilotScene.objects, same(PotagerPilotScene.objects));
+    final manifest = jsonDecode(
+      await rootBundle.loadString('assets/sprites/manifest.json'),
+    ) as Map<String, dynamic>;
+    for (final object in PotagerPilotScene.objects) {
+      expect(manifest.containsKey(object.asset), isTrue);
+    }
+  });
 
   test('depth uses ground Y, z bias, ID and stable legacy order', () {
     final objects = <GardenPlacedObject>[
@@ -108,7 +101,7 @@ void main() {
 
   test('fixed layers precede the shared depth phase', () {
     final order = GardenSceneRenderer.depthOrder([
-      PotagerPilotScene.rock,
+      PotagerPilotScene.barrel,
       const GardenSpriteObject(
         id: 'flat_ground',
         asset: 'fixture.png',
@@ -117,10 +110,7 @@ void main() {
         layer: GardenLayer.ground,
       ),
     ]);
-    expect(order.map((object) => object.id), [
-      'flat_ground',
-      'east_upper_rock',
-    ]);
+    expect(order.map((object) => object.id), ['flat_ground', 'east_barrel']);
   });
 
   test('contact shadow is painted once directly before its sprite', () {

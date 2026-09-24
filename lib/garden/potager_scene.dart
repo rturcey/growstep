@@ -3,19 +3,9 @@ import 'dart:ui';
 import 'garden_scene.dart';
 import 'potager_grid_adapter.dart';
 
-/// First two migrated objects. Their exact display sizes preserve the current
-/// scene; later family tickets can introduce shared size classes and variants.
+/// Potager pilot objects still authored in Dart during the Tiled PoC.
 class PotagerPilotScene {
   const PotagerPilotScene._();
-
-  static const rock = GardenSpriteObject(
-    id: 'east_upper_rock',
-    asset: 'commun_decor_rochers_herbe_statique_ordinaire_00.png',
-    contact: Offset(355, 150),
-    size: Size(41.4, 23),
-    layer: GardenLayer.depth,
-    opacity: 0.82,
-  );
 
   static const barrel = GardenSpriteObject(
     id: 'east_barrel',
@@ -26,7 +16,7 @@ class PotagerPilotScene {
     opacity: 0.88,
   );
 
-  static const objects = <GardenSpriteObject>[rock, barrel];
+  static const objects = <GardenSpriteObject>[barrel];
 }
 
 /// A saved plot index and its authored position on the shared isometric grid.

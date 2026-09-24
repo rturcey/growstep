@@ -4,27 +4,38 @@ import 'dart:ui' as ui;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import 'garden_sprite_metadata.dart';
+
 /// Transparent, independently replaceable garden assets. The alpha bounds are
 /// recorded at production time so generous source margins do not affect scale.
 class GardenSprites {
   final Map<String, _SpriteImage> _images = {};
 
-  Future<void> load() async {
-    final manifest = jsonDecode(
+  Future<Map<String, GardenSpriteMetadata>> load() async {
+    final source = jsonDecode(
       await rootBundle.loadString('assets/sprites/manifest.json'),
     ) as Map<String, dynamic>;
+    final manifest = {
+      for (final entry in source.entries)
+        entry.key: GardenSpriteMetadata.fromJson(
+          entry.value as Map<String, dynamic>,
+        ),
+    };
     await _loadRemaining(manifest.entries.toList());
+    return manifest;
   }
 
-  Future<void> _loadRemaining(List<MapEntry<String, dynamic>> entries) async {
+  Future<void> _loadRemaining(
+    List<MapEntry<String, GardenSpriteMetadata>> entries,
+  ) async {
     for (var index = 0; index < entries.length; index += 4) {
       final end = (index + 4).clamp(0, entries.length);
       await Future.wait(entries.sublist(index, end).map(_loadEntry));
     }
   }
 
-  Future<void> _loadEntry(MapEntry<String, dynamic> entry) async {
-    final data = entry.value as Map<String, dynamic>;
+  Future<void> _loadEntry(MapEntry<String, GardenSpriteMetadata> entry) async {
+    final metadata = entry.value;
     final bytes = await rootBundle.load('assets/sprites/${entry.key}');
     final codec = await ui.instantiateImageCodec(
       bytes.buffer.asUint8List(),
@@ -32,31 +43,20 @@ class GardenSprites {
     );
     final frame = await codec.getNextFrame();
     codec.dispose();
-    final sourceWidth = (data['width'] as num).toDouble();
-    final sourceHeight = (data['height'] as num).toDouble();
-    final bounds = (data['bbox'] as List<dynamic>)
-        .map((value) => (value as num).toDouble())
-        .toList();
+    final bounds = metadata.bounds;
     final crop = Rect.fromLTRB(
-      bounds[0] * frame.image.width / sourceWidth,
-      bounds[1] * frame.image.height / sourceHeight,
-      bounds[2] * frame.image.width / sourceWidth,
-      bounds[3] * frame.image.height / sourceHeight,
+      bounds.left * frame.image.width / metadata.sourceSize.width,
+      bounds.top * frame.image.height / metadata.sourceSize.height,
+      bounds.right * frame.image.width / metadata.sourceSize.width,
+      bounds.bottom * frame.image.height / metadata.sourceSize.height,
     );
-    final anchor = data['anchor'] as List<dynamic>?;
-    final anchorX = anchor == null
-        ? 0.5
-        : ((anchor[0] as num).toDouble() - bounds[0]) / (bounds[2] - bounds[0]);
-    final anchorY = anchor == null
-        ? 1.0
-        : ((anchor[1] as num).toDouble() - bounds[1]) / (bounds[3] - bounds[1]);
     _images[entry.key] = _SpriteImage(
       frame.image,
       crop,
-      Size((bounds[2] - bounds[0]) / 4, (bounds[3] - bounds[1]) / 4),
-      anchorX,
-      anchorY,
-      data['shadow'] == 'separate_contact',
+      bounds.size / 4,
+      metadata.visibleAnchor.dx,
+      metadata.visibleAnchor.dy,
+      metadata.separateContactShadow,
     );
   }
 

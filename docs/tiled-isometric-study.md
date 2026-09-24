@@ -175,6 +175,8 @@ Le PoC #59 encode les coordonnées demi-entières historiques en propriétés en
 
 Le manifeste Growstep reste la source canonique des ground anchors. Les PNG ne sont pas corrigés. Tiled utilise `objectalignment: bottom` (bas-centre, défaut pour les maps isométriques). Le runtime mesure le delta entre `Tiled bottom-center` et `manifest ground anchor` sur plusieurs sprites représentatifs. Si le delta n'est pas nul, le runtime applique un offset déterministe dérivé du manifeste, pas une correction manuelle par objet. `tileoffset` n'est utilisé que pour un décalage commun à tout un tileset.
 
+Pour le rocher pilote du #62, le PNG source mesure 216 × 148 px. Tiled place son ancre bas-centre en `(108, 148)` ; le manifeste place le contact au sol en `(108, 135)`. Le delta source est donc `(0, -13)` px. L'objet TMX mesure 48,6 × 33,3 px, soit une échelle de 0,225 : le delta artboard est `(0, -2,925)` px. Son contact de grille reste `(355, 150)` et le contact transmis au renderer devient `(355, 147,075)`. Le rectangle visible du manifeste `(16, 24, 200, 136)` donne une taille rendue de 41,4 × 25,2 px. Le calcul est centralisé dans `PotagerTiledObjects` et suit les dimensions du TMX et du manifeste si elles changent.
+
 ### 3.10 Plantes dynamiques
 
 Les plantes ne sont **jamais** des objets Tiled. Le flow reste :

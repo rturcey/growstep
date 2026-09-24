@@ -87,6 +87,7 @@
       <properties>
         <property name="gridCol" type="int" value="0" />
         <property name="gridRow" type="int" value="-8" />
+        <property name="opacity" type="float" value="0.82" />
       </properties>
     </object>
   </objectgroup>

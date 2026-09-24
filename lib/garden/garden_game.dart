@@ -16,6 +16,7 @@ import 'potager_grid_adapter.dart';
 import 'landscape_mass.dart';
 import 'potager_path.dart';
 import 'potager_scene.dart';
+import 'potager_tiled_objects.dart';
 
 /// One renderable scene object with depth sorting and draw dispatch.
 class _SceneObject extends GardenPlacedObject {
@@ -69,6 +70,7 @@ class GardenGame extends FlameGame {
   static final Images _tileImages = _PotagerTileImages();
   late final RenderableTiledMap _tileMap;
   late final Offset _tileMapOffset;
+  late final PotagerTiledObjects _tiledObjects;
   GardenSnapshot snapshot = GardenSnapshot.initial();
   ZoneType currentZone = ZoneType.potager;
   int? selectedSlot;
@@ -109,6 +111,11 @@ class GardenGame extends FlameGame {
     ZoneType.verger => _orchardAnchors,
   };
 
+  List<GardenSpriteObject> get _potagerObjects => [
+    _tiledObjects.rock,
+    ...PotagerPilotScene.objects,
+  ];
+
   void moveTo(ZoneType zone) {
     if (zone == currentZone) return;
     currentZone = zone;
@@ -137,7 +144,7 @@ class GardenGame extends FlameGame {
   @override
   Future<void> onLoad() async {
     await super.onLoad();
-    await _sprites.load();
+    final spriteManifest = await _sprites.load();
     _tileMap = await RenderableTiledMap.fromFile(
       'potager.tmx',
       Vector2(IsoGrid.cellWidth, IsoGrid.cellHeight),
@@ -146,6 +153,7 @@ class GardenGame extends FlameGame {
       useAtlas: false,
     );
     _tileMapOffset = const PotagerGridAdapter().tileMapOffset(_tileMap.map);
+    _tiledObjects = PotagerTiledObjects.fromMap(_tileMap.map, spriteManifest);
   }
 
   @override
@@ -278,7 +286,7 @@ class GardenGame extends FlameGame {
           ..style = PaintingStyle.stroke,
       );
     }
-    for (final object in PotagerPilotScene.objects) {
+    for (final object in _potagerObjects) {
       canvas.drawCircle(
         object.contact,
         3,
@@ -592,12 +600,12 @@ class GardenGame extends FlameGame {
   List<_SceneObject> _environmentObjects(ZoneType zone) {
     if (zone == ZoneType.potager) {
       return [
-        for (final object in PotagerPilotScene.objects)
+        for (final object in _potagerObjects)
           _SceneObject(
             object.contact,
             (canvas) {
               if (!GardenSceneRenderer.drawSprite(canvas, object, _sprites)) {
-                if (identical(object, PotagerPilotScene.rock)) {
+                if (identical(object, _tiledObjects.rock)) {
                   LandscapeMassPainter.drawRock(
                     canvas,
                     LandscapeRock(object.contact, object.size.height),

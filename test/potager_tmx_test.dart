@@ -1,8 +1,12 @@
+import 'dart:convert';
 import 'dart:io';
 import 'dart:ui' as ui;
 
 import 'package:flutter_test/flutter_test.dart';
+import 'package:growstep/garden/garden_scene.dart';
+import 'package:growstep/garden/garden_sprite_metadata.dart';
 import 'package:growstep/garden/potager_grid_adapter.dart';
+import 'package:growstep/garden/potager_tiled_objects.dart';
 import 'package:tiled/tiled.dart';
 import 'package:xml/xml.dart';
 
@@ -28,6 +32,65 @@ Future<TiledMap> _loadMap([String? source]) => TiledMap.fromString(
 );
 
 void main() {
+  test(
+    'TMX rock and shadow plots project through the sprite manifest',
+    () async {
+      final map = await _loadMap();
+      final source = jsonDecode(
+        File('assets/sprites/manifest.json').readAsStringSync(),
+      ) as Map<String, dynamic>;
+      final manifest = {
+        for (final entry in source.entries)
+          entry.key: GardenSpriteMetadata.fromJson(
+            entry.value as Map<String, dynamic>,
+          ),
+      };
+      final objects = PotagerTiledObjects.fromMap(map, manifest);
+
+      expect(objects.rock.id, 'east_upper_rock');
+      expect(
+        objects.rock.asset,
+        'commun_decor_rochers_herbe_statique_ordinaire_00.png',
+      );
+      expect(objects.rock.layer, GardenLayer.depth);
+      expect(objects.rock.opacity, 0.82);
+      expect(objects.rock.size.width, closeTo(41.4, 0.001));
+      expect(objects.rock.size.height, closeTo(25.2, 0.001));
+      expect(objects.rockAnchorDelta, const ui.Offset(0, -2.925));
+      expect(objects.rock.contact.dx, 355);
+      expect(objects.rock.contact.dy, closeTo(147.075, 0.001));
+      expect(objects.plotContacts, {
+        'plot_0': const ui.Offset(75, 150),
+        'plot_1': const ui.Offset(275, 230),
+        'plot_2': const ui.Offset(75, 310),
+        'plot_3': const ui.Offset(315, 310),
+        'plot_4': const ui.Offset(195, 150),
+        'plot_5': const ui.Offset(115, 230),
+        'plot_6': const ui.Offset(195, 310),
+        'plot_7': const ui.Offset(315, 150),
+      });
+
+      final document = XmlDocument.parse(
+        File('assets/maps/potager.tmx').readAsStringSync(),
+      );
+      final rock = document.descendants.whereType<XmlElement>().singleWhere(
+        (element) =>
+            element.name.local == 'object' &&
+            element.getAttribute('name') == 'east_upper_rock',
+      );
+      final gridCol = rock.descendants.whereType<XmlElement>().singleWhere(
+        (element) => element.getAttribute('name') == 'gridCol',
+      );
+      gridCol.setAttribute('value', '2');
+      final moved = PotagerTiledObjects.fromMap(
+        await _loadMap(document.toXmlString()),
+        manifest,
+      );
+      expect(moved.rock.contact.dx, 395);
+      expect(moved.rock.contact.dy, closeTo(167.075, 0.001));
+    },
+  );
+
   test('TMX plots preserve the eight historical contacts by stable name', () async {
     const adapter = PotagerGridAdapter();
     final map = await _loadMap();
