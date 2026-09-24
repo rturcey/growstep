@@ -1,13 +1,17 @@
 import 'dart:math' as math;
 
 import 'package:flame/game.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
+import 'garden_scene.dart';
+import 'garden_scene_renderer.dart';
 import 'garden_state.dart';
 import 'garden_sprites.dart';
 import 'potager_composition.dart';
 import 'landscape_mass.dart';
 import 'potager_path.dart';
+import 'potager_scene.dart';
 
 /// Isometric grid engine: every scene position derives from the 80×40 rhombus
 /// lattice with axes u = (40, 20) and v = (-40, 20). Origin is the grid center.
@@ -19,10 +23,8 @@ class IsoGrid {
 
   /// Lattice (i, j) → screen coordinates. Integer = cell center, half-integer
   /// = edge midpoint, the only positions allowed for anchors and path nodes.
-  Offset toScreen(double i, double j) => Offset(
-    origin.dx + (i - j) * 40,
-    origin.dy + (i + j) * 20,
-  );
+  Offset toScreen(double i, double j) =>
+      Offset(origin.dx + (i - j) * 40, origin.dy + (i + j) * 20);
 
   /// Diamond path for one grid cell centered at lattice (i, j).
   Path cellPath(double i, double j) {
@@ -37,11 +39,21 @@ class IsoGrid {
 }
 
 /// One renderable scene object with depth sorting and draw dispatch.
-class _SceneObject {
-  _SceneObject(this.anchor, this.draw);
+class _SceneObject extends GardenPlacedObject {
+  _SceneObject(Offset contact, this.draw, {String id = '', double zBias = 0})
+    : super(id, contact, zBias: zBias);
 
-  final Offset anchor;
   final void Function(Canvas canvas) draw;
+}
+
+enum _TerrainTileVariant { grain, blades, clover, highlight }
+
+class _TerrainTile {
+  const _TerrainTile(this.center, this.variant, this.scale);
+
+  final Offset center;
+  final _TerrainTileVariant variant;
+  final double scale;
 }
 
 /// Modular garden scene rendered by Flame at phone scale.
@@ -62,11 +74,13 @@ class GardenGame extends FlameGame {
     ZoneType.potager,
     ZoneType.verger,
   ];
-  static const double referenceWidth = 390;
-  static const double referenceHeight = 450;
+  static const double referenceWidth = GardenArtboardTransform.width;
+  static const double referenceHeight = GardenArtboardTransform.height;
   static const double touchSize = 44;
-  static const double sceneScale = 1.0;
+  static const double sceneScale = GardenArtboardTransform.fixedScale;
   static const double earthThickness = 24;
+  static const bool _debugComposition =
+      !kReleaseMode && bool.fromEnvironment('GROWSTEP_MAP_DEBUG');
 
   /// Stable 3–2–3 potager anchors ordered by saved slot index, from the
   /// approved island geometry gabarit (docs/geometrie-ilots.md).
@@ -92,8 +106,8 @@ class GardenGame extends FlameGame {
   ];
   static const _orchardAnchors = <Offset>[
     Offset(195, 190), // 0 back-center
-    Offset(115, 325), // 1 front-left
-    Offset(275, 325), // 2 front-right
+    Offset(115, 330), // 1 front-left, on the half-cell lattice
+    Offset(275, 330), // 2 front-right, on the half-cell lattice
   ];
 
   static List<Offset> anchorsFor(ZoneType zone) => switch (zone) {
@@ -109,7 +123,7 @@ class GardenGame extends FlameGame {
   }
 
   int? hitTestSlot(Offset localPosition) {
-    final scenePoint = (localPosition - _canvasOrigin()) / sceneScale;
+    final scenePoint = _artboardTransform.toArtboard(localPosition);
     final anchors = anchorsFor(currentZone);
     for (var slot = 0; slot < snapshot.zones[currentZone]!.length; slot++) {
       final anchor = anchors[slot];
@@ -121,10 +135,8 @@ class GardenGame extends FlameGame {
     return null;
   }
 
-  Offset _canvasOrigin() => Offset(
-    (size.x - referenceWidth * sceneScale) / 2,
-    (size.y - referenceHeight * sceneScale) / 2,
-  );
+  GardenArtboardTransform get _artboardTransform =>
+      GardenArtboardTransform(Size(size.x, size.y));
 
   @override
   Color backgroundColor() => const Color(0xFFE4EBD5);
@@ -154,9 +166,7 @@ class GardenGame extends FlameGame {
         ).createShader(Rect.fromLTWH(0, 0, size.x, size.y)),
     );
     canvas.save();
-    final origin = _canvasOrigin();
-    canvas.translate(origin.dx, origin.dy);
-    canvas.scale(sceneScale);
+    _artboardTransform.apply(canvas);
     _drawIsland(canvas, currentZone);
     canvas.restore();
   }
@@ -184,24 +194,42 @@ class GardenGame extends FlameGame {
     final purchased = snapshot.zones[zone]!;
     for (var slot = 0; slot < purchased.length; slot++) {
       final point = anchors[slot];
-      objects.add(_SceneObject(point, (c) => _drawBed(c, point, zone)));
+      if (zone == ZoneType.potager) {
+        final bed = PotagerBeds.beds[slot];
+        objects.add(
+          _SceneObject(
+            point,
+            (c) {
+              if (!GardenSceneRenderer.drawSprite(c, bed, _sprites)) {
+                _drawBed(c, point, zone);
+              }
+            },
+            id: bed.id,
+          ),
+        );
+      } else {
+        objects.add(_SceneObject(point, (c) => _drawBed(c, point, zone)));
+      }
       if (purchased[slot] != null) {
-        objects.add(_SceneObject(
-          point.translate(0, zone == ZoneType.potager ? 0.1 : -1),
-          (c) => _drawPlant(c, point, purchased[slot]!),
-        ));
+        objects.add(
+          _SceneObject(
+            point.translate(0, 0.1),
+            (c) => _drawPlant(c, point, purchased[slot]!),
+          ),
+        );
       }
       if (zone == currentZone && selectedSlot == slot) {
-        objects.add(_SceneObject(
-          point.translate(0, 1),
-          (c) => _drawSelection(c, point, zone),
-        ));
+        objects.add(
+          _SceneObject(
+            point.translate(0, 1),
+            (c) => _drawSelection(c, point, zone),
+          ),
+        );
       }
     }
 
     // Depth sort by ground-contact Y.
-    objects.sort((a, b) => a.anchor.dy.compareTo(b.anchor.dy));
-    for (final obj in objects) {
+    for (final obj in GardenSceneRenderer.depthOrder(objects)) {
       obj.draw(canvas);
     }
 
@@ -219,6 +247,59 @@ class GardenGame extends FlameGame {
         );
       }
     }
+    if (_debugComposition && zone == ZoneType.potager) {
+      _drawCompositionDebug(canvas, anchors, purchased.length);
+    }
+  }
+
+  void _drawCompositionDebug(Canvas canvas, List<Offset> anchors, int count) {
+    canvas.drawRect(
+      const Rect.fromLTWH(0, 0, referenceWidth, referenceHeight),
+      Paint()
+        ..color = const Color(0xFFAE5A37)
+        ..style = PaintingStyle.stroke
+        ..strokeWidth = 1,
+    );
+    for (var index = 0; index < count; index++) {
+      canvas.drawRect(
+        Rect.fromCenter(
+          center: anchors[index],
+          width: touchSize,
+          height: touchSize,
+        ),
+        Paint()
+          ..color = const Color(0xFFAE5A37)
+          ..style = PaintingStyle.stroke,
+      );
+    }
+    for (final object in PotagerPilotScene.objects) {
+      canvas.drawCircle(
+        object.contact,
+        3,
+        Paint()..color = const Color(0xFFAE5A37),
+      );
+      final label = TextPainter(
+        text: TextSpan(
+          text: '${object.id} · ${object.layer.name} · ${object.depth}',
+          style: const TextStyle(fontSize: 9, color: Color(0xFF482A1D)),
+        ),
+        textDirection: TextDirection.ltr,
+      )..layout();
+      final labelOrigin = object.contact.translate(-label.width, 4);
+      canvas.drawRRect(
+        RRect.fromRectAndRadius(
+          Rect.fromLTWH(
+            labelOrigin.dx - 2,
+            labelOrigin.dy - 1,
+            label.width + 4,
+            label.height + 2,
+          ),
+          const Radius.circular(2),
+        ),
+        Paint()..color = const Color(0xDDFBF8E9),
+      );
+      label.paint(canvas, labelOrigin);
+    }
   }
 
   // ─── Terrain ───────────────────────────────────────────────────────────
@@ -226,23 +307,45 @@ class GardenGame extends FlameGame {
   Path _islandContour(ZoneType zone) {
     final points = switch (zone) {
       ZoneType.potager => const <Offset>[
-        Offset(24, 205), Offset(42, 118), Offset(116, 78),
-        Offset(200, 68), Offset(284, 78), Offset(358, 118),
-        Offset(376, 205), Offset(366, 300), Offset(330, 374),
-        Offset(248, 410), Offset(142, 410), Offset(60, 374),
+        Offset(24, 205),
+        Offset(42, 118),
+        Offset(116, 78),
+        Offset(200, 68),
+        Offset(284, 78),
+        Offset(358, 118),
+        Offset(376, 205),
+        Offset(366, 300),
+        Offset(330, 374),
+        Offset(248, 410),
+        Offset(142, 410),
+        Offset(60, 374),
         Offset(24, 300),
       ],
       ZoneType.jardinFleuri => const <Offset>[
-        Offset(38, 210), Offset(70, 128), Offset(150, 96),
-        Offset(200, 90), Offset(250, 96), Offset(330, 128),
-        Offset(362, 210), Offset(350, 290), Offset(312, 360),
-        Offset(235, 398), Offset(155, 398), Offset(78, 360),
-        Offset(40, 290),
+        Offset(22, 210),
+        Offset(52, 112),
+        Offset(136, 73),
+        Offset(200, 64),
+        Offset(264, 73),
+        Offset(348, 112),
+        Offset(378, 210),
+        Offset(366, 306),
+        Offset(324, 380),
+        Offset(242, 416),
+        Offset(158, 416),
+        Offset(66, 380),
+        Offset(34, 306),
       ],
       ZoneType.verger => const <Offset>[
-        Offset(50, 240), Offset(95, 150), Offset(195, 120),
-        Offset(295, 150), Offset(340, 240), Offset(320, 320),
-        Offset(250, 380), Offset(140, 380), Offset(70, 320),
+        Offset(32, 240),
+        Offset(84, 126),
+        Offset(195, 88),
+        Offset(306, 126),
+        Offset(358, 240),
+        Offset(332, 334),
+        Offset(256, 405),
+        Offset(134, 405),
+        Offset(58, 334),
       ],
     };
     final path = Path()..moveTo(points.first.dx, points.first.dy);
@@ -273,17 +376,53 @@ class GardenGame extends FlameGame {
         ).createShader(earth.getBounds()),
     );
 
-    // Earth grain — subtle horizontal striations for material depth.
+    // Sparse strata and grains make the exposed slice read as cut earth.
     final bounds = earth.getBounds();
     canvas.save();
     canvas.clipPath(earth);
-    for (var y = bounds.top; y < bounds.bottom; y += 4) {
-      canvas.drawLine(
-        Offset(bounds.left, y),
-        Offset(bounds.right, y),
+    final earthRng = math.Random(710 + zone.index);
+    for (var band = 0; band < 3; band++) {
+      final y = bounds.bottom - 7 - band * 7.0;
+      final strata = Path()..moveTo(bounds.left - 8, y);
+      for (var step = 0; step < 8; step++) {
+        final x = bounds.left - 8 + step * bounds.width / 7;
+        strata.quadraticBezierTo(
+          x + bounds.width / 28,
+          y + (step.isEven ? 1.8 : -1.2),
+          x + bounds.width / 14,
+          y,
+        );
+      }
+      canvas.drawPath(
+        strata,
         Paint()
-          ..color = const Color(0x0D5A3F2A)
-          ..strokeWidth = 1,
+          ..color = band == 0
+              ? const Color(0x3E674A35)
+              : const Color(0x263F3028)
+          ..style = PaintingStyle.stroke
+          ..strokeWidth = band == 0 ? 2 : 1,
+      );
+    }
+    for (var i = 0; i < 145; i++) {
+      final x = bounds.left + earthRng.nextDouble() * bounds.width;
+      final y = bounds.top + earthRng.nextDouble() * bounds.height;
+      final length = 2.0 + earthRng.nextDouble() * 10;
+      canvas.drawLine(
+        Offset(x, y),
+        Offset(x + length, y + length * 0.12),
+        Paint()
+          ..color = i.isEven ? const Color(0x3960402D) : const Color(0x3ACDA47A)
+          ..strokeWidth = i % 5 == 0 ? 1.5 : 0.7
+          ..strokeCap = StrokeCap.round,
+      );
+    }
+    for (var i = 0; i < 95; i++) {
+      final x = bounds.left + earthRng.nextDouble() * bounds.width;
+      final y = bounds.top + earthRng.nextDouble() * bounds.height;
+      canvas.drawCircle(
+        Offset(x, y),
+        0.4 + earthRng.nextDouble() * 1.1,
+        Paint()..color = const Color(0x4DD3B08A),
       );
     }
     canvas.restore();
@@ -304,22 +443,30 @@ class GardenGame extends FlameGame {
         ).createShader(contour.getBounds()),
     );
 
-    // Subtle grass texture — organic blotches, not a grid stamp.
+    // Irregular, low-contrast grass patches avoid a visible cell pattern.
     canvas.save();
     canvas.clipPath(contour);
     final rng = math.Random(42 + zone.index);
-    for (var i = 0; i < 60; i++) {
+    _drawGrassTextureTiles(canvas, zone, contour.getBounds());
+    for (var i = 0; i < 120; i++) {
       final x = bounds.left + rng.nextDouble() * bounds.width;
       final y = bounds.top + rng.nextDouble() * bounds.height;
-      final r = 3.0 + rng.nextDouble() * 8;
-      canvas.drawOval(
-        Rect.fromCenter(center: Offset(x, y), width: r * 2, height: r * 1.2),
-        Paint()..color = Color.fromRGBO(
-          130 + rng.nextInt(40),
-          160 + rng.nextInt(40),
-          80 + rng.nextInt(30),
-          0.06 + rng.nextDouble() * 0.08,
-        ),
+      final r = 3.0 + rng.nextDouble() * 9;
+      final patch = Path()
+        ..moveTo(x - r, y)
+        ..quadraticBezierTo(x - r * 0.7, y - r * 0.5, x, y - r * 0.35)
+        ..quadraticBezierTo(x + r * 0.8, y - r * 0.4, x + r, y)
+        ..quadraticBezierTo(x + r * 0.4, y + r * 0.5, x - r * 0.5, y + r * 0.3)
+        ..close();
+      canvas.drawPath(
+        patch,
+        Paint()
+          ..color = Color.fromRGBO(
+            130 + rng.nextInt(40),
+            160 + rng.nextInt(40),
+            80 + rng.nextInt(30),
+            0.10 + rng.nextDouble() * 0.09,
+          ),
       );
     }
     // Brighter highlights near the top-left (light source).
@@ -329,12 +476,33 @@ class GardenGame extends FlameGame {
       final r = 4.0 + rng.nextDouble() * 6;
       canvas.drawOval(
         Rect.fromCenter(center: Offset(x, y), width: r * 2, height: r),
-        Paint()..color = const Color(0x14C4DC8C),
+        Paint()..color = const Color(0x20D1E294),
       );
+    }
+    // A fine, irregular grain gives the grass a painted fiber rather than a
+    // flat fill. The marks stay short so the planting contacts remain clear.
+    final bladeRng = math.Random(901 + zone.index);
+    for (var i = 0; i < 115; i++) {
+      final x = bounds.left + 18 + bladeRng.nextDouble() * (bounds.width - 36);
+      final y = bounds.top + 22 + bladeRng.nextDouble() * (bounds.height - 54);
+      final bladePaint = Paint()
+        ..color = i.isEven ? const Color(0x5273974E) : const Color(0x42618147)
+        ..strokeWidth = i % 5 == 0 ? 1.3 : 0.8
+        ..strokeCap = StrokeCap.round;
+      final lean = (bladeRng.nextDouble() - 0.5) * 3.5;
+      final length = 2.5 + bladeRng.nextDouble() * 3.5;
+      canvas.drawLine(Offset(x, y), Offset(x + lean, y - length), bladePaint);
+      if (i % 4 == 0) {
+        canvas.drawLine(
+          Offset(x + 1, y),
+          Offset(x - lean * 0.4, y - length * 0.72),
+          bladePaint,
+        );
+      }
     }
     canvas.restore();
 
-    // Grass edge — soft highlight on the top rim.
+    // A fine grassy lip keeps the earth and top surface connected.
     canvas.drawPath(
       contour,
       Paint()
@@ -351,11 +519,86 @@ class GardenGame extends FlameGame {
     );
   }
 
+  List<_TerrainTile> _terrainTiles(ZoneType zone, Rect bounds) {
+    final rng = math.Random(1200 + zone.index);
+    final tiles = <_TerrainTile>[];
+    for (var y = bounds.top + 18; y < bounds.bottom - 20; y += 26) {
+      for (var x = bounds.left + 18; x < bounds.right - 18; x += 28) {
+        final center = Offset(
+          x + (rng.nextDouble() - 0.5) * 13,
+          y + (rng.nextDouble() - 0.5) * 11,
+        );
+        final variant = _TerrainTileVariant.values[rng.nextInt(4)];
+        tiles.add(
+          _TerrainTile(center, variant, 0.75 + rng.nextDouble() * 0.55),
+        );
+      }
+    }
+    return tiles;
+  }
+
+  void _drawGrassTextureTiles(Canvas canvas, ZoneType zone, Rect bounds) {
+    for (final tile in _terrainTiles(zone, bounds)) {
+      canvas.save();
+      canvas.translate(tile.center.dx, tile.center.dy);
+      canvas.scale(tile.scale);
+      final dark = Paint()
+        ..color = const Color(0x4B5F8546)
+        ..strokeWidth = 1
+        ..strokeCap = StrokeCap.round;
+      final light = Paint()
+        ..color = const Color(0x4DABC86B)
+        ..strokeWidth = 1
+        ..strokeCap = StrokeCap.round;
+      switch (tile.variant) {
+        case _TerrainTileVariant.grain:
+          canvas.drawCircle(const Offset(-2, 1), 1.1, dark);
+          canvas.drawCircle(const Offset(2, -1), 0.8, light);
+          canvas.drawLine(const Offset(-5, 4), const Offset(-2, 2), dark);
+          canvas.drawLine(const Offset(2, 4), const Offset(5, 2), light);
+        case _TerrainTileVariant.blades:
+          canvas.drawLine(const Offset(-3, 4), const Offset(-4, -3), dark);
+          canvas.drawLine(const Offset(0, 4), const Offset(1, -5), light);
+          canvas.drawLine(const Offset(3, 4), const Offset(5, -2), dark);
+        case _TerrainTileVariant.clover:
+          for (final offset in const [
+            Offset(-2, 0),
+            Offset(2, 0),
+            Offset(0, -2),
+            Offset(0, 2),
+          ]) {
+            canvas.drawCircle(offset, 1.5, light);
+          }
+          canvas.drawCircle(Offset.zero, 0.8, dark);
+        case _TerrainTileVariant.highlight:
+          canvas.drawOval(
+            const Rect.fromLTWH(-6, -2, 12, 4),
+            Paint()..color = const Color(0x246E9B4B),
+          );
+          canvas.drawLine(const Offset(-4, 0), const Offset(3, -1), light);
+      }
+      canvas.restore();
+    }
+  }
+
   // ─── Environment objects ───────────────────────────────────────────────
 
   List<_SceneObject> _environmentObjects(ZoneType zone) {
     if (zone == ZoneType.potager) {
       return [
+        for (final object in PotagerPilotScene.objects)
+          _SceneObject(object.contact, (canvas) {
+            if (!GardenSceneRenderer.drawSprite(canvas, object, _sprites)) {
+              if (identical(object, PotagerPilotScene.rock)) {
+                LandscapeMassPainter.drawRock(
+                  canvas,
+                  LandscapeRock(object.contact, object.size.height),
+                );
+              } else {
+                PotagerComposition.drawBarrel(canvas);
+              }
+            }
+          }, id: object.id, zBias: object.zBias),
         for (final mass in PotagerComposition.masses) ...[
           for (final shrub in mass.shrubs)
             _SceneObject(shrub.anchor, (canvas) {
@@ -413,18 +656,6 @@ class GardenGame extends FlameGame {
             PotagerComposition.drawTrellis(canvas);
           }
         }),
-        _SceneObject(PotagerComposition.barrelAnchor, (canvas) {
-          if (!_sprites.draw(
-            canvas,
-            'commun_decor_tonneau_bois_statique_ordinaire_00.png',
-            PotagerComposition.barrelAnchor,
-            32,
-            35,
-            opacity: 0.88,
-          )) {
-            PotagerComposition.drawBarrel(canvas);
-          }
-        }),
         _SceneObject(PotagerComposition.wateringCanAnchor, (canvas) {
           if (!_sprites.draw(
             canvas,
@@ -454,46 +685,55 @@ class GardenGame extends FlameGame {
 
     final objects = <_SceneObject>[];
 
-    // Edge trees at the back corners.
-    objects.add(_SceneObject(
-      const Offset(68, 152),
-      (c) => _drawTree(c, const Offset(68, 152), zone, withFruit: false),
-    ));
-    if (zone != ZoneType.potager) {
-      objects.add(_SceneObject(
-        const Offset(322, 148),
-        (c) => _drawTree(c, const Offset(322, 148), zone, withFruit: true),
-      ));
-    }
-
-    // Shrubs and bushes along the borders.
-    for (final bush in const [
-      Offset(50, 115), Offset(92, 98), Offset(135, 108),
-      Offset(255, 98), Offset(302, 108), Offset(338, 148),
-      Offset(52, 248), Offset(342, 248),
-    ]) {
-      objects.add(_SceneObject(
-        bush.translate(0, 6),
-        (c) => _drawShrub(c, bush, 13, zone),
-      ));
+    // The high planting stays behind the interactive contacts.
+    final borderShrubs = zone == ZoneType.verger
+        ? const [
+            Offset(122, 159),
+            Offset(268, 159),
+            Offset(62, 249),
+            Offset(328, 249),
+          ]
+        : const [
+            Offset(103, 130),
+            Offset(145, 113),
+            Offset(195, 102),
+            Offset(245, 113),
+            Offset(287, 130),
+            Offset(51, 247),
+            Offset(339, 247),
+          ];
+    for (final bush in borderShrubs) {
+      objects.add(
+        _SceneObject(
+          bush.translate(0, 6),
+          (c) => _drawShrub(c, bush, zone == ZoneType.verger ? 16 : 18, zone),
+        ),
+      );
     }
 
     // Front border hedge.
     for (final point in const [
-      Offset(58, 360), Offset(92, 382), Offset(138, 392),
-      Offset(195, 396), Offset(252, 392), Offset(298, 382),
-      Offset(332, 360),
+      Offset(62, 354),
+      Offset(112, 380),
+      Offset(278, 380),
+      Offset(328, 354),
     ]) {
-      objects.add(_SceneObject(
-        point.translate(0, 5),
-        (c) => _drawShrub(c, point, 10, zone),
-      ));
+      objects.add(
+        _SceneObject(
+          point.translate(0, 4),
+          (c) => _drawShrub(c, point, 8, zone),
+        ),
+      );
     }
 
     // Grass tufts.
     for (final tuft in const [
-      Offset(60, 178), Offset(330, 172), Offset(48, 298),
-      Offset(342, 296), Offset(120, 386), Offset(270, 388),
+      Offset(60, 178),
+      Offset(330, 172),
+      Offset(48, 298),
+      Offset(342, 296),
+      Offset(120, 386),
+      Offset(270, 388),
     ]) {
       objects.add(_SceneObject(tuft, (c) => _drawGrassTuft(c, tuft)));
     }
@@ -505,61 +745,43 @@ class GardenGame extends FlameGame {
       ZoneType.verger => const Color(0xFFF5E7D4),
     };
     for (final bloom in [
-      Offset(53, 212), Offset(337, 216), Offset(66, 336),
+      Offset(53, 212),
+      Offset(337, 216),
+      Offset(66, 336),
       Offset(327, 340),
       if (zone != ZoneType.potager) Offset(195, 390),
       if (zone == ZoneType.potager) Offset(235, 390),
     ]) {
-      objects.add(_SceneObject(
-        bloom.translate(0, 3),
-        (c) => _drawFlowerClump(c, bloom, accent),
-      ));
+      objects.add(
+        _SceneObject(
+          bloom.translate(0, 3),
+          (c) => _drawFlowerClump(c, bloom, accent),
+        ),
+      );
     }
 
     // Zone-specific accessories.
     if (zone == ZoneType.jardinFleuri) {
-      objects.add(_SceneObject(
-        const Offset(330, 175).translate(0, 4),
-        (c) => _drawBirdbath(c, const Offset(330, 175)),
-      ));
-    }
-
-    // Path stones — placed after environment so they sort naturally.
-    if (zone != ZoneType.potager) {
-      for (final entry in _pathNodes(zone).asMap().entries) {
-        objects.add(_SceneObject(
-          entry.value,
-          (c) => _drawStone(c, entry.value, entry.key),
-        ));
-      }
+      objects.add(
+        _SceneObject(
+          const Offset(330, 175).translate(0, 4),
+          (c) => _drawBirdbath(c, const Offset(330, 175)),
+        ),
+      );
     }
 
     // Verger bench.
     if (zone == ZoneType.verger) {
-      objects.add(_SceneObject(
-        const Offset(195, 392),
-        (c) => _sprites.draw(c, 'verger_banc_bois_ordinaire_00.png',
-            const Offset(195, 392), 67, 38),
-      ));
+      objects.add(
+        _SceneObject(
+          const Offset(195, 392),
+          (c) => _drawBench(c, const Offset(195, 392)),
+        ),
+      );
     }
 
     return objects;
   }
-
-  List<Offset> _pathNodes(ZoneType zone) => switch (zone) {
-    ZoneType.potager => const [],
-    ZoneType.jardinFleuri => const [
-      Offset(195, 388), Offset(195, 355),
-      Offset(150, 335), Offset(240, 335),
-      Offset(150, 285), Offset(240, 285),
-      Offset(195, 250), Offset(195, 210), Offset(195, 175),
-    ],
-    ZoneType.verger => const [
-      Offset(195, 388), Offset(195, 350),
-      Offset(150, 330), Offset(240, 330),
-      Offset(140, 280), Offset(250, 280),
-    ],
-  };
 
   // ─── Beds ──────────────────────────────────────────────────────────────
 
@@ -568,21 +790,11 @@ class GardenGame extends FlameGame {
       _drawTreeBase(canvas, point);
       return;
     }
-    if (zone != ZoneType.potager && _sprites.draw(
-      canvas,
-      'commun_parcelle_bois_vide_ordinaire_00.png',
-      point.translate(0, 18),
-      80,
-      58,
-    )) {
-      return;
-    }
 
     if (zone == ZoneType.potager) {
       canvas.save();
       canvas.clipPath(_islandContour(zone));
       PotagerPath.drawBedContact(canvas, point);
-      PotagerComposition.drawBedSeam(canvas, point);
       canvas.restore();
     }
 
@@ -631,6 +843,21 @@ class GardenGame extends FlameGame {
             ? (embedded ? const Color(0xFF82935D) : const Color(0xFFAD8C61))
             : const Color(0xFFB08258),
     );
+    for (final (start, end) in [
+      (point.translate(-33, 5), point.translate(-9, 18)),
+      (point.translate(-21, 11), point.translate(-3, 20)),
+      (point.translate(7, 20), point.translate(32, 6)),
+      (point.translate(14, 25), point.translate(36, 12)),
+    ]) {
+      canvas.drawLine(
+        start,
+        end,
+        Paint()
+          ..color = const Color(0x43805C3C)
+          ..strokeWidth = 0.7,
+      );
+    }
+
     // Wood top rim — warm honey gradient.
     final topRim = embedded
         ? PotagerComposition.embeddedRim(point)
@@ -678,13 +905,17 @@ class GardenGame extends FlameGame {
     final rng = math.Random(point.dx.hashCode ^ point.dy.hashCode);
     canvas.save();
     canvas.clipPath(soil);
-    for (var i = 0; i < 5; i++) {
+    for (var i = 0; i < 17; i++) {
       final dx = (rng.nextDouble() - 0.5) * (w * 1.3);
       final dy = (rng.nextDouble() - 0.3) * (h * 1.2);
-      canvas.drawCircle(
-        point.translate(dx, dy),
-        1.5 + rng.nextDouble() * 2,
-        Paint()..color = const Color(0x44604030),
+      final center = point.translate(dx, dy);
+      final grain = 1.1 + rng.nextDouble() * 2.4;
+      canvas.drawOval(
+        Rect.fromCenter(center: center, width: grain * 1.8, height: grain),
+        Paint()
+          ..color = i.isEven
+              ? const Color(0x6650382A)
+              : const Color(0x557C5A40),
       );
     }
     canvas.restore();
@@ -744,20 +975,35 @@ class GardenGame extends FlameGame {
   }
 
   void _drawTreeBase(Canvas canvas, Offset point) {
-    if (_sprites.draw(
-      canvas,
-      'verger_pied_arbre_herbe_ordinaire_00.png',
-      point.translate(0, 14),
-      90,
-      48,
-    )) {
-      return;
+    final patch = Path()
+      ..moveTo(point.dx - 33, point.dy + 3)
+      ..quadraticBezierTo(
+        point.dx - 26,
+        point.dy - 14,
+        point.dx - 6,
+        point.dy - 14,
+      )
+      ..quadraticBezierTo(
+        point.dx + 20,
+        point.dy - 16,
+        point.dx + 34,
+        point.dy + 2,
+      )
+      ..quadraticBezierTo(
+        point.dx + 13,
+        point.dy + 15,
+        point.dx - 10,
+        point.dy + 13,
+      )
+      ..close();
+    canvas.drawPath(patch, Paint()..color = const Color(0x6682A962));
+    canvas.drawOval(
+      Rect.fromCenter(center: point, width: 16, height: 7),
+      Paint()..color = const Color(0x996C503C),
+    );
+    for (final dx in [-26.0, -17.0, 19.0, 28.0]) {
+      _drawGrassTuft(canvas, point.translate(dx, 2));
     }
-    // Grass pad around tree trunk.
-    _diamond(canvas, point, 42, 21, const Color(0xFF79995B));
-    _diamond(canvas, point, 38, 19, const Color(0xFF8AAA68));
-    // Small earth ring.
-    canvas.drawCircle(point, 6, Paint()..color = const Color(0xFF6C503C));
   }
 
   // ─── Plants ────────────────────────────────────────────────────────────
@@ -784,7 +1030,8 @@ class GardenGame extends FlameGame {
       Species.pommier => 'verger_arbre_pommier',
       Species.poirier => 'verger_arbre_poirier',
     };
-    final produce = plant.isReadyToHarvest ||
+    final produce =
+        plant.isReadyToHarvest ||
         (plant.completedCycles > 0 &&
             plant.progressSteps >= plant.targetSteps / 2);
     final spriteStage = switch (plant.stage) {
@@ -792,33 +1039,188 @@ class GardenGame extends FlameGame {
       PlantStage.presqueMature => 'adulte_sans_production',
       PlantStage.mature => produce ? 'recoltable' : 'adulte_sans_production',
     };
-    final tree = plant.species.zone == ZoneType.verger;
-    final matureSize = switch (plant.species) {
-      Species.tomate => const Size(76, 61),
-      Species.carotte => const Size(77, 41),
-      Species.courgette => const Size(82, 64),
-      Species.tournesol => const Size(73, 83),
-      Species.tulipe => const Size(67, 72),
-      Species.lavande => const Size(67, 73),
-      Species.pommier => const Size(137, 127),
-      Species.poirier => const Size(139, 131),
-    };
-    final stageScale = switch (plant.stage) {
-      PlantStage.graineGermee => tree ? 0.42 : 0.40,
-      PlantStage.jeunePlant => tree ? 0.64 : 0.63,
+    final spriteName = '${spritePrefix}_${spriteStage}_ordinaire_00.png';
+    final spriteSize = _sprites.visibleSize(spriteName);
+    final reusedStageScale = switch (plant.stage) {
+      PlantStage.graineGermee => 0.63,
       PlantStage.presqueMature => 0.83,
-      PlantStage.mature => 1.0,
+      PlantStage.jeunePlant || PlantStage.mature => 1.0,
     };
-    if (_sprites.draw(
-      canvas,
-      '${spritePrefix}_${spriteStage}_ordinaire_00.png',
-      point.translate(0, tree ? 13 : 9),
-      matureSize.width * stageScale,
-      matureSize.height * stageScale,
-    )) {
+    if (spriteSize != null &&
+        _sprites.draw(
+          canvas,
+          spriteName,
+          point,
+          spriteSize.width * reusedStageScale,
+          spriteSize.height * reusedStageScale,
+        )) {
+      if (plant.tier == GrowthTier.brillante) {
+        _drawBrilliantOverlay(
+          canvas,
+          point,
+          plant.species,
+          spriteSize * reusedStageScale,
+        );
+      }
       return;
     }
     _drawPlantShape(canvas, point, plant, produce);
+  }
+
+  void _drawBrilliantOverlay(
+    Canvas canvas,
+    Offset foot,
+    Species species,
+    Size size,
+  ) {
+    final marks = switch (species) {
+      Species.tomate => const [Offset(-0.21, -0.48), Offset(0.18, -0.62)],
+      Species.carotte => const [Offset(-0.30, -0.58), Offset(0.13, -0.73)],
+      Species.courgette => const [Offset(-0.23, -0.37), Offset(0.25, -0.62)],
+      Species.tournesol => const [Offset(-0.12, -0.84), Offset(0.20, -0.56)],
+      Species.tulipe => const [Offset(-0.26, -0.77), Offset(0.18, -0.70)],
+      Species.lavande => const [Offset(-0.28, -0.55), Offset(0.22, -0.81)],
+      Species.pommier => const [Offset(-0.30, -0.72), Offset(0.20, -0.52)],
+      Species.poirier => const [Offset(-0.16, -0.83), Offset(0.28, -0.62)],
+    };
+    final accent = switch (species) {
+      Species.tomate || Species.pommier => const Color(0xFFF4D99B),
+      Species.carotte ||
+      Species.courgette ||
+      Species.poirier => const Color(0xFFDFE5A6),
+      Species.tournesol => const Color(0xFFFFEDAD),
+      Species.tulipe => const Color(0xFFF8D4DE),
+      Species.lavande => const Color(0xFFE4DAF2),
+    };
+    for (final (index, mark) in marks.indexed) {
+      final center = foot.translate(
+        mark.dx * size.width,
+        mark.dy * size.height,
+      );
+      final leaf = Path()
+        ..moveTo(center.dx - 4, center.dy + 1)
+        ..quadraticBezierTo(
+          center.dx - 1,
+          center.dy - 3 - index,
+          center.dx + 4,
+          center.dy - 2,
+        )
+        ..quadraticBezierTo(
+          center.dx + 1,
+          center.dy + 2,
+          center.dx - 4,
+          center.dy + 1,
+        )
+        ..close();
+      canvas.drawPath(leaf, Paint()..color = accent.withValues(alpha: 0.88));
+      canvas.drawLine(
+        center.translate(-2, 0),
+        center.translate(2, -1),
+        Paint()
+          ..color = const Color(0xB5FFF8E9)
+          ..strokeWidth = 0.8,
+      );
+      final ink = Paint()
+        ..color = const Color(0xEFFFFCF0)
+        ..strokeWidth = 1.2
+        ..strokeCap = StrokeCap.round
+        ..style = PaintingStyle.stroke;
+      switch (species) {
+        case Species.tomate:
+          canvas.drawLine(center.translate(0, -4), center.translate(0, 3), ink);
+          canvas.drawLine(
+            center.translate(-3, -1),
+            center.translate(3, 0),
+            ink,
+          );
+          break;
+        case Species.carotte:
+          for (var row = 0; row < 2; row++) {
+            final y = row * 3.0 - 3;
+            canvas.drawLine(
+              center.translate(-3, y),
+              center.translate(0, y + 2),
+              ink,
+            );
+            canvas.drawLine(
+              center.translate(0, y + 2),
+              center.translate(3, y),
+              ink,
+            );
+          }
+          break;
+        case Species.courgette:
+          for (var stripe = -1; stripe <= 1; stripe++) {
+            canvas.drawLine(
+              center.translate(stripe * 2.0 - 1, -3),
+              center.translate(stripe * 2.0 + 1, 2),
+              ink,
+            );
+          }
+          break;
+        case Species.tournesol:
+          for (var dot = 0; dot < 5; dot++) {
+            final angle = dot * math.pi * 2 / 5;
+            canvas.drawCircle(
+              center.translate(math.cos(angle) * 3, math.sin(angle) * 3),
+              0.8,
+              Paint()..color = const Color(0xFFFFFCF0),
+            );
+          }
+          break;
+        case Species.tulipe:
+          canvas.drawLine(
+            center.translate(-3, -3),
+            center.translate(0, 2),
+            ink,
+          );
+          canvas.drawLine(center.translate(0, 2), center.translate(3, -3), ink);
+          break;
+        case Species.lavande:
+          for (var dot = -1; dot <= 1; dot++) {
+            canvas.drawCircle(
+              center.translate(dot * 2.0, -dot * 2.0),
+              1.1,
+              Paint()..color = const Color(0xFFFFFCF0),
+            );
+          }
+          break;
+        case Species.pommier:
+          final diamond = Path()
+            ..moveTo(center.dx, center.dy - 5)
+            ..lineTo(center.dx + 4, center.dy)
+            ..lineTo(center.dx, center.dy + 5)
+            ..lineTo(center.dx - 4, center.dy)
+            ..close();
+          canvas.drawPath(diamond, ink);
+          break;
+        case Species.poirier:
+          canvas.drawArc(
+            Rect.fromCircle(center: center, radius: 4),
+            -math.pi * 0.8,
+            math.pi * 1.2,
+            false,
+            ink,
+          );
+          break;
+      }
+    }
+    _brilliantSparkle(
+      canvas,
+      foot.translate(
+        marks.first.dx * size.width - 3,
+        marks.first.dy * size.height - 3,
+      ),
+    );
+    if (species.zone == ZoneType.verger) {
+      _brilliantSparkle(
+        canvas,
+        foot.translate(
+          marks.last.dx * size.width + 4,
+          marks.last.dy * size.height - 4,
+        ),
+      );
+    }
   }
 
   void _drawPlantShape(Canvas canvas, Offset point, Plant plant, bool produce) {
@@ -852,7 +1254,13 @@ class GardenGame extends FlameGame {
 
   // ─── Vegetable plants ─────────────────────────────────────────────────
 
-  void _drawTomate(Canvas c, Offset p, PlantStage stage, bool produce, bool brilliant) {
+  void _drawTomate(
+    Canvas c,
+    Offset p,
+    PlantStage stage,
+    bool produce,
+    bool brilliant,
+  ) {
     final h = switch (stage) {
       PlantStage.graineGermee => 10.0,
       PlantStage.jeunePlant => 24.0,
@@ -878,11 +1286,19 @@ class GardenGame extends FlameGame {
       }
       // Highlight glints — upper-left.
       c.drawOval(
-        Rect.fromCenter(center: p.translate(-14, -h * 0.45), width: 10, height: 5),
+        Rect.fromCenter(
+          center: p.translate(-14, -h * 0.45),
+          width: 10,
+          height: 5,
+        ),
         Paint()..color = const Color(0x55A5C46B),
       );
       c.drawOval(
-        Rect.fromCenter(center: p.translate(10, -h * 0.82), width: 8, height: 4),
+        Rect.fromCenter(
+          center: p.translate(10, -h * 0.82),
+          width: 8,
+          height: 4,
+        ),
         Paint()..color = const Color(0x55B0CE72),
       );
     }
@@ -894,8 +1310,11 @@ class GardenGame extends FlameGame {
         p.translate(2, -h * 0.35),
       ]) {
         c.drawCircle(fruit, 5, Paint()..color = const Color(0xFFC96955));
-        c.drawCircle(fruit.translate(-1.5, -1.5), 2,
-            Paint()..color = const Color(0xFFE08A70));
+        c.drawCircle(
+          fruit.translate(-1.5, -1.5),
+          2,
+          Paint()..color = const Color(0xFFE08A70),
+        );
       }
     }
     if (brilliant) {
@@ -903,7 +1322,13 @@ class GardenGame extends FlameGame {
     }
   }
 
-  void _drawCarotte(Canvas c, Offset p, PlantStage stage, bool produce, bool brilliant) {
+  void _drawCarotte(
+    Canvas c,
+    Offset p,
+    PlantStage stage,
+    bool produce,
+    bool brilliant,
+  ) {
     final h = switch (stage) {
       PlantStage.graineGermee => 6.0,
       PlantStage.jeunePlant => 16.0,
@@ -919,8 +1344,13 @@ class GardenGame extends FlameGame {
       final dx = i * 7.0;
       final tip = p.translate(dx, -h);
       // Stem.
-      _stem(c, p.translate(dx * 0.3, 0), h * (1 - dx.abs() * 0.02),
-          const Color(0xFF52764F), 2);
+      _stem(
+        c,
+        p.translate(dx * 0.3, 0),
+        h * (1 - dx.abs() * 0.02),
+        const Color(0xFF52764F),
+        2,
+      );
       // Feathery leaves — layered ovals getting smaller toward top.
       c.drawOval(
         Rect.fromCenter(center: tip.translate(0, 6), width: 14, height: 8),
@@ -951,7 +1381,13 @@ class GardenGame extends FlameGame {
     }
   }
 
-  void _drawCourgette(Canvas c, Offset p, PlantStage stage, bool produce, bool brilliant) {
+  void _drawCourgette(
+    Canvas c,
+    Offset p,
+    PlantStage stage,
+    bool produce,
+    bool brilliant,
+  ) {
     final h = switch (stage) {
       PlantStage.graineGermee => 8.0,
       PlantStage.jeunePlant => 20.0,
@@ -974,7 +1410,11 @@ class GardenGame extends FlameGame {
         );
         // Leaf veins — subtle lighter lines.
         c.drawOval(
-          Rect.fromCenter(center: center.translate(-2, -1), width: w * 0.5, height: hh * 0.4),
+          Rect.fromCenter(
+            center: center.translate(-2, -1),
+            width: w * 0.5,
+            height: hh * 0.4,
+          ),
           Paint()..color = const Color(0x22A5C46B),
         );
       }
@@ -986,7 +1426,11 @@ class GardenGame extends FlameGame {
         Paint()..color = const Color(0xFF527C49),
       );
       c.drawOval(
-        Rect.fromCenter(center: p.translate(8, -h * 0.2 - 1), width: 12, height: 4),
+        Rect.fromCenter(
+          center: p.translate(8, -h * 0.2 - 1),
+          width: 12,
+          height: 4,
+        ),
         Paint()..color = const Color(0xFF6B9A55),
       );
     }
@@ -997,7 +1441,13 @@ class GardenGame extends FlameGame {
 
   // ─── Flower plants ─────────────────────────────────────────────────────
 
-  void _drawTournesol(Canvas c, Offset p, PlantStage stage, bool produce, bool brilliant) {
+  void _drawTournesol(
+    Canvas c,
+    Offset p,
+    PlantStage stage,
+    bool produce,
+    bool brilliant,
+  ) {
     final h = switch (stage) {
       PlantStage.graineGermee => 8.0,
       PlantStage.jeunePlant => 22.0,
@@ -1008,11 +1458,19 @@ class GardenGame extends FlameGame {
     if (h > 20) {
       // Leaves along the stem.
       c.drawOval(
-        Rect.fromCenter(center: p.translate(-10, -h * 0.35), width: 16, height: 8),
+        Rect.fromCenter(
+          center: p.translate(-10, -h * 0.35),
+          width: 16,
+          height: 8,
+        ),
         Paint()..color = const Color(0xFF5D8A51),
       );
       c.drawOval(
-        Rect.fromCenter(center: p.translate(10, -h * 0.55), width: 16, height: 8),
+        Rect.fromCenter(
+          center: p.translate(10, -h * 0.55),
+          width: 16,
+          height: 8,
+        ),
         Paint()..color = const Color(0xFF7BA658),
       );
     }
@@ -1023,21 +1481,37 @@ class GardenGame extends FlameGame {
       for (var i = 0; i < 8; i++) {
         final angle = i * math.pi * 2 / 8;
         c.drawCircle(
-          head.translate(math.cos(angle) * petalR * 0.7, math.sin(angle) * petalR * 0.7),
+          head.translate(
+            math.cos(angle) * petalR * 0.7,
+            math.sin(angle) * petalR * 0.7,
+          ),
           petalR * 0.5,
           Paint()..color = const Color(0xFFF0C945),
         );
       }
-      c.drawCircle(head, petalR * 0.45, Paint()..color = const Color(0xFF765338));
-      c.drawCircle(head.translate(-1, -1), petalR * 0.25,
-          Paint()..color = const Color(0xFF9A6B45));
+      c.drawCircle(
+        head,
+        petalR * 0.45,
+        Paint()..color = const Color(0xFF765338),
+      );
+      c.drawCircle(
+        head.translate(-1, -1),
+        petalR * 0.25,
+        Paint()..color = const Color(0xFF9A6B45),
+      );
     }
     if (brilliant) {
       _brilliantSparkle(c, p.translate(0, -h * 0.8));
     }
   }
 
-  void _drawTulipe(Canvas c, Offset p, PlantStage stage, bool produce, bool brilliant) {
+  void _drawTulipe(
+    Canvas c,
+    Offset p,
+    PlantStage stage,
+    bool produce,
+    bool brilliant,
+  ) {
     final h = switch (stage) {
       PlantStage.graineGermee => 6.0,
       PlantStage.jeunePlant => 18.0,
@@ -1052,8 +1526,13 @@ class GardenGame extends FlameGame {
     for (var i = -1; i <= 1; i++) {
       final dx = i * 9.0;
       final tip = p.translate(dx, -h * (1 - dx.abs() * 0.01));
-      _stem(c, p.translate(dx * 0.5, 0), h * (1 - dx.abs() * 0.01),
-          const Color(0xFF52764F), 2);
+      _stem(
+        c,
+        p.translate(dx * 0.5, 0),
+        h * (1 - dx.abs() * 0.01),
+        const Color(0xFF52764F),
+        2,
+      );
       if (h > 30) {
         // Tulip flower — cup shape.
         c.drawOval(
@@ -1082,7 +1561,13 @@ class GardenGame extends FlameGame {
     }
   }
 
-  void _drawLavande(Canvas c, Offset p, PlantStage stage, bool produce, bool brilliant) {
+  void _drawLavande(
+    Canvas c,
+    Offset p,
+    PlantStage stage,
+    bool produce,
+    bool brilliant,
+  ) {
     final h = switch (stage) {
       PlantStage.graineGermee => 6.0,
       PlantStage.jeunePlant => 16.0,
@@ -1097,8 +1582,13 @@ class GardenGame extends FlameGame {
     for (var i = -2; i <= 2; i++) {
       final dx = i * 6.0;
       final tip = p.translate(dx, -h * (1 - dx.abs() * 0.02));
-      _stem(c, p.translate(dx * 0.4, 0), h * (1 - dx.abs() * 0.02),
-          const Color(0xFF52764F), 1.5);
+      _stem(
+        c,
+        p.translate(dx * 0.4, 0),
+        h * (1 - dx.abs() * 0.02),
+        const Color(0xFF52764F),
+        1.5,
+      );
       if (h > 25) {
         // Lavender spike — small ovals.
         c.drawOval(
@@ -1123,8 +1613,14 @@ class GardenGame extends FlameGame {
 
   // ─── Trees ─────────────────────────────────────────────────────────────
 
-  void _drawTreeCanopy(Canvas c, Offset p, Species species, PlantStage stage,
-      bool produce, bool brilliant) {
+  void _drawTreeCanopy(
+    Canvas c,
+    Offset p,
+    Species species,
+    PlantStage stage,
+    bool produce,
+    bool brilliant,
+  ) {
     final h = switch (stage) {
       PlantStage.graineGermee => 28.0,
       PlantStage.jeunePlant => 52.0,
@@ -1159,12 +1655,20 @@ class GardenGame extends FlameGame {
       c.drawLine(p.translate(0, -h * 0.5), p.translate(-18, -h * 0.72), bark);
       c.drawLine(p.translate(0, -h * 0.58), p.translate(16, -h * 0.78), bark);
       bark.strokeWidth = 2.5;
-      c.drawLine(p.translate(-12, -h * 0.68), p.translate(-24, -h * 0.85), bark);
+      c.drawLine(
+        p.translate(-12, -h * 0.68),
+        p.translate(-24, -h * 0.85),
+        bark,
+      );
       c.drawLine(p.translate(10, -h * 0.72), p.translate(22, -h * 0.88), bark);
     }
     // Crown — layered masses for depth.
     final tip = p.translate(0, -h);
-    final crownR = h < 50 ? 14.0 : h < 80 ? 26.0 : 34.0;
+    final crownR = h < 50
+        ? 14.0
+        : h < 80
+        ? 26.0
+        : 34.0;
     // Dark base layer.
     for (final mass in [
       tip.translate(-crownR * 0.6, crownR * 0.3),
@@ -1179,7 +1683,11 @@ class GardenGame extends FlameGame {
       tip.translate(crownR * 0.5, -crownR * 0.15),
       tip.translate(0, -crownR * 0.3),
     ]) {
-      c.drawCircle(mass, crownR * 0.85, Paint()..color = const Color(0xFF4F7946));
+      c.drawCircle(
+        mass,
+        crownR * 0.85,
+        Paint()..color = const Color(0xFF4F7946),
+      );
     }
     // Highlight layer — upper-left.
     c.drawCircle(
@@ -1199,13 +1707,17 @@ class GardenGame extends FlameGame {
       final dist = rng.nextDouble() * crownR * 0.9;
       c.drawOval(
         Rect.fromCenter(
-          center: tip.translate(math.cos(angle) * dist, math.sin(angle) * dist * 0.6 - 4),
+          center: tip.translate(
+            math.cos(angle) * dist,
+            math.sin(angle) * dist * 0.6 - 4,
+          ),
           width: 8,
           height: 5,
         ),
-        Paint()..color = rng.nextBool()
-            ? const Color(0xFFA4C667)
-            : const Color(0xFF7BA658),
+        Paint()
+          ..color = rng.nextBool()
+              ? const Color(0xFFA4C667)
+              : const Color(0xFF7BA658),
       );
     }
     // Fruits.
@@ -1222,7 +1734,11 @@ class GardenGame extends FlameGame {
         tip.translate(crownR * 0.6, -crownR * 0.1),
       ]) {
         c.drawCircle(fruit, 5, Paint()..color = fruitColor);
-        c.drawCircle(fruit.translate(-1.5, -1.5), 2, Paint()..color = fruitHighlight);
+        c.drawCircle(
+          fruit.translate(-1.5, -1.5),
+          2,
+          Paint()..color = fruitHighlight,
+        );
       }
     }
     if (brilliant) {
@@ -1230,129 +1746,78 @@ class GardenGame extends FlameGame {
     }
   }
 
-  void _drawTree(Canvas c, Offset foot, ZoneType zone, {required bool withFruit}) {
-    if (_sprites.draw(
-      c,
-      withFruit && zone == ZoneType.verger
-          ? 'verger_arbre_pommier_recoltable_ordinaire_00.png'
-          : 'verger_arbre_pommier_adulte_sans_production_ordinaire_00.png',
-      foot,
-      88,
-      91,
-    )) {
-      return;
-    }
-    _drawTreeCanopy(c, foot, Species.pommier, PlantStage.mature, withFruit, false);
-  }
-
   // ─── Environment rendering ─────────────────────────────────────────────
 
   void _drawShrub(Canvas c, Offset point, double radius, ZoneType zone) {
-    if (_sprites.draw(
-      c,
-      'commun_buisson_haie_ordinaire_00.png',
-      point.translate(0, 10),
-      radius * 3.0,
-      radius * 1.9,
-    )) {
-      return;
-    }
-    // Contact shadow.
     c.drawOval(
-      Rect.fromCenter(center: point.translate(1, 5), width: radius * 2.8, height: radius * 1.1),
-      Paint()..color = const Color(0x3347683F),
+      Rect.fromCenter(
+        center: point.translate(2, 4),
+        width: radius * 2.7,
+        height: radius * 0.8,
+      ),
+      Paint()
+        ..color = const Color(0x28526941)
+        ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 2),
     );
-    // Base masses — dark to light.
-    for (final (center, r, color) in [
-      (point.translate(-radius * 0.5, 0), radius * 0.7, const Color(0xFF3D6B3A)),
-      (point.translate(radius * 0.4, -radius * 0.15), radius * 0.65, const Color(0xFF4F7946)),
-      (point.translate(-radius * 0.1, -radius * 0.35), radius * 0.6, const Color(0xFF5D8A51)),
-      (point.translate(radius * 0.2, -radius * 0.1), radius * 0.5, const Color(0xFF6F985F)),
-    ]) {
-      c.drawCircle(center, r, Paint()..color = color);
-    }
-    // Highlight glints.
-    for (final (center, w, hh) in [
-      (point.translate(-radius * 0.4, -radius * 0.45), radius * 0.5, radius * 0.25),
-      (point.translate(radius * 0.3, -radius * 0.5), radius * 0.4, radius * 0.2),
-    ]) {
-      c.drawOval(
-        Rect.fromCenter(center: center, width: w, height: hh),
-        Paint()..color = const Color(0x66A7C76B),
+
+    final rng = math.Random(
+      point.dx.round() * 47 + point.dy.round() * 11 + zone.index,
+    );
+    // Small overlapping leaves make a hedge silhouette without a smooth,
+    // stone-like body. The uneven dark core is mostly hidden by foliage.
+    for (var i = 0; i < 7; i++) {
+      final x = point.dx + (i - 3) * radius * 0.29;
+      final y = point.dy - radius * (0.36 + (i % 3) * 0.13);
+      c.drawCircle(
+        Offset(x, y),
+        radius * (i.isEven ? 0.46 : 0.39),
+        Paint()..color = const Color(0xFF4B7245),
       );
     }
-    // Scattered leaves.
-    final rng = math.Random(point.dx.hashCode);
-    for (var i = 0; i < 5; i++) {
-      final dx = (rng.nextDouble() - 0.5) * radius * 2;
-      final dy = -rng.nextDouble() * radius * 1.2;
+    final leafCount = radius > 12 ? 150 : 46;
+    const shades = [
+      Color(0xFF456F43),
+      Color(0xFF5B864E),
+      Color(0xFF709A56),
+      Color(0xFF89AD62),
+      Color(0xFFA6C477),
+    ];
+    for (var i = 0; i < leafCount; i++) {
+      final angle = rng.nextDouble() * math.pi * 2;
+      final distance = math.sqrt(rng.nextDouble());
+      final x = point.dx + math.cos(angle) * distance * radius * 1.12;
+      final y =
+          point.dy - radius * 0.55 + math.sin(angle) * distance * radius * 0.73;
+      final w = (radius > 12 ? 3.2 : 2.1) + rng.nextDouble() * 2.4;
+      c.save();
+      c.translate(x, y);
+      c.rotate((rng.nextDouble() - 0.5) * 2.0);
       c.drawOval(
-        Rect.fromCenter(center: point.translate(dx, dy), width: 7, height: 4),
-        Paint()..color = rng.nextBool()
-            ? const Color(0xFF9ABC63)
-            : const Color(0xFFB4CF76),
+        Rect.fromCenter(center: Offset.zero, width: w * 1.7, height: w * 0.85),
+        Paint()
+          ..color =
+              shades[(rng.nextInt(4) + (y < point.dy - radius ? 1 : 0)).clamp(
+                0,
+                4,
+              )],
       );
+      c.restore();
     }
     // Zone accent flower.
     if (zone == ZoneType.jardinFleuri) {
-      _drawSmallFlower(c, point.translate(radius * 0.3, -radius * 0.4), const Color(0xFFE8B0A8), 3);
+      _drawSmallFlower(
+        c,
+        point.translate(radius * 0.3, -radius * 0.4),
+        const Color(0xFFE8B0A8),
+        3,
+      );
     } else if (zone == ZoneType.verger) {
-      c.drawCircle(point.translate(radius * 0.3, -radius * 0.4), 2.5,
-          Paint()..color = const Color(0xFFD86E58));
+      c.drawCircle(
+        point.translate(radius * 0.3, -radius * 0.4),
+        2.5,
+        Paint()..color = const Color(0xFFD86E58),
+      );
     }
-  }
-
-  void _drawStone(Canvas c, Offset center, int variant) {
-    if (_sprites.draw(
-      c,
-      'commun_dalle_pierre_creme_ordinaire_00.png',
-      center.translate(0, 6),
-      46,
-      26,
-    )) {
-      return;
-    }
-    final hw = 21.0 + (variant % 3) * 1.5;
-    final hh = 11.0 + (variant % 2);
-    // Contact shadow.
-    c.drawOval(
-      Rect.fromCenter(center: center.translate(1, hh + 1), width: hw * 1.8, height: hh * 0.6),
-      Paint()..color = const Color(0x22706050),
-    );
-    // Stone side.
-    final side = Path()
-      ..moveTo(center.dx - hw, center.dy)
-      ..lineTo(center.dx, center.dy + hh)
-      ..lineTo(center.dx + hw, center.dy)
-      ..lineTo(center.dx + hw, center.dy + hh * 0.6)
-      ..lineTo(center.dx, center.dy + hh + hh * 0.6)
-      ..lineTo(center.dx - hw, center.dy + hh * 0.6)
-      ..close();
-    c.drawPath(side, Paint()..color = const Color(0xFFC9C0A8));
-    // Stone top — warm cream with slight variation.
-    final top = Path()
-      ..moveTo(center.dx, center.dy - hh)
-      ..lineTo(center.dx + hw, center.dy)
-      ..lineTo(center.dx, center.dy + hh)
-      ..lineTo(center.dx - hw, center.dy)
-      ..close();
-    c.drawPath(
-      top,
-      Paint()
-        ..shader = LinearGradient(
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-          colors: [const Color(0xFFF5EED8), const Color(0xFFE8DFC4)],
-        ).createShader(top.getBounds()),
-    );
-    // Edge highlight.
-    c.drawPath(
-      top,
-      Paint()
-        ..color = const Color(0x33FFFFFF)
-        ..style = PaintingStyle.stroke
-        ..strokeWidth = 1,
-    );
   }
 
   void _drawGrassTuft(Canvas c, Offset point) {
@@ -1361,10 +1826,12 @@ class GardenGame extends FlameGame {
       ..strokeWidth = 2
       ..strokeCap = StrokeCap.round;
     // Multiple blades at different angles for a natural look.
-    for (final blade in [
-      (-5, -8), (-2, -11), (1, -10), (4, -8), (-3, -6),
-    ]) {
-      c.drawLine(point, point.translate(blade.$1.toDouble(), blade.$2.toDouble()), paint);
+    for (final blade in [(-5, -8), (-2, -11), (1, -10), (4, -8), (-3, -6)]) {
+      c.drawLine(
+        point,
+        point.translate(blade.$1.toDouble(), blade.$2.toDouble()),
+        paint,
+      );
     }
     // Lighter tips.
     final lightPaint = Paint()
@@ -1376,18 +1843,6 @@ class GardenGame extends FlameGame {
   }
 
   void _drawFlowerClump(Canvas c, Offset point, Color color) {
-    final pink = color == const Color(0xFFE8B0A8);
-    if (_sprites.draw(
-      c,
-      pink
-          ? 'fleurs_fleurs_sauvages_roses_ordinaire_00.png'
-          : 'commun_fleurs_marguerites_blanches_ordinaire_00.png',
-      point.translate(0, 3),
-      22,
-      21,
-    )) {
-      return;
-    }
     // Grass base.
     _drawGrassTuft(c, point);
     // Three flowers at different heights.
@@ -1401,25 +1856,23 @@ class GardenGame extends FlameGame {
     for (var i = 0; i < 5; i++) {
       final angle = i * math.pi * 2 / 5;
       c.drawCircle(
-        center.translate(math.cos(angle) * radius * 0.6, math.sin(angle) * radius * 0.6),
+        center.translate(
+          math.cos(angle) * radius * 0.6,
+          math.sin(angle) * radius * 0.6,
+        ),
         radius * 0.5,
         Paint()..color = color,
       );
     }
     // Center.
-    c.drawCircle(center, radius * 0.35, Paint()..color = const Color(0xFFE6C65D));
+    c.drawCircle(
+      center,
+      radius * 0.35,
+      Paint()..color = const Color(0xFFE6C65D),
+    );
   }
 
   void _drawWateringCan(Canvas c, Offset point) {
-    if (_sprites.draw(
-      c,
-      'potager_arrosoir_metal_ordinaire_00.png',
-      point.translate(0, 8),
-      38,
-      31,
-    )) {
-      return;
-    }
     // Shadow.
     c.drawOval(
       Rect.fromCenter(center: point.translate(0, 8), width: 32, height: 10),
@@ -1441,7 +1894,9 @@ class GardenGame extends FlameGame {
     // Handle.
     c.drawArc(
       Rect.fromCenter(center: point.translate(-8, -4), width: 12, height: 10),
-      math.pi * 0.3, math.pi * 0.9, false,
+      math.pi * 0.3,
+      math.pi * 0.9,
+      false,
       Paint()
         ..color = const Color(0xFF6E8982)
         ..style = PaintingStyle.stroke
@@ -1461,20 +1916,13 @@ class GardenGame extends FlameGame {
     c.drawLine(
       point.translate(-6, -5),
       point.translate(4, -5),
-      Paint()..color = const Color(0x44D0E0DB)..strokeWidth = 2,
+      Paint()
+        ..color = const Color(0x44D0E0DB)
+        ..strokeWidth = 2,
     );
   }
 
   void _drawNurseryCrate(Canvas c, Offset point) {
-    if (_sprites.draw(
-      c,
-      'potager_caisse_semis_bois_ordinaire_00.png',
-      point.translate(0, 14),
-      51,
-      39,
-    )) {
-      return;
-    }
     // Shadow.
     c.drawOval(
       Rect.fromCenter(center: point.translate(0, 12), width: 48, height: 14),
@@ -1528,15 +1976,6 @@ class GardenGame extends FlameGame {
   }
 
   void _drawBirdbath(Canvas c, Offset point) {
-    if (_sprites.draw(
-      c,
-      'fleurs_bain_oiseaux_pierre_ordinaire_00.png',
-      point.translate(0, 5),
-      38,
-      49,
-    )) {
-      return;
-    }
     // Shadow.
     c.drawOval(
       Rect.fromCenter(center: point.translate(0, 6), width: 40, height: 12),
@@ -1549,11 +1988,18 @@ class GardenGame extends FlameGame {
         const Radius.circular(3),
       ),
       Paint()
-        ..shader = const LinearGradient(
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-          colors: [Color(0xFFC4C7B8), Color(0xFFA4A798)],
-        ).createShader(Rect.fromCenter(center: point.translate(0, -6), width: 10, height: 28)),
+        ..shader =
+            const LinearGradient(
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+              colors: [Color(0xFFC4C7B8), Color(0xFFA4A798)],
+            ).createShader(
+              Rect.fromCenter(
+                center: point.translate(0, -6),
+                width: 10,
+                height: 28,
+              ),
+            ),
     );
     // Basin.
     c.drawOval(
@@ -1570,6 +2016,54 @@ class GardenGame extends FlameGame {
       Rect.fromCenter(center: point.translate(6, -26), width: 8, height: 2),
       Paint()..color = const Color(0xFFCFEBDF),
     );
+  }
+
+  void _drawBench(Canvas c, Offset foot) {
+    c.drawOval(
+      Rect.fromCenter(center: foot.translate(2, 1), width: 65, height: 11),
+      Paint()
+        ..color = const Color(0x28586C43)
+        ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 3),
+    );
+    for (final x in [-24.0, 24.0]) {
+      c.drawLine(
+        foot.translate(x, -7),
+        foot.translate(x + 2, -27),
+        Paint()
+          ..color = const Color(0xFF785B3F)
+          ..strokeWidth = 5,
+      );
+    }
+    final seat = Path()
+      ..moveTo(foot.dx - 34, foot.dy - 18)
+      ..lineTo(foot.dx + 25, foot.dy - 18)
+      ..lineTo(foot.dx + 34, foot.dy - 12)
+      ..lineTo(foot.dx - 25, foot.dy - 12)
+      ..close();
+    c.drawPath(seat, Paint()..color = const Color(0xFFB98A5A));
+    c.drawLine(
+      foot.translate(-33, -17),
+      foot.translate(26, -17),
+      Paint()
+        ..color = const Color(0xFFE0B47C)
+        ..strokeWidth = 2,
+    );
+    for (final y in [-39.0, -31.0]) {
+      c.drawLine(
+        foot.translate(-29, y),
+        foot.translate(27, y),
+        Paint()
+          ..color = const Color(0xFFAD8155)
+          ..strokeWidth = 6,
+      );
+      c.drawLine(
+        foot.translate(-29, y - 2),
+        foot.translate(27, y - 2),
+        Paint()
+          ..color = const Color(0xFFD5A66D)
+          ..strokeWidth = 2,
+      );
+    }
   }
 
   void _drawSelection(Canvas c, Offset point, ZoneType zone) {
@@ -1611,14 +2105,28 @@ class GardenGame extends FlameGame {
       Paint()..color = const Color(0xFF7BA658),
     );
     c.drawOval(
-      Rect.fromCenter(center: base.translate(2, -height + 1), width: 6, height: 3),
+      Rect.fromCenter(
+        center: base.translate(2, -height + 1),
+        width: 6,
+        height: 3,
+      ),
       Paint()..color = const Color(0xFFA0C46B),
     );
   }
 
   void _brilliantSparkle(Canvas c, Offset point) {
-    c.drawCircle(point, 3, Paint()..color = const Color(0xCCF5EDDA));
-    c.drawCircle(point.translate(-1, -1), 1.5, Paint()..color = const Color(0xFFFFFFFF));
+    final rays = Paint()
+      ..color = const Color(0xF2FFF9DE)
+      ..strokeWidth = 1.4
+      ..strokeCap = StrokeCap.round;
+    c.drawLine(point.translate(0, -5), point.translate(0, 5), rays);
+    c.drawLine(point.translate(-5, 0), point.translate(5, 0), rays);
+    c.drawCircle(point, 2.7, Paint()..color = const Color(0xCCF5EDDA));
+    c.drawCircle(
+      point.translate(-1, -1),
+      1.5,
+      Paint()..color = const Color(0xFFFFFFFF),
+    );
   }
 
   void _diamond(

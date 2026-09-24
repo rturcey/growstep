@@ -78,6 +78,26 @@ class GardenSprites {
     );
   }
 
+  bool hasContactShadow(String name) => _images[name]?.contactShadow ?? false;
+
+  void drawContactShadow(
+    Canvas canvas,
+    Offset contact,
+    double width,
+    double height,
+  ) {
+    canvas.drawOval(
+      Rect.fromCenter(
+        center: contact.translate(2, 1),
+        width: width * 0.65,
+        height: height * 0.12,
+      ),
+      Paint()
+        ..color = const Color(0x2A53614C)
+        ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 2),
+    );
+  }
+
   bool draw(
     Canvas canvas,
     String name,
@@ -85,20 +105,12 @@ class GardenSprites {
     double width,
     double height, {
     double opacity = 1,
+    bool includeContactShadow = true,
   }) {
     final sprite = _images[name];
     if (sprite == null) return false;
-    if (sprite.contactShadow) {
-      canvas.drawOval(
-        Rect.fromCenter(
-          center: groundAnchor.translate(2, 1),
-          width: width * 0.65,
-          height: height * 0.12,
-        ),
-        Paint()
-          ..color = const Color(0x2A53614C)
-          ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 2),
-      );
+    if (includeContactShadow && sprite.contactShadow) {
+      drawContactShadow(canvas, groundAnchor, width, height);
     }
     canvas.drawImageRect(
       sprite.image,

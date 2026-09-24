@@ -3,6 +3,7 @@ import 'dart:math' as math;
 import 'package:flutter/material.dart';
 
 import 'landscape_mass.dart';
+import 'potager_scene.dart';
 
 /// The potager's fixed environmental composition. It remains specific to this
 /// island until the complete scene has been approved at phone size.
@@ -10,7 +11,7 @@ class PotagerComposition {
   const PotagerComposition._();
 
   static const trellisAnchor = Offset(155, 150);
-  static const barrelAnchor = Offset(355, 230);
+  static final barrelAnchor = PotagerPilotScene.barrel.contact;
   static const wateringCanAnchor = Offset(335, 220);
   static const nurseryCrateAnchor = Offset(95, 360);
   static const rimGrass = <Offset>[
@@ -46,7 +47,6 @@ class PotagerComposition {
         LandscapeShrub(Offset(355, 190), 13, ShrubPalette.sage),
       ],
       rocks: [
-        LandscapeRock(Offset(355, 150), 23),
         LandscapeRock(Offset(355, 270), 22),
       ],
     ),
@@ -170,24 +170,6 @@ class PotagerComposition {
       ..quadraticBezierTo(87, 396, 57, 378)
       ..close();
     canvas.drawPath(fringe, Paint()..color = const Color(0xC780A95B));
-  }
-
-  static void drawBedSeam(Canvas canvas, Offset point) {
-    final variant = ((point.dx + point.dy) / 40).round().abs() % 3;
-    for (final side in [-1.0, 1.0]) {
-      final center = point.translate(
-        side * (27 + variant * 2),
-        24.0 + (side < 0 ? variant : 2 - variant),
-      );
-      canvas.drawOval(
-        Rect.fromCenter(
-          center: center,
-          width: 24.0 + variant * 3,
-          height: 7.0 + variant,
-        ),
-        Paint()..color = const Color(0x23577F49),
-      );
-    }
   }
 
   /// The same planted-ground silhouette is reused for three embedded beds.

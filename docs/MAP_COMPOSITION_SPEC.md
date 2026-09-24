@@ -70,6 +70,10 @@ L'ADR-0006 décrit encore les bacs, chemins, bordures et accessoires comme exclu
 15. **Responsive et performance.** Le viewport de l'application garde ses zones UI actuelles. Toutes les transformations de rendu et de hit test utilisent la même conversion. Charger uniquement les assets nécessaires au rendu ou mesurer le chargement global existant avant d'y toucher ; vérifier temps de chargement, mémoire et fluidité après l'arrivée des 40 nouveaux PNG du pack.
 16. **Déterminisme.** La composition ne contient aucune décision artistique aléatoire au runtime. Les variantes, positions, couches et tailles sont explicites. Le générateur de grain du sol existant, à graine stable, relève d'une texture de matière et peut rester tant qu'il ne place pas des objets de composition.
 
+## État de l'itération 1 (#48)
+
+La primitive pilote vit dans `garden_scene.dart` (artboard, contact, couche et donnée immuable), `potager_scene.dart` (deux placements écrits à la main) et `garden_scene_renderer.dart` (ordre stable par couche, puis Y du contact et `zBias`, puis ID des objets nommés ; l'ombre vient immédiatement avant le sprite). Le rocher `(355,150)` et le tonneau `(355,230)` utilisent cette voie ; leurs tailles affichées historiques sont conservées pour une comparaison stricte. Les autres familles restent dans le rendu existant jusqu'à leurs tickets respectifs. `GROWSTEP_MAP_DEBUG=true` affiche en développement l'artboard, les cibles, contacts, IDs, couches et profondeurs ; le mode est inactif en release. Le rendu et le hit test partagent `GardenArtboardTransform`.
+
 ## Composition cible par famille
 
 | Famille | Intention et limite | Vérification observable |
