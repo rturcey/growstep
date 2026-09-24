@@ -9,6 +9,7 @@ import 'package:growstep/garden/garden_scene_renderer.dart';
 import 'package:growstep/garden/garden_sprites.dart';
 import 'package:growstep/garden/garden_state.dart';
 import 'package:growstep/garden/potager_path.dart';
+import 'package:growstep/garden/potager_grid_adapter.dart';
 import 'package:growstep/garden/potager_scene.dart';
 
 class _RecordingSprites extends GardenSprites {
@@ -167,6 +168,14 @@ void main() {
       expect(plot.contact, PotagerPlots.grid.toScreen(plot.gridI, plot.gridJ));
       expect(plot.id, 'soil_plot_${plot.index}');
     }
+  });
+
+  test('Potager grid adapter projects representative cells', () {
+    const adapter = PotagerGridAdapter();
+    expect(adapter.toArtboard(0, 0), const ui.Offset(195, 230));
+    expect(adapter.toArtboard(1, 0), const ui.Offset(235, 250));
+    expect(adapter.toArtboard(0, 1), const ui.Offset(155, 250));
+    expect(adapter.toArtboard(1, 1), const ui.Offset(195, 270));
   });
 
   test('purchased states reveal exactly 4, 6, or 8 soil plots', () {

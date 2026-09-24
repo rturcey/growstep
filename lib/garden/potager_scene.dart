@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'garden_scene.dart';
+import 'potager_grid_adapter.dart';
 
 /// First two migrated objects. Their exact display sizes preserve the current
 /// scene; later family tickets can introduce shared size classes and variants.
@@ -38,13 +39,13 @@ class PotagerPlot {
   final double gridJ;
 
   String get id => 'soil_plot_$index';
-  Offset get contact => PotagerPlots.grid.toScreen(gridI, gridJ);
+  Offset get contact => const PotagerGridAdapter().toArtboard(gridI, gridJ);
 }
 
 class PotagerPlots {
   const PotagerPlots._();
 
-  static const grid = IsoGrid(Offset(195, 230));
+  static const grid = PotagerGridAdapter.grid;
   static const footprintWidth = IsoGrid.cellWidth - 8;
   static const footprintHeight = IsoGrid.cellHeight - 4;
 

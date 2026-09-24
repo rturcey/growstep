@@ -167,7 +167,9 @@ Offset toScreen(double i, double j) => Offset(
 );
 ```
 
-Le PoC doit prouver la conversion avec les coordonnées natives des Object Layers Tiled (espace projeté isométrique). Si le PoC ne retrouve pas exactement les contacts historiques avec les coordonnées natives, le fallback n'est **pas** de garder les objets en coordonnées Dart. Le fallback est d'utiliser `gridCol/gridRow` explicites dans les propriétés Tiled et de calculer le contact via `IsoGrid.toScreen(gridCol, gridRow)`.
+Le PoC doit prouver la conversion avec les coordonnées natives des Object Layers Tiled (espace projeté isométrique). Si ces coordonnées ne retrouvent pas exactement les contacts historiques, le fallback utilise les propriétés `gridCol/gridRow` explicites de la carte, jamais des coordonnées d'objets conservées en Dart.
+
+Le PoC #59 encode les coordonnées demi-entières historiques en propriétés entières : `gridCol = 2 × i`, `gridRow = 2 × j`. `PotagerGridAdapter.fromTiledProperties()` divise ces valeurs par deux avant d'appeler `IsoGrid.toScreen()`. La cellule Tiled `(7,9)` correspond au centre logique `(0,0)`. Les coordonnées natives des objets sont stockées dans l'espace projeté de Tiled, en carrés de 40 px ; le centre `(7,9)` vaut `(x=300,y=380)`. `fromTiledObject()` calcule donc `(i,j) = (x/40 - 7.5, y/40 - 9.5)` avant la même projection. Les huit plots retrouvent exactement les contacts historiques par les deux voies. Les propriétés `gridCol/gridRow` restent autoritaires pour la composition ; les coordonnées natives servent à vérifier leur cohérence.
 
 ### 3.9 Ancres sprites
 
@@ -320,14 +322,14 @@ List<Offset> _loadPlotContacts(TiledMap map) {
       final index = int.parse(obj.name.substring(5));
       final gridCol = obj.properties.getValueByName('gridCol') as int;
       final gridRow = obj.properties.getValueByName('gridRow') as int;
-      contacts[index] = _adapter.toArtboard(gridCol, gridRow);
+      contacts[index] = _adapter.fromTiledProperties(gridCol, gridRow);
     }
   }
   return contacts;
 }
 ```
 
-Les `gridCol/gridRow` sont autoritaires. La conversion native Tiled `(x, y)` est testée mais `gridCol/gridRow` est le fallback qui garantit la correspondance exacte avec les contacts historiques.
+Les `gridCol/gridRow` sont autoritaires. La conversion native Tiled `(x, y)` est testée contre les mêmes contacts, mais n'est pas la source du placement runtime.
 
 ## 7. Preuve de concept (slice minimal)
 

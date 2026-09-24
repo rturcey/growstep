@@ -1,6 +1,8 @@
 import 'dart:io';
+import 'dart:ui' as ui;
 
 import 'package:flutter_test/flutter_test.dart';
+import 'package:growstep/garden/potager_grid_adapter.dart';
 import 'package:tiled/tiled.dart';
 import 'package:xml/xml.dart';
 
@@ -27,6 +29,7 @@ Future<TiledMap> _loadMap([String? source]) => TiledMap.fromString(
 
 void main() {
   test('TMX plots preserve the eight historical contacts by stable name', () async {
+    const adapter = PotagerGridAdapter();
     final map = await _loadMap();
     expect(map.orientation, MapOrientation.isometric);
     expect(
@@ -61,6 +64,16 @@ void main() {
       expect(plot.class_, 'plot', reason: plot.name);
       expect(plot.properties.getValue<int>('gridCol'), col, reason: plot.name);
       expect(plot.properties.getValue<int>('gridRow'), row, reason: plot.name);
+      expect(
+        adapter.fromTiledProperties(col, row),
+        ui.Offset(x, y),
+        reason: plot.name,
+      );
+      expect(
+        adapter.fromTiledObject(plot.x, plot.y),
+        ui.Offset(x, y),
+        reason: plot.name,
+      );
       expect(195 + (col - row) * 20, x, reason: plot.name);
       expect(230 + (col + row) * 10, y, reason: plot.name);
       expect(plot.x, 300 + col * 20, reason: plot.name);
