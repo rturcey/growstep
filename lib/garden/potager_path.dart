@@ -1,76 +1,110 @@
 import 'package:flutter/material.dart';
 
-/// The potager's first walkable composition. Its contacts use the same
-/// integer/half-integer 80 × 40 lattice as the saved planting locations.
-///
-/// Kept specific to the potager until its full-size scene has been reviewed.
+/// A complete walk through the potager, placed on the integer/half-integer
+/// 80 × 40 lattice. A long curving spine takes priority over short bed spurs.
 class PotagerPath {
   const PotagerPath._();
 
-  static const _leftRoute = <Offset>[
-    Offset(195, 390), // entrance
+  static const _spine = <Offset>[
+    Offset(195, 410), // entrance on the front lip
     Offset(195, 370),
     Offset(155, 350),
+    Offset(155, 330), // front-center approach
     Offset(135, 320),
     Offset(135, 280),
-    Offset(155, 290), // front-center bed
-    Offset(155, 270),
     Offset(155, 250),
     Offset(175, 220),
     Offset(195, 190),
   ];
 
-  static const _rightRoute = <Offset>[
-    Offset(195, 370),
-    Offset(235, 350),
-    Offset(255, 320),
-    Offset(255, 280),
-    Offset(235, 290), // front-center bed
-    Offset(235, 270),
-    Offset(235, 250),
+  static const _rightArc = <Offset>[
+    Offset(175, 220),
     Offset(215, 220),
-    Offset(195, 190),
-  ];
-
-  static const _frontLeftSpur = <Offset>[
-    Offset(135, 320),
-    Offset(115, 330), // front-left bed
-  ];
-
-  static const _frontRightSpur = <Offset>[
+    Offset(235, 250),
+    Offset(255, 280),
     Offset(255, 320),
-    Offset(275, 330), // front-right bed
+    Offset(275, 330), // approach to front-right bed
   ];
+
+  static const _frontLeftSpur = <Offset>[Offset(135, 320), Offset(115, 330)];
 
   static const _backLeftRoute = <Offset>[
     Offset(195, 190),
     Offset(155, 170),
-    Offset(135, 160),
     Offset(115, 170), // back-left bed
   ];
 
   static const _backRightRoute = <Offset>[
     Offset(195, 190),
     Offset(235, 170),
-    Offset(255, 160),
     Offset(275, 170), // back-right bed
   ];
 
   /// Connected stepping-stone routes; exposed for geometry acceptance checks.
   static const routes = <List<Offset>>[
-    _leftRoute,
-    _rightRoute,
+    _spine,
+    _rightArc,
     _frontLeftSpur,
-    _frontRightSpur,
     _backLeftRoute,
     _backRightRoute,
   ];
 
   static void draw(Canvas canvas) {
-    final contacts = <Offset>{for (final route in routes) ...route}.toList();
+    for (final route in routes) {
+      final trace = _smoothTrace(route);
+      canvas.drawPath(
+        trace,
+        Paint()
+          ..color = const Color(0x577F9360)
+          ..style = PaintingStyle.stroke
+          ..strokeWidth = 27
+          ..strokeCap = StrokeCap.round
+          ..strokeJoin = StrokeJoin.round,
+      );
+      canvas.drawPath(
+        trace,
+        Paint()
+          ..color = const Color(0x72C3BF91)
+          ..style = PaintingStyle.stroke
+          ..strokeWidth = 14
+          ..strokeCap = StrokeCap.round
+          ..strokeJoin = StrokeJoin.round,
+      );
+    }
+    // The full worn trace stays connected; stone intervals vary along it.
+    const contacts = <Offset>[
+      Offset(195, 410),
+      Offset(195, 370),
+      Offset(155, 350),
+      Offset(135, 320),
+      Offset(135, 280),
+      Offset(175, 220),
+      Offset(195, 190),
+      Offset(235, 250),
+      Offset(255, 320),
+      Offset(115, 330),
+      Offset(115, 170),
+      Offset(275, 170),
+    ];
     for (var index = 0; index < contacts.length; index++) {
       _drawStone(canvas, contacts[index], index);
     }
+  }
+
+  static Path _smoothTrace(List<Offset> route) {
+    final trace = Path()..moveTo(route.first.dx, route.first.dy);
+    for (var index = 1; index < route.length - 1; index++) {
+      final point = route[index];
+      final next = route[index + 1];
+      trace.quadraticBezierTo(
+        point.dx,
+        point.dy,
+        (point.dx + next.dx) / 2,
+        (point.dy + next.dy) / 2,
+      );
+    }
+    trace.lineTo(route.last.dx, route.last.dy);
+    return trace;
   }
 
   static void _drawStone(Canvas canvas, Offset point, int index) {

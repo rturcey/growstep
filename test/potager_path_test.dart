@@ -4,6 +4,7 @@ import 'package:flame/components.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:growstep/garden/garden_game.dart';
 import 'package:growstep/garden/garden_state.dart';
+import 'package:growstep/garden/potager_composition.dart';
 import 'package:growstep/garden/potager_path.dart';
 
 void main() {
@@ -12,12 +13,11 @@ void main() {
   test('les pas restent sur le treillis, reliés et proches des huit lits', () {
     final routes = PotagerPath.routes;
     final contacts = routes.expand((route) => route).toSet();
-    expect(contacts, contains(const ui.Offset(195, 390)));
-    expect(routes[1].first, routes[0][1]);
-    expect(routes[2].first, routes[0][3]);
-    expect(routes[3].first, routes[1][2]);
+    expect(contacts, contains(const ui.Offset(195, 410)));
+    expect(routes[1].first, routes[0][7]);
+    expect(routes[2].first, routes[0][4]);
+    expect(routes[3].first, routes[0].last);
     expect(routes[4].first, routes[0].last);
-    expect(routes[5].first, routes[0].last);
 
     for (final route in routes) {
       for (final (index, point) in route.indexed) {
@@ -46,6 +46,26 @@ void main() {
           isTrue,
         );
       }
+    }
+  });
+
+  test('les masses et les accessoires du potager suivent le treillis', () {
+    final contacts = <ui.Offset>[
+      PotagerComposition.trellisAnchor,
+      PotagerComposition.barrelAnchor,
+      PotagerComposition.wateringCanAnchor,
+      PotagerComposition.nurseryCrateAnchor,
+      ...PotagerComposition.rimGrass,
+      for (final mass in PotagerComposition.masses) ...[
+        for (final shrub in mass.shrubs) shrub.anchor,
+        for (final rock in mass.rocks) rock.anchor,
+      ],
+    ];
+    for (final point in contacts) {
+      final i = ((point.dy - 230) / 20 + (point.dx - 195) / 40) / 2;
+      final j = ((point.dy - 230) / 20 - (point.dx - 195) / 40) / 2;
+      expect(i * 2, closeTo((i * 2).round(), 0.001));
+      expect(j * 2, closeTo((j * 2).round(), 0.001));
     }
   });
 

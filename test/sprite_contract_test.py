@@ -42,7 +42,7 @@ class SpriteContractTest(unittest.TestCase):
             text=True,
         )
         self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
-        self.assertIn("validated 1 sprite", result.stdout)
+        self.assertRegex(result.stdout, r"validated [1-9][0-9]* sprites?")
 
     def test_new_png_without_metadata_is_rejected(self):
         with tempfile.TemporaryDirectory() as directory:

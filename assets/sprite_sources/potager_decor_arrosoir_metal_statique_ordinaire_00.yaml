@@ -1,0 +1,19 @@
+id: potager_decor_arrosoir_metal_statique_ordinaire_00
+canvas_1x:
+- 39
+- 34
+anchor_4x:
+- 78
+- 123
+footprint_grid:
+- 0.5
+- 0.5
+size_class: small_decor
+projection: isometric_80x40
+light: upper_left
+shadow: separate_contact
+palette_roles:
+- bleu_doux
+state: statique
+variant: ordinaire
+frames: 1

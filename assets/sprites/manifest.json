@@ -39,6 +39,81 @@
       972
     ]
   },
+  "commun_decor_bosquet_bas_statique_ordinaire_00.png": {
+    "width": 332,
+    "height": 168,
+    "bbox": [
+      16,
+      24,
+      316,
+      156
+    ],
+    "anchor": [
+      166,
+      155
+    ],
+    "shadow": "separate_contact"
+  },
+  "commun_decor_bosquet_haut_statique_ordinaire_00.png": {
+    "width": 328,
+    "height": 188,
+    "bbox": [
+      16,
+      24,
+      312,
+      176
+    ],
+    "anchor": [
+      164,
+      175
+    ],
+    "shadow": "separate_contact"
+  },
+  "commun_decor_rochers_herbe_statique_ordinaire_00.png": {
+    "width": 216,
+    "height": 148,
+    "bbox": [
+      16,
+      24,
+      200,
+      136
+    ],
+    "anchor": [
+      108,
+      135
+    ],
+    "shadow": "separate_contact"
+  },
+  "commun_decor_tonneau_bois_statique_ordinaire_00.png": {
+    "width": 196,
+    "height": 220,
+    "bbox": [
+      20,
+      20,
+      175,
+      208
+    ],
+    "anchor": [
+      97,
+      207
+    ],
+    "shadow": "separate_contact"
+  },
+  "commun_decor_treillis_bois_statique_ordinaire_00.png": {
+    "width": 284,
+    "height": 272,
+    "bbox": [
+      33,
+      20,
+      251,
+      260
+    ],
+    "anchor": [
+      142,
+      259
+    ],
+    "shadow": "separate_contact"
+  },
   "commun_fleurs_marguerites_blanches_ordinaire_00.png": {
     "width": 1254,
     "height": 1254,
@@ -228,6 +303,36 @@
       1261,
       991
     ]
+  },
+  "potager_decor_arrosoir_metal_statique_ordinaire_00.png": {
+    "width": 156,
+    "height": 136,
+    "bbox": [
+      16,
+      34,
+      140,
+      124
+    ],
+    "anchor": [
+      78,
+      123
+    ],
+    "shadow": "separate_contact"
+  },
+  "potager_decor_caisse_semis_statique_ordinaire_00.png": {
+    "width": 172,
+    "height": 144,
+    "bbox": [
+      16,
+      25,
+      156,
+      132
+    ],
+    "anchor": [
+      86,
+      131
+    ],
+    "shadow": "separate_contact"
   },
   "potager_plante_carotte_adulte_sans_production_ordinaire_00.png": {
     "width": 1774,

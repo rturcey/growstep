@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'garden_state.dart';
 import 'garden_sprites.dart';
 import 'potager_composition.dart';
+import 'landscape_mass.dart';
 import 'potager_path.dart';
 
 /// Isometric grid engine: every scene position derives from the 80×40 rhombus
@@ -355,33 +356,99 @@ class GardenGame extends FlameGame {
   List<_SceneObject> _environmentObjects(ZoneType zone) {
     if (zone == ZoneType.potager) {
       return [
-        for (final shrub in PotagerComposition.shrubs)
-          _SceneObject(
-            shrub.anchor,
-            (canvas) => PotagerComposition.drawShrub(canvas, shrub),
-          ),
-        _SceneObject(
-          PotagerComposition.trellisAnchor,
-          PotagerComposition.drawTrellis,
-        ),
-        _SceneObject(
-          PotagerComposition.barrelAnchor,
-          PotagerComposition.drawBarrel,
-        ),
-        _SceneObject(
-          PotagerComposition.wateringCanAnchor,
-          (canvas) => _drawWateringCan(
+        for (final mass in PotagerComposition.masses) ...[
+          for (final shrub in mass.shrubs)
+            _SceneObject(shrub.anchor, (canvas) {
+              final upright = shrub.anchor.dy >= 170;
+              final sprite = upright
+                  ? 'commun_decor_bosquet_haut_statique_ordinaire_00.png'
+                  : 'commun_decor_bosquet_bas_statique_ordinaire_00.png';
+              if (!_sprites.draw(
+                canvas,
+                sprite,
+                shrub.anchor,
+                shrub.radius * (upright ? 2.5 : 2.8),
+                shrub.radius * (upright ? 1.75 : 1.4),
+                opacity: 0.9,
+              )) {
+                LandscapeMassPainter.drawShrub(canvas, shrub);
+              }
+            }),
+          for (final rock in mass.rocks)
+            _SceneObject(rock.anchor, (canvas) {
+              if (!_sprites.draw(
+                canvas,
+                'commun_decor_rochers_herbe_statique_ordinaire_00.png',
+                rock.anchor,
+                rock.width * 1.8,
+                rock.width * 1.0,
+                opacity: 0.82,
+              )) {
+                LandscapeMassPainter.drawRock(canvas, rock);
+              }
+            }),
+        ],
+        for (final point in PotagerComposition.rimGrass)
+          _SceneObject(point, (canvas) {
+            if (!_sprites.draw(
+              canvas,
+              'commun_decor_bosquet_bas_statique_ordinaire_00.png',
+              point,
+              29,
+              13,
+              opacity: 0.8,
+            )) {
+              PotagerComposition.drawRimGrass(canvas, point);
+            }
+          }),
+        _SceneObject(PotagerComposition.trellisAnchor, (canvas) {
+          if (!_sprites.draw(
             canvas,
+            'commun_decor_treillis_bois_statique_ordinaire_00.png',
+            PotagerComposition.trellisAnchor,
+            58,
+            51,
+            opacity: 0.86,
+          )) {
+            PotagerComposition.drawTrellis(canvas);
+          }
+        }),
+        _SceneObject(PotagerComposition.barrelAnchor, (canvas) {
+          if (!_sprites.draw(
+            canvas,
+            'commun_decor_tonneau_bois_statique_ordinaire_00.png',
+            PotagerComposition.barrelAnchor,
+            32,
+            35,
+            opacity: 0.88,
+          )) {
+            PotagerComposition.drawBarrel(canvas);
+          }
+        }),
+        _SceneObject(PotagerComposition.wateringCanAnchor, (canvas) {
+          if (!_sprites.draw(
+            canvas,
+            'potager_decor_arrosoir_metal_statique_ordinaire_00.png',
             PotagerComposition.wateringCanAnchor,
-          ),
-        ),
-        _SceneObject(
-          PotagerComposition.nurseryCrateAnchor,
-          (canvas) => _drawNurseryCrate(
+            26,
+            22,
+            opacity: 0.86,
+          )) {
+            _drawWateringCan(canvas, PotagerComposition.wateringCanAnchor);
+          }
+        }),
+        _SceneObject(PotagerComposition.nurseryCrateAnchor, (canvas) {
+          if (!_sprites.draw(
             canvas,
+            'potager_decor_caisse_semis_statique_ordinaire_00.png',
             PotagerComposition.nurseryCrateAnchor,
-          ),
-        ),
+            30,
+            23,
+            opacity: 0.82,
+          )) {
+            _drawNurseryCrate(canvas, PotagerComposition.nurseryCrateAnchor);
+          }
+        }),
       ];
     }
 
@@ -530,7 +597,10 @@ class GardenGame extends FlameGame {
     // Bed dimensions aligned to the 80×40 grid diamond.
     const w = 40.0; // half-width
     const h = 20.0; // half-height
-    final fh = zone == ZoneType.potager ? 10.0 : 13.0;
+    final embedded =
+        zone == ZoneType.potager &&
+        PotagerComposition.embeddedBeds.contains(point);
+    final fh = zone == ZoneType.potager ? (embedded ? 4.0 : 10.0) : 13.0;
 
     // Front-left face (darker, shadowed).
     final leftFace = Path()
@@ -539,7 +609,13 @@ class GardenGame extends FlameGame {
       ..lineTo(point.dx, point.dy + h + fh)
       ..lineTo(point.dx - w, point.dy + fh)
       ..close();
-    canvas.drawPath(leftFace, Paint()..color = const Color(0xFF8B6845));
+    canvas.drawPath(
+      leftFace,
+      Paint()
+        ..color = zone == ZoneType.potager
+            ? (embedded ? const Color(0xFF687D4E) : const Color(0xFF927650))
+            : const Color(0xFF8B6845),
+    );
 
     // Front-right face (warmer, lit).
     final rightFace = Path()
@@ -548,33 +624,46 @@ class GardenGame extends FlameGame {
       ..lineTo(point.dx + w, point.dy + fh)
       ..lineTo(point.dx, point.dy + h + fh)
       ..close();
-    canvas.drawPath(rightFace, Paint()..color = const Color(0xFFB08258));
-
+    canvas.drawPath(
+      rightFace,
+      Paint()
+        ..color = zone == ZoneType.potager
+            ? (embedded ? const Color(0xFF82935D) : const Color(0xFFAD8C61))
+            : const Color(0xFFB08258),
+    );
     // Wood top rim — warm honey gradient.
-    final topRim = Path()
-      ..moveTo(point.dx, point.dy - h)
-      ..lineTo(point.dx + w, point.dy)
-      ..lineTo(point.dx, point.dy + h)
-      ..lineTo(point.dx - w, point.dy)
-      ..close();
+    final topRim = embedded
+        ? PotagerComposition.embeddedRim(point)
+        : (Path()
+            ..moveTo(point.dx, point.dy - h)
+            ..lineTo(point.dx + w, point.dy)
+            ..lineTo(point.dx, point.dy + h)
+            ..lineTo(point.dx - w, point.dy)
+            ..close());
     canvas.drawPath(
       topRim,
       Paint()
         ..shader = LinearGradient(
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
-          colors: [const Color(0xFFD9A86A), const Color(0xFFC4905A)],
+          colors: zone == ZoneType.potager
+              ? (embedded
+                    ? const [Color(0xFFA4AE75), Color(0xFF84965F)]
+                    : const [Color(0xFFC7AF7C), Color(0xFFAE9369)])
+              : const [Color(0xFFD9A86A), Color(0xFFC4905A)],
         ).createShader(topRim.getBounds()),
     );
 
     // Soil interior — dark, rich brown.
     const soilInset = 3.0;
-    final soil = Path()
-      ..moveTo(point.dx, point.dy - h + soilInset)
-      ..lineTo(point.dx + w - soilInset, point.dy)
-      ..lineTo(point.dx, point.dy + h - soilInset)
-      ..lineTo(point.dx - w + soilInset, point.dy)
-      ..close();
+    final soil = embedded
+        ? PotagerComposition.embeddedSoil(point)
+        : (Path()
+            ..moveTo(point.dx, point.dy - h + soilInset)
+            ..lineTo(point.dx + w - soilInset, point.dy)
+            ..lineTo(point.dx, point.dy + h - soilInset)
+            ..lineTo(point.dx - w + soilInset, point.dy)
+            ..close());
     canvas.drawPath(
       soil,
       Paint()
@@ -606,37 +695,52 @@ class GardenGame extends FlameGame {
       point.translate(w, 0),
       point.translate(0, h),
     ]) {
+      if (embedded) continue;
       canvas.drawRRect(
         RRect.fromRectAndRadius(
           Rect.fromCenter(center: corner.translate(0, 1), width: 6, height: 10),
           const Radius.circular(2),
         ),
-        Paint()..color = const Color(0xFFC49260),
+        Paint()
+          ..color = zone == ZoneType.potager
+              ? const Color(0xFFB39A6B)
+              : const Color(0xFFC49260),
       );
       canvas.drawLine(
         corner.translate(-1, 0),
         corner.translate(-1, 8),
         Paint()
-          ..color = const Color(0xFFE6B57E)
+          ..color = zone == ZoneType.potager
+              ? const Color(0xFFD9BD8C)
+              : const Color(0xFFE6B57E)
           ..strokeWidth = 1,
       );
     }
 
     // Wood plank edge highlights.
-    canvas.drawLine(
-      point.translate(-w + 2, 1),
-      point.translate(0, h + 1),
-      Paint()
-        ..color = const Color(0xFFE7B781)
-        ..strokeWidth = 1.5,
-    );
-    canvas.drawLine(
-      point.translate(1, h + 1),
-      point.translate(w - 2, 1),
-      Paint()
-        ..color = const Color(0xFFE1AB75)
-        ..strokeWidth = 1.5,
-    );
+    if (!embedded) {
+      canvas.drawLine(
+        point.translate(-w + 2, 1),
+        point.translate(0, h + 1),
+        Paint()
+          ..color = zone == ZoneType.potager
+              ? const Color(0xFFD2B889)
+              : const Color(0xFFE7B781)
+          ..strokeWidth = 1.5,
+      );
+      canvas.drawLine(
+        point.translate(1, h + 1),
+        point.translate(w - 2, 1),
+        Paint()
+          ..color = zone == ZoneType.potager
+              ? const Color(0xFFC9AA7D)
+              : const Color(0xFFE1AB75)
+          ..strokeWidth = 1.5,
+      );
+    }
+    if (zone == ZoneType.potager) {
+      PotagerComposition.drawBedOvergrowth(canvas, point);
+    }
   }
 
   void _drawTreeBase(Canvas canvas, Offset point) {

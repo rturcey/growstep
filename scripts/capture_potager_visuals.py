@@ -22,7 +22,11 @@ from PIL import Image
 
 ROOT = Path(__file__).resolve().parents[1]
 APP = ROOT / "build/linux/x64/debug/bundle/growstep"
-OUTPUT = ROOT / "docs/visual-review/issue-41"
+OUTPUT = Path(
+    os.environ.get(
+        "GROWSTEP_CAPTURE_DIR", str(ROOT / "docs/visual-review/issue-41")
+    )
+)
 
 
 def wait_for_window() -> int:

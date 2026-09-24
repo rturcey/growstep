@@ -1,0 +1,20 @@
+id: commun_decor_tonneau_bois_statique_ordinaire_00
+canvas_1x:
+- 49
+- 55
+anchor_4x:
+- 97
+- 207
+footprint_grid:
+- 0.5
+- 0.5
+size_class: small_decor
+projection: isometric_80x40
+light: upper_left
+shadow: separate_contact
+palette_roles:
+- bois_chaud
+- bleu_doux
+state: statique
+variant: ordinaire
+frames: 1

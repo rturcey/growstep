@@ -2,6 +2,8 @@
 
 `assets/sprites/` contient uniquement les PNG RGBA modulaires chargés par Flame : terrain, platebandes, végétaux, arbres, accessoires et animal. Les maquettes complètes de `art-mockups/` et `test.png` sont des références visuelles ; elles ne sont jamais déclarées comme assets de l'application.
 
+Pour le Potager, sept végétaux et objets de décor sont maintenant des sprites RGBA modulaires : deux bosquets, un ensemble de rochers et d'herbes, un treillis, un tonneau, un arrosoir et une caisse. Le terrain, les platebandes et le tracé des chemins restent en Canvas. Les sources ORA, fiches YAML, masters 4× et exports 2×/3× suivent le même contrat que les plantes ; les prompts et la provenance sont documentés dans [la revue de l'issue 41](visual-review/issue-41/implementation/README.md).
+
 ## Contrat d'un nouvel asset
 
 Un identifiant stable suit `zone_famille_objet_etat_variante_frame`, en minuscules ASCII. La fiche `assets/sprite_sources/<identifiant>.yaml` et la source modifiable OpenRaster `.ora` portent le même identifiant. L'exemple complet livré est `potager_plante_tomate_jeune_ordinaire_00`.

@@ -2,44 +2,91 @@ import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
 
+import 'landscape_mass.dart';
+
 /// The potager's fixed environmental composition. It remains specific to this
 /// island until the complete scene has been approved at phone size.
 class PotagerComposition {
   const PotagerComposition._();
 
-  static const trellisAnchor = Offset(150, 143);
-  static const barrelAnchor = Offset(348, 228);
-  static const wateringCanAnchor = Offset(323, 205);
-  static const nurseryCrateAnchor = Offset(93, 355);
+  static const trellisAnchor = Offset(155, 150);
+  static const barrelAnchor = Offset(355, 230);
+  static const wateringCanAnchor = Offset(335, 220);
+  static const nurseryCrateAnchor = Offset(95, 360);
+  static const rimGrass = <Offset>[
+    Offset(75, 390),
+    Offset(95, 400),
+    Offset(295, 400),
+  ];
+  static const embeddedBeds = <Offset>[
+    Offset(75, 150),
+    Offset(115, 230),
+    Offset(315, 310),
+  ];
 
-  /// The shrubs form one irregular border, leaving the front-center open.
-  static const shrubs = <PotagerShrub>[
-    PotagerShrub(Offset(92, 121), 20, 0),
-    PotagerShrub(Offset(114, 113), 13, 2),
-    PotagerShrub(Offset(139, 105), 20, 1),
-    PotagerShrub(Offset(164, 98), 12, 0),
-    PotagerShrub(Offset(190, 93), 14, 2),
-    PotagerShrub(Offset(221, 98), 12, 1),
-    PotagerShrub(Offset(246, 108), 20, 2),
-    PotagerShrub(Offset(271, 116), 12, 0),
-    PotagerShrub(Offset(294, 124), 20, 1),
-    PotagerShrub(Offset(44, 198), 12, 0),
-    PotagerShrub(Offset(43, 223), 11, 1),
-    PotagerShrub(Offset(43, 248), 20, 2),
-    PotagerShrub(Offset(50, 292), 11, 1),
-    PotagerShrub(Offset(345, 195), 12, 1),
-    PotagerShrub(Offset(349, 221), 11, 2),
-    PotagerShrub(Offset(349, 246), 20, 0),
-    PotagerShrub(Offset(338, 292), 11, 2),
+  /// Two connected border masses frame the center without closing the front.
+  static const masses = <LandscapeMass>[
+    LandscapeMass(
+      shrubs: [
+        LandscapeShrub(Offset(35, 250), 24, ShrubPalette.sage),
+        LandscapeShrub(Offset(35, 210), 25, ShrubPalette.moss),
+        LandscapeShrub(Offset(55, 220), 20, ShrubPalette.olive),
+        LandscapeShrub(Offset(35, 170), 28, ShrubPalette.olive),
+        LandscapeShrub(Offset(75, 130), 28, ShrubPalette.moss),
+        LandscapeShrub(Offset(75, 90), 32, ShrubPalette.sage),
+        LandscapeShrub(Offset(115, 90), 35, ShrubPalette.moss),
+        LandscapeShrub(Offset(155, 90), 29, ShrubPalette.olive),
+      ],
+    ),
+    LandscapeMass(
+      shrubs: [
+        LandscapeShrub(Offset(255, 80), 32, ShrubPalette.sage),
+        LandscapeShrub(Offset(295, 100), 35, ShrubPalette.moss),
+        LandscapeShrub(Offset(335, 140), 28, ShrubPalette.olive),
+        LandscapeShrub(Offset(355, 190), 13, ShrubPalette.sage),
+      ],
+      rocks: [
+        LandscapeRock(Offset(355, 150), 23),
+        LandscapeRock(Offset(355, 270), 22),
+      ],
+    ),
   ];
 
   static void drawGround(Canvas canvas, Path contour) {
     canvas.save();
     canvas.clipPath(contour);
+    for (final mass in masses) {
+      LandscapeMassPainter.drawGround(canvas, mass);
+    }
+    // Wide low growth ties the left beds to their border mass. The right
+    // transition is shorter and lighter, preserving an asymmetric open lawn.
+    final leftGrowth = Path()
+      ..moveTo(55, 140)
+      ..quadraticBezierTo(49, 186, 85, 225);
+    canvas.drawPath(
+      leftGrowth,
+      Paint()
+        ..color = const Color(0x5A5D844D)
+        ..style = PaintingStyle.stroke
+        ..strokeWidth = 46
+        ..strokeCap = StrokeCap.round,
+    );
+    final rightGrowth = Path()
+      ..moveTo(355, 190)
+      ..quadraticBezierTo(353, 224, 330, 250);
+    canvas.drawPath(
+      rightGrowth,
+      Paint()
+        ..color = const Color(0x2B668651)
+        ..style = PaintingStyle.stroke
+        ..strokeWidth = 26
+        ..strokeCap = StrokeCap.round,
+    );
     final rng = math.Random(4106);
-    for (var index = 0; index < 82; index++) {
+    for (var index = 0; index < 38; index++) {
       final x = 36 + rng.nextDouble() * 318;
       final y = 101 + rng.nextDouble() * 285;
+      if (x > 230 && y > 325) continue; // deliberate quiet lawn
       final radius = 4.0 + rng.nextDouble() * 9.0;
       final patch = Path()
         ..moveTo(x - radius, y)
@@ -65,11 +112,12 @@ class PotagerComposition {
               : const Color(0x24D3E39B),
       );
     }
-    for (var index = 0; index < 95; index++) {
+    for (var index = 0; index < 28; index++) {
       final center = Offset(
         38 + rng.nextDouble() * 314,
         111 + rng.nextDouble() * 271,
       );
+      if (center.dx > 230 && center.dy > 325) continue;
       final blade = Paint()
         ..color = index.isEven
             ? const Color(0x33638548)
@@ -98,6 +146,30 @@ class PotagerComposition {
       );
     }
     canvas.restore();
+    drawFrontFringe(canvas);
+  }
+
+  /// Low turf softens the visible outline without covering the earth slice.
+  static void drawFrontFringe(Canvas canvas) {
+    final fringe = Path()
+      ..moveTo(59, 373)
+      ..quadraticBezierTo(68, 378, 76, 381)
+      ..quadraticBezierTo(91, 390, 103, 395)
+      ..quadraticBezierTo(123, 403, 143, 408)
+      ..quadraticBezierTo(161, 408, 173, 411)
+      ..quadraticBezierTo(193, 409, 207, 411)
+      ..quadraticBezierTo(229, 408, 249, 408)
+      ..quadraticBezierTo(276, 402, 291, 393)
+      ..quadraticBezierTo(315, 383, 330, 373)
+      ..lineTo(327, 379)
+      ..quadraticBezierTo(307, 393, 286, 401)
+      ..quadraticBezierTo(267, 411, 246, 413)
+      ..quadraticBezierTo(225, 415, 206, 414)
+      ..quadraticBezierTo(182, 416, 163, 413)
+      ..quadraticBezierTo(139, 414, 121, 406)
+      ..quadraticBezierTo(87, 396, 57, 378)
+      ..close();
+    canvas.drawPath(fringe, Paint()..color = const Color(0xC780A95B));
   }
 
   static void drawBedSeam(Canvas canvas, Offset point) {
@@ -118,79 +190,128 @@ class PotagerComposition {
     }
   }
 
-  static void drawShrub(Canvas canvas, PotagerShrub shrub) {
-    final point = shrub.anchor;
-    final radius = shrub.radius;
-    final seed = point.dx.round() * 43 + point.dy.round() * 17;
-    final rng = math.Random(seed);
+  /// The same planted-ground silhouette is reused for three embedded beds.
+  /// Its bounds remain inside the logical 80 × 40 slot footprint.
+  static Path embeddedRim(Offset point) => Path()
+    ..moveTo(point.dx - 39, point.dy)
+    ..quadraticBezierTo(
+      point.dx - 36,
+      point.dy - 8,
+      point.dx - 21,
+      point.dy - 10,
+    )
+    ..quadraticBezierTo(point.dx - 12, point.dy - 18, point.dx, point.dy - 19)
+    ..quadraticBezierTo(
+      point.dx + 17,
+      point.dy - 15,
+      point.dx + 26,
+      point.dy - 9,
+    )
+    ..quadraticBezierTo(
+      point.dx + 39,
+      point.dy - 5,
+      point.dx + 39,
+      point.dy + 1,
+    )
+    ..quadraticBezierTo(
+      point.dx + 24,
+      point.dy + 12,
+      point.dx + 5,
+      point.dy + 18,
+    )
+    ..quadraticBezierTo(
+      point.dx - 9,
+      point.dy + 19,
+      point.dx - 18,
+      point.dy + 14,
+    )
+    ..quadraticBezierTo(point.dx - 37, point.dy + 7, point.dx - 39, point.dy)
+    ..close();
+
+  static Path embeddedSoil(Offset point) => Path()
+    ..moveTo(point.dx - 35, point.dy)
+    ..quadraticBezierTo(
+      point.dx - 31,
+      point.dy - 7,
+      point.dx - 18,
+      point.dy - 8,
+    )
+    ..quadraticBezierTo(
+      point.dx - 9,
+      point.dy - 15,
+      point.dx + 1,
+      point.dy - 16,
+    )
+    ..quadraticBezierTo(
+      point.dx + 16,
+      point.dy - 12,
+      point.dx + 24,
+      point.dy - 7,
+    )
+    ..quadraticBezierTo(
+      point.dx + 34,
+      point.dy - 4,
+      point.dx + 35,
+      point.dy + 1,
+    )
+    ..quadraticBezierTo(
+      point.dx + 21,
+      point.dy + 10,
+      point.dx + 3,
+      point.dy + 15,
+    )
+    ..quadraticBezierTo(
+      point.dx - 9,
+      point.dy + 16,
+      point.dx - 18,
+      point.dy + 11,
+    )
+    ..quadraticBezierTo(point.dx - 34, point.dy + 6, point.dx - 35, point.dy)
+    ..close();
+
+  static void drawRimGrass(Canvas canvas, Offset point) {
     canvas.drawOval(
-      Rect.fromCenter(
-        center: point.translate(2, 3),
-        width: radius * 2.5,
-        height: radius * 0.65,
-      ),
-      Paint()
-        ..color = const Color(0x2C4C6340)
-        ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 2),
+      Rect.fromCenter(center: point.translate(1, 2), width: 30, height: 8),
+      Paint()..color = const Color(0x6654773F),
     );
-
-    // Overlapping foliage volumes share one silhouette. The offset and height
-    // vary by variant, while the top-left illumination stays consistent.
-    for (var index = 0; index < 7; index++) {
-      final dx = (index - 3) * radius * (shrub.variant == 1 ? 0.31 : 0.28);
-      final dy = -radius * (0.38 + ((index + shrub.variant) % 3) * 0.12);
-      canvas.drawCircle(
-        point.translate(dx, dy),
-        radius * (index.isEven ? 0.47 : 0.39),
-        Paint()
-          ..color = index < 4
-              ? const Color(0xFF50764A)
-              : const Color(0xFF436A45),
-      );
-    }
-
-    const shades = [
-      Color(0xFF456F43),
-      Color(0xFF5B864E),
-      Color(0xFF709A56),
-      Color(0xFF89AD62),
-      Color(0xFFA6C477),
-    ];
-    final leafCount = radius > 15 ? 145 : 52;
-    for (var index = 0; index < leafCount; index++) {
-      final angle = rng.nextDouble() * math.pi * 2;
-      final distance = math.sqrt(rng.nextDouble());
-      final center = point.translate(
-        math.cos(angle) *
-            distance *
-            radius *
-            (shrub.variant == 2 ? 1.07 : 1.12),
-        -radius * 0.55 +
-            math.sin(angle) *
-                distance *
-                radius *
-                (shrub.variant == 0 ? 0.68 : 0.74),
-      );
-      canvas.save();
-      canvas.translate(center.dx, center.dy);
-      canvas.rotate((rng.nextDouble() - 0.5) * 1.7);
-      final leafWidth = (radius > 15 ? 3.2 : 2.1) + rng.nextDouble() * 2.4;
+    for (final (dx, width) in [(-8.0, 14.0), (1.0, 18.0), (9.0, 11.0)]) {
       canvas.drawOval(
         Rect.fromCenter(
-          center: Offset.zero,
-          width: leafWidth * 1.7,
-          height: leafWidth * 0.85,
+          center: point.translate(dx, -6),
+          width: width,
+          height: 13,
         ),
-        Paint()
-          ..color =
-              shades[(rng.nextInt(4) + (center.dy < point.dy - radius ? 1 : 0))
-                  .clamp(0, 4)],
+        Paint()..color = const Color(0xFF8CAF60),
       );
-      canvas.restore();
     }
+    final paint = Paint()
+      ..color = const Color(0xFF739952)
+      ..strokeWidth = 1.5
+      ..strokeCap = StrokeCap.round;
+    for (final dx in [-5.0, 0.0, 5.0]) {
+      final root = point.translate(dx, 1);
+      canvas.drawLine(root, root.translate(dx < 0 ? -3 : 2, -7), paint);
+    }
+  }
 
-    _grass(canvas, point.translate(-radius * 0.72, 1));
-    _grass(canvas, point.translate(radius * 0.67, 1));
+  static void drawBedOvergrowth(Canvas canvas, Offset point) {
+    if (!embeddedBeds.contains(point)) return;
+    for (final (offset, width) in const [
+      (Offset(-37, 8), 32.0),
+      (Offset(-25, 22), 28.0),
+    ]) {
+      final root = point + offset;
+      canvas.drawOval(
+        Rect.fromCenter(center: root, width: width, height: 11),
+        Paint()..color = const Color(0xD2789D56),
+      );
+      final blade = Paint()
+        ..color = const Color(0xFF61864B)
+        ..strokeWidth = 1.5
+        ..strokeCap = StrokeCap.round;
+      canvas.drawLine(root, root.translate(-3, -9), blade);
+      canvas.drawLine(root, root.translate(2, -7), blade);
+    }
   }
 
   static void drawTrellis(Canvas canvas) {
@@ -347,12 +468,4 @@ class PotagerComposition {
     }
     canvas.drawCircle(point, 1.6, Paint()..color = const Color(0xFFE5C75F));
   }
-}
-
-class PotagerShrub {
-  const PotagerShrub(this.anchor, this.radius, this.variant);
-
-  final Offset anchor;
-  final double radius;
-  final int variant;
 }

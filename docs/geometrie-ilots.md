@@ -11,8 +11,8 @@
 
 ## Cadrage proposé
 
-- À 390 × 450 points, l'îlot complet, tranche de terre comprise, est contenu dans `x = 15…375` et `y = 40…405`. L'épaisseur apparente de terre sur les bords visibles vise 24 points, tolérance de 20 à 28.
-- À 375 × 667 points, la même échelle est gardée. En prenant le pire cadrage autorisé de 375 × 380 points sur le canevas de référence, la fenêtre visible est `x = 7,5…382,5`, `y = 35…415` : le contour proposé garde au moins 5 points de marge verticale. Les objets interactifs doivent également rester visibles dans cette fenêtre.
+- Le contour logique actuel du Potager, conservé par la composition paysagère, s'étend de `x = 24…376`, `y = 68…410` dans le canevas 390 × 450. Sa tranche de 24 points atteint `y = 434`. Les feuillages peuvent dépasser localement du dessus de ce contour, sans dépasser le cadrage. Les autres îlots conservent leurs contours propres.
+- À 375 × 667 points, la même échelle est gardée. Le viewport actuel mesure environ 430 points de haut ; la fenêtre visible du canevas de référence est `x = 7,5…382,5`, `y = 10…440`. La tranche du Potager garde environ 6 points de marge verticale. Les objets interactifs et les masses paysagères doivent également rester visibles dans cette fenêtre.
 - Chaque îlot emploie une silhouette finie différente, composée sur le même treillis. Les variations locales de bord ne créent jamais de joint entre deux cases intérieures ni de longue façade de terre horizontale identique à `grow.png`.
 
 ## Implantation de travail des deux îlots de culture
@@ -43,9 +43,9 @@ Le verger utilise comme gabarit de validation un triangle de trois contacts au s
 ## Réseau de chemin
 
 - Un îlot possède un graphe de circulation unique et connecté. Le chemin entre depuis le bord avant, se ramifie pour approcher les emplacements et ne traverse aucune emprise de platebande ou d'arbre.
-- Les centres des pierres suivent les nœuds de demi-case du treillis. Des intervalles d'herbe de quelques points séparent les sprites de pierre ; la continuité est celle du trajet lisible, pas d'un pavage minéral jointif.
+- Le Potager possède un tracé principal sinueux depuis la lèvre avant `(195, 410)` vers `(195, 190)`, une grande branche latérale et de courtes approches vers les cultures. Les contacts des pierres et des masses paysagères restent sur le treillis ; une bande d'herbe usée adoucit visuellement les virages sans devenir une cour pavée. Le jardin fleuri et le verger gardent leur propre composition.
 - Trois ou quatre variantes de pierre gardent le même ancrage, la même gamme de taille et la même lumière. Le choix de variante est déterministe selon le nœud du chemin et ne répète pas la même silhouette sur deux pas adjacents lorsque le parcours le permet.
-- Une pierre ne masque pas une cible tactile de 44 × 44 points ni le contact au sol d'une plante. Les trois îlots n'ont pas besoin du même nombre de pierres, mais partagent leur échelle et leur matériau.
+- Les pierres restent hors des cibles tactiles de 44 × 44 points et des contacts au sol.
 
 ## Vérifications objectives avant validation graphique
 
