@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 
 import 'garden_state.dart';
 import 'garden_sprites.dart';
+import 'potager_composition.dart';
 import 'potager_path.dart';
 
 /// Isometric grid engine: every scene position derives from the 80×40 rhombus
@@ -167,7 +168,10 @@ class GardenGame extends FlameGame {
 
     // Terrain (drawn first, unsorted).
     _drawTerrain(canvas, zone);
-    if (zone == ZoneType.potager) PotagerPath.draw(canvas);
+    if (zone == ZoneType.potager) {
+      PotagerComposition.drawGround(canvas, _islandContour(zone));
+      PotagerPath.draw(canvas);
+    }
 
     // Environment objects.
     for (final entry in _environmentObjects(zone)) {
@@ -182,7 +186,7 @@ class GardenGame extends FlameGame {
       objects.add(_SceneObject(point, (c) => _drawBed(c, point, zone)));
       if (purchased[slot] != null) {
         objects.add(_SceneObject(
-          point.translate(0, -1),
+          point.translate(0, zone == ZoneType.potager ? 0.1 : -1),
           (c) => _drawPlant(c, point, purchased[slot]!),
         ));
       }
@@ -221,11 +225,11 @@ class GardenGame extends FlameGame {
   Path _islandContour(ZoneType zone) {
     final points = switch (zone) {
       ZoneType.potager => const <Offset>[
-        Offset(40, 205), Offset(55, 135), Offset(125, 102),
-        Offset(200, 94), Offset(275, 102), Offset(345, 135),
-        Offset(360, 205), Offset(350, 285), Offset(320, 352),
-        Offset(245, 392), Offset(145, 392), Offset(70, 352),
-        Offset(40, 285),
+        Offset(24, 205), Offset(42, 118), Offset(116, 78),
+        Offset(200, 68), Offset(284, 78), Offset(358, 118),
+        Offset(376, 205), Offset(366, 300), Offset(330, 374),
+        Offset(248, 410), Offset(142, 410), Offset(60, 374),
+        Offset(24, 300),
       ],
       ZoneType.jardinFleuri => const <Offset>[
         Offset(38, 210), Offset(70, 128), Offset(150, 96),
@@ -349,6 +353,38 @@ class GardenGame extends FlameGame {
   // ─── Environment objects ───────────────────────────────────────────────
 
   List<_SceneObject> _environmentObjects(ZoneType zone) {
+    if (zone == ZoneType.potager) {
+      return [
+        for (final shrub in PotagerComposition.shrubs)
+          _SceneObject(
+            shrub.anchor,
+            (canvas) => PotagerComposition.drawShrub(canvas, shrub),
+          ),
+        _SceneObject(
+          PotagerComposition.trellisAnchor,
+          PotagerComposition.drawTrellis,
+        ),
+        _SceneObject(
+          PotagerComposition.barrelAnchor,
+          PotagerComposition.drawBarrel,
+        ),
+        _SceneObject(
+          PotagerComposition.wateringCanAnchor,
+          (canvas) => _drawWateringCan(
+            canvas,
+            PotagerComposition.wateringCanAnchor,
+          ),
+        ),
+        _SceneObject(
+          PotagerComposition.nurseryCrateAnchor,
+          (canvas) => _drawNurseryCrate(
+            canvas,
+            PotagerComposition.nurseryCrateAnchor,
+          ),
+        ),
+      ];
+    }
+
     final objects = <_SceneObject>[];
 
     // Edge trees at the back corners.
@@ -414,16 +450,7 @@ class GardenGame extends FlameGame {
     }
 
     // Zone-specific accessories.
-    if (zone == ZoneType.potager) {
-      objects.add(_SceneObject(
-        const Offset(330, 150).translate(0, 8),
-        (c) => _drawWateringCan(c, const Offset(330, 150)),
-      ));
-      objects.add(_SceneObject(
-        const Offset(330, 350).translate(0, 12),
-        (c) => _drawNurseryCrate(c, const Offset(330, 350)),
-      ));
-    } else if (zone == ZoneType.jardinFleuri) {
+    if (zone == ZoneType.jardinFleuri) {
       objects.add(_SceneObject(
         const Offset(330, 175).translate(0, 4),
         (c) => _drawBirdbath(c, const Offset(330, 175)),
@@ -488,6 +515,7 @@ class GardenGame extends FlameGame {
       canvas.save();
       canvas.clipPath(_islandContour(zone));
       PotagerPath.drawBedContact(canvas, point);
+      PotagerComposition.drawBedSeam(canvas, point);
       canvas.restore();
     }
 
