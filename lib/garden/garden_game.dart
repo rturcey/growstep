@@ -1,6 +1,9 @@
 import 'dart:math' as math;
+import 'dart:ui' as ui;
 
+import 'package:flame/cache.dart';
 import 'package:flame/game.dart';
+import 'package:flame_tiled/flame_tiled.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
@@ -9,6 +12,7 @@ import 'garden_scene_renderer.dart';
 import 'garden_state.dart';
 import 'garden_sprites.dart';
 import 'potager_composition.dart';
+import 'potager_grid_adapter.dart';
 import 'landscape_mass.dart';
 import 'potager_path.dart';
 import 'potager_scene.dart';
@@ -31,6 +35,29 @@ class _TerrainTile {
   final double scale;
 }
 
+/// flame_tiled 3.1.2 takes an Images cache instead of imagesDirectory. Keep
+/// the TSX paths valid for Tiled while loading from Flutter's sprites assets.
+class _PotagerTileImages extends Images {
+  _PotagerTileImages() : super(prefix: 'assets/sprites/');
+
+  @override
+  Future<ui.Image> load(String fileName, {String? key, String? package}) {
+    const tiledPrefix = '../sprites/';
+    if (!fileName.startsWith(tiledPrefix)) {
+      throw ArgumentError.value(
+        fileName,
+        'fileName',
+        'Unexpected TSX image path',
+      );
+    }
+    return super.load(
+      fileName.substring(tiledPrefix.length),
+      key: key ?? fileName,
+      package: package,
+    );
+  }
+}
+
 /// Modular garden scene rendered by Flame at phone scale.
 ///
 /// One island is rendered at a time on a fixed 390 × 450 logical canvas. The
@@ -39,6 +66,9 @@ class _TerrainTile {
 /// decoration snaps to the 80 × 40 isometric lattice.
 class GardenGame extends FlameGame {
   final GardenSprites _sprites = GardenSprites();
+  static final Images _tileImages = _PotagerTileImages();
+  late final RenderableTiledMap _tileMap;
+  late final Offset _tileMapOffset;
   GardenSnapshot snapshot = GardenSnapshot.initial();
   ZoneType currentZone = ZoneType.potager;
   int? selectedSlot;
@@ -108,6 +138,14 @@ class GardenGame extends FlameGame {
   Future<void> onLoad() async {
     await super.onLoad();
     await _sprites.load();
+    _tileMap = await RenderableTiledMap.fromFile(
+      'potager.tmx',
+      Vector2(IsoGrid.cellWidth, IsoGrid.cellHeight),
+      prefix: 'assets/maps/',
+      images: _tileImages,
+      useAtlas: false,
+    );
+    _tileMapOffset = const PotagerGridAdapter().tileMapOffset(_tileMap.map);
   }
 
   @override
@@ -144,6 +182,10 @@ class GardenGame extends FlameGame {
     _drawTerrain(canvas, zone);
     if (zone == ZoneType.potager) {
       PotagerComposition.drawGround(canvas, _islandContour(zone));
+      canvas.save();
+      canvas.translate(_tileMapOffset.dx, _tileMapOffset.dy);
+      _tileMap.render(canvas);
+      canvas.restore();
       for (final stone in PotagerPath.stones) {
         GardenSceneRenderer.drawSprite(canvas, stone, _sprites);
       }

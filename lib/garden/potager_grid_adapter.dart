@@ -1,5 +1,7 @@
 import 'dart:ui';
 
+import 'package:tiled/tiled.dart';
+
 import 'garden_scene.dart';
 
 /// Converts logical Potager grid coordinates to artboard ground contacts.
@@ -25,4 +27,16 @@ class PotagerGridAdapter {
     x / IsoGrid.cellHeight - tiledOriginCol - 0.5,
     y / IsoGrid.cellHeight - tiledOriginRow - 0.5,
   );
+
+  /// Translation from flame_tiled's isometric image centers to the artboard.
+  /// Its tile center includes a horizontal shift of half the map height.
+  Offset tileMapOffset(TiledMap map) {
+    final halfWidth = map.tileWidth / 2;
+    final halfHeight = map.tileHeight / 2;
+    final originTileCenter = Offset(
+      (tiledOriginCol - tiledOriginRow + map.height) * halfWidth,
+      (tiledOriginCol + tiledOriginRow + 1) * halfHeight,
+    );
+    return toArtboard(0, 0) - originTileCenter;
+  }
 }

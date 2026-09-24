@@ -139,6 +139,16 @@ void main() {
 
   test('TMX path contains painted stone tiles at named grid cells', () async {
     final map = await _loadMap();
+    const adapter = PotagerGridAdapter();
+    final offset = adapter.tileMapOffset(map);
+    expect(offset, const ui.Offset(-285, -110));
+    // flame_tiled anchors each 80 × 40 isometric tile at its image center.
+    // Painted cell (6,8) is the logical (-1,-1) contact on the artboard.
+    final tileContact = ui.Offset(
+      (6 - 8 + map.height) * map.tileWidth / 2 + offset.dx,
+      (6 + 8 + 1) * map.tileHeight / 2 + offset.dy,
+    );
+    expect(tileContact, adapter.toArtboard(-1, -1));
     expect(map.layers.map((layer) => layer.name).toList(), [
       'path',
       'plots',
