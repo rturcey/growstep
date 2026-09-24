@@ -15,6 +15,8 @@ from zipfile import BadZipFile, ZipFile
 import yaml
 from PIL import Image
 
+from build_tiled_stone_tiles import STONE_COUNT, build_tile, tile_name
+
 
 ROOT = Path(__file__).resolve().parents[1]
 NAME = re.compile(r"^(commun|potager|fleurs|verger)_[a-z0-9]+_[a-z0-9_]+$")
@@ -209,6 +211,17 @@ def validate(root: Path) -> tuple[int, list[str]]:
     else:
         allowlist = set()
     named = {f"{sheet.stem}.png" for sheet in sheets}
+    if (root / "assets" / "maps" / "growstep.tsx").exists():
+        for index in range(STONE_COUNT):
+            name = tile_name(index)
+            named.add(name)
+            try:
+                actual = _image(root / "assets" / "sprites" / name, (80, 40))
+                expected = build_tile(root, manifest, index)
+                if actual.tobytes() != expected.tobytes():
+                    errors.append(f"{name}: differs from its master-derived Tiled tile")
+            except (OSError, ValueError, KeyError) as error:
+                errors.append(f"{name}: {error}")
     for image in sorted((root / "assets" / "sprites").glob("*.png")):
         if image.name not in named and image.name not in allowlist:
             errors.append(f"{image.name}: missing metadata sheet")
