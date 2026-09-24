@@ -13,31 +13,6 @@ import 'landscape_mass.dart';
 import 'potager_path.dart';
 import 'potager_scene.dart';
 
-/// Isometric grid engine: every scene position derives from the 80×40 rhombus
-/// lattice with axes u = (40, 20) and v = (-40, 20). Origin is the grid center.
-class IsoGrid {
-  const IsoGrid(this.origin);
-
-  /// Screen center of the grid.
-  final Offset origin;
-
-  /// Lattice (i, j) → screen coordinates. Integer = cell center, half-integer
-  /// = edge midpoint, the only positions allowed for anchors and path nodes.
-  Offset toScreen(double i, double j) =>
-      Offset(origin.dx + (i - j) * 40, origin.dy + (i + j) * 20);
-
-  /// Diamond path for one grid cell centered at lattice (i, j).
-  Path cellPath(double i, double j) {
-    final c = toScreen(i, j);
-    return Path()
-      ..moveTo(c.dx, c.dy - 20)
-      ..lineTo(c.dx + 40, c.dy)
-      ..lineTo(c.dx, c.dy + 20)
-      ..lineTo(c.dx - 40, c.dy)
-      ..close();
-  }
-}
-
 /// One renderable scene object with depth sorting and draw dispatch.
 class _SceneObject extends GardenPlacedObject {
   _SceneObject(Offset contact, this.draw, {String id = '', double zBias = 0})
@@ -60,7 +35,7 @@ class _TerrainTile {
 ///
 /// One island is rendered at a time on a fixed 390 × 450 logical canvas. The
 /// apparent scale never shrinks with phone height: the Flutter layout adapts
-/// around the scene instead of rescaling the world. Every bed, path node and
+/// around the scene instead of rescaling the world. Every plot, path node and
 /// decoration snaps to the 80 × 40 isometric lattice.
 class GardenGame extends FlameGame {
   final GardenSprites _sprites = GardenSprites();
@@ -82,18 +57,6 @@ class GardenGame extends FlameGame {
   static const bool _debugComposition =
       !kReleaseMode && bool.fromEnvironment('GROWSTEP_MAP_DEBUG');
 
-  /// Stable 3–2–3 potager anchors ordered by saved slot index, from the
-  /// approved island geometry gabarit (docs/geometrie-ilots.md).
-  static const _potagerAnchors = <Offset>[
-    Offset(75, 150), // 0 back-left
-    Offset(275, 230), // 1 middle-right
-    Offset(75, 310), // 2 front-left
-    Offset(315, 310), // 3 front-right
-    Offset(195, 150), // 4 back-center
-    Offset(115, 230), // 5 middle-left
-    Offset(195, 310), // 6 front-center
-    Offset(315, 150), // 7 back-right
-  ];
   static const _flowerAnchors = <Offset>[
     Offset(75, 150),
     Offset(275, 230),
@@ -111,7 +74,7 @@ class GardenGame extends FlameGame {
   ];
 
   static List<Offset> anchorsFor(ZoneType zone) => switch (zone) {
-    ZoneType.potager => _potagerAnchors,
+    ZoneType.potager => PotagerPlots.contacts,
     ZoneType.jardinFleuri => _flowerAnchors,
     ZoneType.verger => _orchardAnchors,
   };
@@ -181,7 +144,12 @@ class GardenGame extends FlameGame {
     _drawTerrain(canvas, zone);
     if (zone == ZoneType.potager) {
       PotagerComposition.drawGround(canvas, _islandContour(zone));
-      PotagerPath.draw(canvas);
+      for (final stone in PotagerPath.stones) {
+        GardenSceneRenderer.drawSprite(canvas, stone, _sprites);
+      }
+      for (final plot in PotagerPlots.visible(snapshot.zones[zone]!.length)) {
+        PotagerComposition.drawSoilPlot(canvas, plot.contact);
+      }
     }
 
     // Environment objects.
@@ -189,34 +157,30 @@ class GardenGame extends FlameGame {
       objects.add(entry);
     }
 
-    // Slot objects (beds + plants).
+    // Plants share the same authored plot contact used by soil and hit tests.
     final anchors = anchorsFor(zone);
     final purchased = snapshot.zones[zone]!;
     for (var slot = 0; slot < purchased.length; slot++) {
       final point = anchors[slot];
       if (zone == ZoneType.potager) {
-        final bed = PotagerBeds.beds[slot];
-        objects.add(
-          _SceneObject(
-            point,
-            (c) {
-              if (!GardenSceneRenderer.drawSprite(c, bed, _sprites)) {
-                _drawBed(c, point, zone);
-              }
-            },
-            id: bed.id,
-          ),
-        );
+        if (purchased[slot] != null) {
+          objects.add(
+            _SceneObject(
+              point.translate(0, 0.1),
+              (c) => _drawPlant(c, point, purchased[slot]!),
+            ),
+          );
+        }
       } else {
         objects.add(_SceneObject(point, (c) => _drawBed(c, point, zone)));
-      }
-      if (purchased[slot] != null) {
-        objects.add(
-          _SceneObject(
-            point.translate(0, 0.1),
-            (c) => _drawPlant(c, point, purchased[slot]!),
-          ),
-        );
+        if (purchased[slot] != null) {
+          objects.add(
+            _SceneObject(
+              point.translate(0, 0.1),
+              (c) => _drawPlant(c, point, purchased[slot]!),
+            ),
+          );
+        }
       }
       if (zone == currentZone && selectedSlot == slot) {
         objects.add(
@@ -587,18 +551,23 @@ class GardenGame extends FlameGame {
     if (zone == ZoneType.potager) {
       return [
         for (final object in PotagerPilotScene.objects)
-          _SceneObject(object.contact, (canvas) {
-            if (!GardenSceneRenderer.drawSprite(canvas, object, _sprites)) {
-              if (identical(object, PotagerPilotScene.rock)) {
-                LandscapeMassPainter.drawRock(
-                  canvas,
-                  LandscapeRock(object.contact, object.size.height),
-                );
-              } else {
-                PotagerComposition.drawBarrel(canvas);
+          _SceneObject(
+            object.contact,
+            (canvas) {
+              if (!GardenSceneRenderer.drawSprite(canvas, object, _sprites)) {
+                if (identical(object, PotagerPilotScene.rock)) {
+                  LandscapeMassPainter.drawRock(
+                    canvas,
+                    LandscapeRock(object.contact, object.size.height),
+                  );
+                } else {
+                  PotagerComposition.drawBarrel(canvas);
+                }
               }
-            }
-          }, id: object.id, zBias: object.zBias),
+            },
+            id: object.id,
+            zBias: object.zBias,
+          ),
         for (final mass in PotagerComposition.masses) ...[
           for (final shrub in mass.shrubs)
             _SceneObject(shrub.anchor, (canvas) {
@@ -783,7 +752,7 @@ class GardenGame extends FlameGame {
     return objects;
   }
 
-  // ─── Beds ──────────────────────────────────────────────────────────────
+  // ─── Flower beds and orchard bases ─────────────────────────────────────
 
   void _drawBed(Canvas canvas, Offset point, ZoneType zone) {
     if (zone == ZoneType.verger) {
@@ -791,12 +760,7 @@ class GardenGame extends FlameGame {
       return;
     }
 
-    if (zone == ZoneType.potager) {
-      canvas.save();
-      canvas.clipPath(_islandContour(zone));
-      PotagerPath.drawBedContact(canvas, point);
-      canvas.restore();
-    }
+    assert(zone == ZoneType.jardinFleuri);
 
     // Contact shadow — soft, slightly offset.
     canvas.drawOval(
@@ -809,10 +773,7 @@ class GardenGame extends FlameGame {
     // Bed dimensions aligned to the 80×40 grid diamond.
     const w = 40.0; // half-width
     const h = 20.0; // half-height
-    final embedded =
-        zone == ZoneType.potager &&
-        PotagerComposition.embeddedBeds.contains(point);
-    final fh = zone == ZoneType.potager ? (embedded ? 4.0 : 10.0) : 13.0;
+    const fh = 13.0;
 
     // Front-left face (darker, shadowed).
     final leftFace = Path()
@@ -821,13 +782,7 @@ class GardenGame extends FlameGame {
       ..lineTo(point.dx, point.dy + h + fh)
       ..lineTo(point.dx - w, point.dy + fh)
       ..close();
-    canvas.drawPath(
-      leftFace,
-      Paint()
-        ..color = zone == ZoneType.potager
-            ? (embedded ? const Color(0xFF687D4E) : const Color(0xFF927650))
-            : const Color(0xFF8B6845),
-    );
+    canvas.drawPath(leftFace, Paint()..color = const Color(0xFF8B6845));
 
     // Front-right face (warmer, lit).
     final rightFace = Path()
@@ -836,13 +791,7 @@ class GardenGame extends FlameGame {
       ..lineTo(point.dx + w, point.dy + fh)
       ..lineTo(point.dx, point.dy + h + fh)
       ..close();
-    canvas.drawPath(
-      rightFace,
-      Paint()
-        ..color = zone == ZoneType.potager
-            ? (embedded ? const Color(0xFF82935D) : const Color(0xFFAD8C61))
-            : const Color(0xFFB08258),
-    );
+    canvas.drawPath(rightFace, Paint()..color = const Color(0xFFB08258));
     for (final (start, end) in [
       (point.translate(-33, 5), point.translate(-9, 18)),
       (point.translate(-21, 11), point.translate(-3, 20)),
@@ -859,38 +808,30 @@ class GardenGame extends FlameGame {
     }
 
     // Wood top rim — warm honey gradient.
-    final topRim = embedded
-        ? PotagerComposition.embeddedRim(point)
-        : (Path()
-            ..moveTo(point.dx, point.dy - h)
-            ..lineTo(point.dx + w, point.dy)
-            ..lineTo(point.dx, point.dy + h)
-            ..lineTo(point.dx - w, point.dy)
-            ..close());
+    final topRim = Path()
+      ..moveTo(point.dx, point.dy - h)
+      ..lineTo(point.dx + w, point.dy)
+      ..lineTo(point.dx, point.dy + h)
+      ..lineTo(point.dx - w, point.dy)
+      ..close();
     canvas.drawPath(
       topRim,
       Paint()
         ..shader = LinearGradient(
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
-          colors: zone == ZoneType.potager
-              ? (embedded
-                    ? const [Color(0xFFA4AE75), Color(0xFF84965F)]
-                    : const [Color(0xFFC7AF7C), Color(0xFFAE9369)])
-              : const [Color(0xFFD9A86A), Color(0xFFC4905A)],
+          colors: const [Color(0xFFD9A86A), Color(0xFFC4905A)],
         ).createShader(topRim.getBounds()),
     );
 
     // Soil interior — dark, rich brown.
     const soilInset = 3.0;
-    final soil = embedded
-        ? PotagerComposition.embeddedSoil(point)
-        : (Path()
-            ..moveTo(point.dx, point.dy - h + soilInset)
-            ..lineTo(point.dx + w - soilInset, point.dy)
-            ..lineTo(point.dx, point.dy + h - soilInset)
-            ..lineTo(point.dx - w + soilInset, point.dy)
-            ..close());
+    final soil = Path()
+      ..moveTo(point.dx, point.dy - h + soilInset)
+      ..lineTo(point.dx + w - soilInset, point.dy)
+      ..lineTo(point.dx, point.dy + h - soilInset)
+      ..lineTo(point.dx - w + soilInset, point.dy)
+      ..close();
     canvas.drawPath(
       soil,
       Paint()
@@ -926,52 +867,37 @@ class GardenGame extends FlameGame {
       point.translate(w, 0),
       point.translate(0, h),
     ]) {
-      if (embedded) continue;
       canvas.drawRRect(
         RRect.fromRectAndRadius(
           Rect.fromCenter(center: corner.translate(0, 1), width: 6, height: 10),
           const Radius.circular(2),
         ),
-        Paint()
-          ..color = zone == ZoneType.potager
-              ? const Color(0xFFB39A6B)
-              : const Color(0xFFC49260),
+        Paint()..color = const Color(0xFFC49260),
       );
       canvas.drawLine(
         corner.translate(-1, 0),
         corner.translate(-1, 8),
         Paint()
-          ..color = zone == ZoneType.potager
-              ? const Color(0xFFD9BD8C)
-              : const Color(0xFFE6B57E)
+          ..color = const Color(0xFFE6B57E)
           ..strokeWidth = 1,
       );
     }
 
     // Wood plank edge highlights.
-    if (!embedded) {
-      canvas.drawLine(
-        point.translate(-w + 2, 1),
-        point.translate(0, h + 1),
-        Paint()
-          ..color = zone == ZoneType.potager
-              ? const Color(0xFFD2B889)
-              : const Color(0xFFE7B781)
-          ..strokeWidth = 1.5,
-      );
-      canvas.drawLine(
-        point.translate(1, h + 1),
-        point.translate(w - 2, 1),
-        Paint()
-          ..color = zone == ZoneType.potager
-              ? const Color(0xFFC9AA7D)
-              : const Color(0xFFE1AB75)
-          ..strokeWidth = 1.5,
-      );
-    }
-    if (zone == ZoneType.potager) {
-      PotagerComposition.drawBedOvergrowth(canvas, point);
-    }
+    canvas.drawLine(
+      point.translate(-w + 2, 1),
+      point.translate(0, h + 1),
+      Paint()
+        ..color = const Color(0xFFE7B781)
+        ..strokeWidth = 1.5,
+    );
+    canvas.drawLine(
+      point.translate(1, h + 1),
+      point.translate(w - 2, 1),
+      Paint()
+        ..color = const Color(0xFFE1AB75)
+        ..strokeWidth = 1.5,
+    );
   }
 
   void _drawTreeBase(Canvas canvas, Offset point) {

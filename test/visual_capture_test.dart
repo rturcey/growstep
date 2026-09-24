@@ -59,6 +59,16 @@ GardenSnapshot _fixture(String state) {
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
+  test('potager capture fixtures purchase exactly 4, 6, or 8 plots', () {
+    for (final (state, count) in [
+      ('initial', 4),
+      ('intermediaire', 6),
+      ('sature', 8),
+    ]) {
+      expect(_fixture(state).zones[ZoneType.potager]!.length, count);
+    }
+  });
+
   test('captures déterministes des trois îlots', () async {
     final output = Directory(captureDirectory)..createSync(recursive: true);
     for (final viewport in [

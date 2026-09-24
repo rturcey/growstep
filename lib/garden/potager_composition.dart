@@ -19,11 +19,6 @@ class PotagerComposition {
     Offset(95, 400),
     Offset(295, 400),
   ];
-  static const embeddedBeds = <Offset>[
-    Offset(75, 150),
-    Offset(115, 230),
-    Offset(315, 310),
-  ];
 
   /// Two connected border masses frame the center without closing the front.
   static const masses = <LandscapeMass>[
@@ -46,9 +41,7 @@ class PotagerComposition {
         LandscapeShrub(Offset(335, 140), 28, ShrubPalette.olive),
         LandscapeShrub(Offset(355, 190), 13, ShrubPalette.sage),
       ],
-      rocks: [
-        LandscapeRock(Offset(355, 270), 22),
-      ],
+      rocks: [LandscapeRock(Offset(355, 270), 22)],
     ),
   ];
 
@@ -58,7 +51,7 @@ class PotagerComposition {
     for (final mass in masses) {
       LandscapeMassPainter.drawGround(canvas, mass);
     }
-    // Wide low growth ties the left beds to their border mass. The right
+    // Wide low growth ties the left plots to their border mass. The right
     // transition is shorter and lighter, preserving an asymmetric open lawn.
     final leftGrowth = Path()
       ..moveTo(55, 140)
@@ -149,6 +142,33 @@ class PotagerComposition {
     drawFrontFringe(canvas);
   }
 
+  /// A flat soil patch within one 80 × 40 grid cell, beneath its crop.
+  static void drawSoilPlot(Canvas canvas, Offset contact) {
+    final footprint = PotagerPlots.footprintAt(contact);
+    final bounds = footprint.getBounds();
+    canvas.drawPath(
+      footprint,
+      Paint()
+        ..shader = const LinearGradient(
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+          colors: [Color(0xE69A7B5D), Color(0xE68D7053), Color(0xE682684E)],
+        ).createShader(bounds),
+    );
+    canvas.save();
+    canvas.clipPath(footprint);
+    for (final (offset, width) in const [
+      (Offset(-11, -2), 15.0),
+      (Offset(13, 4), 11.0),
+    ]) {
+      canvas.drawOval(
+        Rect.fromCenter(center: contact + offset, width: width, height: 3),
+        Paint()..color = const Color(0x1FB99A76),
+      );
+    }
+    canvas.restore();
+  }
+
   /// Low turf softens the visible outline without covering the earth slice.
   static void drawFrontFringe(Canvas canvas) {
     final fringe = Path()
@@ -172,85 +192,6 @@ class PotagerComposition {
     canvas.drawPath(fringe, Paint()..color = const Color(0xC780A95B));
   }
 
-  /// The same planted-ground silhouette is reused for three embedded beds.
-  /// Its bounds remain inside the logical 80 × 40 slot footprint.
-  static Path embeddedRim(Offset point) => Path()
-    ..moveTo(point.dx - 39, point.dy)
-    ..quadraticBezierTo(
-      point.dx - 36,
-      point.dy - 8,
-      point.dx - 21,
-      point.dy - 10,
-    )
-    ..quadraticBezierTo(point.dx - 12, point.dy - 18, point.dx, point.dy - 19)
-    ..quadraticBezierTo(
-      point.dx + 17,
-      point.dy - 15,
-      point.dx + 26,
-      point.dy - 9,
-    )
-    ..quadraticBezierTo(
-      point.dx + 39,
-      point.dy - 5,
-      point.dx + 39,
-      point.dy + 1,
-    )
-    ..quadraticBezierTo(
-      point.dx + 24,
-      point.dy + 12,
-      point.dx + 5,
-      point.dy + 18,
-    )
-    ..quadraticBezierTo(
-      point.dx - 9,
-      point.dy + 19,
-      point.dx - 18,
-      point.dy + 14,
-    )
-    ..quadraticBezierTo(point.dx - 37, point.dy + 7, point.dx - 39, point.dy)
-    ..close();
-
-  static Path embeddedSoil(Offset point) => Path()
-    ..moveTo(point.dx - 35, point.dy)
-    ..quadraticBezierTo(
-      point.dx - 31,
-      point.dy - 7,
-      point.dx - 18,
-      point.dy - 8,
-    )
-    ..quadraticBezierTo(
-      point.dx - 9,
-      point.dy - 15,
-      point.dx + 1,
-      point.dy - 16,
-    )
-    ..quadraticBezierTo(
-      point.dx + 16,
-      point.dy - 12,
-      point.dx + 24,
-      point.dy - 7,
-    )
-    ..quadraticBezierTo(
-      point.dx + 34,
-      point.dy - 4,
-      point.dx + 35,
-      point.dy + 1,
-    )
-    ..quadraticBezierTo(
-      point.dx + 21,
-      point.dy + 10,
-      point.dx + 3,
-      point.dy + 15,
-    )
-    ..quadraticBezierTo(
-      point.dx - 9,
-      point.dy + 16,
-      point.dx - 18,
-      point.dy + 11,
-    )
-    ..quadraticBezierTo(point.dx - 34, point.dy + 6, point.dx - 35, point.dy)
-    ..close();
-
   static void drawRimGrass(Canvas canvas, Offset point) {
     canvas.drawOval(
       Rect.fromCenter(center: point.translate(1, 2), width: 30, height: 8),
@@ -273,26 +214,6 @@ class PotagerComposition {
     for (final dx in [-5.0, 0.0, 5.0]) {
       final root = point.translate(dx, 1);
       canvas.drawLine(root, root.translate(dx < 0 ? -3 : 2, -7), paint);
-    }
-  }
-
-  static void drawBedOvergrowth(Canvas canvas, Offset point) {
-    if (!embeddedBeds.contains(point)) return;
-    for (final (offset, width) in const [
-      (Offset(-37, 8), 32.0),
-      (Offset(-25, 22), 28.0),
-    ]) {
-      final root = point + offset;
-      canvas.drawOval(
-        Rect.fromCenter(center: root, width: width, height: 11),
-        Paint()..color = const Color(0xD2789D56),
-      );
-      final blade = Paint()
-        ..color = const Color(0xFF61864B)
-        ..strokeWidth = 1.5
-        ..strokeCap = StrokeCap.round;
-      canvas.drawLine(root, root.translate(-3, -9), blade);
-      canvas.drawLine(root, root.translate(2, -7), blade);
     }
   }
 

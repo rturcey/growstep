@@ -1,0 +1,170 @@
+Tiled PoC — Tickets (#58 parent spec)
+======================================
+
+Chaîne: T1 → T2 → T3 → T4 → T5
+
+
+#59 — Tiled PoC #1 — Préparer le projet Tiled (carte, tileset, tuiles de pas)
+======================================================================
+
+## Parent
+
+#58
+
+## What to build
+
+Créer les fichiers Tiled de base et les tuiles de pas japonais, puis prouver que le TMX se parse correctement. Ce ticket pose les fondations : la carte, le tileset, les tuiles et les objets Tiled nécessaires au PoC. Aucun code runtime n'est modifié ici.
+
+## Acceptance criteria
+
+- [ ] `assets/maps/potager.tmx` existe : carte isométrique 80×40, 14×14 tuiles
+- [ ] `assets/maps/growstep.tsx` existe : tileset collection-of-images, `objectalignment: bottom`, référençant les PNG de `assets/sprites/` via chemins relatifs
+- [ ] Les 6 sprites `commun_sol_pas_pierre_*.png` existants sont placés sur un canvas transparent 80×40, correctement ancrés dans la cellule, sans redessiner les pierres. Noms : `commun_sol_pas_pierre_tile_00.png`…`_05.png`
+- [ ] La couche tile layer `path` contient quelques tuiles de pas japonais peintes
+- [ ] La couche object layer `plots` contient 8 point objects nommés `plot_0`…`plot_7`, `class=plot`, avec `gridCol` et `gridRow` (int) en custom properties correspondant aux positions historiques
+- [ ] La couche object layer `props` contient 1 tile object (rocher existant), `class=prop`, avec un `name` stable
+- [ ] La couche `plots` a une couleur distinctive dans Tiled
+- [ ] `flame_tiled: ^3.1.2` est ajouté au `pubspec.yaml`. Si le test ou le futur loader importe directement `package:tiled/...`, `tiled` est déclaré comme dépendance directe au lieu de compter sur la dépendance transitive de `flame_tiled`. Sinon, seul `flame_tiled` suffit.
+- [ ] `assets/maps/` est déclaré dans les assets Flutter du `pubspec.yaml`
+- [ ] La carte TMX s'ouvre dans Tiled avec un aperçu isométrique correct
+- [ ] Un test pur de parsing TMX vérifie : 8 plots (noms stables `plot_0`…`plot_7`, `class=plot`, `gridCol/gridRow` attendus, aucune dépendance aux IDs numériques Tiled), 1 prop (ID stable, asset référencé, coordonnée de grille), et les tiles de path (layer, gridCol, gridRow, référence de tuile)
+- [ ] Aucune tile d'herbe/ground n'est créée dans ce ticket. Le PoC ne contient que la couche `path`, conformément à la décision finale.
+
+## Blocked by
+
+- None (peut démarrer immédiatement)
+
+
+#60 — Tiled PoC #2 — Adapter grille isométrique → artboard Growstep
+======================================================================
+
+## Parent
+
+#58
+
+## What to build
+
+Isoler la conversion `(gridCol, gridRow)` → `IsoGrid.toScreen()` → contact artboard dans un adapter unique et la tester. Prouver que la grille isométrique Tiled reproduit exactement les contacts historiques de Growstep, soit via les coordonnées natives Tiled, soit via `gridCol/gridRow` explicites en fallback.
+
+## Acceptance criteria
+
+- [ ] Un adapter unique isole la conversion grille → artboard. Il expose au minimum : projection générique `(gridCol, gridRow)` → `Offset` via `IsoGrid.toScreen()`, et conversion native Tiled `(x, y)` projeté → `Offset` artboard.
+- [ ] La projection générique est testée avec des cellules représentatives : `(0,0)`, `(1,0)`, `(0,1)`, `(1,1)` — pas seulement les 8 plots.
+- [ ] Les 8 contacts historiques des plots sont reproduits exactement depuis `gridCol/gridRow` via l'adapter.
+- [ ] La conversion native Tiled `(x, y)` est testée et comparée avec les contacts historiques.
+- [ ] Si la conversion native ne reproduit pas exactement les contacts historiques, le fallback `gridCol/gridRow` est documenté comme autoritaire et la conversion native est marquée comme best-effort.
+- [ ] Le fallback n'est jamais de garder les objets en coordonnées Dart.
+
+## Blocked by
+
+- #59 (le projet Tiled doit exister pour tester la conversion)
+
+
+#61 — Tiled PoC #3 — Charger et rendre le RenderableTiledMap
+======================================================================
+
+## Parent
+
+#58
+
+## What to build
+
+Charger le `RenderableTiledMap` depuis `potager.tmx` dans `GardenGame.onLoad()` et le rendre manuellement entre le terrain Canvas existant et la scène dynamique. Pas de `TiledComponent` enfant Flame. Le `RenderableTiledMap` est un membre de `GardenGame`.
+
+## Acceptance criteria
+
+- [ ] `RenderableTiledMap.fromFile()` est appelé dans `GardenGame.onLoad()` avec `imagesDirectory: 'assets/sprites/'` et `useAtlas: false` (mitigation du risque SpriteBatch identifié dans le parent), et le résultat est tenu comme membre de `GardenGame` (pas de `add()`, pas d'enfant Flame)
+- [ ] `_tileMap.render(canvas)` est appelé manuellement dans `_drawIsland()` après `_drawTerrain()` et avant les objets dynamiques, sous le même `GardenArtboardTransform`
+- [ ] Le transform artboard n'est appliqué qu'une seule fois
+- [ ] Le `RenderableTiledMap` n'est jamais rendu deux fois
+- [ ] Les object layers techniques (`plots`) ne sont pas rendues par le Tiled map
+- [ ] Le positionnement/offset du `RenderableTiledMap` est calculé une seule fois à partir de l'adapter #60 ; une tile connue peinte en `(col, row)` tombe exactement sur le contact artboard attendu. Aucun offset magique de calibration n'est dispersé dans `GardenGame`.
+- [ ] Le terrain Canvas existant reste entièrement visible
+- [ ] Les tuiles de pas japonais apparaissent dans Growstep aux cellules peintes dans Tiled
+- [ ] Des captures déterministes sont produites à 390×844 et 375×667 via l'infrastructure existante (`visual_capture_test.dart`)
+- [ ] Les plantes dynamiques restent visibles et fonctionnelles
+- [ ] Aucune exception au runtime
+
+## Blocked by
+
+- #60 (l'adapter grille → artboard doit être validé avant de rendre les tuiles)
+
+
+#62 — Tiled PoC #4 — Extraire les objets Tiled vers le pipeline existant
+======================================================================
+
+## Parent
+
+#58
+
+## What to build
+
+Parser les object layers (`props`, `plots`) depuis le `TiledMap` chargé et convertir le rocher en `GardenSpriteObject` rendu via le pipeline `_SceneObject` existant. Mesurer le delta d'ancre entre Tiled `bottom-center` et le manifeste, et appliquer un offset déterministe si nécessaire. Les 8 plots sont lus depuis Tiled mais ne remplacent pas `PotagerPlots` au runtime dans ce PoC.
+
+**Le rocher pilote devient Tiled-authoritative.** Son ancien placement Dart cesse d'être rendu ; sa position provient exclusivement du TMX. Aucun fallback sur sa coordonnée Dart n'existe. Cela crée une exception assumée au principe « composition Dart intacte » du PoC, mais elle est indispensable pour prouver réellement le point 9 : Tiled → changement visible sans coordonnée Dart.
+
+Avant ce ticket :
+```
+east_upper_rock position → Dart
+```
+
+Après ce ticket :
+```
+east_upper_rock position → potager.tmx exclusivement
+Dart  → asset / anchor / depth / rendering
+Tiled → gridCol / gridRow
+```
+
+## Acceptance criteria
+
+- [ ] Les object layers `props` et `plots` sont parsées depuis le `TiledMap`
+- [ ] Le rocher est extrait comme `GardenSpriteObject` (ID stable, asset, contact calculé via l'adapter, size, layer) et rendu via `_SceneObject` dans le pipeline de profondeur existant
+- [ ] Le rocher pilote n'a qu'une seule instance runtime. Son ancien placement Dart (`PotagerPilotScene.rock`) est retiré/désactivé du rendu ; sa position provient exclusivement du TMX. Aucun fallback sur sa coordonnée Dart n'existe.
+- [ ] Le delta d'ancre entre `Tiled bottom-center` et `manifest ground anchor` est mesuré sur le rocher et documenté
+- [ ] Si le delta n'est pas nul, un offset déterministe dérivé du manifeste est appliqué (pas de correction manuelle par objet, pas de modification des PNG)
+- [ ] Les 8 plots sont lus depuis Tiled (`gridCol/gridRow` → contacts via l'adapter) mais `PotagerPlots` reste autoritaire au runtime — les plots Tiled sont shadow/read-only
+- [ ] Widget test (`potager_scene_test.dart`) : les 8 contacts historiques restent tapables aux deux viewports (390×844, 375×667)
+- [ ] Le hit testing ne dépend pas des bounds de sprites Tiled ; le contact logique reste autoritaire
+- [ ] Le rocher apparaît au même endroit que dans le rendu actuel (à l'offset d'ancre près)
+
+## Blocked by
+
+- #61 (le RenderableTiledMap doit être chargé et rendu avant d'extraire les objets)
+
+
+#63 — Tiled PoC #5 — Valider le workflow de bout en bout
+======================================================================
+
+## Parent
+
+#58
+
+## What to build
+
+Valider que modifier la carte dans Tiled produit un changement visible dans Growstep sans modifier aucune coordonnée Dart. Ce ticket prouve les 9 critères de réussite du PoC et produit les captures pour la revue visuelle externe.
+
+Le protocole de manipulation est une vraie preuve, sans dégrader la map finale : partir d'une position A connue du rocher, le déplacer exactement d'une cellule vers B dans Tiled, générer une capture prouvant B, puis remettre la map canonique à la position choisie avant le commit final. Même chose pour paint/depaint : prouver les deux états, puis conserver seulement l'état final souhaité.
+
+L'AC « revue visuelle externe » reste un gate humain : l'agent d'implémentation produit les captures mais ne coche pas lui-même la validation visuelle.
+
+## Acceptance criteria
+
+- [ ] Déplacer le rocher d'une cellule dans Tiled (position A → position B) → capturer que Growstep affiche B et non A → remettre la map canonique à la position choisie avant le commit final
+- [ ] Peindre de nouvelles pierres dans la couche `path` → capturer qu'elles apparaissent dans Growstep → remettre l'état final souhaité
+- [ ] Dépeindre des pierres → capturer qu'elles disparaissent dans Growstep → remettre l'état final souhaité
+- [ ] Captures couleur et niveaux de gris produites à 390×844 et 375×667
+- [ ] Revue visuelle externe (gate humain, pas coché par l'agent) : pierres aux cellules attendues, terrain Canvas visible, pierres entre terrain et objets dynamiques, anchor/depth du rocher correct, aucun offset d'artboard introduit
+- [ ] Les 9 critères de réussite du PoC sont tous validés :
+  1. Map Tiled isométrique 80×40 ouverte et éditable
+  2. Correspondance exacte grille Tiled → contacts Growstep (8 plots historiques)
+  3. Tile layer `path` rendue correctement dans Growstep
+  4. Tile de pas japonais 80×40 transparente (sprite existant, non redessiné)
+  5. Objet vertical (rocher) ancré à une cellule
+  6. Anchor manifest correctement compensé (delta mesuré, offset déterministe)
+  7. Plot avec marker editor-only natif Tiled, invisible dans Growstep
+  8. Rendu Tiled entre terrain Canvas et scène dynamique
+  9. Modification dans Tiled → résultat visible dans Growstep sans coordonnée Dart
+
+## Blocked by
+
+- #62 (les objets Tiled doivent être extraits et rendus avant la validation finale)

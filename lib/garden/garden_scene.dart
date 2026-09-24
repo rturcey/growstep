@@ -1,5 +1,30 @@
 import 'dart:ui';
 
+/// The shared 80 × 40 isometric lattice used by terrain and plot footprints.
+class IsoGrid {
+  const IsoGrid(this.origin);
+
+  static const cellWidth = 80.0;
+  static const cellHeight = 40.0;
+
+  final Offset origin;
+
+  Offset toScreen(double i, double j) => Offset(
+    origin.dx + (i - j) * cellWidth / 2,
+    origin.dy + (i + j) * cellHeight / 2,
+  );
+
+  Path cellPath(double i, double j) {
+    final c = toScreen(i, j);
+    return Path()
+      ..moveTo(c.dx, c.dy - cellHeight / 2)
+      ..lineTo(c.dx + cellWidth / 2, c.dy)
+      ..lineTo(c.dx, c.dy + cellHeight / 2)
+      ..lineTo(c.dx - cellWidth / 2, c.dy)
+      ..close();
+  }
+}
+
 /// The fixed logical canvas shared by composition, rendering, and hit tests.
 class GardenArtboardTransform {
   const GardenArtboardTransform(this.viewport);

@@ -28,82 +28,64 @@ class PotagerPilotScene {
   static const objects = <GardenSpriteObject>[rock, barrel];
 }
 
-/// The eight potager planting slots rendered as declarative sprite objects.
-/// Each index references an explicitly authored platebande variant;
-/// no variant is chosen by calculation, random, or plant state.
-///
-/// Two variants are used: v00 (bois + terre, fully neutral) and v01 (bois +
-/// terre + pierre + feuillage). v01's extra 6.25 visible px of accessories
-/// sit at the top of the sprite, above the wooden frame. At the 66 px render
-/// width they are compact enough to read as a detail of the bed rather than
-/// a structure crossing the crop. v01 is kept away from the trellis (index 4)
-/// and from the back-left corner (index 0) to avoid compounding structures.
-class PotagerBeds {
-  const PotagerBeds._();
+/// A saved plot index and its authored position on the shared isometric grid.
+/// The contact is shared by soil, plant, selection, and hit testing.
+class PotagerPlot {
+  const PotagerPlot(this.index, this.gridI, this.gridJ);
 
-  static const _bedWidth = 66.0;
-  static const _v00Height = 51.2;
-  static const _v01Height = 59.1;
+  final int index;
+  final double gridI;
+  final double gridJ;
 
-  static const _v00 = 'potager_decor_bac_potager_statique_ordinaire_00.png';
-  static const _v01 = 'potager_decor_bac_potager_statique_ordinaire_01.png';
+  String get id => 'soil_plot_$index';
+  Offset get contact => PotagerPlots.grid.toScreen(gridI, gridJ);
+}
 
-  static const beds = <GardenSpriteObject>[
-    GardenSpriteObject(
-      id: 'bed_0',
-      asset: _v00,
-      contact: Offset(75, 150),
-      size: Size(_bedWidth, _v00Height),
-      layer: GardenLayer.depth,
-    ),
-    GardenSpriteObject(
-      id: 'bed_1',
-      asset: _v01,
-      contact: Offset(275, 230),
-      size: Size(_bedWidth, _v01Height),
-      layer: GardenLayer.depth,
-    ),
-    GardenSpriteObject(
-      id: 'bed_2',
-      asset: _v00,
-      contact: Offset(75, 310),
-      size: Size(_bedWidth, _v00Height),
-      layer: GardenLayer.depth,
-    ),
-    GardenSpriteObject(
-      id: 'bed_3',
-      asset: _v01,
-      contact: Offset(315, 310),
-      size: Size(_bedWidth, _v01Height),
-      layer: GardenLayer.depth,
-    ),
-    GardenSpriteObject(
-      id: 'bed_4',
-      asset: _v00,
-      contact: Offset(195, 150),
-      size: Size(_bedWidth, _v00Height),
-      layer: GardenLayer.depth,
-    ),
-    GardenSpriteObject(
-      id: 'bed_5',
-      asset: _v01,
-      contact: Offset(115, 230),
-      size: Size(_bedWidth, _v01Height),
-      layer: GardenLayer.depth,
-    ),
-    GardenSpriteObject(
-      id: 'bed_6',
-      asset: _v00,
-      contact: Offset(195, 310),
-      size: Size(_bedWidth, _v00Height),
-      layer: GardenLayer.depth,
-    ),
-    GardenSpriteObject(
-      id: 'bed_7',
-      asset: _v01,
-      contact: Offset(315, 150),
-      size: Size(_bedWidth, _v01Height),
-      layer: GardenLayer.depth,
-    ),
+class PotagerPlots {
+  const PotagerPlots._();
+
+  static const grid = IsoGrid(Offset(195, 230));
+  static const footprintWidth = IsoGrid.cellWidth - 8;
+  static const footprintHeight = IsoGrid.cellHeight - 4;
+
+  /// Saved index order; lattice coordinates reproduce the historical contacts.
+  static const plots = <PotagerPlot>[
+    PotagerPlot(0, -3.5, -0.5), // back-left  (75, 150)
+    PotagerPlot(1, 1, -1), // middle-right (275, 230)
+    PotagerPlot(2, 0.5, 3.5), // front-left (75, 310)
+    PotagerPlot(3, 3.5, 0.5), // front-right (315, 310)
+    PotagerPlot(4, -2, -2), // back-center (195, 150)
+    PotagerPlot(5, -1, 1), // middle-left (115, 230)
+    PotagerPlot(6, 2, 2), // front-center (195, 310)
+    PotagerPlot(7, -0.5, -3.5), // back-right (315, 150)
   ];
+
+  static final contacts = List<Offset>.unmodifiable(
+    plots.map((plot) => plot.contact),
+  );
+
+  static Iterable<PotagerPlot> visible(int purchasedCount) =>
+      plots.take(purchasedCount);
+
+  /// One softly irregular 2:1 soil outline inside the same 72 × 36 footprint.
+  static Path footprintAt(Offset contact) {
+    final x = contact.dx;
+    final y = contact.dy;
+    const w = footprintWidth / 2;
+    const h = footprintHeight / 2;
+    Offset p(double nx, double ny) => Offset(x + nx * w, y + ny * h);
+    final path = Path()..moveTo(x, y - h);
+    void curve(Offset a, Offset b, Offset end) =>
+        path.cubicTo(a.dx, a.dy, b.dx, b.dy, end.dx, end.dy);
+
+    curve(p(0.17, -1), p(0.31, -0.83), p(0.42, -0.67));
+    curve(p(0.61, -0.56), p(1, -0.17), p(1, 0));
+    curve(p(1, 0.17), p(0.83, 0.33), p(0.64, 0.44));
+    curve(p(0.44, 0.56), p(0.17, 1), p(0, 1));
+    curve(p(-0.17, 1), p(-0.31, 0.78), p(-0.47, 0.61));
+    curve(p(-0.72, 0.44), p(-1, 0.17), p(-1, 0));
+    curve(p(-1, -0.17), p(-0.86, -0.39), p(-0.64, -0.50));
+    curve(p(-0.42, -0.67), p(-0.17, -1), p(0, -1));
+    return path..close();
+  }
 }

@@ -15,7 +15,7 @@ Une application iPhone où la marche fait grandir et embellir un jardin virtuel.
 **Emplacement de plantation** : place d'une zone pouvant accueillir une plante.
 _Avoid_ : Parcelle
 
-**Platebande** : support de terre surélevé qui matérialise un emplacement de plantation du potager ou du jardin fleuri. Un emplacement du verger n'a pas de platebande.
+**Platebande** : support de terre surélevé utilisé dans le jardin fleuri. Dans le Potager, un emplacement acheté est matérialisé par une empreinte de terre plate liée à son contact de grille ; le Verger n'a pas de platebande.
 
 **Graine** : ressource d'une espèce donnée qui permet de démarrer une plante dans un emplacement.
 
@@ -48,3 +48,12 @@ _Avoid_ : Parcelle
 **Invitation à marcher** : rappel qui propose au joueur de lancer une pause marche.
 
 **Pause marche** : marche volontaire dont la réussite dépend d'un objectif de pas à atteindre dans un délai donné.
+
+**Contact au sol** : point où un objet touche le sol dans le canevas de l'artboard. Sert d'ancre de placement pour le rendu, de cible tactile et de clé de tri en profondeur.
+_Avoid_ : position, centre de l'image
+
+**Élément d'ambiance fixe** : objet visuel purement décoratif placé dans la composition, sans état de jeu ni interaction. Se distingue du décor joueur, qui est achetable, déplaçable et possédé.
+_Avoid_ : accessoire, décoration
+
+**Rendu hybride** : terrain et empreintes de terre du Potager en Canvas ; cultures, arbres et éléments d'environnement pouvant utiliser des sprites PNG modulaires selon leur famille. Voir [ADR-0006](docs/adr/0006-rendu-hybride-canvas-sprites.md) et [ADR-0008](docs/adr/0008-tiled-composition-visuelle.md).
+_Avoid_ : rendu 100 % Canvas, rendu 100 % sprites

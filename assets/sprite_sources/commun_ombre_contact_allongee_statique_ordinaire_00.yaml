@@ -1,0 +1,19 @@
+id: commun_ombre_contact_allongee_statique_ordinaire_00
+canvas_1x:
+- 78
+- 25
+anchor_4x:
+- 156
+- 88
+footprint_grid:
+- 0.5
+- 0.25
+size_class: shadow
+projection: isometric_80x40
+light: upper_left
+shadow: separate_contact
+palette_roles:
+- ombre_contact
+state: statique
+variant: ordinaire
+frames: 1

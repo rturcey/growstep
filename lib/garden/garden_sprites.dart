@@ -1,4 +1,3 @@
-import 'dart:async';
 import 'dart:convert';
 import 'dart:ui' as ui;
 
@@ -14,25 +13,7 @@ class GardenSprites {
     final manifest = jsonDecode(
       await rootBundle.loadString('assets/sprites/manifest.json'),
     ) as Map<String, dynamic>;
-    const firstFrame = {
-      'commun_parcelle_bois_vide_ordinaire_00.png',
-      'commun_dalle_pierre_creme_ordinaire_00.png',
-      'commun_terrain_case_herbe_surface_ordinaire_00.png',
-      'commun_terrain_bord_terre_herbe_ordinaire_00.png',
-      'potager_plante_tomate_jeune_ordinaire_00.png',
-    };
-    await Future.wait(
-      manifest.entries
-          .where((entry) => firstFrame.contains(entry.key))
-          .map(_loadEntry),
-    );
-    unawaited(
-      _loadRemaining(
-        manifest.entries
-            .where((entry) => !firstFrame.contains(entry.key))
-            .toList(),
-      ),
-    );
+    await _loadRemaining(manifest.entries.toList());
   }
 
   Future<void> _loadRemaining(List<MapEntry<String, dynamic>> entries) async {
@@ -72,11 +53,14 @@ class GardenSprites {
     _images[entry.key] = _SpriteImage(
       frame.image,
       crop,
+      Size((bounds[2] - bounds[0]) / 4, (bounds[3] - bounds[1]) / 4),
       anchorX,
       anchorY,
       data['shadow'] == 'separate_contact',
     );
   }
+
+  Size? visibleSize(String name) => _images[name]?.visibleSize;
 
   bool hasContactShadow(String name) => _images[name]?.contactShadow ?? false;
 
@@ -106,6 +90,7 @@ class GardenSprites {
     double height, {
     double opacity = 1,
     bool includeContactShadow = true,
+    ColorFilter? colorFilter,
   }) {
     final sprite = _images[name];
     if (sprite == null) return false;
@@ -123,7 +108,8 @@ class GardenSprites {
       ),
       Paint()
         ..filterQuality = FilterQuality.medium
-        ..color = Color.fromRGBO(255, 255, 255, opacity),
+        ..color = Color.fromRGBO(255, 255, 255, opacity)
+        ..colorFilter = colorFilter,
     );
     return true;
   }
@@ -140,6 +126,7 @@ class _SpriteImage {
   const _SpriteImage(
     this.image,
     this.crop,
+    this.visibleSize,
     this.anchorX,
     this.anchorY,
     this.contactShadow,
@@ -147,6 +134,7 @@ class _SpriteImage {
 
   final ui.Image image;
   final Rect crop;
+  final Size visibleSize;
   final double anchorX;
   final double anchorY;
   final bool contactShadow;

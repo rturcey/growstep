@@ -1,6 +1,6 @@
 # Gabarit géométrique des îlots
 
-> Statut : gabarit approuvé. Les coordonnées des emplacements sont des positions de validation ; elles seront arrêtées définitivement après revue de la scène complète à taille réelle.
+> Statut : gabarit appliqué dans la scène Canvas. Les index de sauvegarde restent associés aux positions ci-dessous ; les captures de `docs/visual-review/` servent à la revue finale à taille réelle.
 
 ## Référentiel commun
 
@@ -25,7 +25,7 @@ Cette implantation est le gabarit de validation approuvé, à éprouver dans la 
 | Milieu, 2 | `(115, 230)`, `(275, 230)` |
 | Avant, 3 | `(75, 310)`, `(195, 310)`, `(315, 310)` |
 
-Ces huit centres respectent les décalages en demi-cases du treillis autour de `O = (195, 230)`. Avec des platebandes larges d'au plus 80 points, les trois emplacements d'une même rangée laissent environ 40 points d'herbe entre eux. Le milieu garde une ouverture de 80 points entre les deux platebandes. L'ordre des index de sauvegarde et les quatre emplacements disponibles au départ doivent être distribués parmi ces positions sans créer un bloc compact. Le jardin fleuri peut décaler certains centres d'une demi-case définie, tout en gardant la répartition 3–2–3 et les mêmes distances minimales.
+Ces huit centres respectent les décalages en demi-cases du treillis autour de `O = (195, 230)`. Les empreintes de terre plates du Potager sont inscrites dans une case 80 × 40, avec un léger retrait commun : les trois emplacements d'une même rangée gardent au moins 40 points d'herbe entre leurs cases logiques, et le milieu garde une ouverture de 80 points. La forme graphique n'est pas déduite des dimensions des cultures ; une plante peut déborder visuellement sans modifier son contact ni sa cible tactile. L'ordre des index de sauvegarde et les quatre emplacements disponibles au départ doivent être distribués parmi ces positions sans créer un bloc compact. Le jardin fleuri peut décaler certains centres d'une demi-case définie, tout en gardant la répartition 3–2–3 et les mêmes distances minimales.
 
 Les quatre premiers index du potager utilisent les positions suivantes dans le gabarit :
 
@@ -38,13 +38,13 @@ Les quatre premiers index du potager utilisent les positions suivantes dans le g
 
 Les index supplémentaires utilisent les quatre centres restants pour la validation : `4 = arrière centre (195, 150)`, `5 = milieu gauche (115, 230)`, `6 = avant centre (195, 310)`, `7 = arrière droit (315, 150)`. L'index identifie une position et ne dicte pas l'ordre dans lequel le joueur peut acheter les emplacements. Le jardin fleuri part du même plan de validation ; tout décalage ultérieur d'une demi-case sera consigné dans son manifeste de scène avant production des assets.
 
-Le verger utilise comme gabarit de validation un triangle de trois contacts au sol : `0 = arrière centre (195, 190)`, `1 = avant gauche (115, 325)`, `2 = avant droit (275, 325)`. Avec une couronne large d'au plus 160 points et haute d'au plus 150 points, ce plan garde les trois arbres dans le cadrage réduit. Les positions définitives seront revues avec les couronnes réelles et le chemin.
+Le verger utilise un triangle de trois contacts au sol : `0 = arrière centre (195, 190)`, `1 = avant gauche (115, 330)`, `2 = avant droit (275, 330)`. Le décalage de 5 points des deux contacts avant les recale sur le treillis demi-entier sans changer les index de sauvegarde.
 
 ## Réseau de chemin
 
-- Un îlot possède un graphe de circulation unique et connecté. Le chemin entre depuis le bord avant, se ramifie pour approcher les emplacements et ne traverse aucune emprise de platebande ou d'arbre.
-- Le Potager possède un tracé principal sinueux depuis la lèvre avant `(195, 410)` vers `(195, 190)`, une grande branche latérale et de courtes approches vers les cultures. Les contacts des pierres et des masses paysagères restent sur le treillis ; une bande d'herbe usée adoucit visuellement les virages sans devenir une cour pavée. Le jardin fleuri et le verger gardent leur propre composition.
-- Trois ou quatre variantes de pierre gardent le même ancrage, la même gamme de taille et la même lumière. Le choix de variante est déterministe selon le nœud du chemin et ne répète pas la même silhouette sur deux pas adjacents lorsque le parcours le permet.
+- Un îlot possède un graphe de circulation unique et connecté. Le chemin entre depuis le bord avant, se ramifie pour approcher les emplacements et ne traverse aucune emprise de culture ou d'arbre.
+- Le Potager possède un tracé principal sinueux depuis la lèvre avant `(195, 410)` vers `(195, 190)` et trois courtes ramifications vers les cultures. `PotagerPath.routes` décrit ce réseau ; `PotagerPath.stones` place douze pas individuels sur ses nœuds. Le terrain herbeux reste visible entre eux, sans bande Canvas continue. Le jardin fleuri et le verger gardent leur propre composition.
+- Les six variantes de pas du pack utilisent leur ancre de contact au sol et une échelle commune de 1× ; deux pas proches des cibles tactiles emploient la petite catégorie 0,8×. Le choix d'asset et de catégorie est explicite et déterministe.
 - Les pierres restent hors des cibles tactiles de 44 × 44 points et des contacts au sol.
 
 ## Vérifications objectives avant validation graphique

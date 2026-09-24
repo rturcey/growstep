@@ -1,0 +1,39 @@
+# Refonte graphique du jardin Growstep
+
+Growstep est un jeu mobile Flutter/Flame où la marche fait grandir un jardin. Reprends le rendu des **trois îlots** (potager, jardin fleuri, verger) pour obtenir un diorama lumineux, naturel et lisible. Avant de coder, compare visuellement `grow.png` (rendu actuel) et `test.png` (inspiration), puis note les écarts observés. La référence de production est `ART_BIBLE.md` : la capture `test.png` ne dicte ni le chien, ni l'eau, ni la densité exacte des objets.
+
+Lis `ART_BIBLE.md`, `docs/geometrie-ilots.md`, `docs/analyse-structure-grow-vs-test.md`, `docs/analyse-maquettes-art.md`, `docs/adr/0006-rendu-hybride-canvas-sprites.md`, `docs/adr/0007-sources-provisoires-des-sprites-herites.md` et `docs/sprite-pipeline.md`. Le rendu est dans `lib/garden/garden_game.dart` ; le chargeur est `lib/garden/garden_sprites.dart`.
+
+## 1. Refondre la scène Canvas
+
+- Dessiner en Canvas le terrain, les tranches de terre, les platebandes, les pierres des chemins, les bordures végétales et les accessoires des trois îlots. **Retirer les appels aux PNG de décor prioritaires** : modifier seulement leurs fallbacks Canvas ne changerait pas la scène actuelle.
+- Donner à chaque îlot un contour fini en relief, avec retours obliques, matière de terre et herbe non répétitive. Garder visibles au moins 40 % de la tranche de terre avant.
+- Aligner les platebandes sur la grille 80 × 40 : dessus large d'au plus 80 points, trois plans de bois lisibles, terre sombre, poteaux et ombre de contact courte.
+- Faire entrer les chemins par l'avant et les ramifier sans traverser les emplacements. Utiliser trois ou quatre silhouettes de pierre crème usée, espacées par de l'herbe, sans effet de damier.
+- Construire les buissons en masses végétales sombres puis claires, avec des feuilles irrégulières ; garder la bordure avant plus basse que l'arrière. Supprimer le chien de la scène.
+- Trier les objets par leur contact au sol. Dessiner chaque ombre de contact séparément du PNG, juste avant son objet dans cet ordre.
+
+## 2. Régulariser les sprites végétaux existants
+
+Le dépôt contient actuellement **40 PNG** : **24 plantes ou arbres** (dont la tomate jeune déjà conforme) et **16 décors**, pied d'arbre compris. Archiver les 16 PNG de décor dans un dossier hors du bundle Flutter, puis les retirer du manifeste et de `assets/sprite_sources/legacy_allowlist.json`.
+
+Pour les **23 PNG hérités de plantes et d'arbres**, normaliser chaque master au format 4× sans dégrader sa silhouette à l'échelle du jeu. Créer une fiche YAML conforme à la bible et au validateur, avec notamment `canvas_1x`, `anchor_4x`, `footprint_grid`, `size_class`, `projection: isometric_80x40`, `light: upper_left`, `shadow: separate_contact`, rôles de palette, état, `variant: ordinaire` et `frames: 1`. Créer une source ORA **aplatie et identifiée comme provisoire** lorsque les couches d'origine manquent : `scripts/export_sprite.py` exporte depuis une ORA, il ne la crée pas depuis le PNG. Dériver les exports 2× et 3×, reconstruire le manifeste, valider le contrat, puis vider progressivement la liste héritée.
+
+Conserver les **trois images existantes par espèce** : l'image jeune sert aussi à la germination et l'image adulte sans production au stade presque mature. Les silhouettes propres à ces étapes sont un travail artistique ultérieur. Pour la variante brillante, superposer au PNG ordinaire un motif et de petits éclats **Canvas propres à chaque espèce**, visibles dans la scène complète ; ne pas créer 24 nouveaux PNG brillants.
+
+## 3. Corriger la géométrie et vérifier le résultat
+
+Distinguer `anchor_4x` (point de contact **dans l'image**) du point de contact **dans la scène**. Recaler les arbres et les nœuds de chemin actuellement hors grille sur des nœuds entiers ou demi-entiers du treillis 80 × 40, sans changer les index des emplacements sauvegardés. Vérifier dimensions affichées, emprises, cible tactile, tri de profondeur et ombres dans les trois îlots.
+
+Produire des captures à taille réelle des **trois îlots**, aux états **initial et saturé**, sur écrans **390 × 844** et **375 × 667**. Les examiner aussi en niveaux de gris, animation coupée, après changement d'îlot. La revue humaine de ces captures est un **critère de livraison** : corriger les défauts visuels relevés même si les tests passent. Les états montrés doivent provenir de fixtures, sans plantes fictives dans une vraie partie.
+
+Conserver l'échelle fixe 1.0, un seul îlot visible à la fois et le nom de zone dans l'UI Flutter. Ne pas bundler `grow.png`, `test.png` ou `art-mockups/`. Préserver les sauvegardes et adapter les tests affectés.
+
+```bash
+export PATH=/tmp/flutter/bin:$PATH
+flutter analyze
+flutter test
+python3 scripts/build_sprite_manifest.py
+python3 scripts/validate_sprites.py
+python3 -m unittest discover -s test -p "sprite_contract_test.py"
+```

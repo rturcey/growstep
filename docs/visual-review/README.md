@@ -1,0 +1,7 @@
+# Revue des trois îlots
+
+Les 24 fichiers `application_*.png` montrent l’application complète à 390 × 844 et 375 × 667 : trois îlots, états initial et saturé, en couleur et en niveaux de gris. La navigation entre îlots a été effectuée dans la fenêtre Flutter. Les 36 autres captures d’îlot cadrent uniquement la scène Flame aux états initial, intermédiaire et saturé ; l’état intermédiaire montre notamment les arbres jeunes. Les 16 fichiers `comparaison_*.png` placent chaque espèce ordinaire et brillante dans la même scène pour comparer les marques à taille réelle.
+
+L’état initial possède les trois îlots mais conserve les seules plantes de départ du potager. L’état saturé est une fixture isolée avec tous les emplacements remplis, dont une plante brillante par îlot. Aucune plante fictive n’est ajoutée à une partie normale.
+
+Pour régénérer les captures de l’application sous Linux, construire successivement les deux états avec `flutter build linux --debug -t lib/visual_fixture.dart --dart-define=GROWSTEP_VISUAL_STATE=initial` puis `sature`, et après chaque construction lancer `xvfb-run -a -s '-screen 0 390x844x24' python3 scripts/capture_linux_visuals.py <état> 390 844` et son équivalent en `375x667`. Le script requiert Xvfb, ImageMagick, Pillow et libXtst. Les captures de la seule scène sont régénérées par `flutter test test/visual_capture_test.dart --dart-define=GROWSTEP_CAPTURE_DIR=docs/visual-review`. Les paires comparatives le sont par `flutter test test/brilliant_comparison_test.dart --dart-define=GROWSTEP_CAPTURE_DIR=docs/visual-review`.

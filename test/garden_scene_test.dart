@@ -8,6 +8,7 @@ import 'package:growstep/garden/garden_scene.dart';
 import 'package:growstep/garden/garden_scene_renderer.dart';
 import 'package:growstep/garden/garden_sprites.dart';
 import 'package:growstep/garden/garden_state.dart';
+import 'package:growstep/garden/potager_path.dart';
 import 'package:growstep/garden/potager_scene.dart';
 
 class _RecordingSprites extends GardenSprites {
@@ -35,6 +36,7 @@ class _RecordingSprites extends GardenSprites {
     double height, {
     double opacity = 1,
     bool includeContactShadow = true,
+    ui.ColorFilter? colorFilter,
   }) {
     events.add('sprite:$name:$includeContactShadow');
     return true;
@@ -44,6 +46,7 @@ class _RecordingSprites extends GardenSprites {
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
   test('artboard and viewport use one reversible transform on both phones', () {
+    expect(GardenGame.touchSize, greaterThanOrEqualTo(44));
     for (final viewport in [const ui.Size(390, 844), const ui.Size(375, 667)]) {
       final transform = GardenArtboardTransform(viewport);
       expect(transform.scale, 1);
@@ -131,63 +134,70 @@ void main() {
     recorder.endRecording().dispose();
   });
 
-  const allowedBedVariants = {
-    'potager_decor_bac_potager_statique_ordinaire_00.png',
-    'potager_decor_bac_potager_statique_ordinaire_01.png',
-  };
-
-  test('potager beds preserve the eight existing ground contacts', () {
-    expect(PotagerBeds.beds.length, 8);
-    expect(
-      PotagerBeds.beds.map((bed) => bed.contact),
-      GardenGame.anchorsFor(ZoneType.potager),
-    );
-  });
-
-  test('potager beds reference only allowed authored variants', () async {
-    for (final bed in PotagerBeds.beds) {
-      expect(allowedBedVariants, contains(bed.asset));
-    }
-    expect(
-      PotagerBeds.beds.map((bed) => bed.asset).toSet().length,
-      2,
-      reason: 'at least two variants must be used for visual variety',
-    );
-    final manifest = jsonDecode(
-      await rootBundle.loadString('assets/sprites/manifest.json'),
-    ) as Map<String, dynamic>;
-    for (final bed in PotagerBeds.beds) {
-      expect(manifest.containsKey(bed.asset), isTrue);
-    }
-  });
-
-  test('potager bed variant mapping is deterministic', () {
-    expect(PotagerBeds.beds, same(PotagerBeds.beds));
-    final firstPass = PotagerBeds.beds.map((bed) => bed.asset).toList();
-    final secondPass = PotagerBeds.beds.map((bed) => bed.asset).toList();
-    expect(secondPass, firstPass);
-  });
-
-  test('each potager bed draws its authored variant via the sprite renderer', () {
+  test('flat path sprites do not receive a second contact shadow', () {
     final sprites = _RecordingSprites();
-    for (final bed in PotagerBeds.beds) {
-      final recorder = ui.PictureRecorder();
-      final canvas = ui.Canvas(recorder);
-      sprites.events.clear();
-      GardenSceneRenderer.drawSprite(canvas, bed, sprites);
-      expect(sprites.events, [
-        'shadow',
-        'sprite:${bed.asset}:false',
-      ]);
-      recorder.endRecording().dispose();
+    final recorder = ui.PictureRecorder();
+    GardenSceneRenderer.drawSprite(
+      ui.Canvas(recorder),
+      PotagerPath.stones.first,
+      sprites,
+    );
+    expect(sprites.events, ['sprite:${PotagerPath.stones.first.asset}:false']);
+    recorder.endRecording().dispose();
+  });
+
+  test('eight saved plot indexes retain their historical grid contacts', () {
+    const historical = <ui.Offset>[
+      ui.Offset(75, 150),
+      ui.Offset(275, 230),
+      ui.Offset(75, 310),
+      ui.Offset(315, 310),
+      ui.Offset(195, 150),
+      ui.Offset(115, 230),
+      ui.Offset(195, 310),
+      ui.Offset(315, 150),
+    ];
+    expect(
+      PotagerPlots.plots.map((plot) => plot.index),
+      List.generate(8, (i) => i),
+    );
+    expect(PotagerPlots.contacts, historical);
+    expect(GardenGame.anchorsFor(ZoneType.potager), PotagerPlots.contacts);
+    for (final plot in PotagerPlots.plots) {
+      expect(plot.contact, PotagerPlots.grid.toScreen(plot.gridI, plot.gridJ));
+      expect(plot.id, 'soil_plot_${plot.index}');
     }
   });
 
-  test('potager beds have unique stable IDs for depth sorting', () {
-    final ids = PotagerBeds.beds.map((bed) => bed.id).toList();
-    expect(ids.toSet().length, 8, reason: 'each bed has a unique ID');
-    for (var index = 0; index < 8; index++) {
-      expect(ids[index], 'bed_$index');
+  test('purchased states reveal exactly 4, 6, or 8 soil plots', () {
+    for (final count in [4, 6, 8]) {
+      final visible = PotagerPlots.visible(count).toList();
+      expect(visible.length, count);
+      expect(visible.map((plot) => plot.index), List.generate(count, (i) => i));
+      expect(
+        visible.map((plot) => plot.contact),
+        PotagerPlots.contacts.take(count),
+      );
+    }
+    expect(PotagerPlots.plots, same(PotagerPlots.plots));
+  });
+
+  test('every flat footprint uses the same inset 2:1 grid geometry', () {
+    expect(IsoGrid.cellWidth, 80);
+    expect(IsoGrid.cellHeight, 40);
+    expect(PotagerPlots.footprintWidth, lessThan(IsoGrid.cellWidth));
+    expect(PotagerPlots.footprintHeight, lessThan(IsoGrid.cellHeight));
+    expect(
+      PotagerPlots.footprintWidth / PotagerPlots.footprintHeight,
+      closeTo(2, 0.01),
+    );
+    for (final plot in PotagerPlots.plots) {
+      final path = PotagerPlots.footprintAt(plot.contact);
+      final bounds = path.getBounds();
+      expect(bounds.center, plot.contact);
+      expect(bounds.width, PotagerPlots.footprintWidth);
+      expect(bounds.height, PotagerPlots.footprintHeight);
+      expect(path.contains(plot.contact), isTrue);
     }
   });
 }

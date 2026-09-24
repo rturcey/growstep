@@ -1,0 +1,21 @@
+id: verger_arbre_pommier_recoltable_ordinaire_00
+canvas_1x:
+- 128
+- 131
+anchor_4x:
+- 256
+- 514
+footprint_grid:
+- 2
+- 2
+size_class: tree
+projection: isometric_80x40
+light: upper_left
+shadow: separate_contact
+palette_roles:
+- feuillage_sauge
+- feuillage_profond
+- rouge_fruit
+state: recoltable
+variant: ordinaire
+frames: 1

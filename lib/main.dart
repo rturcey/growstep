@@ -15,10 +15,16 @@ void main() {
 }
 
 class GrowstepApp extends StatelessWidget {
-  const GrowstepApp({super.key, required this.database, required this.steps});
+  const GrowstepApp({
+    super.key,
+    required this.database,
+    required this.steps,
+    this.initialZone = ZoneType.potager,
+  });
 
   final GardenDatabase database;
   final FakeStepProvider steps;
+  final ZoneType initialZone;
 
   @override
   Widget build(BuildContext context) => MaterialApp(
@@ -32,15 +38,25 @@ class GrowstepApp extends StatelessWidget {
       ),
       scaffoldBackgroundColor: const Color(0xFFFBF8F0),
     ),
-    home: GardenPage(database: database, steps: steps),
+    home: GardenPage(
+      database: database,
+      steps: steps,
+      initialZone: initialZone,
+    ),
   );
 }
 
 class GardenPage extends StatefulWidget {
-  const GardenPage({super.key, required this.database, required this.steps});
+  const GardenPage({
+    super.key,
+    required this.database,
+    required this.steps,
+    this.initialZone = ZoneType.potager,
+  });
 
   final GardenDatabase database;
   final FakeStepProvider steps;
+  final ZoneType initialZone;
 
   @override
   State<GardenPage> createState() => _GardenPageState();
@@ -55,7 +71,7 @@ class _GardenPageState extends State<GardenPage> {
   GardenSnapshot? _snapshot;
   bool _busy = false;
   String? _error;
-  ZoneType _selectedZone = ZoneType.potager;
+  late ZoneType _selectedZone = widget.initialZone;
   int? _selectedSlot;
   bool _showTouchTargets = false;
   final _scrollController = ScrollController();
@@ -145,6 +161,7 @@ class _GardenPageState extends State<GardenPage> {
   @override
   void initState() {
     super.initState();
+    _game.moveTo(widget.initialZone);
     _perform(_loadGarden);
   }
 
@@ -266,8 +283,8 @@ class _GardenPageState extends State<GardenPage> {
     return Scaffold(
       bottomNavigationBar: SafeArea(
         top: false,
-          child: Container(
-            height: 72,
+        child: Container(
+          height: 72,
           decoration: const BoxDecoration(
             color: Color(0xFFFFFCF5),
             border: Border(top: BorderSide(color: Color(0xFFE9E7DB))),
@@ -335,26 +352,30 @@ class _GardenPageState extends State<GardenPage> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          'Growstep',
-                          style: Theme.of(context).textTheme.titleSmall
-                              ?.copyWith(
-                                color: const Color(0xFF63845B),
-                                fontWeight: FontWeight.w700,
-                              ),
-                        ),
-                        Text(
-                          _selectedZone.label,
-                          style: Theme.of(context).textTheme.headlineMedium
-                              ?.copyWith(
-                                fontWeight: FontWeight.w700,
-                                color: const Color(0xFF2F4633),
-                              ),
-                        ),
-                      ],
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            'Growstep',
+                            style: Theme.of(context).textTheme.titleSmall
+                                ?.copyWith(
+                                  color: const Color(0xFF63845B),
+                                  fontWeight: FontWeight.w700,
+                                ),
+                          ),
+                          Text(
+                            _selectedZone.label,
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: Theme.of(context).textTheme.headlineMedium
+                                ?.copyWith(
+                                  fontWeight: FontWeight.w700,
+                                  color: const Color(0xFF2F4633),
+                                ),
+                          ),
+                        ],
+                      ),
                     ),
                     Container(
                       padding: const EdgeInsets.symmetric(

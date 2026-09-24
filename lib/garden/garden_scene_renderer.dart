@@ -7,6 +7,29 @@ import 'garden_sprites.dart';
 class GardenSceneRenderer {
   const GardenSceneRenderer._();
 
+  static const _pathContrast = ColorFilter.matrix([
+    1.2,
+    0,
+    0,
+    0,
+    -18,
+    0,
+    1.2,
+    0,
+    0,
+    -18,
+    0,
+    0,
+    1.2,
+    0,
+    -18,
+    0,
+    0,
+    0,
+    1,
+    0,
+  ]);
+
   static List<T> depthOrder<T extends GardenPlacedObject>(List<T> objects) {
     final indexed = objects.indexed.toList();
     indexed.sort((a, b) {
@@ -31,7 +54,9 @@ class GardenSceneRenderer {
     GardenSpriteObject object,
     GardenSprites sprites,
   ) {
-    if (sprites.hasContactShadow(object.asset)) {
+    // Flat path sprites already carry their soft ground contact in the PNG.
+    if (object.layer != GardenLayer.path &&
+        sprites.hasContactShadow(object.asset)) {
       sprites.drawContactShadow(
         canvas,
         object.contact,
@@ -47,6 +72,7 @@ class GardenSceneRenderer {
       object.size.height,
       opacity: object.opacity,
       includeContactShadow: false,
+      colorFilter: object.layer == GardenLayer.path ? _pathContrast : null,
     );
   }
 }

@@ -1,44 +1,4 @@
 {
-  "commun_buisson_haie_ordinaire_00.png": {
-    "width": 1635,
-    "height": 962,
-    "bbox": [
-      47,
-      107,
-      1592,
-      870
-    ]
-  },
-  "commun_chien_idle_ordinaire_00.png": {
-    "width": 1254,
-    "height": 1254,
-    "bbox": [
-      294,
-      308,
-      981,
-      991
-    ]
-  },
-  "commun_cloture_segment_bois_ordinaire_00.png": {
-    "width": 2172,
-    "height": 724,
-    "bbox": [
-      324,
-      94,
-      1848,
-      632
-    ]
-  },
-  "commun_dalle_pierre_creme_ordinaire_00.png": {
-    "width": 1536,
-    "height": 1024,
-    "bbox": [
-      87,
-      70,
-      1451,
-      972
-    ]
-  },
   "commun_decor_bosquet_bas_statique_ordinaire_00.png": {
     "width": 332,
     "height": 168,
@@ -114,195 +74,140 @@
     ],
     "shadow": "separate_contact"
   },
-  "commun_fleurs_marguerites_blanches_ordinaire_00.png": {
-    "width": 1254,
-    "height": 1254,
-    "bbox": [
-      226,
-      256,
-      1034,
-      1027
-    ]
-  },
-  "commun_panneau_vierge_bois_ordinaire_00.png": {
-    "width": 1774,
-    "height": 887,
-    "bbox": [
-      352,
-      117,
-      1420,
-      783
-    ]
-  },
-  "commun_parcelle_bois_vide_ordinaire_00.png": {
-    "width": 1536,
-    "height": 1024,
-    "bbox": [
-      309,
-      188,
-      1229,
-      849
-    ]
-  },
-  "commun_terrain_bord_terre_herbe_ordinaire_00.png": {
-    "width": 1983,
-    "height": 793,
-    "bbox": [
-      41,
-      193,
-      1943,
-      602
-    ]
-  },
-  "commun_terrain_case_herbe_surface_ordinaire_00.png": {
-    "width": 1774,
-    "height": 887,
-    "bbox": [
-      146,
-      51,
-      1628,
-      835
-    ]
-  },
-  "commun_terrain_case_herbe_terre_ordinaire_00.png": {
-    "width": 1254,
-    "height": 1254,
-    "bbox": [
-      55,
-      251,
-      1191,
-      1079
-    ]
-  },
-  "fleurs_bain_oiseaux_pierre_ordinaire_00.png": {
-    "width": 1222,
-    "height": 1287,
-    "bbox": [
-      248,
-      220,
-      971,
-      1152
-    ]
-  },
-  "fleurs_fleurs_sauvages_roses_ordinaire_00.png": {
-    "width": 1358,
-    "height": 1158,
-    "bbox": [
-      256,
-      182,
-      1134,
-      1017
-    ]
-  },
   "fleurs_plante_lavande_adulte_sans_production_ordinaire_00.png": {
-    "width": 1774,
-    "height": 887,
+    "width": 284,
+    "height": 292,
     "bbox": [
-      489,
-      32,
-      1296,
-      860
-    ]
+      9,
+      9,
+      275,
+      283
+    ],
+    "anchor": [
+      142,
+      282
+    ],
+    "shadow": "separate_contact"
   },
   "fleurs_plante_lavande_jeune_ordinaire_00.png": {
-    "width": 1774,
-    "height": 887,
+    "width": 176,
+    "height": 200,
     "bbox": [
-      630,
-      155,
-      1159,
-      758
-    ]
+      9,
+      9,
+      167,
+      191
+    ],
+    "anchor": [
+      88,
+      190
+    ],
+    "shadow": "separate_contact"
   },
   "fleurs_plante_lavande_recoltable_ordinaire_00.png": {
-    "width": 1774,
-    "height": 887,
+    "width": 284,
+    "height": 292,
     "bbox": [
-      491,
-      36,
-      1291,
-      858
-    ]
+      9,
+      9,
+      275,
+      283
+    ],
+    "anchor": [
+      142,
+      282
+    ],
+    "shadow": "separate_contact"
   },
   "fleurs_plante_tournesol_adulte_sans_production_ordinaire_00.png": {
-    "width": 1297,
-    "height": 1212,
+    "width": 304,
+    "height": 308,
     "bbox": [
-      178,
-      139,
-      1136,
-      1113
-    ]
+      9,
+      9,
+      296,
+      299
+    ],
+    "anchor": [
+      152,
+      298
+    ],
+    "shadow": "separate_contact"
   },
   "fleurs_plante_tournesol_jeune_ordinaire_00.png": {
-    "width": 1774,
-    "height": 887,
+    "width": 196,
+    "height": 180,
     "bbox": [
-      487,
-      96,
-      1263,
-      805
-    ]
+      8,
+      8,
+      188,
+      172
+    ],
+    "anchor": [
+      98,
+      170
+    ],
+    "shadow": "separate_contact"
   },
   "fleurs_plante_tournesol_recoltable_ordinaire_00.png": {
-    "width": 1297,
-    "height": 1212,
+    "width": 304,
+    "height": 324,
     "bbox": [
-      180,
-      90,
-      1138,
-      1109
-    ]
+      9,
+      9,
+      295,
+      315
+    ],
+    "anchor": [
+      152,
+      314
+    ],
+    "shadow": "separate_contact"
   },
   "fleurs_plante_tulipe_adulte_sans_production_ordinaire_00.png": {
-    "width": 1774,
-    "height": 887,
+    "width": 284,
+    "height": 296,
     "bbox": [
-      508,
-      62,
-      1274,
-      858
-    ]
+      9,
+      9,
+      275,
+      287
+    ],
+    "anchor": [
+      142,
+      286
+    ],
+    "shadow": "separate_contact"
   },
   "fleurs_plante_tulipe_jeune_ordinaire_00.png": {
-    "width": 1774,
-    "height": 887,
+    "width": 172,
+    "height": 196,
     "bbox": [
-      587,
-      116,
-      1188,
-      819
-    ]
+      9,
+      9,
+      164,
+      188
+    ],
+    "anchor": [
+      86,
+      186
+    ],
+    "shadow": "separate_contact"
   },
   "fleurs_plante_tulipe_recoltable_ordinaire_00.png": {
-    "width": 1774,
-    "height": 887,
+    "width": 284,
+    "height": 300,
     "bbox": [
-      509,
-      43,
-      1271,
-      856
-    ]
-  },
-  "potager_arrosoir_metal_ordinaire_00.png": {
-    "width": 1374,
-    "height": 1145,
-    "bbox": [
-      214,
-      257,
-      1183,
-      961
-    ]
-  },
-  "potager_caisse_semis_bois_ordinaire_00.png": {
-    "width": 1430,
-    "height": 1100,
-    "bbox": [
-      169,
-      155,
-      1261,
-      991
-    ]
+      9,
+      9,
+      275,
+      291
+    ],
+    "anchor": [
+      142,
+      290
+    ],
+    "shadow": "separate_contact"
   },
   "potager_decor_arrosoir_metal_statique_ordinaire_00.png": {
     "width": 156,
@@ -335,74 +240,109 @@
     "shadow": "separate_contact"
   },
   "potager_plante_carotte_adulte_sans_production_ordinaire_00.png": {
-    "width": 1774,
-    "height": 887,
+    "width": 304,
+    "height": 152,
     "bbox": [
-      219,
-      80,
-      1564,
-      711
-    ]
+      8,
+      8,
+      296,
+      144
+    ],
+    "anchor": [
+      152,
+      142
+    ],
+    "shadow": "separate_contact"
   },
   "potager_plante_carotte_jeune_ordinaire_00.png": {
-    "width": 1774,
-    "height": 887,
+    "width": 196,
+    "height": 72,
     "bbox": [
-      198,
-      226,
-      1573,
-      660
-    ]
+      8,
+      8,
+      188,
+      64
+    ],
+    "anchor": [
+      98,
+      62
+    ],
+    "shadow": "separate_contact"
   },
   "potager_plante_carotte_recoltable_ordinaire_00.png": {
-    "width": 1774,
-    "height": 887,
+    "width": 304,
+    "height": 168,
     "bbox": [
-      221,
-      81,
-      1563,
-      784
-    ]
+      8,
+      8,
+      296,
+      160
+    ],
+    "anchor": [
+      152,
+      158
+    ],
+    "shadow": "separate_contact"
   },
   "potager_plante_courgette_adulte_sans_production_ordinaire_00.png": {
-    "width": 1774,
-    "height": 887,
+    "width": 304,
+    "height": 240,
     "bbox": [
-      340,
-      22,
-      1411,
-      850
-    ]
+      8,
+      9,
+      296,
+      231
+    ],
+    "anchor": [
+      152,
+      230
+    ],
+    "shadow": "separate_contact"
   },
   "potager_plante_courgette_jeune_ordinaire_00.png": {
-    "width": 1774,
-    "height": 887,
+    "width": 196,
+    "height": 108,
     "bbox": [
-      376,
-      226,
-      1398,
-      748
-    ]
+      8,
+      8,
+      188,
+      100
+    ],
+    "anchor": [
+      98,
+      98
+    ],
+    "shadow": "separate_contact"
   },
   "potager_plante_courgette_recoltable_ordinaire_00.png": {
-    "width": 1774,
-    "height": 887,
+    "width": 304,
+    "height": 240,
     "bbox": [
-      371,
-      37,
-      1404,
-      844
-    ]
+      8,
+      9,
+      295,
+      231
+    ],
+    "anchor": [
+      152,
+      230
+    ],
+    "shadow": "separate_contact"
   },
   "potager_plante_tomate_adulte_sans_production_ordinaire_00.png": {
-    "width": 1774,
-    "height": 887,
+    "width": 304,
+    "height": 244,
     "bbox": [
-      369,
-      34,
-      1394,
-      840
-    ]
+      9,
+      9,
+      295,
+      236
+    ],
+    "anchor": [
+      152,
+      234
+    ],
+    "shadow": "separate_contact"
   },
   "potager_plante_tomate_jeune_ordinaire_00.png": {
     "width": 444,
@@ -420,93 +360,708 @@
     "shadow": "separate_contact"
   },
   "potager_plante_tomate_recoltable_ordinaire_00.png": {
-    "width": 1774,
-    "height": 887,
+    "width": 304,
+    "height": 244,
     "bbox": [
-      371,
-      35,
-      1391,
-      839
-    ]
+      9,
+      9,
+      295,
+      235
+    ],
+    "anchor": [
+      152,
+      234
+    ],
+    "shadow": "separate_contact"
   },
   "verger_arbre_poirier_adulte_sans_production_ordinaire_00.png": {
-    "width": 1493,
-    "height": 1054,
+    "width": 528,
+    "height": 540,
     "bbox": [
-      271,
-      34,
-      1234,
-      1021
-    ]
+      9,
+      9,
+      518,
+      531
+    ],
+    "anchor": [
+      264,
+      530
+    ],
+    "shadow": "separate_contact"
   },
   "verger_arbre_poirier_jeune_ordinaire_00.png": {
-    "width": 1182,
-    "height": 1330,
+    "width": 232,
+    "height": 352,
     "bbox": [
-      238,
-      112,
-      960,
-      1233
-    ]
+      9,
+      9,
+      223,
+      343
+    ],
+    "anchor": [
+      116,
+      342
+    ],
+    "shadow": "separate_contact"
   },
   "verger_arbre_poirier_recoltable_ordinaire_00.png": {
-    "width": 1357,
-    "height": 1159,
+    "width": 492,
+    "height": 540,
     "bbox": [
-      201,
-      49,
-      1171,
-      1119
-    ]
+      9,
+      9,
+      483,
+      530
+    ],
+    "anchor": [
+      246,
+      530
+    ],
+    "shadow": "separate_contact"
   },
   "verger_arbre_pommier_adulte_sans_production_ordinaire_00.png": {
-    "width": 1358,
-    "height": 1159,
+    "width": 476,
+    "height": 524,
     "bbox": [
-      201,
-      48,
-      1174,
-      1123
-    ]
+      9,
+      9,
+      467,
+      515
+    ],
+    "anchor": [
+      238,
+      514
+    ],
+    "shadow": "separate_contact"
   },
   "verger_arbre_pommier_jeune_ordinaire_00.png": {
-    "width": 1190,
-    "height": 1322,
+    "width": 256,
+    "height": 340,
     "bbox": [
-      246,
-      161,
-      990,
-      1167
-    ]
+      9,
+      9,
+      247,
+      331
+    ],
+    "anchor": [
+      128,
+      330
+    ],
+    "shadow": "separate_contact"
   },
   "verger_arbre_pommier_recoltable_ordinaire_00.png": {
-    "width": 1493,
-    "height": 1054,
+    "width": 512,
+    "height": 524,
     "bbox": [
-      271,
+      10,
+      9,
+      503,
+      515
+    ],
+    "anchor": [
+      256,
+      514
+    ],
+    "shadow": "separate_contact"
+  },
+  "commun_bordure_fleurs_statique_ordinaire_00.png": {
+    "width": 204,
+    "height": 132,
+    "bbox": [
+      24,
+      28,
+      180,
+      115
+    ],
+    "anchor": [
+      102,
+      120
+    ],
+    "shadow": "separate_contact"
+  },
+  "commun_bordure_herbe_debordante_statique_ordinaire_00.png": {
+    "width": 204,
+    "height": 104,
+    "bbox": [
+      24,
+      20,
+      180,
+      89
+    ],
+    "anchor": [
+      102,
+      92
+    ],
+    "shadow": "separate_contact"
+  },
+  "commun_bordure_mixte_statique_ordinaire_00.png": {
+    "width": 244,
+    "height": 124,
+    "bbox": [
+      24,
+      28,
+      217,
+      108
+    ],
+    "anchor": [
+      122,
+      112
+    ],
+    "shadow": "separate_contact"
+  },
+  "commun_bordure_rochers_statique_ordinaire_00.png": {
+    "width": 180,
+    "height": 104,
+    "bbox": [
+      24,
+      28,
+      156,
+      86
+    ],
+    "anchor": [
+      90,
+      92
+    ],
+    "shadow": "separate_contact"
+  },
+  "commun_decor_bosquet_bas_statique_ordinaire_01.png": {
+    "width": 288,
+    "height": 172,
+    "bbox": [
+      20,
+      24,
+      266,
+      156
+    ],
+    "anchor": [
+      144,
+      160
+    ],
+    "shadow": "separate_contact"
+  },
+  "commun_decor_bosquet_bas_statique_ordinaire_02.png": {
+    "width": 376,
+    "height": 164,
+    "bbox": [
+      20,
+      24,
+      356,
+      148
+    ],
+    "anchor": [
+      188,
+      152
+    ],
+    "shadow": "separate_contact"
+  },
+  "commun_decor_bosquet_haut_statique_ordinaire_01.png": {
+    "width": 300,
+    "height": 200,
+    "bbox": [
+      20,
+      24,
+      280,
+      184
+    ],
+    "anchor": [
+      150,
+      188
+    ],
+    "shadow": "separate_contact"
+  },
+  "commun_decor_bosquet_haut_statique_ordinaire_02.png": {
+    "width": 380,
+    "height": 184,
+    "bbox": [
+      20,
+      24,
+      357,
+      165
+    ],
+    "anchor": [
+      190,
+      172
+    ],
+    "shadow": "separate_contact"
+  },
+  "commun_decor_fleurs_blanches_statique_ordinaire_00.png": {
+    "width": 96,
+    "height": 96,
+    "bbox": [
+      16,
+      16,
+      78,
+      81
+    ],
+    "anchor": [
+      48,
+      84
+    ],
+    "shadow": "separate_contact"
+  },
+  "commun_decor_fleurs_jaunes_statique_ordinaire_00.png": {
+    "width": 84,
+    "height": 84,
+    "bbox": [
+      16,
+      16,
+      68,
+      71
+    ],
+    "anchor": [
+      42,
+      72
+    ],
+    "shadow": "separate_contact"
+  },
+  "commun_decor_herbes_folles_statique_ordinaire_00.png": {
+    "width": 76,
+    "height": 68,
+    "bbox": [
+      16,
+      16,
+      57,
+      54
+    ],
+    "anchor": [
+      38,
+      56
+    ],
+    "shadow": "separate_contact"
+  },
+  "commun_decor_rochers_statique_ordinaire_00.png": {
+    "width": 172,
+    "height": 124,
+    "bbox": [
+      20,
+      24,
+      152,
+      105
+    ],
+    "anchor": [
+      86,
+      112
+    ],
+    "shadow": "separate_contact"
+  },
+  "commun_decor_rochers_statique_ordinaire_01.png": {
+    "width": 208,
+    "height": 144,
+    "bbox": [
+      20,
+      24,
+      186,
+      125
+    ],
+    "anchor": [
+      104,
+      132
+    ],
+    "shadow": "separate_contact"
+  },
+  "commun_decor_rochers_statique_ordinaire_02.png": {
+    "width": 244,
+    "height": 164,
+    "bbox": [
+      20,
+      24,
+      222,
+      147
+    ],
+    "anchor": [
+      122,
+      152
+    ],
+    "shadow": "separate_contact"
+  },
+  "commun_decor_rochers_statique_ordinaire_03.png": {
+    "width": 240,
+    "height": 148,
+    "bbox": [
+      24,
+      28,
+      213,
+      132
+    ],
+    "anchor": [
+      120,
+      136
+    ],
+    "shadow": "separate_contact"
+  },
+  "commun_decor_touffe_herbe_statique_ordinaire_00.png": {
+    "width": 76,
+    "height": 80,
+    "bbox": [
+      16,
+      16,
+      59,
+      66
+    ],
+    "anchor": [
+      38,
+      68
+    ],
+    "shadow": "separate_contact"
+  },
+  "commun_decor_touffe_herbe_statique_ordinaire_01.png": {
+    "width": 72,
+    "height": 72,
+    "bbox": [
+      16,
+      16,
+      53,
+      59
+    ],
+    "anchor": [
       36,
-      1233,
-      1020
-    ]
+      60
+    ],
+    "shadow": "separate_contact"
   },
-  "verger_banc_bois_ordinaire_00.png": {
-    "width": 1536,
-    "height": 1024,
+  "commun_decor_trefle_statique_ordinaire_00.png": {
+    "width": 88,
+    "height": 84,
     "bbox": [
-      320,
-      171,
-      1248,
-      917
-    ]
+      16,
+      16,
+      70,
+      71
+    ],
+    "anchor": [
+      44,
+      72
+    ],
+    "shadow": "separate_contact"
   },
-  "verger_pied_arbre_herbe_ordinaire_00.png": {
-    "width": 1774,
-    "height": 887,
+  "commun_decor_treillis_bois_fleuri_statique_ordinaire_00.png": {
+    "width": 268,
+    "height": 284,
     "bbox": [
-      139,
-      121,
-      1635,
-      777
-    ]
+      24,
+      28,
+      242,
+      268
+    ],
+    "anchor": [
+      134,
+      272
+    ],
+    "shadow": "separate_contact"
+  },
+  "commun_decor_treillis_bois_fleuri_statique_ordinaire_01.png": {
+    "width": 268,
+    "height": 284,
+    "bbox": [
+      24,
+      28,
+      242,
+      268
+    ],
+    "anchor": [
+      134,
+      272
+    ],
+    "shadow": "separate_contact"
+  },
+  "commun_ombre_contact_allongee_statique_ordinaire_00.png": {
+    "width": 312,
+    "height": 100,
+    "bbox": [
+      20,
+      24,
+      289,
+      81
+    ],
+    "anchor": [
+      156,
+      88
+    ],
+    "shadow": "separate_contact"
+  },
+  "commun_ombre_contact_large_statique_ordinaire_00.png": {
+    "width": 296,
+    "height": 116,
+    "bbox": [
+      20,
+      24,
+      273,
+      99
+    ],
+    "anchor": [
+      148,
+      104
+    ],
+    "shadow": "separate_contact"
+  },
+  "commun_ombre_contact_moyenne_statique_ordinaire_00.png": {
+    "width": 220,
+    "height": 100,
+    "bbox": [
+      20,
+      24,
+      197,
+      84
+    ],
+    "anchor": [
+      110,
+      88
+    ],
+    "shadow": "separate_contact"
+  },
+  "commun_ombre_contact_petite_statique_ordinaire_00.png": {
+    "width": 156,
+    "height": 88,
+    "bbox": [
+      20,
+      24,
+      135,
+      72
+    ],
+    "anchor": [
+      78,
+      76
+    ],
+    "shadow": "separate_contact"
+  },
+  "commun_sol_chemin_pierres_courbe_droite_statique_ordinaire_00.png": {
+    "width": 220,
+    "height": 284,
+    "bbox": [
+      24,
+      24,
+      193,
+      264
+    ],
+    "anchor": [
+      110,
+      272
+    ],
+    "shadow": "separate_contact"
+  },
+  "commun_sol_chemin_pierres_courbe_gauche_statique_ordinaire_00.png": {
+    "width": 200,
+    "height": 284,
+    "bbox": [
+      24,
+      24,
+      173,
+      264
+    ],
+    "anchor": [
+      100,
+      272
+    ],
+    "shadow": "separate_contact"
+  },
+  "commun_sol_chemin_pierres_droit_statique_ordinaire_00.png": {
+    "width": 176,
+    "height": 296,
+    "bbox": [
+      24,
+      24,
+      150,
+      273
+    ],
+    "anchor": [
+      88,
+      284
+    ],
+    "shadow": "separate_contact"
+  },
+  "commun_sol_pas_pierre_statique_ordinaire_00.png": {
+    "width": 164,
+    "height": 116,
+    "bbox": [
+      16,
+      16,
+      145,
+      104
+    ],
+    "anchor": [
+      82,
+      104
+    ],
+    "shadow": "separate_contact"
+  },
+  "commun_sol_pas_pierre_statique_ordinaire_01.png": {
+    "width": 164,
+    "height": 120,
+    "bbox": [
+      16,
+      16,
+      146,
+      106
+    ],
+    "anchor": [
+      82,
+      108
+    ],
+    "shadow": "separate_contact"
+  },
+  "commun_sol_pas_pierre_statique_ordinaire_02.png": {
+    "width": 172,
+    "height": 120,
+    "bbox": [
+      16,
+      16,
+      156,
+      107
+    ],
+    "anchor": [
+      86,
+      108
+    ],
+    "shadow": "separate_contact"
+  },
+  "commun_sol_pas_pierre_statique_ordinaire_03.png": {
+    "width": 168,
+    "height": 120,
+    "bbox": [
+      16,
+      16,
+      149,
+      106
+    ],
+    "anchor": [
+      84,
+      108
+    ],
+    "shadow": "separate_contact"
+  },
+  "commun_sol_pas_pierre_statique_ordinaire_04.png": {
+    "width": 164,
+    "height": 112,
+    "bbox": [
+      16,
+      16,
+      146,
+      100
+    ],
+    "anchor": [
+      82,
+      100
+    ],
+    "shadow": "separate_contact"
+  },
+  "commun_sol_pas_pierre_statique_ordinaire_05.png": {
+    "width": 164,
+    "height": 116,
+    "bbox": [
+      16,
+      16,
+      145,
+      101
+    ],
+    "anchor": [
+      82,
+      104
+    ],
+    "shadow": "separate_contact"
+  },
+  "potager_decor_bac_potager_statique_ordinaire_00.png": {
+    "width": 260,
+    "height": 208,
+    "bbox": [
+      24,
+      28,
+      233,
+      190
+    ],
+    "anchor": [
+      130,
+      196
+    ],
+    "shadow": "separate_contact"
+  },
+  "potager_decor_bac_potager_statique_ordinaire_01.png": {
+    "width": 260,
+    "height": 232,
+    "bbox": [
+      24,
+      28,
+      233,
+      215
+    ],
+    "anchor": [
+      130,
+      220
+    ],
+    "shadow": "separate_contact"
+  },
+  "potager_decor_bac_potager_statique_ordinaire_02.png": {
+    "width": 260,
+    "height": 236,
+    "bbox": [
+      24,
+      28,
+      233,
+      220
+    ],
+    "anchor": [
+      130,
+      224
+    ],
+    "shadow": "separate_contact"
+  },
+  "potager_decor_bac_potager_statique_ordinaire_03.png": {
+    "width": 260,
+    "height": 228,
+    "bbox": [
+      24,
+      28,
+      233,
+      210
+    ],
+    "anchor": [
+      130,
+      216
+    ],
+    "shadow": "separate_contact"
+  },
+  "potager_decor_coin_jardinage_statique_ordinaire_00.png": {
+    "width": 276,
+    "height": 212,
+    "bbox": [
+      24,
+      28,
+      251,
+      194
+    ],
+    "anchor": [
+      138,
+      200
+    ],
+    "shadow": "separate_contact"
+  },
+  "potager_decor_outils_jardin_statique_ordinaire_00.png": {
+    "width": 268,
+    "height": 184,
+    "bbox": [
+      24,
+      28,
+      241,
+      166
+    ],
+    "anchor": [
+      134,
+      172
+    ],
+    "shadow": "separate_contact"
+  },
+  "potager_decor_stockage_jardin_statique_ordinaire_00.png": {
+    "width": 308,
+    "height": 232,
+    "bbox": [
+      24,
+      28,
+      283,
+      214
+    ],
+    "anchor": [
+      154,
+      220
+    ],
+    "shadow": "separate_contact"
   }
 }
