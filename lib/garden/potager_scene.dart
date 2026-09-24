@@ -29,73 +29,76 @@ class PotagerPilotScene {
 }
 
 /// The eight potager planting slots rendered as declarative sprite objects.
-/// Each index references one of the four hand-authored platebande variants;
+/// Each index references an explicitly authored platebande variant;
 /// no variant is chosen by calculation, random, or plant state.
+///
+/// Only variant 00 is used: its YAML palette_roles are bois_chaud and
+/// terre_humide alone — no integrated stone or foliage accessory that could
+/// cross or compete with a crop. Variants 01–03 carry pierre_creme and
+/// feuillage_sauge integrated structures deemed too present for a frame.
 class PotagerBeds {
   const PotagerBeds._();
 
   static const _bedWidth = 52.25;
+  static const _bedHeight = 40.5;
 
   static const _v00 = 'potager_decor_bac_potager_statique_ordinaire_00.png';
-  static const _v01 = 'potager_decor_bac_potager_statique_ordinaire_01.png';
-  static const _v02 = 'potager_decor_bac_potager_statique_ordinaire_02.png';
-  static const _v03 = 'potager_decor_bac_potager_statique_ordinaire_03.png';
 
   static const beds = <GardenSpriteObject>[
     GardenSpriteObject(
       id: 'bed_0',
       asset: _v00,
       contact: Offset(75, 150),
-      size: Size(_bedWidth, 40.5),
+      size: Size(_bedWidth, _bedHeight),
       layer: GardenLayer.depth,
     ),
     GardenSpriteObject(
       id: 'bed_1',
-      asset: _v01,
+      asset: _v00,
       contact: Offset(275, 230),
-      size: Size(_bedWidth, 46.75),
+      size: Size(_bedWidth, _bedHeight),
       layer: GardenLayer.depth,
     ),
     GardenSpriteObject(
       id: 'bed_2',
-      asset: _v02,
+      asset: _v00,
       contact: Offset(75, 310),
-      size: Size(_bedWidth, 48.0),
+      size: Size(_bedWidth, _bedHeight),
       layer: GardenLayer.depth,
     ),
     GardenSpriteObject(
       id: 'bed_3',
-      asset: _v03,
+      asset: _v00,
       contact: Offset(315, 310),
-      size: Size(_bedWidth, 45.5),
+      size: Size(_bedWidth, _bedHeight),
       layer: GardenLayer.depth,
     ),
     GardenSpriteObject(
       id: 'bed_4',
-      asset: _v01,
+      asset: _v00,
       contact: Offset(195, 150),
-      size: Size(_bedWidth, 46.75),
+      size: Size(_bedWidth, _bedHeight),
       layer: GardenLayer.depth,
     ),
     GardenSpriteObject(
       id: 'bed_5',
-      asset: _v03,
+      asset: _v00,
       contact: Offset(115, 230),
-      size: Size(_bedWidth, 45.5),
+      size: Size(_bedWidth, _bedHeight),
       layer: GardenLayer.depth,
     ),
     GardenSpriteObject(
       id: 'bed_6',
       asset: _v00,
       contact: Offset(195, 310),
-      size: Size(_bedWidth, 40.5),
+      size: Size(_bedWidth, _bedHeight),
       layer: GardenLayer.depth,
     ),
     GardenSpriteObject(
       id: 'bed_7',
-      asset: _v02,
+      asset: _v00,
       contact: Offset(315, 150),
-      size: Size(_bedWidth, 48.0),
+      size: Size(_bedWidth, _bedHeight),
       layer: GardenLayer.depth,
     ),
   ];

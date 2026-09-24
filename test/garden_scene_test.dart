@@ -138,6 +138,8 @@ void main() {
     'potager_decor_bac_potager_statique_ordinaire_03.png',
   };
 
+  const neutralBedVariant = 'potager_decor_bac_potager_statique_ordinaire_00.png';
+
   test('potager beds preserve the eight existing ground contacts', () {
     expect(PotagerBeds.beds.length, 8);
     expect(
@@ -146,15 +148,17 @@ void main() {
     );
   });
 
-  test('potager beds reference only the four authored variants', () async {
+  test('potager beds reference only neutral authored variants', () async {
     for (final bed in PotagerBeds.beds) {
       expect(bedVariants, contains(bed.asset));
+      expect(
+        bed.asset,
+        neutralBedVariant,
+        reason:
+            'only variant 00 (bois + terre, no integrated stone or foliage) '
+            'is neutral enough to frame all crops without crossing them',
+      );
     }
-    expect(
-      PotagerBeds.beds.map((bed) => bed.asset).toSet().length,
-      4,
-      reason: 'all four variants must be used at least once',
-    );
     final manifest = jsonDecode(
       await rootBundle.loadString('assets/sprites/manifest.json'),
     ) as Map<String, dynamic>;
