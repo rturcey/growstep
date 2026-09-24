@@ -4,6 +4,11 @@ Captures de l'application complète, à échelle 1:1 et animation ambiante absen
 Elles proviennent d'un checkout isolé contenant les changements du ticket #41.
 Les trois états montrent respectivement 4, 6 et 8 platebandes.
 
+[Maquette cible du potager saturé](potager_ideal_concept.png) ·
+[Analyse comparative et contraintes de réalisation](analyse-potager.md).
+Cette maquette est une proposition visuelle générée à partir de la capture
+390 × 844 ; elle ne représente pas le rendu actuel de l'application.
+
 | État | 390 × 844 | 375 × 667 |
 | --- | --- | --- |
 | Initial | [Couleur](application_potager_initial_390x844.png) · [Gris](application_potager_initial_390x844_gris.png) | [Couleur](application_potager_initial_375x667.png) · [Gris](application_potager_initial_375x667_gris.png) |
