@@ -90,6 +90,14 @@ class GardenGame extends FlameGame {
   static const bool _debugComposition =
       !kReleaseMode && bool.fromEnvironment('GROWSTEP_MAP_DEBUG');
 
+  /// Reversible candidate-map selector. Defaults to the production Potager map;
+  /// set `GROWSTEP_POTAGER_MAP=potager_diorama_v1.tmx` to load the diorama
+  /// candidate for capture and testing without changing normal play.
+  static const potagerMapFile = String.fromEnvironment(
+    'GROWSTEP_POTAGER_MAP',
+    defaultValue: 'potager.tmx',
+  );
+
   static const _flowerAnchors = <Offset>[
     Offset(75, 150),
     Offset(275, 230),
@@ -147,7 +155,7 @@ class GardenGame extends FlameGame {
     await super.onLoad();
     final spriteManifest = await _sprites.load();
     _tileMap = await RenderableTiledMap.fromFile(
-      'potager.tmx',
+      potagerMapFile,
       Vector2(IsoGrid.cellWidth, IsoGrid.cellHeight),
       prefix: 'assets/maps/',
       images: _tileImages,

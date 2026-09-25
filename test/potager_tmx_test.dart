@@ -79,12 +79,12 @@ void main() {
       final picture = recorder.endRecording();
       final image = await picture.toImage(390, 844);
       final bytes = await image.toByteData(format: ui.ImageByteFormat.rawRgba);
-      final offset = (270 * 390 + 200) * 4;
+      final offset = (10 * 390 + 10) * 4;
       final red = bytes!.getUint8(offset);
       image.dispose();
       picture.dispose();
       game.onRemove();
-      // This artboard point is outside the painted Tiled ground. The legacy
+      // This viewport corner is outside the painted Tiled ground. The legacy
       // Canvas island used to fill it with green below the new map.
       expect(red, greaterThan(210));
     },
@@ -130,11 +130,11 @@ void main() {
           ),
       };
       final objects = PotagerTiledObjects.fromMap(map, manifest).sceneObjects;
-      expect(objects, hasLength(11));
+      expect(objects, hasLength(23));
       final barrel = objects.singleWhere(
-        (object) => object.id == 'west_barrel',
+        (object) => object.id == 'east_barrel',
       );
-      expect(barrel.contact, const ui.Offset(155, 170));
+      expect(barrel.contact, const ui.Offset(355, 270));
       expect(barrel.size.width, lessThan(50));
       expect(barrel.size.height, lessThan(50));
     },
@@ -161,12 +161,12 @@ void main() {
         'commun_decor_rochers_herbe_statique_ordinaire_00.png',
       );
       expect(objects.rock.layer, GardenLayer.depth);
-      expect(objects.rock.opacity, 0.82);
-      expect(objects.rock.size.width, closeTo(41.4, 0.001));
-      expect(objects.rock.size.height, closeTo(25.2, 0.001));
-      expect(objects.rockAnchorDelta, const ui.Offset(0, -2.925));
-      expect(objects.rock.contact.dx, 355);
-      expect(objects.rock.contact.dy, 150);
+      expect(objects.rock.opacity, 0.9);
+      expect(objects.rock.size.width, closeTo(46.0, 0.001));
+      expect(objects.rock.size.height, closeTo(28.0, 0.001));
+      expect(objects.rockAnchorDelta, const ui.Offset(0, -3.25));
+      expect(objects.rock.contact.dx, 415);
+      expect(objects.rock.contact.dy, 260);
       expect(objects.rock.shadowOverride, isNull);
       expect(objects.plotContacts, {
         'plot_0': const ui.Offset(75, 150),
@@ -195,8 +195,8 @@ void main() {
         await _loadMap(document.toXmlString()),
         manifest,
       );
-      expect(moved.rock.contact.dx, 395);
-      expect(moved.rock.contact.dy, 170);
+      expect(moved.rock.contact.dx, 315);
+      expect(moved.rock.contact.dy, 210);
     },
   );
 
@@ -322,11 +322,11 @@ void main() {
       rock.width / rock.height,
       closeTo(rockImage.width! / rockImage.height!, 0.001),
     );
-    expect(rock.properties.getValue<double>('gridCol'), 0);
-    expect(rock.properties.getValue<double>('gridRow'), -4);
-    expect((rock.x, rock.y), (300, 220));
-    expect((560 + rock.x - rock.y, (rock.x + rock.y) / 2), (640, 260));
-    expect((195 + (0 - -4) * 40, 230 + (0 + -4) * 20), (355, 150));
+      expect(rock.properties.getValue<double>('gridCol'), 3.5);
+      expect(rock.properties.getValue<double>('gridRow'), -2);
+      expect((rock.x, rock.y), (440, 300));
+      expect((560 + rock.x - rock.y, (rock.x + rock.y) / 2), (700, 370));
+      expect((195 + (3.5 - -2) * 40, 230 + (3.5 + -2) * 20), (415, 260));
   });
 
   test('TMX path contains painted stone tiles at named grid cells', () async {
@@ -350,6 +350,7 @@ void main() {
       'edge_overlays',
       'props',
       'vegetation',
+      'rocks',
       'structures',
     ]);
     expect(map.tilesets, hasLength(8));
@@ -376,10 +377,11 @@ void main() {
     expect(
       painted,
       containsAll([
-        (6, 8, '../sprites/commun_sol_pas_pierre_tile_00.png'),
-        (8, 10, '../sprites/commun_sol_pas_pierre_tile_02.png'),
-        (8, 11, '../sprites/commun_sol_pas_pierre_tile_03.png'),
-        (9, 12, '../sprites/commun_sol_pas_pierre_tile_04.png'),
+        (3, 6, '../sprites/commun_sol_pas_pierre_tile_02.png'),
+        (4, 6, '../sprites/commun_sol_pas_pierre_tile_05.png'),
+        (7, 8, '../sprites/commun_sol_pas_pierre_tile_00.png'),
+        (8, 9, '../sprites/commun_sol_pas_pierre_tile_04.png'),
+        (10, 12, '../sprites/commun_sol_pas_pierre_tile_02.png'),
       ]),
     );
     for (final tile in map.tilesets[1].tiles.take(6)) {
@@ -447,7 +449,7 @@ void main() {
         await _loadMap(xml.toXmlString()),
         manifest,
       ).rock.contact,
-      const ui.Offset(375, 160),
+      const ui.Offset(295, 200),
     );
     gridCol.setAttribute('value', '0.25');
     final invalidMap = await _loadMap(xml.toXmlString());

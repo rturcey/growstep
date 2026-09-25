@@ -218,9 +218,9 @@ void main() {
     // Representative stones from the painted Tiled path stay visible at
     // their 80 × 40 cell contacts in the rendered Potager.
     for (final region in const [
-      ui.Rect.fromLTRB(175, 180, 216, 201), // cell (6,8)
-      ui.Rect.fromLTRB(175, 260, 216, 281), // cell (8,10)
-      ui.Rect.fromLTRB(255, 340, 296, 361), // cell (11,11)
+      ui.Rect.fromLTRB(215, 200, 256, 221), // cell (7,8)
+      ui.Rect.fromLTRB(215, 280, 256, 301), // cell (9,10)
+      ui.Rect.fromLTRB(175, 340, 216, 361), // cell (10,12)
     ]) {
       expect(creamPixels(region), greaterThan(20), reason: '$region');
     }
