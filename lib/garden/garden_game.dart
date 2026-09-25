@@ -91,12 +91,16 @@ class GardenGame extends FlameGame {
       !kReleaseMode && bool.fromEnvironment('GROWSTEP_MAP_DEBUG');
 
   /// Reversible candidate-map selector. Defaults to the production Potager map;
-  /// set `GROWSTEP_POTAGER_MAP=potager_diorama_v1.tmx` to load the diorama
-  /// candidate for capture and testing without changing normal play.
-  static const potagerMapFile = String.fromEnvironment(
+  /// pass `potager_diorama_v1.tmx` to load the diorama candidate for capture and
+  /// testing without changing normal play.
+  static const _defaultPotagerMapFile = String.fromEnvironment(
     'GROWSTEP_POTAGER_MAP',
     defaultValue: 'potager.tmx',
   );
+
+  final String potagerMapFile;
+
+  GardenGame({this.potagerMapFile = _defaultPotagerMapFile});
 
   static const _flowerAnchors = <Offset>[
     Offset(75, 150),
