@@ -50,14 +50,14 @@ six et huit emplacements de plantation :
 5. Le déplacement A → B du rocher suit une cellule et modifie son contact rendu.
 6. Le test TMX vérifie la compensation déterministe de l'ancre du manifeste.
 7. Les marqueurs `plots` restent visibles dans Tiled et absents du rendu Growstep.
-8. Le code rend la couche Tiled après le terrain Canvas et avant les objets dynamiques ; la revue humaine doit confirmer sa composition visuelle.
+8. Le code rend la couche Tiled après le terrain Canvas et avant les objets dynamiques ; la revue humaine a confirmé sa composition visuelle.
 9. Les trois changements Tiled apparaissent dans les captures sans changement de coordonnées Dart.
 
-La revue visuelle externe demandée par le ticket reste **à effectuer par une
-personne** : vérifier les pierres aux cellules attendues, le terrain visible,
-l'ordre de profondeur avec les objets dynamiques, l'ancre du rocher et l'absence
-de décalage d'artboard. Ces captures constituent le dossier de revue, pas son
-approbation.
+La revue visuelle externe demandée par le ticket a été **validée par
+l'utilisateur le 25 septembre 2026** après consultation du dossier de captures
+(« Impec ! »). Elle portait sur les pierres aux cellules attendues, le terrain
+visible, l'ordre de profondeur avec les objets dynamiques, l'ancre du rocher et
+l'absence de décalage d'artboard.
 
 Pour régénérer des variantes, lancer `tiled --evaluate tiled-variant.js
 baseline.tmx sortie.tmx rock-one-cell` depuis ce dossier, avec `paint` ou
