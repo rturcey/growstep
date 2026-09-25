@@ -29,6 +29,8 @@ SIZE_LIMITS = {
     "bed": (80, 70),
     "small_decor": (80, 80),
     "terrain_cell": (80, 68),
+    "large_decor": (160, 100),
+    "long_edge": (240, 75),
 }
 PALETTE_ROLES = {
     "fond_hors_jardin": "#E4EBD5",

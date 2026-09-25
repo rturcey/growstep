@@ -12,6 +12,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 GROUPS = ("ground", "paths", "paths_anchored", "floor_decor", "vegetation", "rocks", "structures", "props")
+CANDIDATE_GROUP = "diorama"
 STATUSES = {"included", "excluded", "other_island", "runtime_only", "outside_tiled", "deprecated"}
 
 
@@ -51,7 +52,7 @@ def expected_tilesets(root: Path) -> dict[str, bytes]:
         if entry["status"] != "included":
             continue
         category = entry["group"]
-        if category not in GROUPS or category == "ground":
+        if category not in (*GROUPS, CANDIDATE_GROUP) or category == "ground":
             raise ValueError(f"{name}: invalid anchored sprite group {category}")
         metadata = manifest[name]
         if "anchor" not in metadata:
@@ -69,6 +70,11 @@ def expected_tilesets(root: Path) -> dict[str, bytes]:
             raise ValueError(f"empty Tiled palette group: {group}")
         offset = None if group in ("ground", "paths") else (0, -13)
         result[f"{group}.tsx"] = _xml(group, images, offset)
+    candidate_images = sorted(grouped[CANDIDATE_GROUP])
+    if candidate_images:
+        result[f"{CANDIDATE_GROUP}.tsx"] = _xml(
+            CANDIDATE_GROUP, candidate_images, (0, -13)
+        )
     # Archived PoC maps still reference growstep.tsx with rock at gid 7.
     # Keep that compatibility collection generated as well.
     rock = "commun_decor_rochers_herbe_statique_ordinaire_00.png"

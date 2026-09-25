@@ -1,51 +1,52 @@
 <?xml version='1.0' encoding='utf-8'?>
-<map version="1.10" tiledversion="1.11.0" orientation="isometric" renderorder="right-down" width="14" height="14" tilewidth="80" tileheight="40" infinite="0" nextlayerid="10" nextobjectid="20">
- <tileset firstgid="1" source="ground.tsx" />
- <tileset firstgid="35" source="paths.tsx" />
- <tileset firstgid="41" source="paths_anchored.tsx" />
- <tileset firstgid="47" source="floor_decor.tsx" />
- <tileset firstgid="53" source="vegetation.tsx" />
- <tileset firstgid="61" source="rocks.tsx" />
- <tileset firstgid="67" source="structures.tsx" />
- <tileset firstgid="70" source="props.tsx" />
- <layer id="2" name="skirt" width="14" height="14">
-  <data encoding="csv">
+<map version="1.10" tiledversion="1.11.0" orientation="isometric" renderorder="right-down" width="14" height="14" tilewidth="80" tileheight="40" infinite="0" nextlayerid="10" nextobjectid="25">
+  <tileset firstgid="1" source="ground.tsx" />
+  <tileset firstgid="35" source="paths.tsx" />
+  <tileset firstgid="41" source="paths_anchored.tsx" />
+  <tileset firstgid="47" source="floor_decor.tsx" />
+  <tileset firstgid="53" source="vegetation.tsx" />
+  <tileset firstgid="61" source="rocks.tsx" />
+  <tileset firstgid="67" source="structures.tsx" />
+  <tileset firstgid="70" source="props.tsx" />
+  <tileset firstgid="76" source="diorama.tsx" />
+  <layer id="2" name="skirt" width="14" height="14">
+    <data encoding="csv">
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,29,0,
-0,0,0,0,0,0,0,0,0,0,0,0,29,0,
-0,0,0,0,0,0,0,0,0,0,0,0,29,0,
-0,0,0,0,0,0,0,0,0,0,0,0,29,0,
-0,0,0,0,0,0,0,0,0,0,0,0,29,0,
-0,0,0,0,0,0,0,0,0,0,0,0,29,0,
-0,0,0,0,0,0,0,0,0,0,0,0,29,0,
-0,0,0,0,0,0,0,0,0,0,0,0,29,0,
-0,0,0,0,0,0,0,0,0,0,0,0,29,0,
-0,0,0,0,0,32,32,32,32,32,32,32,0,0
-</data>
- </layer>
- <layer id="1" name="ground" width="14" height="14">
-  <data encoding="csv">
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,8,5,5,5,5,5,9,0,0,
-0,0,0,0,0,4,13,13,15,15,15,16,0,0,
-0,0,0,0,0,14,16,14,15,15,16,16,0,0,
-0,0,0,0,0,4,14,14,13,17,14,16,0,0,
-0,0,0,0,0,4,14,17,17,17,14,16,0,0,
-0,0,0,0,0,4,17,17,14,16,13,16,0,0,
-0,0,0,0,0,4,13,13,13,4,13,16,0,0,
-0,0,0,0,0,4,15,4,13,13,13,16,0,0,
-0,0,0,0,0,7,7,7,7,7,7,16,0,0,
+0,0,0,32,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,31,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,31,0,0,0,0,34,0,0,0,
+0,0,0,0,0,0,31,32,31,32,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0
 </data>
- </layer>
- <layer id="3" name="path" width="14" height="14">
-  <data encoding="csv">
+  </layer>
+  <layer id="1" name="ground" width="14" height="14">
+    <data encoding="csv">
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,8,1,1,9,5,0,0,0,0,0,0,
+0,0,0,7,14,17,15,13,5,0,0,0,0,0,
+0,0,0,0,12,14,17,15,13,5,0,0,0,0,
+0,0,0,0,7,16,14,17,15,13,5,0,0,0,
+0,0,0,0,0,7,16,14,17,15,6,0,0,0,
+0,0,0,0,0,0,7,11,3,6,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0
+</data>
+  </layer>
+  <layer id="3" name="path" width="14" height="14">
+    <data encoding="csv">
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,
@@ -61,139 +62,140 @@
 0,0,0,0,0,0,0,0,0,39,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0
 </data>
- </layer>
- <objectgroup color="#ffd166" id="4" name="plots">
-  <object id="1" name="plot_0" type="plot" x="160" y="360">
-   <properties>
-    <property name="gridCol" type="float" value="-3.5" />
-    <property name="gridRow" type="float" value="-0.5" />
-   </properties>
-   <point />
-  </object>
-  <object id="2" name="plot_1" type="plot" x="340" y="340">
-   <properties>
-    <property name="gridCol" type="float" value="1" />
-    <property name="gridRow" type="float" value="-1" />
-   </properties>
-   <point />
-  </object>
-  <object id="3" name="plot_2" type="plot" x="320" y="520">
-   <properties>
-    <property name="gridCol" type="float" value="0.5" />
-    <property name="gridRow" type="float" value="3.5" />
-   </properties>
-   <point />
-  </object>
-  <object id="4" name="plot_3" type="plot" x="440" y="400">
-   <properties>
-    <property name="gridCol" type="float" value="3.5" />
-    <property name="gridRow" type="float" value="0.5" />
-   </properties>
-   <point />
-  </object>
-  <object id="5" name="plot_4" type="plot" x="220" y="300">
-   <properties>
-    <property name="gridCol" type="float" value="-2" />
-    <property name="gridRow" type="float" value="-2" />
-   </properties>
-   <point />
-  </object>
-  <object id="6" name="plot_5" type="plot" x="260" y="420">
-   <properties>
-    <property name="gridCol" type="float" value="-1" />
-    <property name="gridRow" type="float" value="1" />
-   </properties>
-   <point />
-  </object>
-  <object id="7" name="plot_6" type="plot" x="380" y="460">
-   <properties>
-    <property name="gridCol" type="float" value="2" />
-    <property name="gridRow" type="float" value="2" />
-   </properties>
-   <point />
-  </object>
-  <object id="8" name="plot_7" type="plot" x="280" y="240">
-   <properties>
-    <property name="gridCol" type="float" value="-0.5" />
-    <property name="gridRow" type="float" value="-3.5" />
-   </properties>
-   <point />
-  </object>
- </objectgroup>
- <objectgroup id="5" name="floor_decor">
-  <object id="10" name="yellow_flowers" class="floor_decor" gid="48" x="420.0" y="220.0" width="21.0" height="21.0">
-   <properties>
-    <property name="gridCol" type="float" value="3" />
-    <property name="gridRow" type="float" value="-4" />
-   </properties>
-  </object>
-  <object id="11" name="grass_tuft" class="floor_decor" gid="50" x="340.0" y="260.0" width="19.0" height="20.0">
-   <properties>
-    <property name="gridCol" type="float" value="1" />
-    <property name="gridRow" type="float" value="-3" />
-   </properties>
-  </object>
-  <object id="15" name="white_flowers" class="floor_decor" gid="47" x="460.0" y="340.0" width="24.0" height="24.0">
-   <properties>
-    <property name="gridCol" type="float" value="4" />
-    <property name="gridRow" type="float" value="-1" />
-   </properties>
-  </object>
-  <object id="16" name="clover" class="floor_decor" gid="52" x="340.0" y="460.0" width="22.0" height="21.0">
-   <properties>
-    <property name="gridCol" type="float" value="1" />
-    <property name="gridRow" type="float" value="2" />
-   </properties>
-  </object>
- </objectgroup>
- <objectgroup id="6" name="edge_overlays" />
- <objectgroup id="7" name="props">
-  <object id="9" name="east_upper_rock" type="prop" gid="62" x="300" y="220" width="48.6" height="33.3">
-   <properties>
-    <property name="gridCol" type="float" value="0" />
-    <property name="gridRow" type="float" value="-4" />
-    <property name="opacity" type="float" value="0.82" />
-   </properties>
-  </object>
-  <object id="13" name="nursery_crate" class="props" gid="72" x="380.0" y="300.0" width="43.0" height="36.0">
-   <properties>
-    <property name="gridCol" type="float" value="2" />
-    <property name="gridRow" type="float" value="-2" />
-   </properties>
-  </object>
-  <object id="14" name="west_barrel" class="props" gid="70" x="220.0" y="340.0" width="49.0" height="55.0">
-   <properties>
-    <property name="gridCol" type="float" value="-2" />
-    <property name="gridRow" type="float" value="-1" />
-   </properties>
-  </object>
-  <object id="19" name="garden_tools" class="props" gid="74" x="420.0" y="500.0" width="67.0" height="46.0">
-   <properties>
-    <property name="gridCol" type="float" value="3" />
-    <property name="gridRow" type="float" value="3" />
-   </properties>
-  </object>
- </objectgroup>
- <objectgroup id="8" name="vegetation">
-  <object id="12" name="tall_shrub" class="vegetation" gid="59" x="220.0" y="300.0" width="75.0" height="50.0">
-   <properties>
-    <property name="gridCol" type="float" value="-2" />
-    <property name="gridRow" type="float" value="-2" />
-   </properties>
-  </object>
-  <object id="17" name="mixed_border" class="vegetation" gid="54" x="220.0" y="500.0" width="61.0" height="31.0">
-   <properties>
-    <property name="gridCol" type="float" value="-2" />
-    <property name="gridRow" type="float" value="3" />
-   </properties>
-  </object>
- </objectgroup>
- <objectgroup id="9" name="structures">
-  <object id="18" name="trellis" class="structures" gid="69" x="380.0" y="500.0" width="71.0" height="68.0">
-   <properties>
-    <property name="gridCol" type="float" value="2" />
-    <property name="gridRow" type="float" value="3" />
-   </properties>
-  </object>
- </objectgroup>
+  </layer>
+  <objectgroup color="#ffd166" id="4" name="plots">
+    <object id="1" name="plot_0" type="plot" x="160" y="360">
+      <properties>
+        <property name="gridCol" type="float" value="-3.5" />
+        <property name="gridRow" type="float" value="-0.5" />
+      </properties>
+      <point />
+    </object>
+    <object id="2" name="plot_1" type="plot" x="340" y="340">
+      <properties>
+        <property name="gridCol" type="float" value="1" />
+        <property name="gridRow" type="float" value="-1" />
+      </properties>
+      <point />
+    </object>
+    <object id="3" name="plot_2" type="plot" x="320" y="520">
+      <properties>
+        <property name="gridCol" type="float" value="0.5" />
+        <property name="gridRow" type="float" value="3.5" />
+      </properties>
+      <point />
+    </object>
+    <object id="4" name="plot_3" type="plot" x="440" y="400">
+      <properties>
+        <property name="gridCol" type="float" value="3.5" />
+        <property name="gridRow" type="float" value="0.5" />
+      </properties>
+      <point />
+    </object>
+    <object id="5" name="plot_4" type="plot" x="220" y="300">
+      <properties>
+        <property name="gridCol" type="float" value="-2" />
+        <property name="gridRow" type="float" value="-2" />
+      </properties>
+      <point />
+    </object>
+    <object id="6" name="plot_5" type="plot" x="260" y="420">
+      <properties>
+        <property name="gridCol" type="float" value="-1" />
+        <property name="gridRow" type="float" value="1" />
+      </properties>
+      <point />
+    </object>
+    <object id="7" name="plot_6" type="plot" x="380" y="460">
+      <properties>
+        <property name="gridCol" type="float" value="2" />
+        <property name="gridRow" type="float" value="2" />
+      </properties>
+      <point />
+    </object>
+    <object id="8" name="plot_7" type="plot" x="280" y="240">
+      <properties>
+        <property name="gridCol" type="float" value="-0.5" />
+        <property name="gridRow" type="float" value="-3.5" />
+      </properties>
+      <point />
+    </object>
+  </objectgroup>
+  <objectgroup id="5" name="floor_decor">
+  </objectgroup>
+  <objectgroup id="6" name="edge_overlays">
+    <object id="24" name="front_edge_fringe" class="edge_overlays" gid="76" x="400.0" y="500.0" width="350.0" height="110.0">
+      <properties>
+        <property name="gridCol" type="float" value="2.5" />
+        <property name="gridRow" type="float" value="3" />
+      </properties>
+    </object>
+  </objectgroup>
+  <objectgroup id="7" name="props">
+    <object id="9" name="east_upper_rock" type="prop" gid="62" x="400.0" y="320.0" width="48.6" height="33.3">
+      <properties>
+        <property name="gridCol" type="float" value="2.5" />
+        <property name="gridRow" type="float" value="-1.5" />
+        <property name="opacity" type="float" value="0.82" />
+      </properties>
+    </object>
+    <object id="14" name="utility_barrel" class="props" gid="70" x="340.0" y="260.0" width="49.0" height="55.0">
+      <properties>
+        <property name="gridCol" type="float" value="1" />
+        <property name="gridRow" type="float" value="-3" />
+      </properties>
+    </object>
+    <object id="19" name="utility_watering_can" class="props" gid="71" x="340.0" y="300.0" width="39.0" height="34.0">
+      <properties>
+        <property name="gridCol" type="float" value="1" />
+        <property name="gridRow" type="float" value="-2" />
+      </properties>
+    </object>
+  </objectgroup>
+  <objectgroup id="8" name="vegetation">
+    <object id="12" name="tall_shrub" class="vegetation" gid="59" x="200.0" y="400.0" width="75.0" height="50.0">
+      <properties>
+        <property name="gridCol" type="float" value="-2.5" />
+        <property name="gridRow" type="float" value="0.5" />
+      </properties>
+    </object>
+    <object id="17" name="mixed_border" class="vegetation" gid="54" x="240.0" y="480.0" width="61.0" height="31.0">
+      <properties>
+        <property name="gridCol" type="float" value="-1.5" />
+        <property name="gridRow" type="float" value="2.5" />
+      </properties>
+    </object>
+    <object id="20" name="west_rear_canopy" class="vegetation" gid="78" x="180.0" y="340.0" width="156.0" height="146.0">
+      <properties>
+        <property name="gridCol" type="float" value="-3" />
+        <property name="gridRow" type="float" value="-1" />
+      </properties>
+    </object>
+    <object id="21" name="east_rear_canopy" class="vegetation" gid="77" x="260.0" y="260.0" width="216.0" height="132.0">
+      <properties>
+        <property name="gridCol" type="float" value="-1" />
+        <property name="gridRow" type="float" value="-3" />
+      </properties>
+    </object>
+    <object id="22" name="west_vegetation_corner" class="vegetation" gid="79" x="240.0" y="440.0" width="158.0" height="84.0">
+      <properties>
+        <property name="gridCol" type="float" value="-1.5" />
+        <property name="gridRow" type="float" value="1.5" />
+      </properties>
+    </object>
+  </objectgroup>
+  <objectgroup id="9" name="structures">
+    <object id="18" name="trellis" class="structures" gid="67" x="200.0" y="360.0" width="71.0" height="68.0">
+      <properties>
+        <property name="gridCol" type="float" value="-2.5" />
+        <property name="gridRow" type="float" value="-0.5" />
+      </properties>
+    </object>
+    <object id="23" name="gardening_station" class="structures" gid="80" x="300.0" y="260.0" width="130.0" height="79.0">
+      <properties>
+        <property name="gridCol" type="float" value="0" />
+        <property name="gridRow" type="float" value="-3" />
+      </properties>
+    </object>
+  </objectgroup>
 </map>

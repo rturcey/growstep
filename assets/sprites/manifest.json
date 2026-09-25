@@ -1063,5 +1063,80 @@
       220
     ],
     "shadow": "separate_contact"
+  },
+  "potager_bordure_frange_avant_statique_ordinaire_00.png": {
+    "width": 920,
+    "height": 332,
+    "bbox": [
+      17,
+      16,
+      903,
+      316
+    ],
+    "anchor": [
+      460,
+      319
+    ],
+    "shadow": "separate_contact"
+  },
+  "potager_decor_arbre_canopee_est_statique_ordinaire_00.png": {
+    "width": 864,
+    "height": 528,
+    "bbox": [
+      196,
+      17,
+      816,
+      498
+    ],
+    "anchor": [
+      432,
+      500
+    ],
+    "shadow": "separate_contact"
+  },
+  "potager_decor_arbre_canopee_ouest_statique_ordinaire_00.png": {
+    "width": 624,
+    "height": 584,
+    "bbox": [
+      16,
+      18,
+      608,
+      570
+    ],
+    "anchor": [
+      312,
+      571
+    ],
+    "shadow": "separate_contact"
+  },
+  "potager_decor_coin_vegetal_ouest_statique_ordinaire_00.png": {
+    "width": 632,
+    "height": 336,
+    "bbox": [
+      16,
+      18,
+      616,
+      322
+    ],
+    "anchor": [
+      316,
+      323
+    ],
+    "shadow": "separate_contact"
+  },
+  "potager_decor_station_jardinage_statique_ordinaire_00.png": {
+    "width": 612,
+    "height": 372,
+    "bbox": [
+      16,
+      18,
+      596,
+      358
+    ],
+    "anchor": [
+      306,
+      359
+    ],
+    "shadow": "separate_contact"
   }
 }

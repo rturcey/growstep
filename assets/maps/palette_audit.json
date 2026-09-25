@@ -170,6 +170,18 @@
   "fleurs_plante_tulipe_recoltable_ordinaire_00.png": {
     "status": "other_island"
   },
+  "potager_bordure_frange_avant_statique_ordinaire_00.png": {
+    "status": "included",
+    "group": "diorama"
+  },
+  "potager_decor_arbre_canopee_est_statique_ordinaire_00.png": {
+    "status": "included",
+    "group": "diorama"
+  },
+  "potager_decor_arbre_canopee_ouest_statique_ordinaire_00.png": {
+    "status": "included",
+    "group": "diorama"
+  },
   "potager_decor_arrosoir_metal_statique_ordinaire_00.png": {
     "status": "included",
     "group": "props"
@@ -194,9 +206,17 @@
     "status": "included",
     "group": "props"
   },
+  "potager_decor_coin_vegetal_ouest_statique_ordinaire_00.png": {
+    "status": "included",
+    "group": "diorama"
+  },
   "potager_decor_outils_jardin_statique_ordinaire_00.png": {
     "status": "included",
     "group": "props"
+  },
+  "potager_decor_station_jardinage_statique_ordinaire_00.png": {
+    "status": "included",
+    "group": "diorama"
   },
   "potager_decor_stockage_jardin_statique_ordinaire_00.png": {
     "status": "included",

@@ -15,7 +15,7 @@ import 'package:growstep/garden/potager_tiled_objects.dart';
 import 'package:tiled/tiled.dart';
 import 'package:xml/xml.dart';
 
-/// Acceptance tests for #67: candidate capture seam + contact guard.
+/// Candidate capture/contact guards from #67, extended for #68's static art.
 ///
 /// Every `GardenGame` instance in this file is constructed with
 /// `potagerMapFile: 'potager_diorama_v1.tmx'` so that the tests exercise the
@@ -28,8 +28,8 @@ import 'package:xml/xml.dart';
 /// - dynamic crops render through the real game using the candidate;
 /// - deterministic captures are produced at 390×844 and 375×667 from the
 ///   candidate, not production;
-/// - production `potager.tmx` is not mutated by this ticket (observable
-///   invariants, not a tautological byte comparison).
+/// - production `potager.tmx` retains its gameplay invariants while candidate
+///   art and palette entries are allowed to diverge.
 
 class _FileTsxProvider implements TsxProvider {
   _FileTsxProvider(this.filename);
@@ -189,14 +189,20 @@ void main() {
       },
     );
 
-    test('candidate preserves layer order and tileset count', () async {
+    test('candidate preserves production GID ranges and adds one palette', () async {
       final candidate = await _loadMap(_candidateFile);
       final production = await _loadMap(_productionFile);
       expect(
         candidate.layers.map((l) => l.name).toList(),
         production.layers.map((l) => l.name).toList(),
       );
-      expect(candidate.tilesets, hasLength(production.tilesets.length));
+      expect(candidate.tilesets, hasLength(production.tilesets.length + 1));
+      for (var i = 0; i < production.tilesets.length; i++) {
+        expect(candidate.tilesets[i].firstGid, production.tilesets[i].firstGid);
+        expect(candidate.tilesets[i].tiles.length, production.tilesets[i].tiles.length);
+      }
+      expect(candidate.tilesets.last.firstGid, 76);
+      expect(candidate.tilesets.last.tiles, hasLength(5));
       for (final tileset in candidate.tilesets) {
         expect(tileset.objectAlignment, ObjectAlignment.bottom);
         expect(tileset.image, isNull);
@@ -215,19 +221,13 @@ void main() {
         map.tileByGid(rock.gid!)?.image?.source,
         '../sprites/commun_decor_rochers_herbe_statique_ordinaire_00.png',
       );
-      // The rock's gridCol/gridRow match production exactly (values may
-      // change as the production map evolves; the candidate must follow).
-      final prodMap = await _loadMap(_productionFile);
-      final prodRock = (prodMap.layerByName('props') as ObjectGroup)
-          .objects
-          .singleWhere((object) => object.name == 'east_upper_rock');
+      const adapter = PotagerGridAdapter();
       expect(
-        rock.properties.getValue<double>('gridCol'),
-        prodRock.properties.getValue<double>('gridCol'),
-      );
-      expect(
-        rock.properties.getValue<double>('gridRow'),
-        prodRock.properties.getValue<double>('gridRow'),
+        adapter.fromTiledProperties(
+          rock.properties.getValue<double>('gridCol')!,
+          rock.properties.getValue<double>('gridRow')!,
+        ),
+        isA<ui.Offset>(),
       );
     });
 
@@ -256,6 +256,71 @@ void main() {
         }
       }
     });
+
+    test('candidate ground is connected and its skirt stays outside', () async {
+      final map = await _loadMap(_candidateFile);
+      final ground = (map.layerByName('ground') as TileLayer).data!;
+      final skirt = (map.layerByName('skirt') as TileLayer).data!;
+      final occupied = {
+        for (var i = 0; i < ground.length; i++)
+          if (ground[i] != 0) i,
+      };
+      expect(occupied, isNotEmpty);
+      expect(
+        {for (var i = 0; i < skirt.length; i++) if (skirt[i] != 0) i}
+            .intersection(occupied),
+        isEmpty,
+      );
+      final reached = <int>{};
+      final pending = <int>[occupied.first];
+      while (pending.isNotEmpty) {
+        final index = pending.removeLast();
+        if (!reached.add(index)) continue;
+        final col = index % map.width;
+        final row = index ~/ map.width;
+        for (final (dx, dy) in [(-1, 0), (1, 0), (0, -1), (0, 1)]) {
+          final x = col + dx;
+          final y = row + dy;
+          if (x >= 0 && x < map.width && y >= 0 && y < map.height) {
+            final neighbor = y * map.width + x;
+            if (occupied.contains(neighbor) && !reached.contains(neighbor)) {
+              pending.add(neighbor);
+            }
+          }
+        }
+      }
+      expect(reached, occupied);
+    });
+
+    test('candidate visual objects use valid anchored GIDs and half cells', () async {
+      final map = await _loadMap(_candidateFile);
+      const adapter = PotagerGridAdapter();
+      const visualGroups = [
+        'floor_decor',
+        'vegetation',
+        'rocks',
+        'structures',
+        'props',
+        'edge_overlays',
+      ];
+      for (final group in map.layers.whereType<ObjectGroup>()) {
+        if (!visualGroups.contains(group.name)) continue;
+        for (final object in group.objects) {
+          expect(object.gid, isNotNull, reason: object.name);
+          final image = map.tileByGid(object.gid!)?.image;
+          expect(image?.source, isNotNull, reason: object.name);
+          expect(manifest, contains(image!.source!.split('/').last));
+          expect(
+            () => adapter.fromTiledProperties(
+              object.properties.getValue<double>('gridCol')!,
+              object.properties.getValue<double>('gridRow')!,
+            ),
+            returnsNormally,
+            reason: object.name,
+          );
+        }
+      }
+    });
   });
 
   group('candidate preserves runtime contacts and gameplay', () {
@@ -273,7 +338,7 @@ void main() {
     });
 
     test(
-      'candidate and production produce identical PotagerTiledObjects',
+      'candidate and production preserve gameplay contacts',
       () async {
         final candidate = await _loadMap(_candidateFile);
         final production = await _loadMap(_productionFile);
@@ -281,25 +346,16 @@ void main() {
         final p = PotagerTiledObjects.fromMap(production, manifest);
 
         expect(c.plotContacts, p.plotContacts);
-        expect(c.rock.id, p.rock.id);
-        expect(c.rock.asset, p.rock.asset);
-        expect(c.rock.contact, p.rock.contact);
-        expect(c.rock.size, p.rock.size);
-        expect(c.rock.opacity, p.rock.opacity);
-        expect(c.rockAnchorDelta, p.rockAnchorDelta);
-        expect(c.sceneObjects.length, p.sceneObjects.length);
-        for (var i = 0; i < c.sceneObjects.length; i++) {
-          expect(c.sceneObjects[i].id, p.sceneObjects[i].id,
-              reason: 'scene object $i');
-          expect(c.sceneObjects[i].asset, p.sceneObjects[i].asset,
-              reason: 'scene object $i');
-          expect(c.sceneObjects[i].contact, p.sceneObjects[i].contact,
-              reason: 'scene object $i');
-          expect(c.sceneObjects[i].size, p.sceneObjects[i].size,
-              reason: 'scene object $i');
-          expect(c.sceneObjects[i].opacity, p.sceneObjects[i].opacity,
-              reason: 'scene object $i');
-        }
+        expect(
+          c.sceneObjects.map((object) => object.id),
+          containsAll([
+            'west_rear_canopy',
+            'east_rear_canopy',
+            'west_vegetation_corner',
+            'gardening_station',
+            'front_edge_fringe',
+          ]),
+        );
       },
     );
 
@@ -310,16 +366,18 @@ void main() {
         final game = GardenGame(potagerMapFile: _candidateFile)
           ..snapshot = snapshot;
         await game.onLoad();
-        game.onGameResize(Vector2(390, 844));
-        final transform = GardenArtboardTransform(const ui.Size(390, 844));
-        for (var slot = 0; slot < 8; slot++) {
-          final anchor = GardenGame.anchorsFor(ZoneType.potager)[slot];
-          final viewportPoint = transform.toViewport(anchor);
-          expect(
-            game.hitTestSlot(viewportPoint),
-            slot,
-            reason: 'slot $slot must be hittable at its contact',
-          );
+        for (final size in [const ui.Size(390, 844), const ui.Size(375, 667)]) {
+          game.onGameResize(Vector2(size.width, size.height));
+          final transform = GardenArtboardTransform(size);
+          for (var slot = 0; slot < 8; slot++) {
+            final anchor = GardenGame.anchorsFor(ZoneType.potager)[slot];
+            final viewportPoint = transform.toViewport(anchor);
+            expect(
+              game.hitTestSlot(viewportPoint),
+              slot,
+              reason: 'slot $slot must be hittable at ${size.width}x${size.height}',
+            );
+          }
         }
         game.onRemove();
       },

@@ -37,6 +37,34 @@ def contract_fixture(root):
 
 
 class SpriteContractTest(unittest.TestCase):
+    def test_diorama_hero_assets_have_a_separate_generated_palette(self):
+        names = {
+            "potager_decor_arbre_canopee_ouest_statique_ordinaire_00.png",
+            "potager_decor_arbre_canopee_est_statique_ordinaire_00.png",
+            "potager_decor_coin_vegetal_ouest_statique_ordinaire_00.png",
+            "potager_decor_station_jardinage_statique_ordinaire_00.png",
+            "potager_bordure_frange_avant_statique_ordinaire_00.png",
+        }
+        palette = ET.parse(REPO / "assets/maps/diorama.tsx").getroot()
+        self.assertEqual(
+            {Path(tile.find("image").attrib["source"]).name for tile in palette.findall("tile")},
+            names,
+        )
+        production = ET.parse(REPO / "assets/maps/potager.tmx").getroot()
+        self.assertNotIn(
+            "diorama.tsx", {tileset.attrib["source"] for tileset in production.findall("tileset")}
+        )
+        for path in (REPO / "assets/maps").glob("*.tsx"):
+            if path.name in {"diorama.tsx", "growstep.tsx"}:
+                continue
+            self.assertTrue(
+                names.isdisjoint(
+                    Path(tile.find("image").attrib["source"]).name
+                    for tile in ET.parse(path).getroot().findall("tile")
+                ),
+                path.name,
+            )
+
     def test_surface_tile_export_detects_a_stale_pixel(self):
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)

@@ -1,0 +1,23 @@
+id: potager_bordure_frange_avant_statique_ordinaire_00
+canvas_1x:
+- 230
+- 83
+anchor_4x:
+- 460
+- 319
+footprint_grid:
+- 3
+- 1
+size_class: long_edge
+projection: isometric_80x40
+light: upper_left
+shadow: separate_contact
+palette_roles:
+- feuillage_sauge
+- feuillage_profond
+- pierre_creme
+- blanc_floral
+- terre_tranche
+state: statique
+variant: ordinaire
+frames: 1
