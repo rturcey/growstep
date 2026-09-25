@@ -71,6 +71,7 @@ class GardenGame extends FlameGame {
   late final RenderableTiledMap _tileMap;
   late final Offset _tileMapOffset;
   late final PotagerTiledObjects _tiledObjects;
+  late final bool _hasPaintedTiledGround;
   GardenSnapshot snapshot = GardenSnapshot.initial();
   ZoneType currentZone = ZoneType.potager;
   int? selectedSlot;
@@ -154,6 +155,9 @@ class GardenGame extends FlameGame {
     );
     _tileMapOffset = const PotagerGridAdapter().tileMapOffset(_tileMap.map);
     _tiledObjects = PotagerTiledObjects.fromMap(_tileMap.map, spriteManifest);
+    _hasPaintedTiledGround = (_tileMap.map.layerByName('ground') as TileLayer)
+        .data!
+        .any((gid) => gid != 0);
   }
 
   @override
@@ -187,15 +191,20 @@ class GardenGame extends FlameGame {
     final objects = <_SceneObject>[];
 
     // Terrain (drawn first, unsorted).
-    _drawTerrain(canvas, zone);
+    final tiledPotager = zone == ZoneType.potager && _hasPaintedTiledGround;
+    if (!tiledPotager) _drawTerrain(canvas, zone);
     if (zone == ZoneType.potager) {
-      PotagerComposition.drawGround(canvas, _islandContour(zone));
+      if (!tiledPotager) {
+        PotagerComposition.drawGround(canvas, _islandContour(zone));
+      }
       canvas.save();
       canvas.translate(_tileMapOffset.dx, _tileMapOffset.dy);
       _tileMap.render(canvas);
       canvas.restore();
-      for (final stone in PotagerPath.stones) {
-        GardenSceneRenderer.drawSprite(canvas, stone, _sprites);
+      if (!tiledPotager) {
+        for (final stone in PotagerPath.stones) {
+          GardenSceneRenderer.drawSprite(canvas, stone, _sprites);
+        }
       }
       for (final plot in PotagerPlots.visible(snapshot.zones[zone]!.length)) {
         PotagerComposition.drawSoilPlot(canvas, plot.contact);
@@ -599,6 +608,18 @@ class GardenGame extends FlameGame {
 
   List<_SceneObject> _environmentObjects(ZoneType zone) {
     if (zone == ZoneType.potager) {
+      if (_hasPaintedTiledGround) {
+        return [
+          for (final object in _tiledObjects.sceneObjects)
+            _SceneObject(
+              object.contact,
+              (canvas) =>
+                  GardenSceneRenderer.drawSprite(canvas, object, _sprites),
+              id: object.id,
+              zBias: object.zBias,
+            ),
+        ];
+      }
       return [
         for (final object in _potagerObjects)
           _SceneObject(

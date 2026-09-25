@@ -8,7 +8,7 @@ Tiled possède le placement visuel statique (où sont les rochers, le treillis, 
 
 ## Migration du terrain Canvas vers les surface tiles
 
-État actuel : le terrain procédural Canvas reste en place pendant la migration. Cible : les couches de `surface_tile` remplacent progressivement le terrain Canvas. Migration : famille par famille, couche par couche, avec acceptation visuelle avant suppression. État final : Tiled possède le terrain et la composition statiques ; Growstep possède l'état de jeu, le rendu dynamique et la sémantique d'interaction. La classe `surface_tile` et son pipeline sont définis dans [ADR-0009](0009-surface-tile-classe-asset.md) ; le modèle d'autoring Tiled (ancres, demi-cellules, ombres) dans [ADR-0010](0010-modele-autoring-tiled.md). La décision de ADR-0006 de garder le terrain en Canvas est supersedée pour cet aspect.
+État actuel : dès que `ground` est peint dans la TMX du Potager, ses couches de surface remplacent le terrain et le chemin Canvas, et ses object layers remplacent les décors statiques Dart. Le terrain Canvas reste utilisé pour les autres îlots et comme repli si le Potager n'a pas encore de sol Tiled. Les empreintes de plantation et les cultures restent dynamiques dans Growstep. État final : Tiled possède le terrain et la composition statiques ; Growstep possède l'état de jeu, le rendu dynamique et la sémantique d'interaction. La classe `surface_tile` et son pipeline sont définis dans [ADR-0009](0009-surface-tile-classe-asset.md) ; le modèle d'autoring Tiled (ancres, demi-cellules, ombres) dans [ADR-0010](0010-modele-autoring-tiled.md). La décision de ADR-0006 de garder le terrain en Canvas est supersedée pour cet aspect.
 
 ## Options écartées
 

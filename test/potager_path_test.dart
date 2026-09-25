@@ -215,19 +215,14 @@ void main() {
       return count;
     }
 
-    // The entrance, central bend, and right branch remain visible in the
-    // rendered scene; geometry tests above check actual spacing and clearance.
-    expect(
-      creamPixels(const ui.Rect.fromLTRB(170, 360, 220, 415)),
-      greaterThan(50),
-    );
-    expect(
-      creamPixels(const ui.Rect.fromLTRB(125, 265, 215, 335)),
-      greaterThan(100),
-    );
-    expect(
-      creamPixels(const ui.Rect.fromLTRB(215, 185, 255, 220)),
-      greaterThan(30),
-    );
+    // Representative stones from the painted Tiled path stay visible at
+    // their 80 × 40 cell contacts in the rendered Potager.
+    for (final region in const [
+      ui.Rect.fromLTRB(175, 180, 216, 201), // cell (6,8)
+      ui.Rect.fromLTRB(175, 260, 216, 281), // cell (8,10)
+      ui.Rect.fromLTRB(255, 340, 296, 361), // cell (11,11)
+    ]) {
+      expect(creamPixels(region), greaterThan(20), reason: '$region');
+    }
   });
 }

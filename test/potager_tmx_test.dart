@@ -2,7 +2,9 @@ import 'dart:convert';
 import 'dart:io';
 import 'dart:ui' as ui;
 
+import 'package:flame/components.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:growstep/garden/garden_game.dart';
 import 'package:growstep/garden/garden_scene.dart';
 import 'package:growstep/garden/garden_scene_renderer.dart';
 import 'package:growstep/garden/garden_sprite_metadata.dart';
@@ -64,6 +66,80 @@ Future<TiledMap> _loadMap([String? source]) => TiledMap.fromString(
 );
 
 void main() {
+  TestWidgetsFlutterBinding.ensureInitialized();
+
+  test(
+    'runtime terrain does not leave the old Canvas island exposed',
+    () async {
+      final game = GardenGame();
+      await game.onLoad();
+      game.onGameResize(Vector2(390, 844));
+      final recorder = ui.PictureRecorder();
+      game.render(ui.Canvas(recorder));
+      final picture = recorder.endRecording();
+      final image = await picture.toImage(390, 844);
+      final bytes = await image.toByteData(format: ui.ImageByteFormat.rawRgba);
+      final offset = (270 * 390 + 200) * 4;
+      final red = bytes!.getUint8(offset);
+      image.dispose();
+      picture.dispose();
+      game.onRemove();
+      // This artboard point is outside the painted Tiled ground. The legacy
+      // Canvas island used to fill it with green below the new map.
+      expect(red, greaterThan(210));
+    },
+  );
+
+  test('runtime tile layers contain only 80x40 surface tiles', () async {
+    final map = await _loadMap();
+    final allowed = {
+      'ground': RegExp(r'^commun_sol_(herbe|terre|bordure_herbe)_tile_'),
+      'skirt': RegExp(r'^commun_sol_tranche_terre_tile_'),
+      'path': RegExp(r'^commun_sol_pas_pierre_tile_'),
+    };
+    for (final name in ['ground', 'skirt', 'path']) {
+      final layer = map.layerByName(name) as TileLayer;
+      for (final gid in layer.data!.where((gid) => gid != 0)) {
+        final image = map.tileByGid(gid)?.image;
+        expect(image, isNotNull, reason: '$name gid $gid');
+        expect(
+          (image!.width, image.height),
+          (80, 40),
+          reason: '$name gid $gid',
+        );
+        expect(
+          image.source!.split('/').last,
+          matches(allowed[name]!),
+          reason: '$name gid $gid',
+        );
+      }
+    }
+  });
+
+  test(
+    'runtime painted props retain their cells as anchored objects',
+    () async {
+      final map = await _loadMap();
+      final source = jsonDecode(
+        File('assets/sprites/manifest.json').readAsStringSync(),
+      ) as Map<String, dynamic>;
+      final manifest = {
+        for (final entry in source.entries)
+          entry.key: GardenSpriteMetadata.fromJson(
+            entry.value as Map<String, dynamic>,
+          ),
+      };
+      final objects = PotagerTiledObjects.fromMap(map, manifest).sceneObjects;
+      expect(objects, hasLength(11));
+      final barrel = objects.singleWhere(
+        (object) => object.id == 'west_barrel',
+      );
+      expect(barrel.contact, const ui.Offset(155, 170));
+      expect(barrel.size.width, lessThan(50));
+      expect(barrel.size.height, lessThan(50));
+    },
+  );
+
   test(
     'TMX rock and shadow plots project through the sprite manifest',
     () async {
@@ -231,8 +307,9 @@ void main() {
     final map = await _loadMap();
     final props =
         map.layers.singleWhere((layer) => layer.name == 'props') as ObjectGroup;
-    expect(props.objects, hasLength(1));
-    final rock = props.objects.single;
+    final rock = props.objects.singleWhere(
+      (object) => object.name == 'east_upper_rock',
+    );
     expect(rock.name, 'east_upper_rock');
     expect(rock.class_, 'prop');
     expect(rock.gid, isNotNull);
@@ -265,13 +342,15 @@ void main() {
     );
     expect(tileContact, adapter.toArtboard(-1, -1));
     expect(map.layers.map((layer) => layer.name).toList(), [
-      'ground',
       'skirt',
+      'ground',
       'path',
       'plots',
       'floor_decor',
       'edge_overlays',
       'props',
+      'vegetation',
+      'structures',
     ]);
     expect(map.tilesets, hasLength(8));
     for (final tileset in map.tilesets) {
@@ -280,11 +359,7 @@ void main() {
     }
     for (final name in ['ground', 'skirt']) {
       final layer = map.layerByName(name) as TileLayer;
-      expect(
-        layer.data,
-        everyElement(0),
-        reason: '$name stays empty until terrain migration',
-      );
+      expect(layer.data, contains(isNot(0)), reason: '$name is now painted');
     }
 
     final path =
@@ -298,13 +373,15 @@ void main() {
         painted.add((col, row, map.tileByGid(gid)!.image!.source!));
       }
     }
-    expect(painted, [
-      (6, 8, '../sprites/commun_sol_pas_pierre_tile_00.png'),
-      (7, 9, '../sprites/commun_sol_pas_pierre_tile_01.png'),
-      (8, 10, '../sprites/commun_sol_pas_pierre_tile_02.png'),
-      (8, 11, '../sprites/commun_sol_pas_pierre_tile_03.png'),
-      (9, 12, '../sprites/commun_sol_pas_pierre_tile_04.png'),
-    ]);
+    expect(
+      painted,
+      containsAll([
+        (6, 8, '../sprites/commun_sol_pas_pierre_tile_00.png'),
+        (8, 10, '../sprites/commun_sol_pas_pierre_tile_02.png'),
+        (8, 11, '../sprites/commun_sol_pas_pierre_tile_03.png'),
+        (9, 12, '../sprites/commun_sol_pas_pierre_tile_04.png'),
+      ]),
+    );
     for (final tile in map.tilesets[1].tiles.take(6)) {
       expect((tile.image?.width, tile.image?.height), (80, 40));
       expect(File('assets/maps/${tile.image!.source}').existsSync(), isTrue);

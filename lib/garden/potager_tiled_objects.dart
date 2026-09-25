@@ -13,11 +13,13 @@ class PotagerTiledObjects {
     this.rock,
     this.rockAnchorDelta,
     this.plotContacts,
+    this.sceneObjects,
   );
 
   final GardenSpriteObject rock;
   final Offset rockAnchorDelta;
   final Map<String, Offset> plotContacts;
+  final List<GardenSpriteObject> sceneObjects;
 
   static double _gridProperty(TiledObject object, String name) =>
       object.properties.getValue<double>(name) ??
@@ -72,6 +74,50 @@ class PotagerTiledObjects {
       shadowOverride: _shadowOverride(rockObject),
     );
 
+    final sceneObjects = <GardenSpriteObject>[];
+    const visualGroups = {
+      'floor_decor',
+      'vegetation',
+      'rocks',
+      'structures',
+      'props',
+      'edge_overlays',
+    };
+    for (final group in map.layers.whereType<ObjectGroup>()) {
+      if (!visualGroups.contains(group.name)) continue;
+      for (final object in group.objects) {
+        if (identical(object, rockObject)) {
+          sceneObjects.add(rock);
+          continue;
+        }
+        final gid = object.gid;
+        if (gid == null) {
+          throw FormatException('${object.name} must be a Tiled tile object');
+        }
+        final source = map.tileByGid(gid)?.image?.source;
+        final asset = source?.split('/').last;
+        final metadata = asset == null ? null : spriteManifest[asset];
+        if (asset == null || metadata == null) {
+          throw FormatException('${object.name} has no sprite manifest entry');
+        }
+        final contact = adapter.fromTiledProperties(
+          _gridProperty(object, 'gridCol'),
+          _gridProperty(object, 'gridRow'),
+        );
+        sceneObjects.add(
+          GardenSpriteObject(
+            id: object.name,
+            asset: asset,
+            contact: contact,
+            size: metadata.visibleSizeAt(Size(object.width, object.height)),
+            layer: GardenLayer.depth,
+            opacity: object.properties.getValue<double>('opacity') ?? 1,
+            shadowOverride: _shadowOverride(object),
+          ),
+        );
+      }
+    }
+
     return PotagerTiledObjects._(
       rock,
       anchorDelta,
@@ -83,6 +129,7 @@ class PotagerTiledObjects {
               _gridProperty(plot, 'gridRow'),
             ),
       }),
+      List.unmodifiable(sceneObjects),
     );
   }
 }
