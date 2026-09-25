@@ -1,4 +1,64 @@
 {
+  "commun_bordure_fleurs_statique_ordinaire_00.png": {
+    "width": 204,
+    "height": 132,
+    "bbox": [
+      24,
+      28,
+      180,
+      115
+    ],
+    "anchor": [
+      102,
+      120
+    ],
+    "shadow": "separate_contact"
+  },
+  "commun_bordure_herbe_debordante_statique_ordinaire_00.png": {
+    "width": 204,
+    "height": 104,
+    "bbox": [
+      24,
+      20,
+      180,
+      89
+    ],
+    "anchor": [
+      102,
+      92
+    ],
+    "shadow": "separate_contact"
+  },
+  "commun_bordure_mixte_statique_ordinaire_00.png": {
+    "width": 244,
+    "height": 124,
+    "bbox": [
+      24,
+      28,
+      217,
+      108
+    ],
+    "anchor": [
+      122,
+      112
+    ],
+    "shadow": "separate_contact"
+  },
+  "commun_bordure_rochers_statique_ordinaire_00.png": {
+    "width": 180,
+    "height": 104,
+    "bbox": [
+      24,
+      28,
+      156,
+      86
+    ],
+    "anchor": [
+      90,
+      92
+    ],
+    "shadow": "separate_contact"
+  },
   "commun_decor_bosquet_bas_statique_ordinaire_00.png": {
     "width": 332,
     "height": 168,
@@ -11,6 +71,36 @@
     "anchor": [
       166,
       155
+    ],
+    "shadow": "separate_contact"
+  },
+  "commun_decor_bosquet_bas_statique_ordinaire_01.png": {
+    "width": 288,
+    "height": 172,
+    "bbox": [
+      20,
+      24,
+      266,
+      156
+    ],
+    "anchor": [
+      144,
+      160
+    ],
+    "shadow": "separate_contact"
+  },
+  "commun_decor_bosquet_bas_statique_ordinaire_02.png": {
+    "width": 376,
+    "height": 164,
+    "bbox": [
+      20,
+      24,
+      356,
+      148
+    ],
+    "anchor": [
+      188,
+      152
     ],
     "shadow": "separate_contact"
   },
@@ -29,6 +119,81 @@
     ],
     "shadow": "separate_contact"
   },
+  "commun_decor_bosquet_haut_statique_ordinaire_01.png": {
+    "width": 300,
+    "height": 200,
+    "bbox": [
+      20,
+      24,
+      280,
+      184
+    ],
+    "anchor": [
+      150,
+      188
+    ],
+    "shadow": "separate_contact"
+  },
+  "commun_decor_bosquet_haut_statique_ordinaire_02.png": {
+    "width": 380,
+    "height": 184,
+    "bbox": [
+      20,
+      24,
+      357,
+      165
+    ],
+    "anchor": [
+      190,
+      172
+    ],
+    "shadow": "separate_contact"
+  },
+  "commun_decor_fleurs_blanches_statique_ordinaire_00.png": {
+    "width": 96,
+    "height": 96,
+    "bbox": [
+      16,
+      16,
+      78,
+      81
+    ],
+    "anchor": [
+      48,
+      84
+    ],
+    "shadow": "separate_contact"
+  },
+  "commun_decor_fleurs_jaunes_statique_ordinaire_00.png": {
+    "width": 84,
+    "height": 84,
+    "bbox": [
+      16,
+      16,
+      68,
+      71
+    ],
+    "anchor": [
+      42,
+      72
+    ],
+    "shadow": "separate_contact"
+  },
+  "commun_decor_herbes_folles_statique_ordinaire_00.png": {
+    "width": 76,
+    "height": 68,
+    "bbox": [
+      16,
+      16,
+      57,
+      54
+    ],
+    "anchor": [
+      38,
+      56
+    ],
+    "shadow": "separate_contact"
+  },
   "commun_decor_rochers_herbe_statique_ordinaire_00.png": {
     "width": 216,
     "height": 148,
@@ -41,6 +206,66 @@
     "anchor": [
       108,
       135
+    ],
+    "shadow": "separate_contact"
+  },
+  "commun_decor_rochers_statique_ordinaire_00.png": {
+    "width": 172,
+    "height": 124,
+    "bbox": [
+      20,
+      24,
+      152,
+      105
+    ],
+    "anchor": [
+      86,
+      112
+    ],
+    "shadow": "separate_contact"
+  },
+  "commun_decor_rochers_statique_ordinaire_01.png": {
+    "width": 208,
+    "height": 144,
+    "bbox": [
+      20,
+      24,
+      186,
+      125
+    ],
+    "anchor": [
+      104,
+      132
+    ],
+    "shadow": "separate_contact"
+  },
+  "commun_decor_rochers_statique_ordinaire_02.png": {
+    "width": 244,
+    "height": 164,
+    "bbox": [
+      20,
+      24,
+      222,
+      147
+    ],
+    "anchor": [
+      122,
+      152
+    ],
+    "shadow": "separate_contact"
+  },
+  "commun_decor_rochers_statique_ordinaire_03.png": {
+    "width": 240,
+    "height": 148,
+    "bbox": [
+      24,
+      28,
+      213,
+      132
+    ],
+    "anchor": [
+      120,
+      136
     ],
     "shadow": "separate_contact"
   },
@@ -59,6 +284,81 @@
     ],
     "shadow": "separate_contact"
   },
+  "commun_decor_touffe_herbe_statique_ordinaire_00.png": {
+    "width": 76,
+    "height": 80,
+    "bbox": [
+      16,
+      16,
+      59,
+      66
+    ],
+    "anchor": [
+      38,
+      68
+    ],
+    "shadow": "separate_contact"
+  },
+  "commun_decor_touffe_herbe_statique_ordinaire_01.png": {
+    "width": 72,
+    "height": 72,
+    "bbox": [
+      16,
+      16,
+      53,
+      59
+    ],
+    "anchor": [
+      36,
+      60
+    ],
+    "shadow": "separate_contact"
+  },
+  "commun_decor_trefle_statique_ordinaire_00.png": {
+    "width": 88,
+    "height": 84,
+    "bbox": [
+      16,
+      16,
+      70,
+      71
+    ],
+    "anchor": [
+      44,
+      72
+    ],
+    "shadow": "separate_contact"
+  },
+  "commun_decor_treillis_bois_fleuri_statique_ordinaire_00.png": {
+    "width": 268,
+    "height": 284,
+    "bbox": [
+      24,
+      28,
+      242,
+      268
+    ],
+    "anchor": [
+      134,
+      272
+    ],
+    "shadow": "separate_contact"
+  },
+  "commun_decor_treillis_bois_fleuri_statique_ordinaire_01.png": {
+    "width": 268,
+    "height": 284,
+    "bbox": [
+      24,
+      28,
+      242,
+      268
+    ],
+    "anchor": [
+      134,
+      272
+    ],
+    "shadow": "separate_contact"
+  },
   "commun_decor_treillis_bois_statique_ordinaire_00.png": {
     "width": 284,
     "height": 272,
@@ -71,6 +371,201 @@
     "anchor": [
       142,
       259
+    ],
+    "shadow": "separate_contact"
+  },
+  "commun_ombre_contact_allongee_statique_ordinaire_00.png": {
+    "width": 312,
+    "height": 100,
+    "bbox": [
+      37,
+      37,
+      272,
+      68
+    ],
+    "anchor": [
+      156,
+      88
+    ],
+    "shadow": "separate_contact"
+  },
+  "commun_ombre_contact_large_statique_ordinaire_00.png": {
+    "width": 296,
+    "height": 116,
+    "bbox": [
+      37,
+      39,
+      256,
+      84
+    ],
+    "anchor": [
+      148,
+      104
+    ],
+    "shadow": "separate_contact"
+  },
+  "commun_ombre_contact_moyenne_statique_ordinaire_00.png": {
+    "width": 220,
+    "height": 100,
+    "bbox": [
+      33,
+      36,
+      184,
+      72
+    ],
+    "anchor": [
+      110,
+      88
+    ],
+    "shadow": "separate_contact"
+  },
+  "commun_ombre_contact_petite_statique_ordinaire_00.png": {
+    "width": 156,
+    "height": 88,
+    "bbox": [
+      31,
+      33,
+      124,
+      63
+    ],
+    "anchor": [
+      78,
+      76
+    ],
+    "shadow": "separate_contact"
+  },
+  "commun_sol_chemin_pierres_courbe_droite_statique_ordinaire_00.png": {
+    "width": 220,
+    "height": 284,
+    "bbox": [
+      27,
+      24,
+      193,
+      253
+    ],
+    "anchor": [
+      110,
+      272
+    ],
+    "shadow": "separate_contact"
+  },
+  "commun_sol_chemin_pierres_courbe_gauche_statique_ordinaire_00.png": {
+    "width": 200,
+    "height": 284,
+    "bbox": [
+      24,
+      24,
+      168,
+      253
+    ],
+    "anchor": [
+      100,
+      272
+    ],
+    "shadow": "separate_contact"
+  },
+  "commun_sol_chemin_pierres_droit_statique_ordinaire_00.png": {
+    "width": 176,
+    "height": 296,
+    "bbox": [
+      24,
+      24,
+      150,
+      262
+    ],
+    "anchor": [
+      88,
+      284
+    ],
+    "shadow": "separate_contact"
+  },
+  "commun_sol_pas_pierre_statique_ordinaire_00.png": {
+    "width": 164,
+    "height": 116,
+    "bbox": [
+      20,
+      16,
+      138,
+      88
+    ],
+    "anchor": [
+      82,
+      104
+    ],
+    "shadow": "separate_contact"
+  },
+  "commun_sol_pas_pierre_statique_ordinaire_01.png": {
+    "width": 164,
+    "height": 120,
+    "bbox": [
+      16,
+      16,
+      146,
+      90
+    ],
+    "anchor": [
+      82,
+      108
+    ],
+    "shadow": "separate_contact"
+  },
+  "commun_sol_pas_pierre_statique_ordinaire_02.png": {
+    "width": 172,
+    "height": 120,
+    "bbox": [
+      16,
+      16,
+      156,
+      92
+    ],
+    "anchor": [
+      86,
+      108
+    ],
+    "shadow": "separate_contact"
+  },
+  "commun_sol_pas_pierre_statique_ordinaire_03.png": {
+    "width": 168,
+    "height": 120,
+    "bbox": [
+      17,
+      16,
+      149,
+      90
+    ],
+    "anchor": [
+      84,
+      108
+    ],
+    "shadow": "separate_contact"
+  },
+  "commun_sol_pas_pierre_statique_ordinaire_04.png": {
+    "width": 164,
+    "height": 112,
+    "bbox": [
+      16,
+      16,
+      139,
+      87
+    ],
+    "anchor": [
+      82,
+      100
+    ],
+    "shadow": "separate_contact"
+  },
+  "commun_sol_pas_pierre_statique_ordinaire_05.png": {
+    "width": 164,
+    "height": 116,
+    "bbox": [
+      18,
+      16,
+      134,
+      88
+    ],
+    "anchor": [
+      82,
+      104
     ],
     "shadow": "separate_contact"
   },
@@ -209,6 +704,51 @@
     ],
     "shadow": "separate_contact"
   },
+  "potager_bordure_frange_avant_statique_ordinaire_00.png": {
+    "width": 920,
+    "height": 332,
+    "bbox": [
+      17,
+      16,
+      903,
+      316
+    ],
+    "anchor": [
+      460,
+      319
+    ],
+    "shadow": "separate_contact"
+  },
+  "potager_decor_arbre_canopee_est_statique_ordinaire_00.png": {
+    "width": 864,
+    "height": 528,
+    "bbox": [
+      196,
+      17,
+      816,
+      498
+    ],
+    "anchor": [
+      432,
+      500
+    ],
+    "shadow": "separate_contact"
+  },
+  "potager_decor_arbre_canopee_ouest_statique_ordinaire_00.png": {
+    "width": 624,
+    "height": 584,
+    "bbox": [
+      16,
+      18,
+      608,
+      570
+    ],
+    "anchor": [
+      312,
+      571
+    ],
+    "shadow": "separate_contact"
+  },
   "potager_decor_arrosoir_metal_statique_ordinaire_00.png": {
     "width": 156,
     "height": 136,
@@ -224,6 +764,126 @@
     ],
     "shadow": "separate_contact"
   },
+  "potager_decor_bac_potager_statique_ordinaire_00.png": {
+    "width": 260,
+    "height": 208,
+    "bbox": [
+      27,
+      31,
+      230,
+      187
+    ],
+    "anchor": [
+      130,
+      196
+    ],
+    "shadow": "separate_contact"
+  },
+  "potager_decor_bac_potager_statique_ordinaire_01.png": {
+    "width": 260,
+    "height": 232,
+    "bbox": [
+      24,
+      31,
+      230,
+      215
+    ],
+    "anchor": [
+      130,
+      220
+    ],
+    "shadow": "separate_contact"
+  },
+  "potager_decor_bac_potager_statique_ordinaire_02.png": {
+    "width": 260,
+    "height": 236,
+    "bbox": [
+      27,
+      31,
+      230,
+      220
+    ],
+    "anchor": [
+      130,
+      224
+    ],
+    "shadow": "separate_contact"
+  },
+  "potager_decor_bac_potager_statique_ordinaire_03.png": {
+    "width": 260,
+    "height": 228,
+    "bbox": [
+      27,
+      31,
+      230,
+      210
+    ],
+    "anchor": [
+      130,
+      216
+    ],
+    "shadow": "separate_contact"
+  },
+  "potager_decor_cadre_culture_arriere_statique_ordinaire_00.png": {
+    "width": 852,
+    "height": 360,
+    "bbox": [
+      16,
+      16,
+      836,
+      344
+    ],
+    "anchor": [
+      426,
+      347
+    ],
+    "shadow": "separate_contact"
+  },
+  "potager_decor_cadre_culture_avant_statique_ordinaire_00.png": {
+    "width": 852,
+    "height": 312,
+    "bbox": [
+      16,
+      16,
+      836,
+      296
+    ],
+    "anchor": [
+      426,
+      299
+    ],
+    "shadow": "separate_contact"
+  },
+  "potager_decor_cadre_culture_droite_statique_ordinaire_00.png": {
+    "width": 572,
+    "height": 592,
+    "bbox": [
+      16,
+      16,
+      556,
+      576
+    ],
+    "anchor": [
+      286,
+      579
+    ],
+    "shadow": "separate_contact"
+  },
+  "potager_decor_cadre_culture_gauche_statique_ordinaire_00.png": {
+    "width": 612,
+    "height": 528,
+    "bbox": [
+      16,
+      16,
+      596,
+      512
+    ],
+    "anchor": [
+      306,
+      515
+    ],
+    "shadow": "separate_contact"
+  },
   "potager_decor_caisse_semis_statique_ordinaire_00.png": {
     "width": 172,
     "height": 144,
@@ -236,6 +896,81 @@
     "anchor": [
       86,
       131
+    ],
+    "shadow": "separate_contact"
+  },
+  "potager_decor_coin_jardinage_statique_ordinaire_00.png": {
+    "width": 276,
+    "height": 212,
+    "bbox": [
+      24,
+      28,
+      251,
+      194
+    ],
+    "anchor": [
+      138,
+      200
+    ],
+    "shadow": "separate_contact"
+  },
+  "potager_decor_coin_vegetal_ouest_statique_ordinaire_00.png": {
+    "width": 632,
+    "height": 336,
+    "bbox": [
+      16,
+      18,
+      616,
+      322
+    ],
+    "anchor": [
+      316,
+      323
+    ],
+    "shadow": "separate_contact"
+  },
+  "potager_decor_outils_jardin_statique_ordinaire_00.png": {
+    "width": 268,
+    "height": 184,
+    "bbox": [
+      24,
+      28,
+      241,
+      166
+    ],
+    "anchor": [
+      134,
+      172
+    ],
+    "shadow": "separate_contact"
+  },
+  "potager_decor_station_jardinage_statique_ordinaire_00.png": {
+    "width": 612,
+    "height": 372,
+    "bbox": [
+      16,
+      18,
+      596,
+      358
+    ],
+    "anchor": [
+      306,
+      359
+    ],
+    "shadow": "separate_contact"
+  },
+  "potager_decor_stockage_jardin_statique_ordinaire_00.png": {
+    "width": 308,
+    "height": 232,
+    "bbox": [
+      24,
+      28,
+      283,
+      214
+    ],
+    "anchor": [
+      154,
+      220
     ],
     "shadow": "separate_contact"
   },
@@ -461,681 +1196,6 @@
     "anchor": [
       256,
       514
-    ],
-    "shadow": "separate_contact"
-  },
-  "commun_bordure_fleurs_statique_ordinaire_00.png": {
-    "width": 204,
-    "height": 132,
-    "bbox": [
-      24,
-      28,
-      180,
-      115
-    ],
-    "anchor": [
-      102,
-      120
-    ],
-    "shadow": "separate_contact"
-  },
-  "commun_bordure_herbe_debordante_statique_ordinaire_00.png": {
-    "width": 204,
-    "height": 104,
-    "bbox": [
-      24,
-      20,
-      180,
-      89
-    ],
-    "anchor": [
-      102,
-      92
-    ],
-    "shadow": "separate_contact"
-  },
-  "commun_bordure_mixte_statique_ordinaire_00.png": {
-    "width": 244,
-    "height": 124,
-    "bbox": [
-      24,
-      28,
-      217,
-      108
-    ],
-    "anchor": [
-      122,
-      112
-    ],
-    "shadow": "separate_contact"
-  },
-  "commun_bordure_rochers_statique_ordinaire_00.png": {
-    "width": 180,
-    "height": 104,
-    "bbox": [
-      24,
-      28,
-      156,
-      86
-    ],
-    "anchor": [
-      90,
-      92
-    ],
-    "shadow": "separate_contact"
-  },
-  "commun_decor_bosquet_bas_statique_ordinaire_01.png": {
-    "width": 288,
-    "height": 172,
-    "bbox": [
-      20,
-      24,
-      266,
-      156
-    ],
-    "anchor": [
-      144,
-      160
-    ],
-    "shadow": "separate_contact"
-  },
-  "commun_decor_bosquet_bas_statique_ordinaire_02.png": {
-    "width": 376,
-    "height": 164,
-    "bbox": [
-      20,
-      24,
-      356,
-      148
-    ],
-    "anchor": [
-      188,
-      152
-    ],
-    "shadow": "separate_contact"
-  },
-  "commun_decor_bosquet_haut_statique_ordinaire_01.png": {
-    "width": 300,
-    "height": 200,
-    "bbox": [
-      20,
-      24,
-      280,
-      184
-    ],
-    "anchor": [
-      150,
-      188
-    ],
-    "shadow": "separate_contact"
-  },
-  "commun_decor_bosquet_haut_statique_ordinaire_02.png": {
-    "width": 380,
-    "height": 184,
-    "bbox": [
-      20,
-      24,
-      357,
-      165
-    ],
-    "anchor": [
-      190,
-      172
-    ],
-    "shadow": "separate_contact"
-  },
-  "commun_decor_fleurs_blanches_statique_ordinaire_00.png": {
-    "width": 96,
-    "height": 96,
-    "bbox": [
-      16,
-      16,
-      78,
-      81
-    ],
-    "anchor": [
-      48,
-      84
-    ],
-    "shadow": "separate_contact"
-  },
-  "commun_decor_fleurs_jaunes_statique_ordinaire_00.png": {
-    "width": 84,
-    "height": 84,
-    "bbox": [
-      16,
-      16,
-      68,
-      71
-    ],
-    "anchor": [
-      42,
-      72
-    ],
-    "shadow": "separate_contact"
-  },
-  "commun_decor_herbes_folles_statique_ordinaire_00.png": {
-    "width": 76,
-    "height": 68,
-    "bbox": [
-      16,
-      16,
-      57,
-      54
-    ],
-    "anchor": [
-      38,
-      56
-    ],
-    "shadow": "separate_contact"
-  },
-  "commun_decor_rochers_statique_ordinaire_00.png": {
-    "width": 172,
-    "height": 124,
-    "bbox": [
-      20,
-      24,
-      152,
-      105
-    ],
-    "anchor": [
-      86,
-      112
-    ],
-    "shadow": "separate_contact"
-  },
-  "commun_decor_rochers_statique_ordinaire_01.png": {
-    "width": 208,
-    "height": 144,
-    "bbox": [
-      20,
-      24,
-      186,
-      125
-    ],
-    "anchor": [
-      104,
-      132
-    ],
-    "shadow": "separate_contact"
-  },
-  "commun_decor_rochers_statique_ordinaire_02.png": {
-    "width": 244,
-    "height": 164,
-    "bbox": [
-      20,
-      24,
-      222,
-      147
-    ],
-    "anchor": [
-      122,
-      152
-    ],
-    "shadow": "separate_contact"
-  },
-  "commun_decor_rochers_statique_ordinaire_03.png": {
-    "width": 240,
-    "height": 148,
-    "bbox": [
-      24,
-      28,
-      213,
-      132
-    ],
-    "anchor": [
-      120,
-      136
-    ],
-    "shadow": "separate_contact"
-  },
-  "commun_decor_touffe_herbe_statique_ordinaire_00.png": {
-    "width": 76,
-    "height": 80,
-    "bbox": [
-      16,
-      16,
-      59,
-      66
-    ],
-    "anchor": [
-      38,
-      68
-    ],
-    "shadow": "separate_contact"
-  },
-  "commun_decor_touffe_herbe_statique_ordinaire_01.png": {
-    "width": 72,
-    "height": 72,
-    "bbox": [
-      16,
-      16,
-      53,
-      59
-    ],
-    "anchor": [
-      36,
-      60
-    ],
-    "shadow": "separate_contact"
-  },
-  "commun_decor_trefle_statique_ordinaire_00.png": {
-    "width": 88,
-    "height": 84,
-    "bbox": [
-      16,
-      16,
-      70,
-      71
-    ],
-    "anchor": [
-      44,
-      72
-    ],
-    "shadow": "separate_contact"
-  },
-  "commun_decor_treillis_bois_fleuri_statique_ordinaire_00.png": {
-    "width": 268,
-    "height": 284,
-    "bbox": [
-      24,
-      28,
-      242,
-      268
-    ],
-    "anchor": [
-      134,
-      272
-    ],
-    "shadow": "separate_contact"
-  },
-  "commun_decor_treillis_bois_fleuri_statique_ordinaire_01.png": {
-    "width": 268,
-    "height": 284,
-    "bbox": [
-      24,
-      28,
-      242,
-      268
-    ],
-    "anchor": [
-      134,
-      272
-    ],
-    "shadow": "separate_contact"
-  },
-  "commun_ombre_contact_allongee_statique_ordinaire_00.png": {
-    "width": 312,
-    "height": 100,
-    "bbox": [
-      20,
-      24,
-      289,
-      81
-    ],
-    "anchor": [
-      156,
-      88
-    ],
-    "shadow": "separate_contact"
-  },
-  "commun_ombre_contact_large_statique_ordinaire_00.png": {
-    "width": 296,
-    "height": 116,
-    "bbox": [
-      20,
-      24,
-      273,
-      99
-    ],
-    "anchor": [
-      148,
-      104
-    ],
-    "shadow": "separate_contact"
-  },
-  "commun_ombre_contact_moyenne_statique_ordinaire_00.png": {
-    "width": 220,
-    "height": 100,
-    "bbox": [
-      20,
-      24,
-      197,
-      84
-    ],
-    "anchor": [
-      110,
-      88
-    ],
-    "shadow": "separate_contact"
-  },
-  "commun_ombre_contact_petite_statique_ordinaire_00.png": {
-    "width": 156,
-    "height": 88,
-    "bbox": [
-      20,
-      24,
-      135,
-      72
-    ],
-    "anchor": [
-      78,
-      76
-    ],
-    "shadow": "separate_contact"
-  },
-  "commun_sol_chemin_pierres_courbe_droite_statique_ordinaire_00.png": {
-    "width": 220,
-    "height": 284,
-    "bbox": [
-      24,
-      24,
-      193,
-      264
-    ],
-    "anchor": [
-      110,
-      272
-    ],
-    "shadow": "separate_contact"
-  },
-  "commun_sol_chemin_pierres_courbe_gauche_statique_ordinaire_00.png": {
-    "width": 200,
-    "height": 284,
-    "bbox": [
-      24,
-      24,
-      173,
-      264
-    ],
-    "anchor": [
-      100,
-      272
-    ],
-    "shadow": "separate_contact"
-  },
-  "commun_sol_chemin_pierres_droit_statique_ordinaire_00.png": {
-    "width": 176,
-    "height": 296,
-    "bbox": [
-      24,
-      24,
-      150,
-      273
-    ],
-    "anchor": [
-      88,
-      284
-    ],
-    "shadow": "separate_contact"
-  },
-  "commun_sol_pas_pierre_statique_ordinaire_00.png": {
-    "width": 164,
-    "height": 116,
-    "bbox": [
-      16,
-      16,
-      145,
-      104
-    ],
-    "anchor": [
-      82,
-      104
-    ],
-    "shadow": "separate_contact"
-  },
-  "commun_sol_pas_pierre_statique_ordinaire_01.png": {
-    "width": 164,
-    "height": 120,
-    "bbox": [
-      16,
-      16,
-      146,
-      106
-    ],
-    "anchor": [
-      82,
-      108
-    ],
-    "shadow": "separate_contact"
-  },
-  "commun_sol_pas_pierre_statique_ordinaire_02.png": {
-    "width": 172,
-    "height": 120,
-    "bbox": [
-      16,
-      16,
-      156,
-      107
-    ],
-    "anchor": [
-      86,
-      108
-    ],
-    "shadow": "separate_contact"
-  },
-  "commun_sol_pas_pierre_statique_ordinaire_03.png": {
-    "width": 168,
-    "height": 120,
-    "bbox": [
-      16,
-      16,
-      149,
-      106
-    ],
-    "anchor": [
-      84,
-      108
-    ],
-    "shadow": "separate_contact"
-  },
-  "commun_sol_pas_pierre_statique_ordinaire_04.png": {
-    "width": 164,
-    "height": 112,
-    "bbox": [
-      16,
-      16,
-      146,
-      100
-    ],
-    "anchor": [
-      82,
-      100
-    ],
-    "shadow": "separate_contact"
-  },
-  "commun_sol_pas_pierre_statique_ordinaire_05.png": {
-    "width": 164,
-    "height": 116,
-    "bbox": [
-      16,
-      16,
-      145,
-      101
-    ],
-    "anchor": [
-      82,
-      104
-    ],
-    "shadow": "separate_contact"
-  },
-  "potager_decor_bac_potager_statique_ordinaire_00.png": {
-    "width": 260,
-    "height": 208,
-    "bbox": [
-      24,
-      28,
-      233,
-      190
-    ],
-    "anchor": [
-      130,
-      196
-    ],
-    "shadow": "separate_contact"
-  },
-  "potager_decor_bac_potager_statique_ordinaire_01.png": {
-    "width": 260,
-    "height": 232,
-    "bbox": [
-      24,
-      28,
-      233,
-      215
-    ],
-    "anchor": [
-      130,
-      220
-    ],
-    "shadow": "separate_contact"
-  },
-  "potager_decor_bac_potager_statique_ordinaire_02.png": {
-    "width": 260,
-    "height": 236,
-    "bbox": [
-      24,
-      28,
-      233,
-      220
-    ],
-    "anchor": [
-      130,
-      224
-    ],
-    "shadow": "separate_contact"
-  },
-  "potager_decor_bac_potager_statique_ordinaire_03.png": {
-    "width": 260,
-    "height": 228,
-    "bbox": [
-      24,
-      28,
-      233,
-      210
-    ],
-    "anchor": [
-      130,
-      216
-    ],
-    "shadow": "separate_contact"
-  },
-  "potager_decor_coin_jardinage_statique_ordinaire_00.png": {
-    "width": 276,
-    "height": 212,
-    "bbox": [
-      24,
-      28,
-      251,
-      194
-    ],
-    "anchor": [
-      138,
-      200
-    ],
-    "shadow": "separate_contact"
-  },
-  "potager_decor_outils_jardin_statique_ordinaire_00.png": {
-    "width": 268,
-    "height": 184,
-    "bbox": [
-      24,
-      28,
-      241,
-      166
-    ],
-    "anchor": [
-      134,
-      172
-    ],
-    "shadow": "separate_contact"
-  },
-  "potager_decor_stockage_jardin_statique_ordinaire_00.png": {
-    "width": 308,
-    "height": 232,
-    "bbox": [
-      24,
-      28,
-      283,
-      214
-    ],
-    "anchor": [
-      154,
-      220
-    ],
-    "shadow": "separate_contact"
-  },
-  "potager_bordure_frange_avant_statique_ordinaire_00.png": {
-    "width": 920,
-    "height": 332,
-    "bbox": [
-      17,
-      16,
-      903,
-      316
-    ],
-    "anchor": [
-      460,
-      319
-    ],
-    "shadow": "separate_contact"
-  },
-  "potager_decor_arbre_canopee_est_statique_ordinaire_00.png": {
-    "width": 864,
-    "height": 528,
-    "bbox": [
-      196,
-      17,
-      816,
-      498
-    ],
-    "anchor": [
-      432,
-      500
-    ],
-    "shadow": "separate_contact"
-  },
-  "potager_decor_arbre_canopee_ouest_statique_ordinaire_00.png": {
-    "width": 624,
-    "height": 584,
-    "bbox": [
-      16,
-      18,
-      608,
-      570
-    ],
-    "anchor": [
-      312,
-      571
-    ],
-    "shadow": "separate_contact"
-  },
-  "potager_decor_coin_vegetal_ouest_statique_ordinaire_00.png": {
-    "width": 632,
-    "height": 336,
-    "bbox": [
-      16,
-      18,
-      616,
-      322
-    ],
-    "anchor": [
-      316,
-      323
-    ],
-    "shadow": "separate_contact"
-  },
-  "potager_decor_station_jardinage_statique_ordinaire_00.png": {
-    "width": 612,
-    "height": 372,
-    "bbox": [
-      16,
-      18,
-      596,
-      358
-    ],
-    "anchor": [
-      306,
-      359
     ],
     "shadow": "separate_contact"
   }

@@ -13,6 +13,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 GROUPS = ("ground", "paths", "paths_anchored", "floor_decor", "vegetation", "rocks", "structures", "props")
 CANDIDATE_GROUP = "diorama"
+CANDIDATE_SURFACE_GROUPS = ("paths_diorama",)
 STATUSES = {"included", "excluded", "other_island", "runtime_only", "outside_tiled", "deprecated"}
 
 
@@ -70,6 +71,18 @@ def expected_tilesets(root: Path) -> dict[str, bytes]:
             raise ValueError(f"empty Tiled palette group: {group}")
         offset = None if group in ("ground", "paths") else (0, -13)
         result[f"{group}.tsx"] = _xml(group, images, offset)
+
+    # Candidate-only transparent surface palettes.
+    # They must never alter production GID ranges.
+    for group in CANDIDATE_SURFACE_GROUPS:
+        images = sorted(grouped[group])
+        if images:
+            result[f"{group}.tsx"] = _xml(
+                group,
+                images,
+                tile_size=(80, 40),
+            )
+
     candidate_images = sorted(grouped[CANDIDATE_GROUP])
     if candidate_images:
         result[f"{CANDIDATE_GROUP}.tsx"] = _xml(

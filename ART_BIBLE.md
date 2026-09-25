@@ -39,6 +39,8 @@ Les centres de deux emplacements interactifs sont séparés suffisamment pour ac
 | Arbre adulte | 160 points | 150 points | Réservation de 2 unités de large autour d'un emplacement |
 | Grande décoration | 160 points | 100 points | 2 unités de large au plus |
 | Frange longue de bord d'îlot | 240 points | 75 points | Plusieurs cellules du bord ; entrée et tranche de terre visibles |
+| Cadre de culture horizontal multi-emplacements | 210 points | 90 points d'enveloppe, rebord de 10 points au plus | Deux contacts historiques côte à côte ; aucune nouvelle zone de jeu |
+| Cadre de culture diagonal multi-emplacements | 160 points | 145 points d'enveloppe, rebord de 10 points au plus | Deux contacts historiques décalés ; aucune nouvelle zone de jeu |
 | Petite décoration | 80 points | 70 points | 1 unité |
 
 Les silhouettes peuvent être plus petites selon l'espèce ; une espèce ne dépasse jamais sa classe pour devenir plus spectaculaire. L'arbre porte au plus quelques fruits agrandis pour être identifiables ; ses feuilles forment une masse principale et deux ou trois sous-volumes, pas une multitude de feuilles indépendantes. Une fleur ou un légume privilégie la forme de ses feuilles, de sa fleur ou de son fruit à la finesse botanique.

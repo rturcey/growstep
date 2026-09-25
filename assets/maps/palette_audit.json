@@ -3,100 +3,100 @@
     "status": "other_island"
   },
   "commun_bordure_herbe_debordante_statique_ordinaire_00.png": {
-    "status": "included",
-    "group": "vegetation"
+    "group": "vegetation",
+    "status": "included"
   },
   "commun_bordure_mixte_statique_ordinaire_00.png": {
-    "status": "included",
-    "group": "vegetation"
+    "group": "vegetation",
+    "status": "included"
   },
   "commun_bordure_rochers_statique_ordinaire_00.png": {
-    "status": "included",
-    "group": "rocks"
+    "group": "rocks",
+    "status": "included"
   },
   "commun_decor_bosquet_bas_statique_ordinaire_00.png": {
-    "status": "included",
-    "group": "vegetation"
+    "group": "vegetation",
+    "status": "included"
   },
   "commun_decor_bosquet_bas_statique_ordinaire_01.png": {
-    "status": "included",
-    "group": "vegetation"
+    "group": "vegetation",
+    "status": "included"
   },
   "commun_decor_bosquet_bas_statique_ordinaire_02.png": {
-    "status": "included",
-    "group": "vegetation"
+    "group": "vegetation",
+    "status": "included"
   },
   "commun_decor_bosquet_haut_statique_ordinaire_00.png": {
-    "status": "included",
-    "group": "vegetation"
+    "group": "vegetation",
+    "status": "included"
   },
   "commun_decor_bosquet_haut_statique_ordinaire_01.png": {
-    "status": "included",
-    "group": "vegetation"
+    "group": "vegetation",
+    "status": "included"
   },
   "commun_decor_bosquet_haut_statique_ordinaire_02.png": {
-    "status": "included",
-    "group": "vegetation"
+    "group": "vegetation",
+    "status": "included"
   },
   "commun_decor_fleurs_blanches_statique_ordinaire_00.png": {
-    "status": "included",
-    "group": "floor_decor"
+    "group": "floor_decor",
+    "status": "included"
   },
   "commun_decor_fleurs_jaunes_statique_ordinaire_00.png": {
-    "status": "included",
-    "group": "floor_decor"
+    "group": "floor_decor",
+    "status": "included"
   },
   "commun_decor_herbes_folles_statique_ordinaire_00.png": {
-    "status": "included",
-    "group": "floor_decor"
+    "group": "floor_decor",
+    "status": "included"
   },
   "commun_decor_rochers_herbe_statique_ordinaire_00.png": {
-    "status": "included",
-    "group": "rocks"
+    "group": "rocks",
+    "status": "included"
   },
   "commun_decor_rochers_statique_ordinaire_00.png": {
-    "status": "included",
-    "group": "rocks"
+    "group": "rocks",
+    "status": "included"
   },
   "commun_decor_rochers_statique_ordinaire_01.png": {
-    "status": "included",
-    "group": "rocks"
+    "group": "rocks",
+    "status": "included"
   },
   "commun_decor_rochers_statique_ordinaire_02.png": {
-    "status": "included",
-    "group": "rocks"
+    "group": "rocks",
+    "status": "included"
   },
   "commun_decor_rochers_statique_ordinaire_03.png": {
-    "status": "included",
-    "group": "rocks"
+    "group": "rocks",
+    "status": "included"
   },
   "commun_decor_tonneau_bois_statique_ordinaire_00.png": {
-    "status": "included",
-    "group": "props"
+    "group": "props",
+    "status": "included"
   },
   "commun_decor_touffe_herbe_statique_ordinaire_00.png": {
-    "status": "included",
-    "group": "floor_decor"
+    "group": "floor_decor",
+    "status": "included"
   },
   "commun_decor_touffe_herbe_statique_ordinaire_01.png": {
-    "status": "included",
-    "group": "floor_decor"
+    "group": "floor_decor",
+    "status": "included"
   },
   "commun_decor_trefle_statique_ordinaire_00.png": {
-    "status": "included",
-    "group": "floor_decor"
+    "group": "floor_decor",
+    "status": "included"
   },
   "commun_decor_treillis_bois_fleuri_statique_ordinaire_00.png": {
-    "status": "included",
-    "group": "structures"
+    "group": "structures",
+    "status": "included"
   },
   "commun_decor_treillis_bois_fleuri_statique_ordinaire_01.png": {
-    "status": "included",
-    "group": "structures"
+    "group": "structures",
+    "status": "included"
   },
   "commun_decor_treillis_bois_statique_ordinaire_00.png": {
-    "status": "included",
-    "group": "structures"
+    "group": "structures",
+    "status": "included"
   },
   "commun_ombre_contact_allongee_statique_ordinaire_00.png": {
     "status": "runtime_only"
@@ -120,28 +120,28 @@
     "status": "excluded"
   },
   "commun_sol_pas_pierre_statique_ordinaire_00.png": {
-    "status": "included",
-    "group": "paths_anchored"
+    "group": "paths_anchored",
+    "status": "included"
   },
   "commun_sol_pas_pierre_statique_ordinaire_01.png": {
-    "status": "included",
-    "group": "paths_anchored"
+    "group": "paths_anchored",
+    "status": "included"
   },
   "commun_sol_pas_pierre_statique_ordinaire_02.png": {
-    "status": "included",
-    "group": "paths_anchored"
+    "group": "paths_anchored",
+    "status": "included"
   },
   "commun_sol_pas_pierre_statique_ordinaire_03.png": {
-    "status": "included",
-    "group": "paths_anchored"
+    "group": "paths_anchored",
+    "status": "included"
   },
   "commun_sol_pas_pierre_statique_ordinaire_04.png": {
-    "status": "included",
-    "group": "paths_anchored"
+    "group": "paths_anchored",
+    "status": "included"
   },
   "commun_sol_pas_pierre_statique_ordinaire_05.png": {
-    "status": "included",
-    "group": "paths_anchored"
+    "group": "paths_anchored",
+    "status": "included"
   },
   "fleurs_plante_lavande_adulte_sans_production_ordinaire_00.png": {
     "status": "other_island"
@@ -171,20 +171,20 @@
     "status": "other_island"
   },
   "potager_bordure_frange_avant_statique_ordinaire_00.png": {
-    "status": "included",
-    "group": "diorama"
+    "group": "diorama",
+    "status": "included"
   },
   "potager_decor_arbre_canopee_est_statique_ordinaire_00.png": {
-    "status": "included",
-    "group": "diorama"
+    "group": "diorama",
+    "status": "included"
   },
   "potager_decor_arbre_canopee_ouest_statique_ordinaire_00.png": {
-    "status": "included",
-    "group": "diorama"
+    "group": "diorama",
+    "status": "included"
   },
   "potager_decor_arrosoir_metal_statique_ordinaire_00.png": {
-    "status": "included",
-    "group": "props"
+    "group": "props",
+    "status": "included"
   },
   "potager_decor_bac_potager_statique_ordinaire_00.png": {
     "status": "excluded"
@@ -198,29 +198,45 @@
   "potager_decor_bac_potager_statique_ordinaire_03.png": {
     "status": "excluded"
   },
+  "potager_decor_cadre_culture_arriere_statique_ordinaire_00.png": {
+    "group": "diorama",
+    "status": "included"
+  },
+  "potager_decor_cadre_culture_avant_statique_ordinaire_00.png": {
+    "group": "diorama",
+    "status": "included"
+  },
+  "potager_decor_cadre_culture_droite_statique_ordinaire_00.png": {
+    "group": "diorama",
+    "status": "included"
+  },
+  "potager_decor_cadre_culture_gauche_statique_ordinaire_00.png": {
+    "group": "diorama",
+    "status": "included"
+  },
   "potager_decor_caisse_semis_statique_ordinaire_00.png": {
-    "status": "included",
-    "group": "props"
+    "group": "props",
+    "status": "included"
   },
   "potager_decor_coin_jardinage_statique_ordinaire_00.png": {
-    "status": "included",
-    "group": "props"
+    "group": "props",
+    "status": "included"
   },
   "potager_decor_coin_vegetal_ouest_statique_ordinaire_00.png": {
-    "status": "included",
-    "group": "diorama"
+    "group": "diorama",
+    "status": "included"
   },
   "potager_decor_outils_jardin_statique_ordinaire_00.png": {
-    "status": "included",
-    "group": "props"
+    "group": "props",
+    "status": "included"
   },
   "potager_decor_station_jardinage_statique_ordinaire_00.png": {
-    "status": "included",
-    "group": "diorama"
+    "group": "diorama",
+    "status": "included"
   },
   "potager_decor_stockage_jardin_statique_ordinaire_00.png": {
-    "status": "included",
-    "group": "props"
+    "group": "props",
+    "status": "included"
   },
   "potager_plante_carotte_adulte_sans_production_ordinaire_00.png": {
     "status": "outside_tiled"

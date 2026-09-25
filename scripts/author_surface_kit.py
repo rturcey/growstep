@@ -159,7 +159,7 @@ def main() -> None:
     with Image.open(SOURCES / "grass_reference.png") as grass_source, Image.open(SOURCES / "earth_reference.png") as earth_source:
         grass, earth = grass_source.convert("RGBA"), earth_source.convert("RGBA")
         for family, info in inventory.items():
-            if family == "paths":
+            if family == "paths" or info.get("custom_authoring"):
                 continue
             layers = []
             for index in range(info["count"]):

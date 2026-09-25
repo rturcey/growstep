@@ -31,6 +31,8 @@ SIZE_LIMITS = {
     "terrain_cell": (80, 68),
     "large_decor": (160, 100),
     "long_edge": (240, 75),
+    "wide_cultivation_surround": (210, 90),
+    "deep_cultivation_surround": (160, 145),
 }
 PALETTE_ROLES = {
     "fond_hors_jardin": "#E4EBD5",

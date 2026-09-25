@@ -48,7 +48,9 @@ def expected_tiles(root: Path):
                 with Image.open(io.BytesIO(archive.read(named[name]))) as source:
                     if source.size != (320, 160) or source.mode != "RGBA":
                         raise ValueError(f"{family}/{name}: expected 320x160 RGBA layer")
-                    tile = _seal_diamond(source.resize((80, 40), Image.Resampling.LANCZOS), family)
+                    tile = source.resize((80, 40), Image.Resampling.LANCZOS)
+                    if not info.get("transparent", False):
+                        tile = _seal_diamond(tile, family)
                 yield name, tile
 
 

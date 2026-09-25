@@ -113,6 +113,7 @@ class PotagerTiledObjects {
             layer: GardenLayer.depth,
             opacity: object.properties.getValue<double>('opacity') ?? 1,
             shadowOverride: _shadowOverride(object),
+            zBias: object.properties.getValue<double>('zBias') ?? 0,
           ),
         );
       }

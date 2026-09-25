@@ -8,19 +8,51 @@
     "ground_earth": {
       "prefix": "commun_sol_terre_tile_",
       "count": 11,
-      "roles": ["interior_00", "interior_01", "interior_02", "side_north_east", "side_south_east", "side_south_west", "side_north_west", "corner_east", "corner_south", "corner_west", "corner_north"],
+      "roles": [
+        "interior_00",
+        "interior_01",
+        "interior_02",
+        "side_north_east",
+        "side_south_east",
+        "side_south_west",
+        "side_north_west",
+        "corner_east",
+        "corner_south",
+        "corner_west",
+        "corner_north"
+      ],
       "tileset": "ground"
     },
     "ground_edges": {
       "prefix": "commun_sol_bordure_herbe_tile_",
       "count": 12,
       "tileset": "ground",
-      "roles": ["side_north_east", "side_south_east", "side_south_west", "side_north_west", "corner_east", "corner_south", "corner_west", "corner_north", "side_north_east_soft", "side_south_east_soft", "side_south_west_soft", "side_north_west_soft"]
+      "roles": [
+        "side_north_east",
+        "side_south_east",
+        "side_south_west",
+        "side_north_west",
+        "corner_east",
+        "corner_south",
+        "corner_west",
+        "corner_north",
+        "side_north_east_soft",
+        "side_south_east_soft",
+        "side_south_west_soft",
+        "side_north_west_soft"
+      ]
     },
     "ground_skirt": {
       "prefix": "commun_sol_tranche_terre_tile_",
       "count": 6,
-      "roles": ["front_right_00", "front_right_01", "front_left_00", "front_left_01", "both_00", "both_01"],
+      "roles": [
+        "front_right_00",
+        "front_right_01",
+        "front_left_00",
+        "front_left_01",
+        "both_00",
+        "both_01"
+      ],
       "tileset": "ground"
     },
     "paths": {
@@ -28,6 +60,13 @@
       "count": 6,
       "tileset": "paths",
       "derived_from": "build_tiled_stone_tiles.py"
+    },
+    "potager_paths_diorama": {
+      "prefix": "potager_sol_dalles_chemin_tile_",
+      "count": 5,
+      "tileset": "paths_diorama",
+      "transparent": true,
+      "custom_authoring": true
     }
   }
 }
