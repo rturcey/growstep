@@ -7,6 +7,7 @@ import 'package:growstep/garden/garden_game.dart';
 import 'package:growstep/garden/garden_state.dart';
 
 const captureDirectory = String.fromEnvironment('GROWSTEP_CAPTURE_DIR');
+const captureFullScreen = bool.fromEnvironment('GROWSTEP_CAPTURE_FULL_SCREEN');
 
 GardenSnapshot _fixture(String state) {
   final initial = GardenSnapshot.initial();
@@ -72,8 +73,8 @@ void main() {
   test('captures déterministes des trois îlots', () async {
     final output = Directory(captureDirectory)..createSync(recursive: true);
     for (final viewport in [
-      (screen: '390x844', width: 390, height: 450),
-      (screen: '375x667', width: 375, height: 380),
+      (screen: '390x844', width: 390, height: captureFullScreen ? 844 : 450),
+      (screen: '375x667', width: 375, height: captureFullScreen ? 667 : 380),
     ]) {
       for (final state in ['initial', 'intermediaire', 'sature']) {
         for (final zone in ZoneType.values) {

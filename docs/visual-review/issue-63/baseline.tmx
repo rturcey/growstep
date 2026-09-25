@@ -1,0 +1,94 @@
+<?xml version='1.0' encoding='utf-8'?>
+<map version="1.10" tiledversion="1.11.2" orientation="isometric" renderorder="right-down" width="14" height="14" tilewidth="80" tileheight="40" infinite="0" nextlayerid="4" nextobjectid="10">
+  <!-- gridCol/gridRow are signed half-cell units relative to PotagerPlots.grid.
+       Tiled cell (7,9) corresponds to logical (0,0); object x/y use Tiled's
+       projected isometric object space (40 pixels per full cell axis). -->
+  <tileset firstgid="1" source="../../../assets/maps/growstep.tsx" />
+  <layer id="1" name="path" width="14" height="14">
+    <data encoding="csv">
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,1,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,2,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,3,0,0,0,0,0,
+0,0,0,0,0,0,0,0,4,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,5,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0
+</data>
+  </layer>
+  <objectgroup id="2" name="plots" color="#ffd166">
+    <object id="1" name="plot_0" class="plot" x="160" y="360">
+      <properties>
+        <property name="gridCol" type="int" value="-7" />
+        <property name="gridRow" type="int" value="-1" />
+      </properties>
+      <point />
+    </object>
+    <object id="2" name="plot_1" class="plot" x="340" y="340">
+      <properties>
+        <property name="gridCol" type="int" value="2" />
+        <property name="gridRow" type="int" value="-2" />
+      </properties>
+      <point />
+    </object>
+    <object id="3" name="plot_2" class="plot" x="320" y="520">
+      <properties>
+        <property name="gridCol" type="int" value="1" />
+        <property name="gridRow" type="int" value="7" />
+      </properties>
+      <point />
+    </object>
+    <object id="4" name="plot_3" class="plot" x="440" y="400">
+      <properties>
+        <property name="gridCol" type="int" value="7" />
+        <property name="gridRow" type="int" value="1" />
+      </properties>
+      <point />
+    </object>
+    <object id="5" name="plot_4" class="plot" x="220" y="300">
+      <properties>
+        <property name="gridCol" type="int" value="-4" />
+        <property name="gridRow" type="int" value="-4" />
+      </properties>
+      <point />
+    </object>
+    <object id="6" name="plot_5" class="plot" x="260" y="420">
+      <properties>
+        <property name="gridCol" type="int" value="-2" />
+        <property name="gridRow" type="int" value="2" />
+      </properties>
+      <point />
+    </object>
+    <object id="7" name="plot_6" class="plot" x="380" y="460">
+      <properties>
+        <property name="gridCol" type="int" value="4" />
+        <property name="gridRow" type="int" value="4" />
+      </properties>
+      <point />
+    </object>
+    <object id="8" name="plot_7" class="plot" x="280" y="240">
+      <properties>
+        <property name="gridCol" type="int" value="-1" />
+        <property name="gridRow" type="int" value="-7" />
+      </properties>
+      <point />
+    </object>
+  </objectgroup>
+  <objectgroup id="3" name="props">
+    <!-- Tiled scales the full PNG, including transparent margins. At 48.6x33.3,
+         its native ratio is preserved and the visible width remains 41.4. -->
+    <object id="9" name="east_upper_rock" class="prop" gid="7" x="300" y="220" width="48.6" height="33.3">
+      <properties>
+        <property name="gridCol" type="int" value="0" />
+        <property name="gridRow" type="int" value="-8" />
+        <property name="opacity" type="float" value="0.82" />
+      </properties>
+    </object>
+  </objectgroup>
+</map>

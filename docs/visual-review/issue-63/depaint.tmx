@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.10" tiledversion="1.11.0" orientation="isometric" renderorder="right-down" width="14" height="14" tilewidth="80" tileheight="40" infinite="0" nextlayerid="4" nextobjectid="10">
+ <tileset firstgid="1" source="../../../assets/maps/growstep.tsx"/>
+ <layer id="1" name="path" width="14" height="14">
+  <data encoding="csv">
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,1,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,2,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,4,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,5,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0
+</data>
+ </layer>
+ <objectgroup color="#ffd166" id="2" name="plots">
+  <object id="1" name="plot_0" type="plot" x="160" y="360">
+   <properties>
+    <property name="gridCol" type="int" value="-7"/>
+    <property name="gridRow" type="int" value="-1"/>
+   </properties>
+   <point/>
+  </object>
+  <object id="2" name="plot_1" type="plot" x="340" y="340">
+   <properties>
+    <property name="gridCol" type="int" value="2"/>
+    <property name="gridRow" type="int" value="-2"/>
+   </properties>
+   <point/>
+  </object>
+  <object id="3" name="plot_2" type="plot" x="320" y="520">
+   <properties>
+    <property name="gridCol" type="int" value="1"/>
+    <property name="gridRow" type="int" value="7"/>
+   </properties>
+   <point/>
+  </object>
+  <object id="4" name="plot_3" type="plot" x="440" y="400">
+   <properties>
+    <property name="gridCol" type="int" value="7"/>
+    <property name="gridRow" type="int" value="1"/>
+   </properties>
+   <point/>
+  </object>
+  <object id="5" name="plot_4" type="plot" x="220" y="300">
+   <properties>
+    <property name="gridCol" type="int" value="-4"/>
+    <property name="gridRow" type="int" value="-4"/>
+   </properties>
+   <point/>
+  </object>
+  <object id="6" name="plot_5" type="plot" x="260" y="420">
+   <properties>
+    <property name="gridCol" type="int" value="-2"/>
+    <property name="gridRow" type="int" value="2"/>
+   </properties>
+   <point/>
+  </object>
+  <object id="7" name="plot_6" type="plot" x="380" y="460">
+   <properties>
+    <property name="gridCol" type="int" value="4"/>
+    <property name="gridRow" type="int" value="4"/>
+   </properties>
+   <point/>
+  </object>
+  <object id="8" name="plot_7" type="plot" x="280" y="240">
+   <properties>
+    <property name="gridCol" type="int" value="-1"/>
+    <property name="gridRow" type="int" value="-7"/>
+   </properties>
+   <point/>
+  </object>
+ </objectgroup>
+ <objectgroup id="3" name="props">
+  <object id="9" name="east_upper_rock" type="prop" gid="7" x="300" y="220" width="48.6" height="33.3">
+   <properties>
+    <property name="gridCol" type="int" value="0"/>
+    <property name="gridRow" type="int" value="-8"/>
+    <property name="opacity" type="float" value="0.82"/>
+   </properties>
+  </object>
+ </objectgroup>
+</map>
