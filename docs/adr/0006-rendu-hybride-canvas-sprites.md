@@ -1,5 +1,7 @@
 # Rendu hybride : Canvas pour le terrain, sprites modulaires pour les silhouettes
 
+> **Partiellement supersedée pour la décision terrain/composition** : la décision de garder le terrain en Canvas est remplacée par la migration progressive vers les `surface_tile` décrite dans [ADR-0008](0008-tiled-composition-visuelle.md) (section « Migration du terrain ») et [ADR-0009](0009-surface-tile-classe-asset.md). La décision sur les sprites verticaux modulaires (cultures, arbres, éléments d'environnement) reste valable.
+>
 > Décision actualisée pour la composition du Potager, issue #47. La [bible graphique](../../ART_BIBLE.md) fixe l'apparence ; la [spécification de composition](../MAP_COMPOSITION_SPEC.md) fixe l'artboard et les couches.
 
 Le terrain, sa tranche et ses variations de matière restent dessinés en Canvas dans le renderer Flame existant. Les plantes cultivées et les arbres conservent leurs sprites PNG. Les végétaux d'ambiance, les accessoires, les bordures ponctuelles, les platebandes et les pas de pierre peuvent également être des sprites RGBA modulaires lorsqu'une silhouette peinte apporte un gain visible. Le tracé, les transitions d'herbe et les effets de sol peuvent rester en Canvas. Le choix s'applique par famille, sans background monolithique ni changement de caméra, de projection 80 × 40 ou de moteur.

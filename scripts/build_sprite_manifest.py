@@ -14,7 +14,8 @@ import yaml
 SPRITES = Path(__file__).resolve().parents[1] / "assets" / "sprites"
 manifest = {}
 
-for path in sorted(SPRITES.glob("*.png")):
+for sheet in sorted((SPRITES.parent / "sprite_sources").glob("*.yaml")):
+    path = SPRITES / f"{sheet.stem}.png"
     with Image.open(path) as image:
         if image.mode != "RGBA":
             raise ValueError(f"{path.name}: expected transparent RGBA PNG")

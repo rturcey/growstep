@@ -55,5 +55,11 @@ _Avoid_ : position, centre de l'image
 **Élément d'ambiance fixe** : objet visuel purement décoratif placé dans la composition, sans état de jeu ni interaction. Se distingue du décor joueur, qui est achetable, déplaçable et possédé.
 _Avoid_ : accessoire, décoration
 
-**Rendu hybride** : terrain et empreintes de terre du Potager en Canvas ; cultures, arbres et éléments d'environnement pouvant utiliser des sprites PNG modulaires selon leur famille. Voir [ADR-0006](docs/adr/0006-rendu-hybride-canvas-sprites.md) et [ADR-0008](docs/adr/0008-tiled-composition-visuelle.md).
+**Rendu hybride** : terrain du Potager historiquement en Canvas, en migration progressive vers les surface tiles (ADR-0008) ; empreintes de terre de plantation en Canvas ; cultures, arbres et éléments d'environnement utilisent des sprites PNG modulaires selon leur famille. Voir [ADR-0006](docs/adr/0006-rendu-hybride-canvas-sprites.md), [ADR-0008](docs/adr/0008-tiled-composition-visuelle.md) et [ADR-0009](docs/adr/0009-surface-tile-classe-asset.md).
 _Avoid_ : rendu 100 % Canvas, rendu 100 % sprites
+
+**Surface tile** : asset de surface aligné sur la grille Tiled, produit depuis un master artistique 4× vers un export runtime/Tiled 1×. N'utilise ni ground anchor ni pipeline de sprite vertical. Voir [ADR-0009](docs/adr/0009-surface-tile-classe-asset.md).
+_Avoid_ : tile, tuile (préférer « surface tile »)
+
+**Anchored sprite** : sprite PNG vertical transparent, ancré au sol par un point de contact du manifeste et trié en profondeur. Suit le pipeline 4× complet (ORA, YAML, manifeste, exports 2×/3×). S'oppose à la surface tile.
+_Avoid_ : sprite (préférer « anchored sprite » quand la distinction importe)

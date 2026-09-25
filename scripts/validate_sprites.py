@@ -16,6 +16,8 @@ import yaml
 from PIL import Image
 
 from build_tiled_stone_tiles import STONE_COUNT, build_tile, tile_name
+from build_surface_tiles import build as check_surface_tiles
+from build_tiled_tilesets import build as check_tiled_tilesets
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -222,6 +224,17 @@ def validate(root: Path) -> tuple[int, list[str]]:
                     errors.append(f"{name}: differs from its master-derived Tiled tile")
             except (OSError, ValueError, KeyError) as error:
                 errors.append(f"{name}: {error}")
+    inventory_path = root / "assets" / "surface_sources" / "inventory.json"
+    if inventory_path.exists():
+        try:
+            inventory = json.loads(inventory_path.read_text(encoding="utf-8"))["families"]
+            for family in inventory.values():
+                for index in range(family["count"]):
+                    named.add(f'{family["prefix"]}{index:02}.png')
+            errors.extend(check_surface_tiles(root, check=True))
+            errors.extend(check_tiled_tilesets(root, check=True))
+        except (OSError, ValueError, KeyError, BadZipFile, ET.ParseError) as error:
+            errors.append(f"Tiled asset contract: {error}")
     for image in sorted((root / "assets" / "sprites").glob("*.png")):
         if image.name not in named and image.name not in allowlist:
             errors.append(f"{image.name}: missing metadata sheet")

@@ -1,5 +1,7 @@
 # Composition spatiale du Potager — spécification
 
+> **Partiellement supersedée.** La décision #1 ci-dessous (« aucun moteur de niveaux ni DSL externe ») et l'aspect « définition Dart immuable » sont inversés par [ADR-0008](adr/0008-tiled-composition-visuelle.md) : Tiled Map Editor est désormais la source de vérité de la composition visuelle. La migration du terrain Canvas vers les surface tiles est actée dans ADR-0008 (section « Migration du terrain ») et formalisée par [ADR-0009](adr/0009-surface-tile-classe-asset.md). Le reste de cette spécification (artboard, contacts, profondeur, ombres, contrat spatial) reste valable.
+>
 > Statut : spécification pour découpage en tickets. La [bible graphique](../ART_BIBLE.md) fixe l'apparence ; ce document fixe la composition spatiale et son contrat de rendu. Périmètre de production : Potager uniquement. Les autres îlots restent inchangés, mais la grammaire de scène doit pouvoir leur servir plus tard.
 
 ## Problem Statement

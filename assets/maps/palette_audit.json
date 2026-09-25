@@ -1,0 +1,250 @@
+{
+  "commun_bordure_fleurs_statique_ordinaire_00.png": {
+    "status": "other_island"
+  },
+  "commun_bordure_herbe_debordante_statique_ordinaire_00.png": {
+    "status": "included",
+    "group": "vegetation"
+  },
+  "commun_bordure_mixte_statique_ordinaire_00.png": {
+    "status": "included",
+    "group": "vegetation"
+  },
+  "commun_bordure_rochers_statique_ordinaire_00.png": {
+    "status": "included",
+    "group": "rocks"
+  },
+  "commun_decor_bosquet_bas_statique_ordinaire_00.png": {
+    "status": "included",
+    "group": "vegetation"
+  },
+  "commun_decor_bosquet_bas_statique_ordinaire_01.png": {
+    "status": "included",
+    "group": "vegetation"
+  },
+  "commun_decor_bosquet_bas_statique_ordinaire_02.png": {
+    "status": "included",
+    "group": "vegetation"
+  },
+  "commun_decor_bosquet_haut_statique_ordinaire_00.png": {
+    "status": "included",
+    "group": "vegetation"
+  },
+  "commun_decor_bosquet_haut_statique_ordinaire_01.png": {
+    "status": "included",
+    "group": "vegetation"
+  },
+  "commun_decor_bosquet_haut_statique_ordinaire_02.png": {
+    "status": "included",
+    "group": "vegetation"
+  },
+  "commun_decor_fleurs_blanches_statique_ordinaire_00.png": {
+    "status": "included",
+    "group": "floor_decor"
+  },
+  "commun_decor_fleurs_jaunes_statique_ordinaire_00.png": {
+    "status": "included",
+    "group": "floor_decor"
+  },
+  "commun_decor_herbes_folles_statique_ordinaire_00.png": {
+    "status": "included",
+    "group": "floor_decor"
+  },
+  "commun_decor_rochers_herbe_statique_ordinaire_00.png": {
+    "status": "included",
+    "group": "rocks"
+  },
+  "commun_decor_rochers_statique_ordinaire_00.png": {
+    "status": "included",
+    "group": "rocks"
+  },
+  "commun_decor_rochers_statique_ordinaire_01.png": {
+    "status": "included",
+    "group": "rocks"
+  },
+  "commun_decor_rochers_statique_ordinaire_02.png": {
+    "status": "included",
+    "group": "rocks"
+  },
+  "commun_decor_rochers_statique_ordinaire_03.png": {
+    "status": "included",
+    "group": "rocks"
+  },
+  "commun_decor_tonneau_bois_statique_ordinaire_00.png": {
+    "status": "included",
+    "group": "props"
+  },
+  "commun_decor_touffe_herbe_statique_ordinaire_00.png": {
+    "status": "included",
+    "group": "floor_decor"
+  },
+  "commun_decor_touffe_herbe_statique_ordinaire_01.png": {
+    "status": "included",
+    "group": "floor_decor"
+  },
+  "commun_decor_trefle_statique_ordinaire_00.png": {
+    "status": "included",
+    "group": "floor_decor"
+  },
+  "commun_decor_treillis_bois_fleuri_statique_ordinaire_00.png": {
+    "status": "included",
+    "group": "structures"
+  },
+  "commun_decor_treillis_bois_fleuri_statique_ordinaire_01.png": {
+    "status": "included",
+    "group": "structures"
+  },
+  "commun_decor_treillis_bois_statique_ordinaire_00.png": {
+    "status": "included",
+    "group": "structures"
+  },
+  "commun_ombre_contact_allongee_statique_ordinaire_00.png": {
+    "status": "runtime_only"
+  },
+  "commun_ombre_contact_large_statique_ordinaire_00.png": {
+    "status": "runtime_only"
+  },
+  "commun_ombre_contact_moyenne_statique_ordinaire_00.png": {
+    "status": "runtime_only"
+  },
+  "commun_ombre_contact_petite_statique_ordinaire_00.png": {
+    "status": "runtime_only"
+  },
+  "commun_sol_chemin_pierres_courbe_droite_statique_ordinaire_00.png": {
+    "status": "excluded"
+  },
+  "commun_sol_chemin_pierres_courbe_gauche_statique_ordinaire_00.png": {
+    "status": "excluded"
+  },
+  "commun_sol_chemin_pierres_droit_statique_ordinaire_00.png": {
+    "status": "excluded"
+  },
+  "commun_sol_pas_pierre_statique_ordinaire_00.png": {
+    "status": "included",
+    "group": "paths_anchored"
+  },
+  "commun_sol_pas_pierre_statique_ordinaire_01.png": {
+    "status": "included",
+    "group": "paths_anchored"
+  },
+  "commun_sol_pas_pierre_statique_ordinaire_02.png": {
+    "status": "included",
+    "group": "paths_anchored"
+  },
+  "commun_sol_pas_pierre_statique_ordinaire_03.png": {
+    "status": "included",
+    "group": "paths_anchored"
+  },
+  "commun_sol_pas_pierre_statique_ordinaire_04.png": {
+    "status": "included",
+    "group": "paths_anchored"
+  },
+  "commun_sol_pas_pierre_statique_ordinaire_05.png": {
+    "status": "included",
+    "group": "paths_anchored"
+  },
+  "fleurs_plante_lavande_adulte_sans_production_ordinaire_00.png": {
+    "status": "other_island"
+  },
+  "fleurs_plante_lavande_jeune_ordinaire_00.png": {
+    "status": "other_island"
+  },
+  "fleurs_plante_lavande_recoltable_ordinaire_00.png": {
+    "status": "other_island"
+  },
+  "fleurs_plante_tournesol_adulte_sans_production_ordinaire_00.png": {
+    "status": "other_island"
+  },
+  "fleurs_plante_tournesol_jeune_ordinaire_00.png": {
+    "status": "other_island"
+  },
+  "fleurs_plante_tournesol_recoltable_ordinaire_00.png": {
+    "status": "other_island"
+  },
+  "fleurs_plante_tulipe_adulte_sans_production_ordinaire_00.png": {
+    "status": "other_island"
+  },
+  "fleurs_plante_tulipe_jeune_ordinaire_00.png": {
+    "status": "other_island"
+  },
+  "fleurs_plante_tulipe_recoltable_ordinaire_00.png": {
+    "status": "other_island"
+  },
+  "potager_decor_arrosoir_metal_statique_ordinaire_00.png": {
+    "status": "included",
+    "group": "props"
+  },
+  "potager_decor_bac_potager_statique_ordinaire_00.png": {
+    "status": "excluded"
+  },
+  "potager_decor_bac_potager_statique_ordinaire_01.png": {
+    "status": "excluded"
+  },
+  "potager_decor_bac_potager_statique_ordinaire_02.png": {
+    "status": "excluded"
+  },
+  "potager_decor_bac_potager_statique_ordinaire_03.png": {
+    "status": "excluded"
+  },
+  "potager_decor_caisse_semis_statique_ordinaire_00.png": {
+    "status": "included",
+    "group": "props"
+  },
+  "potager_decor_coin_jardinage_statique_ordinaire_00.png": {
+    "status": "included",
+    "group": "props"
+  },
+  "potager_decor_outils_jardin_statique_ordinaire_00.png": {
+    "status": "included",
+    "group": "props"
+  },
+  "potager_decor_stockage_jardin_statique_ordinaire_00.png": {
+    "status": "included",
+    "group": "props"
+  },
+  "potager_plante_carotte_adulte_sans_production_ordinaire_00.png": {
+    "status": "outside_tiled"
+  },
+  "potager_plante_carotte_jeune_ordinaire_00.png": {
+    "status": "outside_tiled"
+  },
+  "potager_plante_carotte_recoltable_ordinaire_00.png": {
+    "status": "outside_tiled"
+  },
+  "potager_plante_courgette_adulte_sans_production_ordinaire_00.png": {
+    "status": "outside_tiled"
+  },
+  "potager_plante_courgette_jeune_ordinaire_00.png": {
+    "status": "outside_tiled"
+  },
+  "potager_plante_courgette_recoltable_ordinaire_00.png": {
+    "status": "outside_tiled"
+  },
+  "potager_plante_tomate_adulte_sans_production_ordinaire_00.png": {
+    "status": "outside_tiled"
+  },
+  "potager_plante_tomate_jeune_ordinaire_00.png": {
+    "status": "outside_tiled"
+  },
+  "potager_plante_tomate_recoltable_ordinaire_00.png": {
+    "status": "outside_tiled"
+  },
+  "verger_arbre_poirier_adulte_sans_production_ordinaire_00.png": {
+    "status": "other_island"
+  },
+  "verger_arbre_poirier_jeune_ordinaire_00.png": {
+    "status": "other_island"
+  },
+  "verger_arbre_poirier_recoltable_ordinaire_00.png": {
+    "status": "other_island"
+  },
+  "verger_arbre_pommier_adulte_sans_production_ordinaire_00.png": {
+    "status": "other_island"
+  },
+  "verger_arbre_pommier_jeune_ordinaire_00.png": {
+    "status": "other_island"
+  },
+  "verger_arbre_pommier_recoltable_ordinaire_00.png": {
+    "status": "other_island"
+  }
+}

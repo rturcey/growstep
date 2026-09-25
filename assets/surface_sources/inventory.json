@@ -1,0 +1,31 @@
+{
+  "families": {
+    "ground_grass": {
+      "prefix": "commun_sol_herbe_tile_",
+      "count": 5,
+      "tileset": "ground"
+    },
+    "ground_earth": {
+      "prefix": "commun_sol_terre_tile_",
+      "count": 3,
+      "tileset": "ground"
+    },
+    "ground_edges": {
+      "prefix": "commun_sol_bordure_herbe_tile_",
+      "count": 12,
+      "tileset": "ground",
+      "roles": ["north_west", "north_east", "south_east", "south_west", "north", "east", "south", "west", "north_west_soft", "north_east_soft", "south_east_soft", "south_west_soft"]
+    },
+    "ground_skirt": {
+      "prefix": "commun_sol_tranche_terre_tile_",
+      "count": 3,
+      "tileset": "ground"
+    },
+    "paths": {
+      "prefix": "commun_sol_pas_pierre_tile_",
+      "count": 6,
+      "tileset": "paths",
+      "derived_from": "build_tiled_stone_tiles.py"
+    }
+  }
+}

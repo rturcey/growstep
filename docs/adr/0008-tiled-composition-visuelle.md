@@ -6,6 +6,10 @@ La composition visuelle du Potager est aujourd'hui rédigée en constantes Dart 
 
 Tiled possède le placement visuel statique (où sont les rochers, le treillis, les pas de pierre, les bosquets). Growstep possède l'état du jeu (emplacements achetés, espèces, étapes, florins, progression). Les IDs stables sont des noms humainement lisibles (`plot_0`, `east_barrel`) dans le champ `name` de l'objet Tiled, jamais l'ID numérique interne de Tiled. Le manifeste des sprites reste la source canonique des ground anchors.
 
+## Migration du terrain Canvas vers les surface tiles
+
+État actuel : le terrain procédural Canvas reste en place pendant la migration. Cible : les couches de `surface_tile` remplacent progressivement le terrain Canvas. Migration : famille par famille, couche par couche, avec acceptation visuelle avant suppression. État final : Tiled possède le terrain et la composition statiques ; Growstep possède l'état de jeu, le rendu dynamique et la sémantique d'interaction. La classe `surface_tile` et son pipeline sont définis dans [ADR-0009](0009-surface-tile-classe-asset.md) ; le modèle d'autoring Tiled (ancres, demi-cellules, ombres) dans [ADR-0010](0010-modele-autoring-tiled.md). La décision de ADR-0006 de garder le terrain en Canvas est supersedée pour cet aspect.
+
 ## Options écartées
 
 - **`TiledComponent` comme enfant Flame** : `priority` contrôle l'ordre entre composants enfants d'un même parent ; `FlameGame.render()` n'est pas un sibling de `TiledComponent`. Le rendu de Tiled ne peut pas être garanti avant le contenu de `GardenGame.render()` via `priority`. Refusé pour le PoC ; `RenderableTiledMap` est rendu manuellement. Direction long terme : extraire le rendu en composants frères si justifié.

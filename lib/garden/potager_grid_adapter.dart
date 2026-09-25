@@ -15,10 +15,18 @@ class PotagerGridAdapter {
   Offset toArtboard(double gridCol, double gridRow) =>
       grid.toScreen(gridCol, gridRow);
 
-  /// TMX integer properties count half-cells so historical plot contacts fit.
-  /// These properties are authoritative for authored object placement.
-  Offset fromTiledProperties(int gridCol, int gridRow) =>
-      toArtboard(gridCol / 2, gridRow / 2);
+  /// Decimal whole or half-cell properties are authoritative for placement.
+  Offset fromTiledProperties(double gridCol, double gridRow) {
+    if (!gridCol.isFinite ||
+        !gridRow.isFinite ||
+        gridCol * 2 != (gridCol * 2).roundToDouble() ||
+        gridRow * 2 != (gridRow * 2).roundToDouble()) {
+      throw const FormatException(
+        'Potager grid coordinates must use whole or half cells',
+      );
+    }
+    return toArtboard(gridCol, gridRow);
+  }
 
   /// Tiled stores isometric object positions in projected 40px square space.
   /// A point at the center of tile (7,9) is the Potager's logical (0,0).

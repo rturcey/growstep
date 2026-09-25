@@ -55,13 +55,18 @@ class GardenSceneRenderer {
     GardenSprites sprites,
   ) {
     // Flat path sprites already carry their soft ground contact in the PNG.
-    if (object.layer != GardenLayer.path &&
-        sprites.hasContactShadow(object.asset)) {
+    final shadow =
+        object.shadowOverride ??
+        (sprites.hasContactShadow(object.asset)
+            ? GardenShadow.medium
+            : GardenShadow.none);
+    if (object.layer != GardenLayer.path && shadow != GardenShadow.none) {
       sprites.drawContactShadow(
         canvas,
         object.contact,
         object.size.width,
         object.size.height,
+        style: shadow,
       );
     }
     return sprites.draw(

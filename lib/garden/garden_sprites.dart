@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import 'garden_sprite_metadata.dart';
+import 'garden_scene.dart';
 
 /// Transparent, independently replaceable garden assets. The alpha bounds are
 /// recorded at production time so generous source margins do not affect scale.
@@ -68,17 +69,26 @@ class GardenSprites {
     Canvas canvas,
     Offset contact,
     double width,
-    double height,
-  ) {
+    double height, {
+    GardenShadow style = GardenShadow.medium,
+  }) {
+    final (widthFactor, heightFactor, blur) = switch (style) {
+      GardenShadow.none => (0.0, 0.0, 0.0),
+      GardenShadow.small => (0.45, 0.08, 1.5),
+      GardenShadow.medium => (0.65, 0.12, 2.0),
+      GardenShadow.large => (0.85, 0.16, 3.0),
+      GardenShadow.elongated => (1.15, 0.10, 2.5),
+    };
+    if (style == GardenShadow.none) return;
     canvas.drawOval(
       Rect.fromCenter(
         center: contact.translate(2, 1),
-        width: width * 0.65,
-        height: height * 0.12,
+        width: width * widthFactor,
+        height: height * heightFactor,
       ),
       Paint()
         ..color = const Color(0x2A53614C)
-        ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 2),
+        ..maskFilter = MaskFilter.blur(BlurStyle.normal, blur),
     );
   }
 

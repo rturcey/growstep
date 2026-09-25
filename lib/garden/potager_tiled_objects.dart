@@ -19,9 +19,18 @@ class PotagerTiledObjects {
   final Offset rockAnchorDelta;
   final Map<String, Offset> plotContacts;
 
-  static int _gridProperty(TiledObject object, String name) =>
-      object.properties.getValue<int>(name) ??
+  static double _gridProperty(TiledObject object, String name) =>
+      object.properties.getValue<double>(name) ??
       (throw FormatException('${object.name} is missing $name'));
+
+  static GardenShadow? _shadowOverride(TiledObject object) {
+    final value = object.properties.getValue<String>('shadow');
+    if (value == null) return null;
+    for (final option in GardenShadow.values) {
+      if (option.name == value) return option;
+    }
+    throw FormatException('${object.name} has invalid shadow: $value');
+  }
 
   factory PotagerTiledObjects.fromMap(
     TiledMap map,
@@ -49,12 +58,10 @@ class PotagerTiledObjects {
 
     final fullImageSize = Size(rockObject.width, rockObject.height);
     final anchorDelta = metadata.bottomCenterToGroundAt(fullImageSize);
-    final contact =
-        adapter.fromTiledProperties(
-          _gridProperty(rockObject, 'gridCol'),
-          _gridProperty(rockObject, 'gridRow'),
-        ) +
-        anchorDelta;
+    final contact = adapter.fromTiledProperties(
+      _gridProperty(rockObject, 'gridCol'),
+      _gridProperty(rockObject, 'gridRow'),
+    );
     final rock = GardenSpriteObject(
       id: rockObject.name,
       asset: asset,
@@ -62,6 +69,7 @@ class PotagerTiledObjects {
       size: metadata.visibleSizeAt(fullImageSize),
       layer: GardenLayer.depth,
       opacity: rockObject.properties.getValue<double>('opacity') ?? 1,
+      shadowOverride: _shadowOverride(rockObject),
     );
 
     return PotagerTiledObjects._(

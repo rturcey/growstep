@@ -1,0 +1,17 @@
+name: Tiled asset contract
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  generated-assets:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - run: python -m pip install Pillow
+      - run: python scripts/build_surface_tiles.py --check
+      - run: python scripts/build_tiled_tilesets.py --check

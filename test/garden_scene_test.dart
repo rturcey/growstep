@@ -23,8 +23,9 @@ class _RecordingSprites extends GardenSprites {
     ui.Canvas canvas,
     ui.Offset contact,
     double width,
-    double height,
-  ) {
+    double height, {
+    GardenShadow style = GardenShadow.medium,
+  }) {
     events.add('shadow');
   }
 

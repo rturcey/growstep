@@ -53,6 +53,9 @@ class GardenArtboardTransform {
 /// Fixed ground and path phases precede the shared Y-sorted depth phase.
 enum GardenLayer { ground, path, depth, foreground }
 
+/// Optional Tiled shadow choice; null on an object keeps the manifest default.
+enum GardenShadow { none, small, medium, large, elongated }
+
 /// Common depth data for legacy draw calls and declarative sprite objects.
 class GardenPlacedObject {
   const GardenPlacedObject(this.id, this.contact, {this.zBias = 0});
@@ -73,6 +76,7 @@ class GardenSpriteObject extends GardenPlacedObject {
     required this.size,
     required this.layer,
     this.opacity = 1,
+    this.shadowOverride,
     double zBias = 0,
   }) : super(id, contact, zBias: zBias);
 
@@ -81,4 +85,5 @@ class GardenSpriteObject extends GardenPlacedObject {
   @override
   final GardenLayer layer;
   final double opacity;
+  final GardenShadow? shadowOverride;
 }
