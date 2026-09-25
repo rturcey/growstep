@@ -10,11 +10,12 @@ import random
 import xml.etree.ElementTree as ET
 from pathlib import Path
 
+from build_tiled_tilesets import GROUPS
+
 
 ROOT = Path(__file__).resolve().parents[1]
 MAPS = ROOT / "assets" / "maps"
 WIDTH = HEIGHT = 16
-GROUPS = ("ground", "paths", "paths_anchored", "floor_decor", "vegetation", "rocks", "structures", "props")
 
 
 def _tilesets(map_root: ET.Element):
@@ -66,22 +67,37 @@ def build() -> None:
     rng = random.Random(6400)
     surface = {}
     earth = {}
-    skirt = {}
+    skirt_faces = {}
     path = {}
+    soil_cells = {(col, row) for col, row in occupied if 5 <= col <= 7 and 5 <= row <= 7}
+    corners = {frozenset((0, 1)): 0, frozenset((1, 2)): 1,
+               frozenset((2, 3)): 2, frozenset((0, 3)): 3}
     for col, row in sorted(occupied):
         exposed = [(col - 1, row) not in occupied, (col, row - 1) not in occupied,
                    (col + 1, row) not in occupied, (col, row + 1) not in occupied]
-        if any(exposed):
-            # Four directional sides plus four soft corner variants.
-            index = (next(i for i, flag in enumerate(exposed) if flag) + (8 if sum(exposed) > 1 else 0))
+        sides = {side for missing, side in zip(exposed, (3, 0, 1, 2)) if missing}
+        if sides:
+            # 00–03 are single sides, 04–07 their adjacent-side corners,
+            # 08–11 subtle alternatives to the single sides.
+            matched = next((index for pair, index in corners.items() if pair <= sides), None)
+            index = 4 + matched if matched is not None else min(sides) + (8 if (col + row) % 3 == 0 else 0)
             surface[(col, row)] = gids[f"commun_sol_bordure_herbe_tile_{index:02}.png"]
         else:
             surface[(col, row)] = gids[f"commun_sol_herbe_tile_{rng.randrange(5):02}.png"]
-        if 5 <= col <= 7 and 5 <= row <= 7 and (col, row) in occupied:
-            earth[(col, row)] = gids[f"commun_sol_terre_tile_{(col + row) % 3:02}.png"]
-        for front in ((col + 1, row), (col, row + 1)):
+        if (col, row) in soil_cells:
+            soil_exposed = [(col - 1, row) not in soil_cells, (col, row - 1) not in soil_cells,
+                            (col + 1, row) not in soil_cells, (col, row + 1) not in soil_cells]
+            soil_sides = {side for missing, side in zip(soil_exposed, (3, 0, 1, 2)) if missing}
+            corner = next((index for pair, index in corners.items() if pair <= soil_sides), None)
+            earth_index = 7 + corner if corner is not None else 3 + min(soil_sides) if soil_sides else (col + row) % 3
+            earth[(col, row)] = gids[f"commun_sol_terre_tile_{earth_index:02}.png"]
+        for front, face in (((col + 1, row), 1), ((col, row + 1), 2)):
             if front not in occupied and all(0 <= n < WIDTH for n in front):
-                skirt[front] = gids[f"commun_sol_tranche_terre_tile_{(col + row) % 3:02}.png"]
+                skirt_faces[front] = skirt_faces.get(front, 0) | face
+    skirt = {
+        cell: gids[f"commun_sol_tranche_terre_tile_{({1: 0, 2: 2, 3: 4}[faces] + (cell[0] + cell[1]) % 2):02}.png"]
+        for cell, faces in skirt_faces.items()
+    }
     for index, cell in enumerate(((5, 7), (6, 8), (7, 9), (8, 10), (9, 11), (10, 12))):
         if cell in occupied:
             path[cell] = gids[f"commun_sol_pas_pierre_tile_{index:02}.png"]

@@ -1,8 +1,13 @@
 <?xml version='1.0' encoding='utf-8'?>
 <map version="1.10" tiledversion="1.11.2" orientation="isometric" renderorder="right-down" width="14" height="14" tilewidth="80" tileheight="40" infinite="0" nextlayerid="8" nextobjectid="10">
   <tileset firstgid="1" source="ground.tsx" />
-  <tileset firstgid="24" source="paths.tsx" />
-  <tileset firstgid="30" source="rocks.tsx" />
+  <tileset firstgid="35" source="paths.tsx" />
+  <tileset firstgid="41" source="paths_anchored.tsx" />
+  <tileset firstgid="47" source="floor_decor.tsx" />
+  <tileset firstgid="53" source="vegetation.tsx" />
+  <tileset firstgid="61" source="rocks.tsx" />
+  <tileset firstgid="67" source="structures.tsx" />
+  <tileset firstgid="70" source="props.tsx" />
   <layer id="1" name="ground" width="14" height="14">
     <data encoding="csv">
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,
@@ -49,11 +54,11 @@
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,24,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,25,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,26,0,0,0,0,0,
-0,0,0,0,0,0,0,0,27,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,28,0,0,0,0,
+0,0,0,0,0,0,35,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,36,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,37,0,0,0,0,0,
+0,0,0,0,0,0,0,0,38,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,39,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0
 </data>
   </layer>
@@ -118,7 +123,7 @@
   <objectgroup id="5" name="floor_decor" />
   <objectgroup id="6" name="edge_overlays" />
   <objectgroup id="7" name="props">
-    <object id="9" name="east_upper_rock" class="prop" gid="31" x="300" y="220" width="48.6" height="33.3">
+    <object id="9" name="east_upper_rock" class="prop" gid="62" x="300" y="220" width="48.6" height="33.3">
       <properties>
         <property name="gridCol" type="float" value="0" />
         <property name="gridRow" type="float" value="-4" />

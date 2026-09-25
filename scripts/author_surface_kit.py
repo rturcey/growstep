@@ -11,7 +11,7 @@ import xml.etree.ElementTree as ET
 from pathlib import Path
 from zipfile import ZIP_DEFLATED, ZIP_STORED, ZipFile
 
-from PIL import Image, ImageChops, ImageDraw
+from PIL import Image, ImageDraw
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -38,32 +38,38 @@ def _material(reference: Image.Image, index: int, color: str, strength: float) -
     output = adjusted.load()
     for row in range(SIZE[1]):
         for col in range(SIZE[0]):
-            diamond_distance = abs((col - 160) / 160) + abs((row - 80) / 80)
-            # Every tile reaches the same base colour at its four seams.
-            # The painted detail remains in the interior, where it cannot
-            # reveal the grid as repeated bright/dark edges.
-            edge_fade = max(0.0, min(1.0, (1.0 - diamond_distance) / 0.23))
-            output[col, row] = tuple(max(0, min(255, round(target[channel] + (pixels[col, row][channel] - means[channel]) * strength * edge_fade))) for channel in range(3))
+            # Normalize every crop to the same mean and keep variation very
+            # low. A special flat edge band would trace the isometric grid.
+            output[col, row] = tuple(max(0, min(255, round(target[channel] + (pixels[col, row][channel] - means[channel]) * strength))) for channel in range(3))
     return adjusted.convert("RGBA")
 
 
-def _diamond_mask() -> Image.Image:
-    mask = Image.new("L", SIZE)
-    draw = ImageDraw.Draw(mask)
-    # A tiny overlap survives downsampling and hides transparent hairlines
-    # between adjacent diamonds in Tiled.
-    draw.polygon([(160, -16), (336, 80), (160, 176), (-16, 80)], fill=255)
+def _exposure_mask(directions: list[int]) -> Image.Image:
+    mask = Image.new("L", SIZE, 255)
+    clear = ImageDraw.Draw(mask)
+    outside = [
+        [(160, -16), (336, -16), (336, 80)],
+        [(336, 80), (336, 176), (160, 176)],
+        [(160, 176), (-16, 176), (-16, 80)],
+        [(-16, 80), (-16, -16), (160, -16)],
+    ]
+    for side in directions:
+        clear.polygon(outside[side], fill=0)
     return mask
 
 
-def _grass_edge(image: Image.Image, index: int, mask: Image.Image) -> Image.Image:
+def _grass_edge(image: Image.Image, index: int) -> Image.Image:
     rng = random.Random(6400 + index)
-    draw = ImageDraw.Draw(image)
     directions = {
         0: [0], 1: [1], 2: [2], 3: [3],
         4: [0, 1], 5: [1, 2], 6: [2, 3], 7: [3, 0],
         8: [0], 9: [1], 10: [2], 11: [3],
     }[index]
+    # Fill through the sides that touch occupied cells. Only the exposed
+    # outside triangles are transparent, so adjacent ground tiles have no
+    # alpha seam. Blades painted next cross those exposed boundaries.
+    image.putalpha(_exposure_mask(directions))
+    draw = ImageDraw.Draw(image)
     corners = [(160, 0), (320, 80), (160, 160), (0, 80)]
     for side in directions:
         start, end = corners[side], corners[(side + 1) % 4]
@@ -80,30 +86,56 @@ def _grass_edge(image: Image.Image, index: int, mask: Image.Image) -> Image.Imag
             tip = (x + dx / length * blade + rng.uniform(-2, 2), y + dy / length * blade + rng.uniform(-2, 2))
             color = rng.choice(["#719455", "#85A965", "#A7C77D", "#91AD68"])
             draw.line((x, y, *tip), fill=color, width=rng.choice((3, 4, 5)))
-    image.putalpha(ImageChops.lighter(mask, image.getchannel("A")))
+    return image
+
+
+def _earth_edge(image: Image.Image, index: int) -> Image.Image:
+    rng = random.Random(6800 + index)
+    directions = {
+        3: [0], 4: [1], 5: [2], 6: [3],
+        7: [0, 1], 8: [1, 2], 9: [2, 3], 10: [3, 0],
+    }[index]
+    image.putalpha(_exposure_mask(directions))
+    draw = ImageDraw.Draw(image)
+    corners = [(160, 0), (320, 80), (160, 160), (0, 80)]
+    for side in directions:
+        start, end = corners[side], corners[(side + 1) % 4]
+        for _ in range(14):
+            t = rng.uniform(0.08, 0.92)
+            x = start[0] * (1 - t) + end[0] * t
+            y = start[1] * (1 - t) + end[1] * t
+            # Short, muted overhangs break the geometric edge without
+            # creating isolated green dots at the soil boundary.
+            reach = rng.uniform(3, 8)
+            draw.line((x, y, x + (end[1] - start[1]) / 360 * reach,
+                       y - (end[0] - start[0]) / 360 * reach),
+                      fill=rng.choice(("#6F533D", "#795B42", "#866449")), width=rng.choice((2, 3)))
     return image
 
 
 def _skirt(reference: Image.Image, index: int) -> Image.Image:
-    image = _material(reference, index, "#8A674A", 0.35)
-    mask = _diamond_mask()
+    # Keep the long exterior face at a stable value across cell boundaries;
+    # the sparse brush marks provide variation without regular color joins.
+    image = _material(reference, 0, "#76543B", 0.03)
+    mask = Image.new("L", SIZE)
     rng = random.Random(6700 + index)
-    # The full diamond closes gaps between neighbouring skirt cells. It is
-    # only painted in empty front neighbours, beneath the grassy surface.
-    image.putalpha(mask)
-    shading = Image.new("RGBA", SIZE)
-    gradient = shading.load()
-    for y in range(80, 160):
-        alpha = round((y - 80) / 80 * 28)
-        for x in range(320):
-            gradient[x, y] = (52, 34, 24, alpha)
-    image.alpha_composite(shading)
-    shade = Image.new("RGBA", SIZE, (58, 39, 29, 0))
+    draw = ImageDraw.Draw(mask)
+    # An exposed front-right edge occupies the back-left half of the empty
+    # neighbouring cell; front-left uses the mirrored half. The two slanted
+    # top edges coincide with the occupied grass cell's exposed edges, while
+    # their lower edges sit 20 logical pixels below to form a vertical face.
+    left_face = [(160, -8), (-8, 80), (-8, 168), (160, 80)]
+    right_face = [(160, -8), (328, 80), (328, 168), (160, 80)]
+    if index // 2 in (0, 2):
+        draw.polygon(left_face, fill=255)
+    if index // 2 in (1, 2):
+        draw.polygon(right_face, fill=255)
+    shade = Image.new("RGBA", SIZE)
     shade_draw = ImageDraw.Draw(shade)
-    for n in range(45):
+    for _ in range(50):
         x = rng.randrange(0, 320)
-        y = rng.randrange(100, 160)
-        shade_draw.line((x, y, x + rng.randrange(-5, 6), y + rng.randrange(3, 11)), fill=(58, 39, 29, rng.randrange(20, 65)), width=rng.randrange(1, 4))
+        y = rng.randrange(70, 160)
+        shade_draw.line((x, y, x + rng.randrange(-2, 3), y + rng.randrange(5, 18)), fill=(58, 39, 29, rng.randrange(10, 45)), width=rng.randrange(1, 3))
     image.alpha_composite(shade)
     image.putalpha(mask)
     return image
@@ -126,7 +158,6 @@ def main() -> None:
     inventory = json.loads((SOURCES / "inventory.json").read_text())["families"]
     with Image.open(SOURCES / "grass_reference.png") as grass_source, Image.open(SOURCES / "earth_reference.png") as earth_source:
         grass, earth = grass_source.convert("RGBA"), earth_source.convert("RGBA")
-        diamond = _diamond_mask()
         for family, info in inventory.items():
             if family == "paths":
                 continue
@@ -136,11 +167,12 @@ def main() -> None:
                 if family == "ground_skirt":
                     image = _skirt(earth, index)
                 else:
-                    reference, color, strength = (earth, "#6C503C", 0.28) if family == "ground_earth" else (grass, "#9DBF72", 0.28)
+                    reference, color, strength = (earth, "#6C503C", 0.16) if family == "ground_earth" else (grass, "#9DBF72", 0.12)
                     image = _material(reference, index, color, strength)
-                    image.putalpha(diamond)
                     if family == "ground_edges":
-                        image = _grass_edge(image, index, diamond)
+                        image = _grass_edge(image, index)
+                    if family == "ground_earth" and index >= 3:
+                        image = _earth_edge(image, index)
                 layers.append((name, image))
             _write_ora(SOURCES / f"{family}_master.ora", layers)
             print(f"authored {family}: {len(layers)} layers")

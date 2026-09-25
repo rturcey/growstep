@@ -15,17 +15,18 @@ ROOT = Path(__file__).resolve().parents[1]
 
 def _seal_diamond(tile: Image.Image, family: str) -> Image.Image:
     """Make adjacent Tiled cells opaque at their shared raster seam."""
+    if family == "ground_skirt":
+        alpha = tile.getchannel("A")
+        for y in range(tile.height):
+            for x in (0, tile.width - 1):
+                if alpha.getpixel((x, y)) >= 245:
+                    alpha.putpixel((x, y), 255)
+        tile.putalpha(alpha)
+        return tile
     mask = Image.new("L", (80, 40))
     ImageDraw.Draw(mask).polygon([(40, -2), (82, 20), (40, 42), (-2, 20)], fill=255)
     alpha = ImageChops.lighter(tile.getchannel("A"), mask)
     tile.putalpha(alpha)
-    base = (138, 103, 74) if family == "ground_skirt" else (108, 80, 60) if family == "ground_earth" else (157, 191, 114)
-    pixels = tile.load()
-    for y in range(40):
-        for x in range(80):
-            distance = abs((x - 40) / 40) + abs((y - 20) / 20)
-            if 0.94 <= distance <= 1.0 and alpha.getpixel((x, y)) == 255:
-                pixels[x, y] = (*base, 255)
     return tile
 
 

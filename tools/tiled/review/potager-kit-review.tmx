@@ -1,29 +1,29 @@
 <?xml version='1.0' encoding='utf-8'?>
 <map version="1.10" tiledversion="1.11.2" orientation="isometric" renderorder="right-down" width="16" height="16" tilewidth="80" tileheight="40" infinite="0" nextlayerid="12" nextobjectid="100" backgroundcolor="#E4EBD5">
   <tileset firstgid="1" source="../../../assets/maps/ground.tsx" />
-  <tileset firstgid="24" source="../../../assets/maps/paths.tsx" />
-  <tileset firstgid="30" source="../../../assets/maps/paths_anchored.tsx" />
-  <tileset firstgid="36" source="../../../assets/maps/floor_decor.tsx" />
-  <tileset firstgid="42" source="../../../assets/maps/vegetation.tsx" />
-  <tileset firstgid="50" source="../../../assets/maps/rocks.tsx" />
-  <tileset firstgid="56" source="../../../assets/maps/structures.tsx" />
-  <tileset firstgid="59" source="../../../assets/maps/props.tsx" />
+  <tileset firstgid="35" source="../../../assets/maps/paths.tsx" />
+  <tileset firstgid="41" source="../../../assets/maps/paths_anchored.tsx" />
+  <tileset firstgid="47" source="../../../assets/maps/floor_decor.tsx" />
+  <tileset firstgid="53" source="../../../assets/maps/vegetation.tsx" />
+  <tileset firstgid="61" source="../../../assets/maps/rocks.tsx" />
+  <tileset firstgid="67" source="../../../assets/maps/structures.tsx" />
+  <tileset firstgid="70" source="../../../assets/maps/props.tsx" />
   <layer id="1" name="skirt" width="16" height="16">
     <data encoding="csv">
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,21,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,22,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,22,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,23,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,21,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,22,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,23,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,21,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,22,0,0,
-0,0,21,22,0,0,0,0,0,0,0,21,22,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,22,0,0,0,0,
-0,0,0,0,22,23,21,22,23,21,22,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,30,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,29,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,30,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,29,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,30,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,29,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,30,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,29,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,30,0,0,
+0,0,32,31,0,0,0,0,0,0,0,33,32,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,30,0,0,0,0,
+0,0,0,0,32,31,32,31,32,31,32,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 </data>
@@ -32,17 +32,17 @@
     <data encoding="csv">
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,9,2,2,2,2,2,10,0,0,0,0,0,
-0,0,0,0,1,17,15,14,16,16,3,0,0,0,0,0,
-0,0,9,2,17,17,15,14,16,16,13,2,10,0,0,0,
-0,0,1,14,14,14,17,15,17,17,15,16,3,0,0,0,
-0,0,1,13,15,14,14,13,17,13,13,14,3,0,0,0,
-0,0,1,13,15,16,17,14,15,13,16,16,3,0,0,0,
-0,0,1,13,15,16,17,16,17,13,16,16,3,0,0,0,
-0,0,1,14,17,16,17,17,15,15,14,16,3,0,0,0,
-0,0,9,4,17,14,14,17,13,17,14,4,11,0,0,0,
-0,0,0,0,1,16,15,17,15,13,3,0,0,0,0,0,
-0,0,0,0,9,4,4,4,4,4,11,0,0,0,0,0,
+0,0,0,0,8,1,1,9,1,1,5,0,0,0,0,0,
+0,0,0,0,4,17,15,14,16,16,2,0,0,0,0,0,
+0,0,8,1,17,17,15,14,16,16,13,9,5,0,0,0,
+0,0,4,14,14,14,17,15,17,17,15,16,2,0,0,0,
+0,0,4,13,15,14,14,13,17,13,13,14,10,0,0,0,
+0,0,12,13,15,16,17,14,15,13,16,16,2,0,0,0,
+0,0,4,13,15,16,17,16,17,13,16,16,2,0,0,0,
+0,0,4,14,17,16,17,17,15,15,14,16,10,0,0,0,
+0,0,7,3,17,14,14,17,13,17,14,11,6,0,0,0,
+0,0,0,0,12,16,15,17,15,13,10,0,0,0,0,0,
+0,0,0,0,7,3,11,3,3,11,6,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
@@ -55,9 +55,9 @@
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,19,20,18,0,0,0,0,0,0,0,0,
-0,0,0,0,0,20,18,19,0,0,0,0,0,0,0,0,
-0,0,0,0,0,18,19,20,0,0,0,0,0,0,0,0,
+0,0,0,0,0,28,21,25,0,0,0,0,0,0,0,0,
+0,0,0,0,0,24,18,22,0,0,0,0,0,0,0,0,
+0,0,0,0,0,27,23,26,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
@@ -77,19 +77,19 @@
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,24,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,25,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,26,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,27,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,28,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,29,0,0,0,0,0,
+0,0,0,0,0,35,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,36,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,37,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,38,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,39,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,40,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 </data>
   </layer>
   <objectgroup id="5" name="path_sources">
-    <object id="1" name="stone_master_sample" class="path_sources" gid="30" x="420.0" y="420.0" width="41.0" height="29.0">
+    <object id="1" name="stone_master_sample" class="path_sources" gid="41" x="420.0" y="420.0" width="41.0" height="29.0">
       <properties>
         <property name="gridCol" type="float" value="3" />
         <property name="gridRow" type="float" value="3" />
@@ -98,37 +98,37 @@
     </object>
   </objectgroup>
   <objectgroup id="6" name="floor_decor">
-    <object id="2" name="commun_decor_fleurs_blanches_statique_ordinaire_00" class="floor_decor" gid="36" x="180.0" y="220.0" width="24.0" height="24.0">
+    <object id="2" name="commun_decor_fleurs_blanches_statique_ordinaire_00" class="floor_decor" gid="47" x="180.0" y="220.0" width="24.0" height="24.0">
       <properties>
         <property name="gridCol" type="float" value="-3" />
         <property name="gridRow" type="float" value="-2" />
       </properties>
     </object>
-    <object id="3" name="commun_decor_fleurs_jaunes_statique_ordinaire_00" class="floor_decor" gid="37" x="220.0" y="180.0" width="21.0" height="21.0">
+    <object id="3" name="commun_decor_fleurs_jaunes_statique_ordinaire_00" class="floor_decor" gid="48" x="220.0" y="180.0" width="21.0" height="21.0">
       <properties>
         <property name="gridCol" type="float" value="-2" />
         <property name="gridRow" type="float" value="-3" />
       </properties>
     </object>
-    <object id="4" name="commun_decor_herbes_folles_statique_ordinaire_00" class="floor_decor" gid="38" x="380.0" y="220.0" width="19.0" height="17.0">
+    <object id="4" name="commun_decor_herbes_folles_statique_ordinaire_00" class="floor_decor" gid="49" x="380.0" y="220.0" width="19.0" height="17.0">
       <properties>
         <property name="gridCol" type="float" value="2" />
         <property name="gridRow" type="float" value="-2" />
       </properties>
     </object>
-    <object id="5" name="commun_decor_touffe_herbe_statique_ordinaire_00" class="floor_decor" gid="39" x="180.0" y="380.0" width="19.0" height="20.0">
+    <object id="5" name="commun_decor_touffe_herbe_statique_ordinaire_00" class="floor_decor" gid="50" x="180.0" y="380.0" width="19.0" height="20.0">
       <properties>
         <property name="gridCol" type="float" value="-3" />
         <property name="gridRow" type="float" value="2" />
       </properties>
     </object>
-    <object id="6" name="commun_decor_touffe_herbe_statique_ordinaire_01" class="floor_decor" gid="40" x="420.0" y="340.0" width="18.0" height="18.0">
+    <object id="6" name="commun_decor_touffe_herbe_statique_ordinaire_01" class="floor_decor" gid="51" x="420.0" y="340.0" width="18.0" height="18.0">
       <properties>
         <property name="gridCol" type="float" value="3" />
         <property name="gridRow" type="float" value="1" />
       </properties>
     </object>
-    <object id="7" name="commun_decor_trefle_statique_ordinaire_00" class="floor_decor" gid="41" x="340.0" y="180.0" width="22.0" height="21.0">
+    <object id="7" name="commun_decor_trefle_statique_ordinaire_00" class="floor_decor" gid="52" x="340.0" y="180.0" width="22.0" height="21.0">
       <properties>
         <property name="gridCol" type="float" value="1" />
         <property name="gridRow" type="float" value="-3" />
@@ -136,49 +136,49 @@
     </object>
   </objectgroup>
   <objectgroup id="7" name="vegetation">
-    <object id="8" name="commun_bordure_herbe_debordante_statique_ordinaire_00" class="vegetation" gid="42" x="140.0" y="260.0" width="51.0" height="26.0">
+    <object id="8" name="commun_bordure_herbe_debordante_statique_ordinaire_00" class="vegetation" gid="53" x="140.0" y="260.0" width="51.0" height="26.0">
       <properties>
         <property name="gridCol" type="float" value="-4" />
         <property name="gridRow" type="float" value="-1" />
       </properties>
     </object>
-    <object id="9" name="commun_bordure_mixte_statique_ordinaire_00" class="vegetation" gid="43" x="180.0" y="140.0" width="61.0" height="31.0">
+    <object id="9" name="commun_bordure_mixte_statique_ordinaire_00" class="vegetation" gid="54" x="180.0" y="140.0" width="61.0" height="31.0">
       <properties>
         <property name="gridCol" type="float" value="-3" />
         <property name="gridRow" type="float" value="-4" />
       </properties>
     </object>
-    <object id="10" name="commun_decor_bosquet_bas_statique_ordinaire_00" class="vegetation" gid="44" x="300.0" y="140.0" width="83.0" height="42.0">
+    <object id="10" name="commun_decor_bosquet_bas_statique_ordinaire_00" class="vegetation" gid="55" x="300.0" y="140.0" width="83.0" height="42.0">
       <properties>
         <property name="gridCol" type="float" value="0" />
         <property name="gridRow" type="float" value="-4" />
       </properties>
     </object>
-    <object id="11" name="commun_decor_bosquet_bas_statique_ordinaire_01" class="vegetation" gid="45" x="420.0" y="180.0" width="72.0" height="43.0">
+    <object id="11" name="commun_decor_bosquet_bas_statique_ordinaire_01" class="vegetation" gid="56" x="420.0" y="180.0" width="72.0" height="43.0">
       <properties>
         <property name="gridCol" type="float" value="3" />
         <property name="gridRow" type="float" value="-3" />
       </properties>
     </object>
-    <object id="12" name="commun_decor_bosquet_bas_statique_ordinaire_02" class="vegetation" gid="46" x="460.0" y="300.0" width="94.0" height="41.0">
+    <object id="12" name="commun_decor_bosquet_bas_statique_ordinaire_02" class="vegetation" gid="57" x="460.0" y="300.0" width="94.0" height="41.0">
       <properties>
         <property name="gridCol" type="float" value="4" />
         <property name="gridRow" type="float" value="0" />
       </properties>
     </object>
-    <object id="13" name="commun_decor_bosquet_haut_statique_ordinaire_00" class="vegetation" gid="47" x="340.0" y="460.0" width="82.0" height="47.0">
+    <object id="13" name="commun_decor_bosquet_haut_statique_ordinaire_00" class="vegetation" gid="58" x="340.0" y="460.0" width="82.0" height="47.0">
       <properties>
         <property name="gridCol" type="float" value="1" />
         <property name="gridRow" type="float" value="4" />
       </properties>
     </object>
-    <object id="14" name="commun_decor_bosquet_haut_statique_ordinaire_01" class="vegetation" gid="48" x="140.0" y="260.0" width="75.0" height="50.0">
+    <object id="14" name="commun_decor_bosquet_haut_statique_ordinaire_01" class="vegetation" gid="59" x="140.0" y="260.0" width="75.0" height="50.0">
       <properties>
         <property name="gridCol" type="float" value="-4" />
         <property name="gridRow" type="float" value="-1" />
       </properties>
     </object>
-    <object id="15" name="commun_decor_bosquet_haut_statique_ordinaire_02" class="vegetation" gid="49" x="180.0" y="140.0" width="95.0" height="46.0">
+    <object id="15" name="commun_decor_bosquet_haut_statique_ordinaire_02" class="vegetation" gid="60" x="180.0" y="140.0" width="95.0" height="46.0">
       <properties>
         <property name="gridCol" type="float" value="-3" />
         <property name="gridRow" type="float" value="-4" />
@@ -186,37 +186,37 @@
     </object>
   </objectgroup>
   <objectgroup id="8" name="rocks">
-    <object id="16" name="commun_bordure_rochers_statique_ordinaire_00" class="rocks" gid="50" x="140.0" y="380.0" width="45.0" height="26.0">
+    <object id="16" name="commun_bordure_rochers_statique_ordinaire_00" class="rocks" gid="61" x="140.0" y="380.0" width="45.0" height="26.0">
       <properties>
         <property name="gridCol" type="float" value="-4" />
         <property name="gridRow" type="float" value="2" />
       </properties>
     </object>
-    <object id="17" name="commun_decor_rochers_herbe_statique_ordinaire_00" class="rocks" gid="51" x="340.0" y="140.0" width="54.0" height="37.0">
+    <object id="17" name="commun_decor_rochers_herbe_statique_ordinaire_00" class="rocks" gid="62" x="340.0" y="140.0" width="54.0" height="37.0">
       <properties>
         <property name="gridCol" type="float" value="1" />
         <property name="gridRow" type="float" value="-4" />
       </properties>
     </object>
-    <object id="18" name="commun_decor_rochers_statique_ordinaire_00" class="rocks" gid="52" x="460.0" y="340.0" width="43.0" height="31.0">
+    <object id="18" name="commun_decor_rochers_statique_ordinaire_00" class="rocks" gid="63" x="460.0" y="340.0" width="43.0" height="31.0">
       <properties>
         <property name="gridCol" type="float" value="4" />
         <property name="gridRow" type="float" value="1" />
       </properties>
     </object>
-    <object id="19" name="commun_decor_rochers_statique_ordinaire_01" class="rocks" gid="53" x="380.0" y="420.0" width="52.0" height="36.0">
+    <object id="19" name="commun_decor_rochers_statique_ordinaire_01" class="rocks" gid="64" x="380.0" y="420.0" width="52.0" height="36.0">
       <properties>
         <property name="gridCol" type="float" value="2" />
         <property name="gridRow" type="float" value="3" />
       </properties>
     </object>
-    <object id="20" name="commun_decor_rochers_statique_ordinaire_02" class="rocks" gid="54" x="260.0" y="460.0" width="61.0" height="41.0">
+    <object id="20" name="commun_decor_rochers_statique_ordinaire_02" class="rocks" gid="65" x="260.0" y="460.0" width="61.0" height="41.0">
       <properties>
         <property name="gridCol" type="float" value="-1" />
         <property name="gridRow" type="float" value="4" />
       </properties>
     </object>
-    <object id="21" name="commun_decor_rochers_statique_ordinaire_03" class="rocks" gid="55" x="180.0" y="420.0" width="60.0" height="37.0">
+    <object id="21" name="commun_decor_rochers_statique_ordinaire_03" class="rocks" gid="66" x="180.0" y="420.0" width="60.0" height="37.0">
       <properties>
         <property name="gridCol" type="float" value="-3" />
         <property name="gridRow" type="float" value="3" />
@@ -224,19 +224,19 @@
     </object>
   </objectgroup>
   <objectgroup id="9" name="structures">
-    <object id="22" name="commun_decor_treillis_bois_fleuri_statique_ordinaire_00" class="structures" gid="56" x="220.0" y="140.0" width="67.0" height="71.0">
+    <object id="22" name="commun_decor_treillis_bois_fleuri_statique_ordinaire_00" class="structures" gid="67" x="220.0" y="140.0" width="67.0" height="71.0">
       <properties>
         <property name="gridCol" type="float" value="-2" />
         <property name="gridRow" type="float" value="-4" />
       </properties>
     </object>
-    <object id="23" name="commun_decor_treillis_bois_fleuri_statique_ordinaire_01" class="structures" gid="57" x="300.0" y="180.0" width="67.0" height="71.0">
+    <object id="23" name="commun_decor_treillis_bois_fleuri_statique_ordinaire_01" class="structures" gid="68" x="300.0" y="180.0" width="67.0" height="71.0">
       <properties>
         <property name="gridCol" type="float" value="0" />
         <property name="gridRow" type="float" value="-3" />
       </properties>
     </object>
-    <object id="24" name="commun_decor_treillis_bois_statique_ordinaire_00" class="structures" gid="58" x="340.0" y="340.0" width="71.0" height="68.0">
+    <object id="24" name="commun_decor_treillis_bois_statique_ordinaire_00" class="structures" gid="69" x="340.0" y="340.0" width="71.0" height="68.0">
       <properties>
         <property name="gridCol" type="float" value="1" />
         <property name="gridRow" type="float" value="1" />
@@ -244,37 +244,37 @@
     </object>
   </objectgroup>
   <objectgroup id="10" name="props">
-    <object id="25" name="commun_decor_tonneau_bois_statique_ordinaire_00" class="props" gid="59" x="260.0" y="180.0" width="49.0" height="55.0">
+    <object id="25" name="commun_decor_tonneau_bois_statique_ordinaire_00" class="props" gid="70" x="260.0" y="180.0" width="49.0" height="55.0">
       <properties>
         <property name="gridCol" type="float" value="-1" />
         <property name="gridRow" type="float" value="-3" />
       </properties>
     </object>
-    <object id="26" name="potager_decor_arrosoir_metal_statique_ordinaire_00" class="props" gid="60" x="380.0" y="260.0" width="39.0" height="34.0">
+    <object id="26" name="potager_decor_arrosoir_metal_statique_ordinaire_00" class="props" gid="71" x="380.0" y="260.0" width="39.0" height="34.0">
       <properties>
         <property name="gridCol" type="float" value="2" />
         <property name="gridRow" type="float" value="-1" />
       </properties>
     </object>
-    <object id="27" name="potager_decor_caisse_semis_statique_ordinaire_00" class="props" gid="61" x="220.0" y="380.0" width="43.0" height="36.0">
+    <object id="27" name="potager_decor_caisse_semis_statique_ordinaire_00" class="props" gid="72" x="220.0" y="380.0" width="43.0" height="36.0">
       <properties>
         <property name="gridCol" type="float" value="-2" />
         <property name="gridRow" type="float" value="2" />
       </properties>
     </object>
-    <object id="28" name="potager_decor_coin_jardinage_statique_ordinaire_00" class="props" gid="62" x="420.0" y="380.0" width="69.0" height="53.0">
+    <object id="28" name="potager_decor_coin_jardinage_statique_ordinaire_00" class="props" gid="73" x="420.0" y="380.0" width="69.0" height="53.0">
       <properties>
         <property name="gridCol" type="float" value="3" />
         <property name="gridRow" type="float" value="2" />
       </properties>
     </object>
-    <object id="29" name="potager_decor_outils_jardin_statique_ordinaire_00" class="props" gid="63" x="300.0" y="420.0" width="67.0" height="46.0">
+    <object id="29" name="potager_decor_outils_jardin_statique_ordinaire_00" class="props" gid="74" x="300.0" y="420.0" width="67.0" height="46.0">
       <properties>
         <property name="gridCol" type="float" value="0" />
         <property name="gridRow" type="float" value="3" />
       </properties>
     </object>
-    <object id="30" name="potager_decor_stockage_jardin_statique_ordinaire_00" class="props" gid="64" x="180.0" y="300.0" width="77.0" height="58.0">
+    <object id="30" name="potager_decor_stockage_jardin_statique_ordinaire_00" class="props" gid="75" x="180.0" y="300.0" width="77.0" height="58.0">
       <properties>
         <property name="gridCol" type="float" value="-3" />
         <property name="gridRow" type="float" value="0" />
@@ -282,19 +282,19 @@
     </object>
   </objectgroup>
   <objectgroup id="11" name="edge_overlays">
-    <object id="31" name="commun_bordure_herbe_debordante_statique_ordinaire_00" class="edge_overlays" gid="42" x="140.0" y="420.0" width="51.0" height="26.0">
+    <object id="31" name="commun_bordure_herbe_debordante_statique_ordinaire_00" class="edge_overlays" gid="53" x="140.0" y="420.0" width="51.0" height="26.0">
       <properties>
         <property name="gridCol" type="float" value="-4" />
         <property name="gridRow" type="float" value="3" />
       </properties>
     </object>
-    <object id="32" name="commun_bordure_mixte_statique_ordinaire_00" class="edge_overlays" gid="43" x="380.0" y="460.0" width="61.0" height="31.0">
+    <object id="32" name="commun_bordure_mixte_statique_ordinaire_00" class="edge_overlays" gid="54" x="380.0" y="460.0" width="61.0" height="31.0">
       <properties>
         <property name="gridCol" type="float" value="2" />
         <property name="gridRow" type="float" value="4" />
       </properties>
     </object>
-    <object id="33" name="commun_bordure_rochers_statique_ordinaire_00" class="edge_overlays" gid="50" x="460.0" y="380.0" width="45.0" height="26.0">
+    <object id="33" name="commun_bordure_rochers_statique_ordinaire_00" class="edge_overlays" gid="61" x="460.0" y="380.0" width="45.0" height="26.0">
       <properties>
         <property name="gridCol" type="float" value="4" />
         <property name="gridRow" type="float" value="2" />

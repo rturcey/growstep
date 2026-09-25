@@ -273,7 +273,7 @@ void main() {
       'edge_overlays',
       'props',
     ]);
-    expect(map.tilesets, hasLength(3));
+    expect(map.tilesets, hasLength(8));
     for (final tileset in map.tilesets) {
       expect(tileset.objectAlignment, ObjectAlignment.bottom);
       expect(tileset.image, isNull); // collection of individual images

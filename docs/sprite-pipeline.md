@@ -20,7 +20,7 @@ Les surface tiles sont des textures alignées sur la grille Tiled 80×40, pas de
 
 L'art est produit à 4× (320×160 pixels pour une cellule 80×40). Le master n'est jamais peint directement à 80×40. L'export 1× (80×40) est dérivé du master par downsampling déterministe. Le résultat final 80×40 ne doit pas dépendre de détails qui disparaissent après downsampling.
 
-Les sources modifiables sont organisées par famille, pas par tile individuel. Un ORA par famille (p.ex. `ground_grass_master.ora`, `ground_earth_master.ora`, `ground_edges_master.ora`) contient les variantes de cette famille. Les tiles individuels sont exportés depuis le master de leur famille.
+Les sources modifiables sont organisées par famille, pas par tile individuel. Un ORA par famille (`ground_grass_master.ora`, `ground_earth_master.ora`, `ground_edges_master.ora`, `ground_skirt_master.ora`) contient les variantes de cette famille. Les tiles individuels sont exportés depuis le master de leur famille. Le kit Potager contient 5 herbes intérieures, 11 terres (intérieurs, côtés et coins), 12 bordures d'herbe, 6 tranches de terre et les 6 pas de pierre dérivés.
 
 ### Naming
 

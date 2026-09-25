@@ -7,18 +7,20 @@
     },
     "ground_earth": {
       "prefix": "commun_sol_terre_tile_",
-      "count": 3,
+      "count": 11,
+      "roles": ["interior_00", "interior_01", "interior_02", "side_north_east", "side_south_east", "side_south_west", "side_north_west", "corner_east", "corner_south", "corner_west", "corner_north"],
       "tileset": "ground"
     },
     "ground_edges": {
       "prefix": "commun_sol_bordure_herbe_tile_",
       "count": 12,
       "tileset": "ground",
-      "roles": ["north_west", "north_east", "south_east", "south_west", "north", "east", "south", "west", "north_west_soft", "north_east_soft", "south_east_soft", "south_west_soft"]
+      "roles": ["side_north_east", "side_south_east", "side_south_west", "side_north_west", "corner_east", "corner_south", "corner_west", "corner_north", "side_north_east_soft", "side_south_east_soft", "side_south_west_soft", "side_north_west_soft"]
     },
     "ground_skirt": {
       "prefix": "commun_sol_tranche_terre_tile_",
-      "count": 3,
+      "count": 6,
+      "roles": ["front_right_00", "front_right_01", "front_left_00", "front_left_01", "both_00", "both_01"],
       "tileset": "ground"
     },
     "paths": {

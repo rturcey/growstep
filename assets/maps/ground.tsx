@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<tileset version="1.10" tiledversion="1.11.2" name="ground" tilewidth="80" tileheight="40" tilecount="23" columns="0" objectalignment="bottom">
+<tileset version="1.10" tiledversion="1.11.2" name="ground" tilewidth="80" tileheight="40" tilecount="34" columns="0" objectalignment="bottom">
   <tile id="0">
     <image source="../sprites/commun_sol_bordure_herbe_tile_00.png" width="80" height="40" />
   </tile>
@@ -61,12 +61,45 @@
     <image source="../sprites/commun_sol_terre_tile_02.png" width="80" height="40" />
   </tile>
   <tile id="20">
-    <image source="../sprites/commun_sol_tranche_terre_tile_00.png" width="80" height="40" />
+    <image source="../sprites/commun_sol_terre_tile_03.png" width="80" height="40" />
   </tile>
   <tile id="21">
-    <image source="../sprites/commun_sol_tranche_terre_tile_01.png" width="80" height="40" />
+    <image source="../sprites/commun_sol_terre_tile_04.png" width="80" height="40" />
   </tile>
   <tile id="22">
+    <image source="../sprites/commun_sol_terre_tile_05.png" width="80" height="40" />
+  </tile>
+  <tile id="23">
+    <image source="../sprites/commun_sol_terre_tile_06.png" width="80" height="40" />
+  </tile>
+  <tile id="24">
+    <image source="../sprites/commun_sol_terre_tile_07.png" width="80" height="40" />
+  </tile>
+  <tile id="25">
+    <image source="../sprites/commun_sol_terre_tile_08.png" width="80" height="40" />
+  </tile>
+  <tile id="26">
+    <image source="../sprites/commun_sol_terre_tile_09.png" width="80" height="40" />
+  </tile>
+  <tile id="27">
+    <image source="../sprites/commun_sol_terre_tile_10.png" width="80" height="40" />
+  </tile>
+  <tile id="28">
+    <image source="../sprites/commun_sol_tranche_terre_tile_00.png" width="80" height="40" />
+  </tile>
+  <tile id="29">
+    <image source="../sprites/commun_sol_tranche_terre_tile_01.png" width="80" height="40" />
+  </tile>
+  <tile id="30">
     <image source="../sprites/commun_sol_tranche_terre_tile_02.png" width="80" height="40" />
+  </tile>
+  <tile id="31">
+    <image source="../sprites/commun_sol_tranche_terre_tile_03.png" width="80" height="40" />
+  </tile>
+  <tile id="32">
+    <image source="../sprites/commun_sol_tranche_terre_tile_04.png" width="80" height="40" />
+  </tile>
+  <tile id="33">
+    <image source="../sprites/commun_sol_tranche_terre_tile_05.png" width="80" height="40" />
   </tile>
 </tileset>

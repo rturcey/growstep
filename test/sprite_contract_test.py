@@ -103,6 +103,11 @@ class SpriteContractTest(unittest.TestCase):
         self.assertNotIn("potager_decor_bac_potager", palette)
         self.assertNotIn("commun_ombre_contact", palette)
         self.assertNotIn("potager_plante_", palette)
+        main_map = ET.parse(REPO / "assets/maps/potager.tmx").getroot()
+        self.assertEqual(
+            {Path(tileset.attrib["source"]).stem for tileset in main_map.findall("tileset")},
+            {"ground", "paths", "paths_anchored", "floor_decor", "vegetation", "rocks", "structures", "props"},
+        )
 
     def test_surface_tiles_have_no_sprite_manifest_or_high_density_exports(self):
         inventory = json.loads((REPO / "assets/surface_sources/inventory.json").read_text())["families"]
