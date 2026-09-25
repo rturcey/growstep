@@ -1,5 +1,7 @@
 # Revue des trois îlots
 
+La [revue de l'issue #64](issue-64/README.md) rassemble le kit graphique Tiled et les captures du Potager avant et après le correctif de superposition et d'échelle des objets.
+
 Les 24 fichiers `application_*.png` montrent l’application complète à 390 × 844 et 375 × 667 : trois îlots, états initial et saturé, en couleur et en niveaux de gris. La navigation entre îlots a été effectuée dans la fenêtre Flutter. Les 36 autres captures d’îlot cadrent uniquement la scène Flame aux états initial, intermédiaire et saturé ; l’état intermédiaire montre notamment les arbres jeunes. Les 16 fichiers `comparaison_*.png` placent chaque espèce ordinaire et brillante dans la même scène pour comparer les marques à taille réelle.
 
 L’état initial possède les trois îlots mais conserve les seules plantes de départ du potager. L’état saturé est une fixture isolée avec tous les emplacements remplis, dont une plante brillante par îlot. Aucune plante fictive n’est ajoutée à une partie normale.
