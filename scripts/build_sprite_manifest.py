@@ -12,6 +12,18 @@ import yaml
 
 
 SPRITES = Path(__file__).resolve().parents[1] / "assets" / "sprites"
+
+PRESERVE_MANIFEST_PREFIXES = (
+    "commun_sol_pas_pierre_statique_ordinaire_",
+)
+
+manifest_path = SPRITES / "manifest.json"
+previous_manifest = (
+    json.loads(manifest_path.read_text(encoding="utf-8"))
+    if manifest_path.exists()
+    else {}
+)
+
 manifest = {}
 
 for sheet in sorted((SPRITES.parent / "sprite_sources").glob("*.yaml")):
@@ -23,11 +35,20 @@ for sheet in sorted((SPRITES.parent / "sprite_sources").glob("*.yaml")):
         bounds = alpha.point(lambda value: 255 if value > 32 else 0).getbbox()
         if bounds is None:
             raise ValueError(f"{path.name}: no visible pixels")
-        manifest[path.name] = {
-            "width": image.width,
-            "height": image.height,
-            "bbox": list(bounds),
-        }
+        if (
+            path.name in previous_manifest
+            and path.name.startswith(PRESERVE_MANIFEST_PREFIXES)
+        ):
+            # These six historical stepping-stone entries are an approved
+            # runtime geometry contract. Their alpha-derived bbox is
+            # intentionally not regenerated.
+            manifest[path.name] = dict(previous_manifest[path.name])
+        else:
+            manifest[path.name] = {
+                "width": image.width,
+                "height": image.height,
+                "bbox": list(bounds),
+            }
         sheet = SPRITES.parent / "sprite_sources" / f"{path.stem}.yaml"
         if sheet.exists():
             metadata = yaml.safe_load(sheet.read_text(encoding="utf-8"))

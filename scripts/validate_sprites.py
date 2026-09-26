@@ -33,6 +33,7 @@ SIZE_LIMITS = {
     "long_edge": (240, 75),
     "wide_cultivation_surround": (210, 90),
     "deep_cultivation_surround": (160, 145),
+    "cultivated_heart": (390, 450),
 }
 PALETTE_ROLES = {
     "fond_hors_jardin": "#E4EBD5",

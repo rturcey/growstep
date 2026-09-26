@@ -28,7 +28,7 @@ taille complète indiquée, en couleur et en niveaux de gris.
 
 ## Carte retenue
 
-La [carte finale](../../../assets/maps/potager.tmx) est restaurée à l'octet près
+La [carte finale](../../../assets/maps/potager_diorama_v1.tmx) est restaurée à l'octet près
 à l'état du commit `5918a5d` : cinq cellules peintes dans `path`, rocher en A et
 huit points `plots` sur leurs contacts historiques. Ces points restent des
 marqueurs d'éditeur invisibles dans Growstep. Les douze pierres Dart historiques

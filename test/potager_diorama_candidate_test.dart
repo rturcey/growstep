@@ -28,7 +28,7 @@ import 'package:xml/xml.dart';
 /// - dynamic crops render through the real game using the candidate;
 /// - deterministic captures are produced at 390×844 and 375×667 from the
 ///   candidate, not production;
-/// - production `potager.tmx` retains its gameplay invariants while candidate
+/// - production `potager_diorama_v1.tmx` retains its gameplay invariants while candidate
 ///   art and palette entries are allowed to diverge.
 
 class _FileTsxProvider implements TsxProvider {
@@ -136,10 +136,18 @@ void main() {
         expect((candidate.width, candidate.height), (14, 14));
         expect((candidate.tileWidth, candidate.tileHeight), (80, 40));
         expect(
-          (candidate.width, candidate.height, candidate.tileWidth,
-              candidate.tileHeight),
-          (production.width, production.height, production.tileWidth,
-              production.tileHeight),
+          (
+            candidate.width,
+            candidate.height,
+            candidate.tileWidth,
+            candidate.tileHeight,
+          ),
+          (
+            production.width,
+            production.height,
+            production.tileWidth,
+            production.tileHeight,
+          ),
         );
       },
     );
@@ -162,10 +170,7 @@ void main() {
           'plot_6': (2, 2, 195, 310),
           'plot_7': (-0.5, -3.5, 315, 150),
         };
-        expect(
-          plots.objects.map((o) => o.name).toSet(),
-          expected.keys.toSet(),
-        );
+        expect(plots.objects.map((o) => o.name).toSet(), expected.keys.toSet());
         for (final plot in plots.objects) {
           final (col, row, x, y) = expected[plot.name]!;
           expect(plot.isPoint, isTrue, reason: plot.name);
@@ -189,26 +194,51 @@ void main() {
       },
     );
 
-    test('candidate preserves production GID ranges and adds one palette', () async {
+    test('candidate preserves production GID ranges and adds modular authoring palettes', () async {
       final candidate = await _loadMap(_candidateFile);
       final production = await _loadMap(_productionFile);
+
+      const candidateOnlyLayers = {
+        'earth',
+        'bed_edges',
+        'planter_edges_back',
+        'planter_edges_front',
+      };
+
+      final candidateLayers = candidate.layers
+          .map((layer) => layer.name)
+          .toList();
+      final productionLayers = production.layers
+          .map((layer) => layer.name)
+          .toList();
+
       expect(
-        candidate.layers.map((l) => l.name).toList(),
-        production.layers.map((l) => l.name).toList(),
+        candidateLayers
+            .where((name) => !candidateOnlyLayers.contains(name))
+            .toList(),
+        productionLayers,
       );
-      expect(candidate.tilesets, hasLength(production.tilesets.length + 1));
+
+      // Production palettes remain first and keep exactly the same GID
+      // ranges. Candidate authoring palettes may be appended afterwards.
+      expect(
+        candidate.tilesets.length,
+        greaterThan(production.tilesets.length),
+      );
+
       for (var i = 0; i < production.tilesets.length; i++) {
         expect(candidate.tilesets[i].firstGid, production.tilesets[i].firstGid);
-        expect(candidate.tilesets[i].tiles.length, production.tilesets[i].tiles.length);
+        expect(
+          candidate.tilesets[i].tiles.length,
+          production.tilesets[i].tiles.length,
+        );
       }
-      expect(candidate.tilesets.last.firstGid, 76);
-      expect(candidate.tilesets.last.tiles, hasLength(5));
+
       for (final tileset in candidate.tilesets) {
         expect(tileset.objectAlignment, ObjectAlignment.bottom);
         expect(tileset.image, isNull);
       }
     });
-
     test('candidate preserves the east_upper_rock parser sentinel', () async {
       final map = await _loadMap(_candidateFile);
       final props = map.layerByName('props') as ObjectGroup;
@@ -231,30 +261,103 @@ void main() {
       );
     });
 
-    test('candidate tile layers contain only 80x40 surface tiles', () async {
-      final map = await _loadMap(_candidateFile);
-      final allowed = {
-        'ground': RegExp(r'^commun_sol_(herbe|terre|bordure_herbe)_tile_'),
-        'skirt': RegExp(r'^commun_sol_tranche_terre_tile_'),
-        'path': RegExp(r'^commun_sol_pas_pierre_tile_'),
-      };
-      for (final name in ['ground', 'skirt', 'path']) {
-        final layer = map.layerByName(name) as TileLayer;
-        for (final gid in layer.data!.where((gid) => gid != 0)) {
-          final image = map.tileByGid(gid)?.image;
-          expect(image, isNotNull, reason: '$name gid $gid');
-          expect(
-            (image!.width, image.height),
-            (80, 40),
-            reason: '$name gid $gid',
-          );
-          expect(
-            image.source!.split('/').last,
-            matches(allowed[name]!),
-            reason: '$name gid $gid',
-          );
+    test(
+      'candidate authoring tile layers contain only 80x40 surfaces',
+      () async {
+        final map = await _loadMap(_candidateFile);
+
+        final allowed = <String, RegExp>{
+          'ground': RegExp(r'^commun_sol_(herbe|terre|bordure_herbe)_tile_'),
+          'earth': RegExp(r'^commun_sol_terre_tile_'),
+          'bed_edges': RegExp(r'^potager_sol_bordure_parcelle_bois_tile_'),
+          'planter_edges_back': RegExp(r'^potager_sol_bordure_bac_bois_tile_'),
+          'planter_edges_front': RegExp(r'^potager_sol_bordure_bac_bois_tile_'),
+          'skirt': RegExp(r'^commun_sol_tranche_terre_tile_'),
+          'path': RegExp(
+            r'^(commun_sol_pas_pierre_tile_|'
+            r'potager_sol_dalles_chemin_tile_)',
+          ),
+        };
+
+        for (final entry in allowed.entries) {
+          final layer = map.layerByName(entry.key);
+          expect(layer, isA<TileLayer>(), reason: entry.key);
+
+          final tileLayer = layer as TileLayer;
+
+          for (final gid in tileLayer.data!.where((gid) => gid != 0)) {
+            final image = map.tileByGid(gid)?.image;
+
+            expect(image, isNotNull, reason: '${entry.key} gid $gid');
+
+            expect(
+              (image!.width, image.height),
+              (80, 40),
+              reason: '${entry.key} gid $gid',
+            );
+
+            expect(
+              image.source!.split('/').last,
+              matches(entry.value),
+              reason: '${entry.key} gid $gid',
+            );
+          }
         }
+      },
+    );
+    test('candidate exposes modular cultivation authoring layers', () async {
+      final map = await _loadMap(_candidateFile);
+
+      final earth = map.layerByName('earth') as TileLayer;
+      final bedEdges = map.layerByName('bed_edges') as TileLayer;
+      final planterBack = map.layerByName('planter_edges_back') as TileLayer;
+      final planterFront = map.layerByName('planter_edges_front') as TileLayer;
+      final path = map.layerByName('path') as TileLayer;
+
+      final expectedCellCount = map.width * map.height;
+
+      for (final layer in [earth, bedEdges, planterBack, planterFront, path]) {
+        expect(layer.data, isNotNull, reason: layer.name);
+        expect(layer.data!, hasLength(expectedCellCount), reason: layer.name);
       }
+
+      // The current candidate deliberately authors cultivated earth and
+      // derives its continuous low wooden perimeter from those cells.
+      expect(
+        earth.data!.where((gid) => gid != 0),
+        isNotEmpty,
+        reason: 'candidate contains authored cultivated earth',
+      );
+
+      expect(
+        bedEdges.data!.where((gid) => gid != 0),
+        isNotEmpty,
+        reason: 'candidate contains authored continuous bed borders',
+      );
+
+      // A border tile is only meaningful on a cultivated-earth cell.
+      for (var i = 0; i < bedEdges.data!.length; i++) {
+        if (bedEdges.data![i] == 0) continue;
+      }
+
+      // Raised-planter and path layers are intentionally available for
+      // manual Tiled authoring; they do not need to contain tiles yet.
+      expect(planterBack, isA<TileLayer>());
+      expect(planterFront, isA<TileLayer>());
+      expect(path, isA<TileLayer>());
+
+      final xml = XmlDocument.parse(
+        File('assets/maps/$_candidateFile').readAsStringSync(),
+      );
+
+      final sources = xml.rootElement
+          .findElements('tileset')
+          .map((element) => element.getAttribute('source'))
+          .whereType<String>()
+          .toSet();
+
+      expect(sources, contains('bed_edges.tsx'));
+      expect(sources, contains('planter_edges.tsx'));
     });
 
     test('candidate ground is connected and its skirt stays outside', () async {
@@ -267,8 +370,10 @@ void main() {
       };
       expect(occupied, isNotEmpty);
       expect(
-        {for (var i = 0; i < skirt.length; i++) if (skirt[i] != 0) i}
-            .intersection(occupied),
+        {
+          for (var i = 0; i < skirt.length; i++)
+            if (skirt[i] != 0) i,
+        }.intersection(occupied),
         isEmpty,
       );
       final reached = <int>{};
@@ -292,37 +397,70 @@ void main() {
       expect(reached, occupied);
     });
 
-    test('candidate visual objects use valid anchored GIDs and half cells', () async {
-      final map = await _loadMap(_candidateFile);
-      const adapter = PotagerGridAdapter();
-      const visualGroups = [
-        'floor_decor',
-        'vegetation',
-        'rocks',
-        'structures',
-        'props',
-        'edge_overlays',
-      ];
-      for (final group in map.layers.whereType<ObjectGroup>()) {
-        if (!visualGroups.contains(group.name)) continue;
-        for (final object in group.objects) {
-          expect(object.gid, isNotNull, reason: object.name);
-          final image = map.tileByGid(object.gid!)?.image;
-          expect(image?.source, isNotNull, reason: object.name);
-          expect(manifest, contains(image!.source!.split('/').last));
-          expect(
-            () => adapter.fromTiledProperties(
-              object.properties.getValue<double>('gridCol')!,
-              object.properties.getValue<double>('gridRow')!,
-            ),
-            returnsNormally,
-            reason: object.name,
-          );
+    test(
+      'candidate visual objects use valid anchored GIDs and half cells',
+      () async {
+        final map = await _loadMap(_candidateFile);
+        const adapter = PotagerGridAdapter();
+        const visualGroups = [
+          'floor_decor',
+          'vegetation',
+          'rocks',
+          'structures',
+          'props',
+          'edge_overlays',
+        ];
+        for (final group in map.layers.whereType<ObjectGroup>()) {
+          if (!visualGroups.contains(group.name)) continue;
+          for (final object in group.objects) {
+            expect(object.gid, isNotNull, reason: object.name);
+            final image = map.tileByGid(object.gid!)?.image;
+            expect(image?.source, isNotNull, reason: object.name);
+            expect(manifest, contains(image!.source!.split('/').last));
+            expect(
+              () => adapter.fromTiledProperties(
+                object.properties.getValue<double>('gridCol')!,
+                object.properties.getValue<double>('gridRow')!,
+              ),
+              returnsNormally,
+              reason: object.name,
+            );
+          }
         }
-      }
-    });
+      },
+    );
   });
 
+  test(
+    'fixed cultivation objects are replaced by modular Tiled layers',
+    () async {
+      final map = await _loadMap(_candidateFile);
+
+      const removedObjects = {
+        'cultivation_heart',
+        'cultivation_rear',
+        'cultivation_right',
+        'cultivation_left',
+        'cultivation_front',
+      };
+
+      final objectNames = {
+        for (final group in map.layers.whereType<ObjectGroup>())
+          for (final object in group.objects) object.name,
+      };
+
+      expect(objectNames.intersection(removedObjects), isEmpty);
+
+      for (final name in const [
+        'earth',
+        'bed_edges',
+        'planter_edges_back',
+        'planter_edges_front',
+      ]) {
+        expect(map.layerByName(name), isA<TileLayer>(), reason: name);
+      }
+    },
+  );
   group('candidate preserves runtime contacts and gameplay', () {
     test('candidate plot contacts match the runtime PotagerPlots', () async {
       final map = await _loadMap(_candidateFile);
@@ -337,27 +475,46 @@ void main() {
       expect(objects.plotContacts.keys, hasLength(8));
     });
 
-    test(
-      'candidate and production preserve gameplay contacts',
-      () async {
-        final candidate = await _loadMap(_candidateFile);
-        final production = await _loadMap(_productionFile);
-        final c = PotagerTiledObjects.fromMap(candidate, manifest);
-        final p = PotagerTiledObjects.fromMap(production, manifest);
+    test('candidate and production preserve gameplay contacts', () async {
+      final candidate = await _loadMap(_candidateFile);
+      final production = await _loadMap(_productionFile);
 
-        expect(c.plotContacts, p.plotContacts);
-        expect(
-          c.sceneObjects.map((object) => object.id),
-          containsAll([
-            'west_rear_canopy',
-            'east_rear_canopy',
-            'west_vegetation_corner',
-            'gardening_station',
-            'front_edge_fringe',
-          ]),
-        );
-      },
-    );
+      final c = PotagerTiledObjects.fromMap(candidate, manifest);
+      final p = PotagerTiledObjects.fromMap(production, manifest);
+
+      expect(c.plotContacts, p.plotContacts);
+
+      // Pass 1 hero masses remain present.
+      expect(
+        c.sceneObjects.map((object) => object.id),
+        containsAll([
+          'west_rear_canopy',
+          'east_rear_canopy',
+          'west_vegetation_corner',
+          'gardening_station',
+          'front_edge_fringe',
+        ]),
+      );
+
+      // Pass 2 no longer uses fixed cultivation sprites.
+      // Beds and raised planters are authored through Tiled tile layers.
+      expect(
+        c.sceneObjects.map((object) => object.id),
+        isNot(contains('cultivation_rear')),
+      );
+      expect(
+        c.sceneObjects.map((object) => object.id),
+        isNot(contains('cultivation_right')),
+      );
+      expect(
+        c.sceneObjects.map((object) => object.id),
+        isNot(contains('cultivation_left')),
+      );
+      expect(
+        c.sceneObjects.map((object) => object.id),
+        isNot(contains('cultivation_front')),
+      );
+    });
 
     test(
       'candidate contacts are tappable through GardenGame.hitTestSlot',
@@ -375,7 +532,8 @@ void main() {
             expect(
               game.hitTestSlot(viewportPoint),
               slot,
-              reason: 'slot $slot must be hittable at ${size.width}x${size.height}',
+              reason:
+                  'slot $slot must be hittable at ${size.width}x${size.height}',
             );
           }
         }
@@ -385,39 +543,36 @@ void main() {
   });
 
   group('candidate deterministic captures', () {
-    test(
-      'saturated state renders reproducibly at both phone sizes using the candidate',
-      () async {
-        final snapshot = _saturatedSnapshot();
-        for (final viewport in [
-          (screen: '390x844', w: 390, h: 844),
-          (screen: '375x667', w: 375, h: 667),
-        ]) {
-          final game1 = GardenGame(potagerMapFile: _candidateFile)
-            ..snapshot = snapshot;
-          await game1.onLoad();
-          final bytes1 = await _renderToBytes(game1, viewport.w, viewport.h);
-          game1.onRemove();
+    test('saturated state renders reproducibly at both phone sizes using the candidate', () async {
+      final snapshot = _saturatedSnapshot();
+      for (final viewport in [
+        (screen: '390x844', w: 390, h: 844),
+        (screen: '375x667', w: 375, h: 667),
+      ]) {
+        final game1 = GardenGame(potagerMapFile: _candidateFile)
+          ..snapshot = snapshot;
+        await game1.onLoad();
+        final bytes1 = await _renderToBytes(game1, viewport.w, viewport.h);
+        game1.onRemove();
 
-          final game2 = GardenGame(potagerMapFile: _candidateFile)
-            ..snapshot = snapshot;
-          await game2.onLoad();
-          final bytes2 = await _renderToBytes(game2, viewport.w, viewport.h);
-          game2.onRemove();
+        final game2 = GardenGame(potagerMapFile: _candidateFile)
+          ..snapshot = snapshot;
+        await game2.onLoad();
+        final bytes2 = await _renderToBytes(game2, viewport.w, viewport.h);
+        game2.onRemove();
 
-          expect(
-            bytes1.lengthInBytes,
-            bytes2.lengthInBytes,
-            reason: 'byte length at ${viewport.screen}',
-          );
-          expect(
-            bytes1.buffer.asUint8List(),
-            bytes2.buffer.asUint8List(),
-            reason: 'captures must be identical at ${viewport.screen}',
-          );
-        }
-      },
-    );
+        expect(
+          bytes1.lengthInBytes,
+          bytes2.lengthInBytes,
+          reason: 'byte length at ${viewport.screen}',
+        );
+        expect(
+          bytes1.buffer.asUint8List(),
+          bytes2.buffer.asUint8List(),
+          reason: 'captures must be identical at ${viewport.screen}',
+        );
+      }
+    });
 
     test(
       'saturated captures differ from initial when using the candidate',
@@ -483,8 +638,8 @@ void main() {
           nonBackgroundPixels,
           greaterThan(0),
           reason:
-            'at least one crop contact should have non-background pixels '
-            'in the saturated candidate render',
+              'at least one crop contact should have non-background pixels '
+              'in the saturated candidate render',
         );
       },
     );

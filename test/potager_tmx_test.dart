@@ -61,7 +61,7 @@ class _ShadowProbeSprites extends GardenSprites {
 }
 
 Future<TiledMap> _loadMap([String? source]) => TiledMap.fromString(
-  source ?? File('assets/maps/potager.tmx').readAsStringSync(),
+  source ?? File('assets/maps/potager_diorama_v1.tmx').readAsStringSync(),
   (filename) async => _FileTsxProvider(filename),
 );
 
@@ -180,7 +180,7 @@ void main() {
       });
 
       final document = XmlDocument.parse(
-        File('assets/maps/potager.tmx').readAsStringSync(),
+        File('assets/maps/potager_diorama_v1.tmx').readAsStringSync(),
       );
       final rock = document.descendants.whereType<XmlElement>().singleWhere(
         (element) =>
@@ -273,7 +273,7 @@ void main() {
       }
 
       final document = XmlDocument.parse(
-        File('assets/maps/potager.tmx').readAsStringSync(),
+        File('assets/maps/potager_diorama_v1.tmx').readAsStringSync(),
       );
       final objects = document.descendants.whereType<XmlElement>().where(
         (element) => element.name.local == 'object',
@@ -399,7 +399,7 @@ void main() {
         ),
     };
     final xml = XmlDocument.parse(
-      File('assets/maps/potager.tmx').readAsStringSync(),
+      File('assets/maps/potager_diorama_v1.tmx').readAsStringSync(),
     );
     final rock = xml.descendants.whereType<XmlElement>().singleWhere(
       (element) =>

@@ -67,6 +67,54 @@
       "tileset": "paths_diorama",
       "transparent": true,
       "custom_authoring": true
+    },
+    "potager_bed_edges": {
+      "prefix": "potager_sol_bordure_parcelle_bois_tile_",
+      "count": 15,
+      "tileset": "bed_edges",
+      "transparent": true,
+      "custom_authoring": true,
+      "roles": [
+        "nw",
+        "ne",
+        "nw_ne",
+        "se",
+        "nw_se",
+        "ne_se",
+        "nw_ne_se",
+        "sw",
+        "nw_sw",
+        "ne_sw",
+        "nw_ne_sw",
+        "se_sw",
+        "nw_se_sw",
+        "ne_se_sw",
+        "all"
+      ]
+    },
+    "potager_planter_edges": {
+      "prefix": "potager_sol_bordure_bac_bois_tile_",
+      "count": 15,
+      "tileset": "planter_edges",
+      "transparent": true,
+      "custom_authoring": true,
+      "roles": [
+        "nw",
+        "ne",
+        "nw_ne",
+        "se",
+        "nw_se",
+        "ne_se",
+        "nw_ne_se",
+        "sw",
+        "nw_sw",
+        "ne_sw",
+        "nw_ne_sw",
+        "se_sw",
+        "nw_se_sw",
+        "ne_se_sw",
+        "all"
+      ]
     }
   }
 }
