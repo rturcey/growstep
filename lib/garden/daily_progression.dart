@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'economy_config.dart';
 import 'garden_state.dart';
 import 'local_date.dart';
 
@@ -37,7 +38,9 @@ class DailyLot {
 /// The outcome for a given day depends only on [playerSeed] and the
 /// calendar day. It never rerolls and is reconstructible at any time.
 class DailyProgression {
-  const DailyProgression();
+  const DailyProgression([this.config = EconomyConfig.defaultConfig]);
+
+  final EconomyConfig config;
 
   /// Returns a deterministic seed for [playerSeed] and [day].
   int _dailySeed(int playerSeed, LocalDate day) {
@@ -95,15 +98,10 @@ class DailyProgression {
     required int rank,
     required Species? shinySeedSpecies,
   }) {
-    final firstNoFlorins = rng.nextDouble() < 0.2;
+    final firstNoFlorins =
+        rng.nextDouble() < config.dailyLotFirstNoFlorinsChance;
 
-    final florinAmounts = [
-      [3, 5],
-      [8, 12],
-      [15, 20],
-      [30, 50],
-    ];
-    final range = florinAmounts[rank];
+    final range = config.dailyLotFlorinRanges[rank];
     final florins = firstNoFlorins && rank == 0
         ? 0
         : range[0] + rng.nextInt(range[1] - range[0] + 1);

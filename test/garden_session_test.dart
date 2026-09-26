@@ -1506,5 +1506,47 @@ void main() {
       );
       expect(garden.snapshot.claimedDailyRewards.length, 2);
     });
+
+    test('les pas tardifs créditent aussi les florins de marche manqués', () async {
+      var now = DateTime(2026, 9, 26, 12);
+      final database = GardenDatabase(NativeDatabase.memory());
+      addTearDown(database.close);
+      final steps = FakeStepProvider(now: () => now);
+      final garden = GardenSession(
+        database: database,
+        stepProvider: steps,
+        now: () => now,
+      );
+      await garden.load();
+
+      final pastDay = LocalDate(2026, 9, 25);
+      steps.setStepsOnDay(pastDay, 500);
+      final florinsBefore = garden.snapshot.florins;
+      await garden.applyLateSteps(pastDay);
+      expect(garden.snapshot.florins, florinsBefore + 1);
+      expect(garden.snapshot.walkFlorinsDay, pastDay.toIsoString());
+      expect(garden.snapshot.walkFlorinsClaimed, 1);
+    });
+
+    test('un re-crédit tardif des florins de marche ne double pas', () async {
+      var now = DateTime(2026, 9, 26, 12);
+      final database = GardenDatabase(NativeDatabase.memory());
+      addTearDown(database.close);
+      final steps = FakeStepProvider(now: () => now);
+      final garden = GardenSession(
+        database: database,
+        stepProvider: steps,
+        now: () => now,
+      );
+      await garden.load();
+
+      final pastDay = LocalDate(2026, 9, 25);
+      steps.setStepsOnDay(pastDay, 500);
+      await garden.applyLateSteps(pastDay);
+      final florinsAfterFirst = garden.snapshot.florins;
+
+      await garden.applyLateSteps(pastDay);
+      expect(garden.snapshot.florins, florinsAfterFirst);
+    });
   });
 }

@@ -13,27 +13,29 @@ class EconomyConfig {
     required this.fertilizerPrices,
     required this.decorationPrices,
     required this.harvestFlorinDailyLimit,
+    required this.dailyLotFlorinRanges,
+    this.dailyLotFirstNoFlorinsChance = 0.2,
   });
 
-  factory EconomyConfig.defaults() => const EconomyConfig(
-        florinsPerWalkStep: 1 / 500,
-        walkFlorinDailyCap: 30,
-        slotPrices: {
+  const EconomyConfig._default()
+      : florinsPerWalkStep = 1 / 500,
+        walkFlorinDailyCap = 30,
+        slotPrices = const {
           ZoneType.potager: [30, 45, 60, 75],
           ZoneType.jardinFleuri: [30, 45, 60, 75],
           ZoneType.verger: [30, 45],
         },
-        seedPrices: {
+        seedPrices = const {
           GrowthTier.commune: 5,
           GrowthTier.peuCommune: 20,
           GrowthTier.rare: 60,
         },
-        fertilizerPrices: {
+        fertilizerPrices = const {
           FertilizerType.basique: 10,
           FertilizerType.superEngrais: 20,
           FertilizerType.mega: 40,
         },
-        decorationPrices: {
+        decorationPrices = const {
           'arrosoir': 15,
           'banc': 20,
           'fontaine': 50,
@@ -45,8 +47,18 @@ class EconomyConfig {
           'nichoir': 18,
           'brouette': 25,
         },
-        harvestFlorinDailyLimit: 20,
-      );
+        harvestFlorinDailyLimit = 20,
+        dailyLotFlorinRanges = const [
+          [3, 5],
+          [8, 12],
+          [15, 20],
+          [30, 50],
+        ],
+        dailyLotFirstNoFlorinsChance = 0.2;
+
+  factory EconomyConfig.defaults() => const EconomyConfig._default();
+
+  static const EconomyConfig defaultConfig = EconomyConfig._default();
 
   /// Florins earned per step walked (1 florin per 500 steps = 1/500).
   final double florinsPerWalkStep;
@@ -68,4 +80,10 @@ class EconomyConfig {
 
   /// Maximum florins from harvests per day (without subscription).
   final int harvestFlorinDailyLimit;
+
+  /// Florin amount ranges [min, max] per daily lot rank (0-3).
+  final List<List<int>> dailyLotFlorinRanges;
+
+  /// Chance that the first daily lot gives no florins.
+  final double dailyLotFirstNoFlorinsChance;
 }

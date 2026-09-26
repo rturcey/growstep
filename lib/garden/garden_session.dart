@@ -59,7 +59,7 @@ class GardenSession {
   final StepProvider stepProvider;
   final EconomyConfig economyConfig;
   late final EconomyRules _economyRules = EconomyRules(economyConfig);
-  final DailyProgression _dailyProgression = const DailyProgression();
+  late final DailyProgression _dailyProgression = DailyProgression(economyConfig);
   GardenSnapshot snapshot = GardenSnapshot.initial();
 
   int get harvestFlorinLimit => economyConfig.harvestFlorinDailyLimit;
@@ -197,6 +197,24 @@ class GardenSession {
   Future<GardenSnapshot> applyLateSteps(LocalDate pastDay) async {
     final steps = max(0, await stepProvider.stepsOnDay(pastDay));
     if (steps <= 0) return snapshot;
+
+    final dayKey = pastDay.toIsoString();
+    final isSameWalkDay = snapshot.walkFlorinsDay == dayKey;
+    final alreadyClaimedWalk =
+        isSameWalkDay ? snapshot.walkFlorinsClaimed : 0;
+    final walkFlorins = _economyRules.walkFlorinsFromSteps(
+      steps,
+      alreadyClaimedWalk,
+    );
+
+    if (walkFlorins > 0) {
+      snapshot = snapshot.copyWith(
+        florins: snapshot.florins + walkFlorins,
+        walkFlorinsDay: dayKey,
+        walkFlorinsClaimed: alreadyClaimedWalk + walkFlorins,
+      );
+    }
+
     snapshot = _creditDailyLots(snapshot, pastDay, steps);
     await _store.save(snapshot);
     return snapshot;
