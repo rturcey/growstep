@@ -9,6 +9,7 @@ import 'package:growstep/garden/economy_config.dart';
 import 'package:growstep/garden/economy_rules.dart';
 import 'package:growstep/garden/daily_reward_id.dart';
 import 'package:growstep/steps/fake_step_provider.dart';
+import 'package:growstep/steps/fake_notification_scheduler.dart';
 
 void main() {
   test('les nouveaux pas font grandir toutes les plantes présentes', () async {
@@ -1547,6 +1548,400 @@ void main() {
 
       await garden.applyLateSteps(pastDay);
       expect(garden.snapshot.florins, florinsAfterFirst);
+    });
+  });
+
+  group('pauses marche', () {
+    test('une pause réussie donne un engrais basique', () async {
+      var now = DateTime(2026, 9, 26, 10);
+      final database = GardenDatabase(NativeDatabase.memory());
+      addTearDown(database.close);
+      final steps = FakeStepProvider(now: () => now);
+      final garden = GardenSession(
+        database: database,
+        stepProvider: steps,
+        now: () => now,
+      );
+      await database.save(GardenSnapshot.initial().copyWith(
+        starterFertilizerGranted: true,
+        fertilizers: {},
+      ));
+      await garden.load();
+
+      final start = now;
+      await garden.startPause();
+      now = start.add(const Duration(minutes: 10));
+      steps.setStepsBetween(start, now, 300);
+      await garden.checkActivePause();
+
+      expect(garden.snapshot.fertilizers[FertilizerType.basique], 1);
+      expect(garden.snapshot.pauseRewardsCount, 1);
+    });
+
+    test('299 pas en 10 minutes ne réussit pas la pause', () async {
+      var now = DateTime(2026, 9, 26, 10);
+      final database = GardenDatabase(NativeDatabase.memory());
+      addTearDown(database.close);
+      final steps = FakeStepProvider(now: () => now);
+      final garden = GardenSession(
+        database: database,
+        stepProvider: steps,
+        now: () => now,
+      );
+      await database.save(GardenSnapshot.initial().copyWith(
+        starterFertilizerGranted: true,
+        fertilizers: {},
+      ));
+      await garden.load();
+
+      final start = now;
+      await garden.startPause();
+      now = start.add(const Duration(minutes: 10));
+      steps.setStepsBetween(start, now, 299);
+      await garden.checkActivePause();
+
+      expect(garden.snapshot.fertilizers[FertilizerType.basique], isNull);
+      expect(garden.snapshot.pauseRewardsCount, 0);
+    });
+
+    test('au plus trois récompenses par jour', () async {
+      var now = DateTime(2026, 9, 26, 10);
+      final database = GardenDatabase(NativeDatabase.memory());
+      addTearDown(database.close);
+      final steps = FakeStepProvider(now: () => now);
+      final garden = GardenSession(
+        database: database,
+        stepProvider: steps,
+        now: () => now,
+      );
+      await database.save(GardenSnapshot.initial().copyWith(
+        starterFertilizerGranted: true,
+        fertilizers: {},
+      ));
+      await garden.load();
+
+      for (var i = 0; i < 3; i++) {
+        final start = now;
+        await garden.startPause();
+        now = start.add(const Duration(minutes: 10));
+        steps.setStepsBetween(start, now, 300);
+        await garden.checkActivePause();
+      }
+      expect(garden.snapshot.pauseRewardsCount, 3);
+      expect(garden.snapshot.fertilizers[FertilizerType.basique], 3);
+
+      final start = now;
+      await garden.startPause();
+      now = start.add(const Duration(minutes: 10));
+      steps.setStepsBetween(start, now, 300);
+      await garden.checkActivePause();
+      expect(garden.snapshot.pauseRewardsCount, 3);
+      expect(garden.snapshot.fertilizers[FertilizerType.basique], 3);
+    });
+
+    test('une pause reste possible après le troisième bonus', () async {
+      var now = DateTime(2026, 9, 26, 10);
+      final database = GardenDatabase(NativeDatabase.memory());
+      addTearDown(database.close);
+      final steps = FakeStepProvider(now: () => now);
+      final garden = GardenSession(
+        database: database,
+        stepProvider: steps,
+        now: () => now,
+      );
+      await database.save(GardenSnapshot.initial().copyWith(
+        starterFertilizerGranted: true,
+        fertilizers: {},
+        pauseRewardsCount: 3,
+      ));
+      await garden.load();
+
+      await garden.startPause();
+      expect(garden.snapshot.activePause, isNotNull);
+    });
+
+    test('abandonner une pause ne donne ni récompense ni malus', () async {
+      var now = DateTime(2026, 9, 26, 10);
+      final database = GardenDatabase(NativeDatabase.memory());
+      addTearDown(database.close);
+      final steps = FakeStepProvider(now: () => now);
+      final garden = GardenSession(
+        database: database,
+        stepProvider: steps,
+        now: () => now,
+      );
+      await database.save(GardenSnapshot.initial().copyWith(
+        starterFertilizerGranted: true,
+        fertilizers: {},
+      ));
+      await garden.load();
+
+      await garden.startPause();
+      await garden.cancelPause();
+      expect(garden.snapshot.activePause, isNull);
+      expect(garden.snapshot.fertilizers[FertilizerType.basique], isNull);
+    });
+
+    test('une pause évaluée à la reprise ne double pas la récompense', () async {
+      var now = DateTime(2026, 9, 26, 10);
+      final database = GardenDatabase(NativeDatabase.memory());
+      addTearDown(database.close);
+      final steps = FakeStepProvider(now: () => now);
+      final garden = GardenSession(
+        database: database,
+        stepProvider: steps,
+        now: () => now,
+      );
+      await garden.load();
+
+      final start = now;
+      await garden.startPause();
+      now = start.add(const Duration(minutes: 15));
+      steps.setStepsBetween(start, start.add(const Duration(minutes: 10)), 300);
+      await garden.checkActivePause();
+      final fertilizersAfterFirst = garden.snapshot.fertilizers[FertilizerType.basique];
+
+      await garden.checkActivePause();
+      expect(
+        garden.snapshot.fertilizers[FertilizerType.basique],
+        fertilizersAfterFirst,
+      );
+    });
+
+    test('le changement de jour réinitialise le compteur de pauses', () async {
+      var now = DateTime(2026, 9, 26, 10);
+      final database = GardenDatabase(NativeDatabase.memory());
+      addTearDown(database.close);
+      final steps = FakeStepProvider(now: () => now);
+      final garden = GardenSession(
+        database: database,
+        stepProvider: steps,
+        now: () => now,
+      );
+      await garden.load();
+      await database.save(garden.snapshot.copyWith(
+        starterFertilizerGranted: true,
+        fertilizers: {},
+        pauseRewardsCount: 3,
+      ));
+
+      now = DateTime(2026, 9, 27, 10);
+      final start = now;
+      await garden.startPause();
+      now = start.add(const Duration(minutes: 10));
+      steps.setStepsBetween(start, now, 300);
+      await garden.checkActivePause();
+      expect(garden.snapshot.pauseRewardsCount, 1);
+    });
+  });
+
+  group('inactivité', () {
+    test('300 pas détectés remettent le compteur d\'inactivité à zéro', () async {
+      var now = DateTime(2026, 9, 26, 10);
+      final database = GardenDatabase(NativeDatabase.memory());
+      addTearDown(database.close);
+      final steps = FakeStepProvider(now: () => now);
+      final garden = GardenSession(
+        database: database,
+        stepProvider: steps,
+        now: () => now,
+      );
+      final earlier = now.subtract(const Duration(minutes: 30));
+      await database.save(GardenSnapshot.initial().copyWith(
+        starterFertilizerGranted: true,
+        lastActivityTime: earlier.toIso8601String(),
+      ));
+      await garden.load();
+
+      steps.addSteps(300);
+      await garden.refreshSteps();
+      expect(
+        garden.snapshot.lastActivityTime,
+        isNot(earlier.toIso8601String()),
+      );
+    });
+
+    test('lancer une pause ne remet pas le compteur à zéro', () async {
+      var now = DateTime(2026, 9, 26, 10);
+      final database = GardenDatabase(NativeDatabase.memory());
+      addTearDown(database.close);
+      final steps = FakeStepProvider(now: () => now);
+      final garden = GardenSession(
+        database: database,
+        stepProvider: steps,
+        now: () => now,
+      );
+      final earlier = now.subtract(const Duration(minutes: 30));
+      await database.save(GardenSnapshot.initial().copyWith(
+        starterFertilizerGranted: true,
+        lastActivityTime: earlier.toIso8601String(),
+      ));
+      await garden.load();
+
+      await garden.startPause();
+      expect(
+        garden.snapshot.lastActivityTime,
+        earlier.toIso8601String(),
+      );
+    });
+
+    test('60 minutes d\'inactivité déclenche une proposition', () async {
+      var now = DateTime(2026, 9, 26, 11);
+      final database = GardenDatabase(NativeDatabase.memory());
+      addTearDown(database.close);
+      final steps = FakeStepProvider(now: () => now);
+      final notifications = FakeNotificationScheduler();
+      final garden = GardenSession(
+        database: database,
+        stepProvider: steps,
+        now: () => now,
+        notificationScheduler: notifications,
+      );
+      final lastActivity = now.subtract(const Duration(minutes: 61));
+      await database.save(GardenSnapshot.initial().copyWith(
+        lastActivityTime: lastActivity.toIso8601String(),
+        starterFertilizerGranted: true,
+      ));
+      await garden.load();
+
+      garden.evaluateInactivity();
+
+      expect(notifications.scheduled, anyElement(isA<ProposeWalkIntent>()));
+    });
+
+    test('90 minutes d\'inactivité déclenche un rappel', () async {
+      var now = DateTime(2026, 9, 26, 11, 31);
+      final database = GardenDatabase(NativeDatabase.memory());
+      addTearDown(database.close);
+      final steps = FakeStepProvider(now: () => now);
+      final notifications = FakeNotificationScheduler();
+      final garden = GardenSession(
+        database: database,
+        stepProvider: steps,
+        now: () => now,
+        notificationScheduler: notifications,
+      );
+      final lastActivity = now.subtract(const Duration(minutes: 91));
+      await database.save(GardenSnapshot.initial().copyWith(
+        lastActivityTime: lastActivity.toIso8601String(),
+        starterFertilizerGranted: true,
+      ));
+      await garden.load();
+
+      garden.evaluateInactivity();
+
+      expect(notifications.scheduled, anyElement(isA<ReminderWalkIntent>()));
+    });
+
+    test('moins de 60 minutes d\'inactivité ne déclenche rien', () async {
+      var now = DateTime(2026, 9, 26, 10, 30);
+      final database = GardenDatabase(NativeDatabase.memory());
+      addTearDown(database.close);
+      final steps = FakeStepProvider(now: () => now);
+      final notifications = FakeNotificationScheduler();
+      final garden = GardenSession(
+        database: database,
+        stepProvider: steps,
+        now: () => now,
+        notificationScheduler: notifications,
+      );
+      final lastActivity = now.subtract(const Duration(minutes: 45));
+      await database.save(GardenSnapshot.initial().copyWith(
+        lastActivityTime: lastActivity.toIso8601String(),
+        starterFertilizerGranted: true,
+      ));
+      await garden.load();
+
+      garden.evaluateInactivity();
+
+      expect(notifications.scheduled, isEmpty);
+    });
+  });
+
+  group('invitations à heures choisies', () {
+    test('les heures d\'invitation se règlent et persistent', () async {
+      final database = GardenDatabase(NativeDatabase.memory());
+      addTearDown(database.close);
+      final garden = GardenSession(
+        database: database,
+        stepProvider: FakeStepProvider(),
+      );
+      await garden.load();
+
+      await garden.setInvitationHours([9, 14, 18]);
+      expect(garden.snapshot.invitationHours, [9, 14, 18]);
+
+      final reopened = GardenDatabase(NativeDatabase.memory());
+      addTearDown(reopened.close);
+      await reopened.save(garden.snapshot);
+      final reopenedGarden = GardenSession(
+        database: reopened,
+        stepProvider: FakeStepProvider(),
+      );
+      await reopenedGarden.load();
+      expect(reopenedGarden.snapshot.invitationHours, [9, 14, 18]);
+    });
+
+    test('une invitation à heure choisie produit une intention de notification', () async {
+      var now = DateTime(2026, 9, 26, 9, 5);
+      final database = GardenDatabase(NativeDatabase.memory());
+      addTearDown(database.close);
+      final notifications = FakeNotificationScheduler();
+      final garden = GardenSession(
+        database: database,
+        stepProvider: FakeStepProvider(now: () => now),
+        now: () => now,
+        notificationScheduler: notifications,
+      );
+      await garden.load();
+      await garden.setInvitationHours([9]);
+
+      garden.evaluateScheduledInvitations();
+
+      expect(
+        notifications.scheduled,
+        anyElement(isA<InvitationWalkIntent>()),
+      );
+    });
+
+    test('une invitation est supprimée si 300 pas ont été détectés récemment', () async {
+      var now = DateTime(2026, 9, 26, 9, 5);
+      final database = GardenDatabase(NativeDatabase.memory());
+      addTearDown(database.close);
+      final steps = FakeStepProvider(now: () => now);
+      final notifications = FakeNotificationScheduler();
+      final garden = GardenSession(
+        database: database,
+        stepProvider: steps,
+        now: () => now,
+        notificationScheduler: notifications,
+      );
+      await garden.load();
+      await garden.setInvitationHours([9]);
+
+      steps.addSteps(300);
+      await garden.refreshSteps();
+      notifications.clear();
+      garden.evaluateScheduledInvitations();
+
+      expect(notifications.scheduled, isEmpty);
+      expect(notifications.cancelled, isNotEmpty);
+    });
+
+    test('le refus des notifications n\'empêche pas les pauses manuelles', () async {
+      var now = DateTime(2026, 9, 26, 10);
+      final database = GardenDatabase(NativeDatabase.memory());
+      addTearDown(database.close);
+      final steps = FakeStepProvider(now: () => now);
+      final garden = GardenSession(
+        database: database,
+        stepProvider: steps,
+        now: () => now,
+      );
+      await garden.load();
+
+      await garden.startPause();
+      expect(garden.snapshot.activePause, isNotNull);
     });
   });
 }

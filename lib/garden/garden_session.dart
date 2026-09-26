@@ -2,6 +2,8 @@ import 'dart:math';
 import 'dart:ui';
 
 import '../steps/step_provider.dart';
+import '../steps/notification_scheduler.dart';
+import 'active_pause.dart';
 import 'daily_progression.dart';
 import 'daily_reward_id.dart';
 import 'decoration_catalogue.dart';
@@ -10,7 +12,9 @@ import 'economy_rules.dart';
 import 'garden_scene.dart';
 import 'garden_state.dart';
 import 'local_date.dart';
+import 'notification_intent.dart';
 
+export 'active_pause.dart' show ActivePause;
 export 'daily_progression.dart' show DailyLot;
 export 'garden_state.dart'
     show
@@ -22,6 +26,8 @@ export 'garden_state.dart'
         PlantStage,
         Species,
         ZoneType;
+export 'notification_intent.dart'
+    show NotificationIntent, ProposeWalkIntent, ReminderWalkIntent, InvitationWalkIntent;
 
 typedef PlantLocation = ({ZoneType zone, int slot});
 
@@ -48,6 +54,13 @@ class GardenSession {
     DateTime Function()? now,
     double Function()? roll,
     EconomyConfig? economyConfig,
+    this.notificationScheduler,
+    this.pauseObjective = 300,
+    this.pauseDurationMinutes = 10,
+    this.maxPauseRewardsPerDay = 3,
+    this.inactivityProposeMinutes = 60,
+    this.inactivityReminderMinutes = 90,
+    this.inactivityStepThreshold = 300,
   }) : _store = database,
        _now = now ?? DateTime.now,
        _roll = roll ?? Random().nextDouble,
@@ -58,6 +71,13 @@ class GardenSession {
   final double Function() _roll;
   final StepProvider stepProvider;
   final EconomyConfig economyConfig;
+  final NotificationScheduler? notificationScheduler;
+  final int pauseObjective;
+  final int pauseDurationMinutes;
+  final int maxPauseRewardsPerDay;
+  final int inactivityProposeMinutes;
+  final int inactivityReminderMinutes;
+  final int inactivityStepThreshold;
   late final EconomyRules _economyRules = EconomyRules(economyConfig);
   late final DailyProgression _dailyProgression = DailyProgression(economyConfig);
   GardenSnapshot snapshot = GardenSnapshot.initial();
@@ -135,6 +155,12 @@ class GardenSession {
 
     snapshot = _creditDailyLots(snapshot, todayLocal, steps);
 
+    if (steps >= inactivityStepThreshold) {
+      snapshot = snapshot.copyWith(
+        lastActivityTime: _now().toIso8601String(),
+      );
+    }
+
     await _store.save(snapshot);
     return snapshot;
   }
@@ -193,6 +219,130 @@ class GardenSession {
 
   List<DailyLot> previewDailyLots(LocalDate day) =>
       _dailyProgression.lotsFor(snapshot.playerSeed, day);
+
+  // ─── Pause marche ───────────────────────────────────────────────────
+
+  Future<GardenSnapshot> startPause() async {
+    final now = _now();
+    final pause = ActivePause(
+      startTime: now,
+      objective: pauseObjective,
+      deadline: now.add(Duration(minutes: pauseDurationMinutes)),
+    );
+    snapshot = snapshot.copyWith(activePause: pause);
+    await _store.save(snapshot);
+    return snapshot;
+  }
+
+  Future<GardenSnapshot> checkActivePause() async {
+    final pause = snapshot.activePause;
+    if (pause == null) return snapshot;
+
+    final now = _now();
+    if (now.isBefore(pause.deadline) && !pause.rewarded) return snapshot;
+
+    if (pause.rewarded) return snapshot;
+
+    final steps = await stepProvider.stepsBetween(
+      pause.startTime,
+      pause.deadline,
+    );
+
+    if (steps >= pause.objective) {
+      final today = localDayKey(now);
+      final isSameDay = snapshot.pauseRewardsDay == today;
+      final currentCount = isSameDay ? snapshot.pauseRewardsCount : 0;
+
+      var fertilizers = {...snapshot.fertilizers};
+      var newCount = currentCount;
+      if (currentCount < maxPauseRewardsPerDay) {
+        fertilizers[FertilizerType.basique] =
+            (fertilizers[FertilizerType.basique] ?? 0) + 1;
+        newCount = currentCount + 1;
+      }
+
+      snapshot = snapshot.copyWith(
+        activePause: pause.copyWith(rewarded: true),
+        fertilizers: fertilizers,
+        pauseRewardsDay: today,
+        pauseRewardsCount: newCount,
+      );
+    } else {
+      snapshot = snapshot.copyWith(activePause: pause.copyWith(rewarded: true));
+    }
+    await _store.save(snapshot);
+    return snapshot;
+  }
+
+  Future<GardenSnapshot> cancelPause() async {
+    if (snapshot.activePause == null) return snapshot;
+    snapshot = snapshot.copyWith(activePause: null);
+    await _store.save(snapshot);
+    return snapshot;
+  }
+
+  // ─── Inactivité ────────────────────────────────────────────────────
+
+  void evaluateInactivity() {
+    final scheduler = notificationScheduler;
+    if (scheduler == null) return;
+
+    final now = _now();
+    final lastActivity = snapshot.lastActivityTime;
+    if (lastActivity == null) return;
+
+    final lastActivityDt = DateTime.parse(lastActivity);
+    final inactiveMinutes = now.difference(lastActivityDt).inMinutes;
+
+    if (inactiveMinutes >= inactivityReminderMinutes) {
+      scheduler.schedule(ReminderWalkIntent(scheduledTime: now));
+    } else if (inactiveMinutes >= inactivityProposeMinutes) {
+      scheduler.schedule(ProposeWalkIntent(scheduledTime: now));
+    }
+  }
+
+  // ─── Invitations à heures choisies ─────────────────────────────────
+
+  Future<GardenSnapshot> setInvitationHours(List<int> hours) async {
+    final sorted = (Set<int>.from(hours).toList()..sort());
+    snapshot = snapshot.copyWith(invitationHours: sorted);
+    await _store.save(snapshot);
+    return snapshot;
+  }
+
+  void evaluateScheduledInvitations() {
+    final scheduler = notificationScheduler;
+    if (scheduler == null) return;
+
+    final now = _now();
+    final hour = now.hour;
+
+    if (!snapshot.invitationHours.contains(hour)) return;
+
+    final today = localDayKey(now);
+    final invitedKey = 'invitation_${today}_$hour';
+    if (snapshot.invitationSentKeys.contains(invitedKey)) return;
+
+    final lastActivity = snapshot.lastActivityTime;
+    final recentActivity = lastActivity != null &&
+        now.difference(DateTime.parse(lastActivity)).inMinutes < 30 &&
+        snapshot.creditedSteps >= inactivityStepThreshold;
+
+    if (recentActivity) {
+      scheduler.cancel(InvitationWalkIntent(hour: hour));
+      return;
+    }
+
+    if (snapshot.activePause != null) {
+      scheduler.cancel(InvitationWalkIntent(hour: hour));
+      return;
+    }
+
+    scheduler.schedule(InvitationWalkIntent(hour: hour, scheduledTime: now));
+    snapshot = snapshot.copyWith(
+      invitationSentKeys: {...snapshot.invitationSentKeys, invitedKey},
+    );
+  }
 
   Future<GardenSnapshot> applyLateSteps(LocalDate pastDay) async {
     final steps = max(0, await stepProvider.stepsOnDay(pastDay));

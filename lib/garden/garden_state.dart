@@ -1,7 +1,10 @@
 import 'dart:ui';
 
+import 'active_pause.dart';
 import 'daily_reward_id.dart';
 import 'local_date.dart';
+
+const _unset = Object();
 
 enum ZoneType {
   potager('Potager', 4, 8, 0),
@@ -272,6 +275,12 @@ class GardenSnapshot {
     this.walkFlorinsClaimed = 0,
     this.ownedDecorations = const {},
     this.placedDecorations = const [],
+    this.pauseRewardsDay,
+    this.pauseRewardsCount = 0,
+    this.activePause,
+    this.invitationHours = const [],
+    this.invitationSentKeys = const {},
+    this.lastActivityTime,
     this.legacyArchive,
     this.ownedZones = const {},
   });
@@ -306,6 +315,12 @@ class GardenSnapshot {
     walkFlorinsClaimed: 0,
     ownedDecorations: {},
     placedDecorations: [],
+    pauseRewardsDay: null,
+    pauseRewardsCount: 0,
+    activePause: null,
+    invitationHours: [],
+    invitationSentKeys: {},
+    lastActivityTime: null,
     ownedZones: {ZoneType.potager},
   );
 
@@ -326,6 +341,12 @@ class GardenSnapshot {
   final int walkFlorinsClaimed;
   final Map<String, int> ownedDecorations;
   final List<PlacedDecoration> placedDecorations;
+  final String? pauseRewardsDay;
+  final int pauseRewardsCount;
+  final ActivePause? activePause;
+  final List<int> invitationHours;
+  final Set<String> invitationSentKeys;
+  final String? lastActivityTime;
   final Map<String, dynamic>? legacyArchive;
   final Set<ZoneType> ownedZones;
 
@@ -351,6 +372,12 @@ class GardenSnapshot {
     int? walkFlorinsClaimed,
     Map<String, int>? ownedDecorations,
     List<PlacedDecoration>? placedDecorations,
+    String? pauseRewardsDay,
+    int? pauseRewardsCount,
+    Object? activePause = _unset,
+    List<int>? invitationHours,
+    Set<String>? invitationSentKeys,
+    String? lastActivityTime,
     Map<String, dynamic>? legacyArchive,
     Set<ZoneType>? ownedZones,
   }) => GardenSnapshot(
@@ -372,6 +399,12 @@ class GardenSnapshot {
     walkFlorinsClaimed: walkFlorinsClaimed ?? this.walkFlorinsClaimed,
     ownedDecorations: ownedDecorations ?? this.ownedDecorations,
     placedDecorations: placedDecorations ?? this.placedDecorations,
+    pauseRewardsDay: pauseRewardsDay ?? this.pauseRewardsDay,
+    pauseRewardsCount: pauseRewardsCount ?? this.pauseRewardsCount,
+    activePause: activePause == _unset ? this.activePause : activePause as ActivePause?,
+    invitationHours: invitationHours ?? this.invitationHours,
+    invitationSentKeys: invitationSentKeys ?? this.invitationSentKeys,
+    lastActivityTime: lastActivityTime ?? this.lastActivityTime,
     legacyArchive: legacyArchive ?? this.legacyArchive,
     ownedZones: ownedZones ?? this.ownedZones,
   );
@@ -406,6 +439,12 @@ class GardenSnapshot {
     'placedDecorations': [
       for (final d in placedDecorations) d.toJson(),
     ],
+    'pauseRewardsDay': pauseRewardsDay,
+    'pauseRewardsCount': pauseRewardsCount,
+    'activePause': activePause?.toJson(),
+    'invitationHours': invitationHours,
+    'invitationSentKeys': invitationSentKeys.toList(),
+    'lastActivityTime': lastActivityTime,
     'legacyArchive': legacyArchive,
     'ownedZones': ownedZones.map((zone) => zone.name).toList(),
   };
@@ -497,6 +536,18 @@ class GardenSnapshot {
         for (final d in rawPlacedDecorations)
           PlacedDecoration.fromJson(d as Map<String, dynamic>),
       ],
+      pauseRewardsDay: json['pauseRewardsDay'] as String?,
+      pauseRewardsCount: json['pauseRewardsCount'] as int? ?? 0,
+      activePause: json['activePause'] == null
+          ? null
+          : ActivePause.fromJson(
+              json['activePause'] as Map<String, dynamic>,
+            ),
+      invitationHours: (json['invitationHours'] as List<dynamic>? ?? [])
+          .cast<int>(),
+      invitationSentKeys:
+          (json['invitationSentKeys'] as List<dynamic>? ?? []).cast<String>().toSet(),
+      lastActivityTime: json['lastActivityTime'] as String?,
       legacyArchive: json['legacyArchive'] as Map<String, dynamic>?,
       ownedZones: ownedZones,
     );

@@ -15,6 +15,7 @@ class FakeStepProvider implements StepProvider {
   late String _day;
 
   final Map<String, int> _stepsByDay = {};
+  final List<({DateTime start, DateTime end, int steps})> _intervals = [];
 
   void _refreshDay() {
     final today = localDayKey(_now());
@@ -53,6 +54,22 @@ class FakeStepProvider implements StepProvider {
   @override
   Future<int> stepsOnDay(LocalDate day) async =>
       _stepsByDay[day.toIsoString()] ?? 0;
+
+  void setStepsBetween(DateTime start, DateTime end, int count) {
+    if (count < 0) throw ArgumentError.value(count, 'count');
+    _intervals.add((start: start, end: end, steps: count));
+  }
+
+  @override
+  Future<int> stepsBetween(DateTime start, DateTime end) async {
+    var total = 0;
+    for (final interval in _intervals) {
+      if (interval.start.isBefore(end) && interval.end.isAfter(start)) {
+        total += interval.steps;
+      }
+    }
+    return total;
+  }
 
   @override
   Future<int> stepsToday() async => currentSteps;
