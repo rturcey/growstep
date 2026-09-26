@@ -1,8 +1,17 @@
 import 'dart:math';
+import 'dart:ui';
 
 import '../steps/step_provider.dart';
+import 'daily_progression.dart';
+import 'daily_reward_id.dart';
+import 'decoration_catalogue.dart';
+import 'economy_config.dart';
+import 'economy_rules.dart';
+import 'garden_scene.dart';
 import 'garden_state.dart';
+import 'local_date.dart';
 
+export 'daily_progression.dart' show DailyLot;
 export 'garden_state.dart'
     show
         FertilizerType,
@@ -38,17 +47,22 @@ class GardenSession {
     required this.stepProvider,
     DateTime Function()? now,
     double Function()? roll,
-    this.harvestFlorinLimit = dailyHarvestFlorinLimit,
+    EconomyConfig? economyConfig,
   }) : _store = database,
        _now = now ?? DateTime.now,
-       _roll = roll ?? Random().nextDouble;
+       _roll = roll ?? Random().nextDouble,
+       economyConfig = economyConfig ?? EconomyConfig.defaults();
 
   final GardenStore _store;
   final DateTime Function() _now;
   final double Function() _roll;
   final StepProvider stepProvider;
-  final int harvestFlorinLimit;
+  final EconomyConfig economyConfig;
+  late final EconomyRules _economyRules = EconomyRules(economyConfig);
+  final DailyProgression _dailyProgression = const DailyProgression();
   GardenSnapshot snapshot = GardenSnapshot.initial();
+
+  int get harvestFlorinLimit => economyConfig.harvestFlorinDailyLimit;
 
   int get harvestFlorinsToday =>
       snapshot.harvestFlorinsDay == localDayKey(_now())
@@ -73,6 +87,10 @@ class GardenSession {
       );
       changed = true;
     }
+    if (snapshot.playerSeed == 0) {
+      snapshot = snapshot.copyWith(playerSeed: Random().nextInt(1 << 31) + 1);
+      changed = true;
+    }
     if (changed) await _store.save(snapshot);
     return snapshot;
   }
@@ -80,6 +98,7 @@ class GardenSession {
   Future<GardenSnapshot> refreshSteps() async {
     final steps = max(0, await stepProvider.stepsToday());
     final today = localDayKey(_now());
+    final todayLocal = LocalDate.fromDateTime(_now());
     final previouslyCredited = snapshot.creditedDay == today
         ? snapshot.creditedSteps
         : 0;
@@ -95,11 +114,90 @@ class GardenSession {
         ],
     };
     zones = _prepareHarvests(zones) ?? zones;
+
+    final isSameWalkDay =
+        snapshot.walkFlorinsDay == todayLocal.toIsoString();
+    final alreadyClaimedWalk =
+        isSameWalkDay ? snapshot.walkFlorinsClaimed : 0;
+    final walkFlorins = _economyRules.walkFlorinsFromSteps(
+      steps,
+      alreadyClaimedWalk,
+    );
+
     snapshot = snapshot.copyWith(
       zones: zones,
       creditedDay: today,
       creditedSteps: max(steps, previouslyCredited),
+      florins: snapshot.florins + walkFlorins,
+      walkFlorinsDay: todayLocal.toIsoString(),
+      walkFlorinsClaimed: alreadyClaimedWalk + walkFlorins,
     );
+
+    snapshot = _creditDailyLots(snapshot, todayLocal, steps);
+
+    await _store.save(snapshot);
+    return snapshot;
+  }
+
+  GardenSnapshot _creditDailyLots(
+    GardenSnapshot current,
+    LocalDate day,
+    int stepsToday,
+  ) {
+    final lots = _dailyProgression.lotsFor(current.playerSeed, day);
+    final reachedThresholds = _dailyProgression.reachedThresholds(stepsToday);
+
+    var florins = current.florins;
+    var seeds = {...current.seeds};
+    var brilliantSeeds = {...current.brilliantSeeds};
+    var fertilizers = {...current.fertilizers};
+    var ownedDecorations = {...current.ownedDecorations};
+    final claimed = {...current.claimedDailyRewards};
+    var changed = false;
+
+    for (final lot in lots) {
+      if (!reachedThresholds.contains(lot.threshold)) continue;
+      final rewardId = DailyRewardId(day, lot.threshold);
+      if (claimed.contains(rewardId)) continue;
+
+      florins += lot.florins;
+      if (lot.seedSpecies != null) {
+        seeds[lot.seedSpecies!] = (seeds[lot.seedSpecies!] ?? 0) + 1;
+      }
+      if (lot.fertilizerType != null) {
+        fertilizers[lot.fertilizerType!] =
+            (fertilizers[lot.fertilizerType!] ?? 0) + 1;
+      }
+      if (lot.decorationId != null) {
+        ownedDecorations[lot.decorationId!] =
+            (ownedDecorations[lot.decorationId!] ?? 0) + 1;
+      }
+      if (lot.shinySeedSpecies != null) {
+        brilliantSeeds[lot.shinySeedSpecies!] =
+            (brilliantSeeds[lot.shinySeedSpecies!] ?? 0) + 1;
+      }
+      claimed.add(rewardId);
+      changed = true;
+    }
+
+    if (!changed) return current;
+    return current.copyWith(
+      florins: florins,
+      seeds: seeds,
+      brilliantSeeds: brilliantSeeds,
+      fertilizers: fertilizers,
+      ownedDecorations: ownedDecorations,
+      claimedDailyRewards: claimed,
+    );
+  }
+
+  List<DailyLot> previewDailyLots(LocalDate day) =>
+      _dailyProgression.lotsFor(snapshot.playerSeed, day);
+
+  Future<GardenSnapshot> applyLateSteps(LocalDate pastDay) async {
+    final steps = max(0, await stepProvider.stepsOnDay(pastDay));
+    if (steps <= 0) return snapshot;
+    snapshot = _creditDailyLots(snapshot, pastDay, steps);
     await _store.save(snapshot);
     return snapshot;
   }
@@ -134,6 +232,32 @@ class GardenSession {
     await _store.save(next);
     snapshot = next;
     return snapshot;
+  }
+
+  Future<GardenSnapshot> buySlot(ZoneType zone) async {
+    if (!snapshot.ownedZones.contains(zone)) {
+      throw StateError('${zone.label} is not owned yet');
+    }
+    final currentSlots = snapshot.zones[zone]!;
+    final alreadyPurchased = currentSlots.length - zone.initialSlots;
+    if (currentSlots.length >= zone.maxSlots) {
+      throw StateError('${zone.label} has reached its maximum slots');
+    }
+    final price = _economyRules.slotPrice(zone, alreadyPurchased);
+    if (snapshot.florins < price) {
+      throw StateError('Not enough florins to buy a slot in ${zone.label}');
+    }
+    final zones = {
+      for (final entry in snapshot.zones.entries) entry.key: [...entry.value],
+    };
+    zones[zone] = [...currentSlots, null];
+    final next = snapshot.copyWith(
+      zones: zones,
+      florins: snapshot.florins - price,
+    );
+    await _store.save(next);
+    snapshot = next;
+    return next;
   }
 
   Future<GardenSnapshot> plantSeed(
@@ -182,6 +306,184 @@ class GardenSession {
     };
     zones[zone]![slot] = null;
     snapshot = snapshot.copyWith(zones: zones);
+    await _store.save(snapshot);
+    return snapshot;
+  }
+
+  Future<GardenSnapshot> buySeed(Species species, GrowthTier tier) async {
+    if (tier == GrowthTier.brillante) {
+      throw StateError('Brillant seeds cannot be purchased');
+    }
+    final price = _economyRules.seedPrice(tier);
+    if (snapshot.florins < price) {
+      throw StateError('Not enough florins to buy a ${tier.name} seed');
+    }
+    final seeds = {...snapshot.seeds};
+    seeds[species] = (seeds[species] ?? 0) + 1;
+    snapshot = snapshot.copyWith(
+      seeds: seeds,
+      florins: snapshot.florins - price,
+    );
+    await _store.save(snapshot);
+    return snapshot;
+  }
+
+  Future<GardenSnapshot> buyFertilizer(FertilizerType type) async {
+    final price = _economyRules.fertilizerPrice(type);
+    if (snapshot.florins < price) {
+      throw StateError('Not enough florins to buy ${type.label} fertilizer');
+    }
+    final fertilizers = {...snapshot.fertilizers};
+    fertilizers[type] = (fertilizers[type] ?? 0) + 1;
+    snapshot = snapshot.copyWith(
+      fertilizers: fertilizers,
+      florins: snapshot.florins - price,
+    );
+    await _store.save(snapshot);
+    return snapshot;
+  }
+
+  Future<GardenSnapshot> discardSeeds(
+    Species species, {
+    bool brilliant = false,
+    int count = 1,
+  }) async {
+    final inventory = brilliant
+        ? {...snapshot.brilliantSeeds}
+        : {...snapshot.seeds};
+    final current = inventory[species] ?? 0;
+    if (current < count) {
+      throw StateError('Not enough seeds to discard');
+    }
+    inventory[species] = current - count;
+    snapshot = brilliant
+        ? snapshot.copyWith(brilliantSeeds: inventory)
+        : snapshot.copyWith(seeds: inventory);
+    await _store.save(snapshot);
+    return snapshot;
+  }
+
+  Future<GardenSnapshot> buyDecoration(String decorationId) async {
+    if (!const DecorationCatalogue().contains(decorationId)) {
+      throw StateError('Unknown decoration: $decorationId');
+    }
+    final price = _economyRules.decorationPrice(decorationId);
+    if (snapshot.florins < price) {
+      throw StateError('Not enough florins to buy $decorationId');
+    }
+    final owned = {...snapshot.ownedDecorations};
+    owned[decorationId] = (owned[decorationId] ?? 0) + 1;
+    snapshot = snapshot.copyWith(
+      ownedDecorations: owned,
+      florins: snapshot.florins - price,
+    );
+    await _store.save(snapshot);
+    return snapshot;
+  }
+
+  Future<String> placeDecoration(
+    String decorationId,
+    ZoneType zone,
+    Offset contact,
+  ) async {
+    if (!snapshot.ownedZones.contains(zone)) {
+      throw StateError('${zone.label} is not owned yet');
+    }
+    final inInventory = snapshot.ownedDecorations[decorationId] ?? 0;
+    if (inInventory < 1) {
+      throw StateError('No $decorationId in inventory');
+    }
+    _validateGridContact(contact, decorationId, zone);
+    final placedId = '${decorationId}_${_now().microsecondsSinceEpoch}';
+    final placed = PlacedDecoration(
+      placedId: placedId,
+      decorationId: decorationId,
+      zone: zone,
+      contact: contact,
+    );
+    final owned = {...snapshot.ownedDecorations};
+    owned[decorationId] = inInventory - 1;
+    snapshot = snapshot.copyWith(
+      ownedDecorations: owned,
+      placedDecorations: [...snapshot.placedDecorations, placed],
+    );
+    await _store.save(snapshot);
+    return placedId;
+  }
+
+  void _validateGridContact(Offset contact, String decorationId, ZoneType zone) {
+    final catalogue = const DecorationCatalogue();
+    final def = catalogue.find(decorationId);
+    if (def == null) return;
+    final halfCellW = IsoGrid.cellWidth / 2;
+    final halfCellH = IsoGrid.cellHeight / 2;
+    final snappedDx = (contact.dx / halfCellW).round() * halfCellW;
+    final snappedDy = (contact.dy / halfCellH).round() * halfCellH;
+    if ((snappedDx - contact.dx).abs() > 0.01 ||
+        (snappedDy - contact.dy).abs() > 0.01) {
+      throw StateError(
+        'Contact $contact is not aligned on the 80×40 grid',
+      );
+    }
+    for (final placed in snapshot.placedDecorations) {
+      if (placed.zone != zone) continue;
+      final dx = (placed.contact.dx - contact.dx).abs();
+      final dy = (placed.contact.dy - contact.dy).abs();
+      if (dx < halfCellW && dy < halfCellH) {
+        throw StateError(
+          'Decoration overlaps existing placement at ${placed.contact}',
+        );
+      }
+    }
+  }
+
+  Future<GardenSnapshot> moveDecoration(
+    String placedId,
+    ZoneType zone,
+    Offset newContact,
+  ) async {
+    final placements = [...snapshot.placedDecorations];
+    var index = -1;
+    for (var i = 0; i < placements.length; i++) {
+      if (placements[i].placedId == placedId) {
+        index = i;
+        break;
+      }
+    }
+    if (index == -1) {
+      throw StateError('No placed decoration with id $placedId');
+    }
+    placements[index] = PlacedDecoration(
+      placedId: placedId,
+      decorationId: placements[index].decorationId,
+      zone: zone,
+      contact: newContact,
+    );
+    snapshot = snapshot.copyWith(placedDecorations: placements);
+    await _store.save(snapshot);
+    return snapshot;
+  }
+
+  Future<GardenSnapshot> removeDecoration(String placedId) async {
+    final placements = [...snapshot.placedDecorations];
+    var index = -1;
+    for (var i = 0; i < placements.length; i++) {
+      if (placements[i].placedId == placedId) {
+        index = i;
+        break;
+      }
+    }
+    if (index == -1) {
+      throw StateError('No placed decoration with id $placedId');
+    }
+    final removed = placements.removeAt(index);
+    final owned = {...snapshot.ownedDecorations};
+    owned[removed.decorationId] =
+        (owned[removed.decorationId] ?? 0) + 1;
+    snapshot = snapshot.copyWith(
+      placedDecorations: placements,
+      ownedDecorations: owned,
+    );
     await _store.save(snapshot);
     return snapshot;
   }

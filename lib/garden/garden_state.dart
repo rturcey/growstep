@@ -1,3 +1,8 @@
+import 'dart:ui';
+
+import 'daily_reward_id.dart';
+import 'local_date.dart';
+
 enum ZoneType {
   potager('Potager', 4, 8, 0),
   jardinFleuri('Jardin fleuri', 4, 8, 100),
@@ -216,6 +221,38 @@ class Plant {
   );
 }
 
+class PlacedDecoration {
+  const PlacedDecoration({
+    required this.placedId,
+    required this.decorationId,
+    required this.zone,
+    required this.contact,
+  });
+
+  final String placedId;
+  final String decorationId;
+  final ZoneType zone;
+  final Offset contact;
+
+  Map<String, Object?> toJson() => {
+        'placedId': placedId,
+        'decorationId': decorationId,
+        'zone': zone.name,
+        'contact': {'dx': contact.dx, 'dy': contact.dy},
+      };
+
+  factory PlacedDecoration.fromJson(Map<String, dynamic> json) =>
+      PlacedDecoration(
+        placedId: json['placedId'] as String,
+        decorationId: json['decorationId'] as String,
+        zone: ZoneType.values.byName(json['zone'] as String),
+        contact: Offset(
+          (json['contact'] as Map<String, dynamic>)['dx'] as double,
+          (json['contact'] as Map<String, dynamic>)['dy'] as double,
+        ),
+      );
+}
+
 class GardenSnapshot {
   const GardenSnapshot({
     required this.zones,
@@ -229,7 +266,12 @@ class GardenSnapshot {
     this.harvestFlorinsDay,
     this.harvestFlorinsClaimed = 0,
     this.starterFertilizerGranted = false,
-    required this.decorations,
+    this.playerSeed = 0,
+    this.claimedDailyRewards = const {},
+    this.walkFlorinsDay,
+    this.walkFlorinsClaimed = 0,
+    this.ownedDecorations = const {},
+    this.placedDecorations = const [],
     this.legacyArchive,
     this.ownedZones = const {},
   });
@@ -258,7 +300,12 @@ class GardenSnapshot {
     harvestFlorinsDay: null,
     harvestFlorinsClaimed: 0,
     starterFertilizerGranted: false,
-    decorations: const [],
+    playerSeed: 0,
+    claimedDailyRewards: {},
+    walkFlorinsDay: null,
+    walkFlorinsClaimed: 0,
+    ownedDecorations: {},
+    placedDecorations: [],
     ownedZones: {ZoneType.potager},
   );
 
@@ -273,7 +320,12 @@ class GardenSnapshot {
   final String? harvestFlorinsDay;
   final int harvestFlorinsClaimed;
   final bool starterFertilizerGranted;
-  final List<String> decorations;
+  final int playerSeed;
+  final Set<DailyRewardId> claimedDailyRewards;
+  final String? walkFlorinsDay;
+  final int walkFlorinsClaimed;
+  final Map<String, int> ownedDecorations;
+  final List<PlacedDecoration> placedDecorations;
   final Map<String, dynamic>? legacyArchive;
   final Set<ZoneType> ownedZones;
 
@@ -293,7 +345,12 @@ class GardenSnapshot {
     String? harvestFlorinsDay,
     int? harvestFlorinsClaimed,
     bool? starterFertilizerGranted,
-    List<String>? decorations,
+    int? playerSeed,
+    Set<DailyRewardId>? claimedDailyRewards,
+    String? walkFlorinsDay,
+    int? walkFlorinsClaimed,
+    Map<String, int>? ownedDecorations,
+    List<PlacedDecoration>? placedDecorations,
     Map<String, dynamic>? legacyArchive,
     Set<ZoneType>? ownedZones,
   }) => GardenSnapshot(
@@ -309,7 +366,12 @@ class GardenSnapshot {
     harvestFlorinsClaimed: harvestFlorinsClaimed ?? this.harvestFlorinsClaimed,
     starterFertilizerGranted:
         starterFertilizerGranted ?? this.starterFertilizerGranted,
-    decorations: decorations ?? this.decorations,
+    playerSeed: playerSeed ?? this.playerSeed,
+    claimedDailyRewards: claimedDailyRewards ?? this.claimedDailyRewards,
+    walkFlorinsDay: walkFlorinsDay ?? this.walkFlorinsDay,
+    walkFlorinsClaimed: walkFlorinsClaimed ?? this.walkFlorinsClaimed,
+    ownedDecorations: ownedDecorations ?? this.ownedDecorations,
+    placedDecorations: placedDecorations ?? this.placedDecorations,
     legacyArchive: legacyArchive ?? this.legacyArchive,
     ownedZones: ownedZones ?? this.ownedZones,
   );
@@ -333,7 +395,17 @@ class GardenSnapshot {
     'harvestFlorinsDay': harvestFlorinsDay,
     'harvestFlorinsClaimed': harvestFlorinsClaimed,
     'starterFertilizerGranted': starterFertilizerGranted,
-    'decorations': decorations,
+    'playerSeed': playerSeed,
+    'claimedDailyRewards': [
+      for (final id in claimedDailyRewards)
+        {'day': id.day.toIsoString(), 'threshold': id.threshold},
+    ],
+    'walkFlorinsDay': walkFlorinsDay,
+    'walkFlorinsClaimed': walkFlorinsClaimed,
+    'ownedDecorations': ownedDecorations,
+    'placedDecorations': [
+      for (final d in placedDecorations) d.toJson(),
+    ],
     'legacyArchive': legacyArchive,
     'ownedZones': ownedZones.map((zone) => zone.name).toList(),
   };
@@ -363,6 +435,35 @@ class GardenSnapshot {
       for (final entry in zones.entries)
         if (entry.value.any((plant) => plant != null)) entry.key,
     };
+
+    final rawClaimedDailyRewards =
+        json['claimedDailyRewards'] as List<dynamic>? ?? [];
+    final claimedDailyRewards = <DailyRewardId>{
+      for (final entry in rawClaimedDailyRewards)
+        DailyRewardId(
+          LocalDate.fromDateTime(
+            DateTime.parse((entry as Map<String, dynamic>)['day'] as String),
+          ),
+          entry['threshold'] as int,
+        ),
+    };
+
+    final rawOwnedDecorations =
+        json['ownedDecorations'] as Map<String, dynamic>? ?? {};
+    final rawPlacedDecorations =
+        json['placedDecorations'] as List<dynamic>? ?? [];
+    final rawLegacyDecorations = json['decorations'] as List<dynamic>?;
+    final migratedOwnedDecorations = <String, int>{
+      for (final entry in rawOwnedDecorations.entries)
+        entry.key: entry.value as int,
+    };
+    if (rawLegacyDecorations != null) {
+      for (final id in rawLegacyDecorations.cast<String>()) {
+        migratedOwnedDecorations[id] =
+            (migratedOwnedDecorations[id] ?? 0) + 1;
+      }
+    }
+
     return GardenSnapshot(
       zones: zones,
       seeds: {
@@ -387,7 +488,15 @@ class GardenSnapshot {
       harvestFlorinsClaimed: json['harvestFlorinsClaimed'] as int? ?? 0,
       starterFertilizerGranted:
           json['starterFertilizerGranted'] as bool? ?? false,
-      decorations: (json['decorations'] as List<dynamic>).cast<String>(),
+      playerSeed: json['playerSeed'] as int? ?? 0,
+      claimedDailyRewards: claimedDailyRewards,
+      walkFlorinsDay: json['walkFlorinsDay'] as String?,
+      walkFlorinsClaimed: json['walkFlorinsClaimed'] as int? ?? 0,
+      ownedDecorations: migratedOwnedDecorations,
+      placedDecorations: [
+        for (final d in rawPlacedDecorations)
+          PlacedDecoration.fromJson(d as Map<String, dynamic>),
+      ],
       legacyArchive: json['legacyArchive'] as Map<String, dynamic>?,
       ownedZones: ownedZones,
     );

@@ -1,5 +1,6 @@
 import 'step_provider.dart';
 import '../garden/garden_state.dart';
+import '../garden/local_date.dart';
 
 /// The first playable slice uses simulated steps until the iOS provider lands.
 class FakeStepProvider implements StepProvider {
@@ -12,6 +13,8 @@ class FakeStepProvider implements StepProvider {
   int _steps;
   final DateTime Function() _now;
   late String _day;
+
+  final Map<String, int> _stepsByDay = {};
 
   void _refreshDay() {
     final today = localDayKey(_now());
@@ -41,6 +44,15 @@ class FakeStepProvider implements StepProvider {
     _refreshDay();
     _steps = count;
   }
+
+  void setStepsOnDay(LocalDate day, int count) {
+    if (count < 0) throw ArgumentError.value(count, 'count');
+    _stepsByDay[day.toIsoString()] = count;
+  }
+
+  @override
+  Future<int> stepsOnDay(LocalDate day) async =>
+      _stepsByDay[day.toIsoString()] ?? 0;
 
   @override
   Future<int> stepsToday() async => currentSteps;
