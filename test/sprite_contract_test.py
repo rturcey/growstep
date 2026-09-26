@@ -50,7 +50,7 @@ class SpriteContractTest(unittest.TestCase):
             {Path(tile.find("image").attrib["source"]).name for tile in palette.findall("tile")},
             names,
         )
-        production = ET.parse(REPO / "assets/maps/potager.tmx").getroot()
+        production = ET.parse(REPO / "assets/maps/potager_diorama_v1.tmx").getroot()
         self.assertNotIn(
             "diorama.tsx", {tileset.attrib["source"] for tileset in production.findall("tileset")}
         )
@@ -131,7 +131,7 @@ class SpriteContractTest(unittest.TestCase):
         self.assertNotIn("potager_decor_bac_potager", palette)
         self.assertNotIn("commun_ombre_contact", palette)
         self.assertNotIn("potager_plante_", palette)
-        main_map = ET.parse(REPO / "assets/maps/potager.tmx").getroot()
+        main_map = ET.parse(REPO / "assets/maps/potager_diorama_v1.tmx").getroot()
         self.assertEqual(
             {Path(tileset.attrib["source"]).stem for tileset in main_map.findall("tileset")},
             {"ground", "paths", "paths_anchored", "floor_decor", "vegetation", "rocks", "structures", "props"},

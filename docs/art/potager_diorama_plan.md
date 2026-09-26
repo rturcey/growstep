@@ -12,7 +12,7 @@ The Growstep art bible still governs 2:1 projection, material and lighting, 4× 
 
 ## Current audit and technical boundary
 
-The current working-tree `assets/maps/potager.tmx` is a 14×14 isometric map with 71 painted ground cells, 16 skirt cells, 8 small stone-path cells, 8 stable plot markers, and 23 environmental objects. A fresh static Tiled raster shows separated shrubs, an isolated barrel/can cluster, a small arch, extensive lawn, and a stair-stepped outline. The checked-in issue-64 phone captures predate the uncommitted map changes and cannot establish the current phone crop. The map is a technical baseline, not the composition to preserve.
+The current working-tree `assets/maps/potager_diorama_v1.tmx` is a 14×14 isometric map with 71 painted ground cells, 16 skirt cells, 8 small stone-path cells, 8 stable plot markers, and 23 environmental objects. A fresh static Tiled raster shows separated shrubs, an isolated barrel/can cluster, a small arch, extensive lawn, and a stair-stepped outline. The checked-in issue-64 phone captures predate the uncommitted map changes and cannot establish the current phone crop. The map is a technical baseline, not the composition to preserve.
 
 The eight contacts and their save order remain immutable:
 

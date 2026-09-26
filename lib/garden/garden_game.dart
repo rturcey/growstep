@@ -95,7 +95,7 @@ class GardenGame extends FlameGame {
   /// testing without changing normal play.
   static const _defaultPotagerMapFile = String.fromEnvironment(
     'GROWSTEP_POTAGER_MAP',
-    defaultValue: 'potager.tmx',
+    defaultValue: 'potager_diorama_v1.tmx',
   );
 
   final String potagerMapFile;
@@ -154,6 +154,15 @@ class GardenGame extends FlameGame {
   @override
   Color backgroundColor() => const Color(0xFFE4EBD5);
 
+  TileLayer? _findTileLayer(String name) {
+    for (final layer in _tileMap.map.layers.whereType<TileLayer>()) {
+      if (layer.name == name) {
+        return layer;
+      }
+    }
+    return null;
+  }
+
   @override
   Future<void> onLoad() async {
     await super.onLoad();
@@ -170,6 +179,15 @@ class GardenGame extends FlameGame {
     _hasPaintedTiledGround = (_tileMap.map.layerByName('ground') as TileLayer)
         .data!
         .any((gid) => gid != 0);
+
+    final planterFront = _findTileLayer('planter_edges_front');
+    if (planterFront != null) {
+      final planterFrontIndex = _tileMap.map.layers.indexOf(planterFront);
+
+      if (planterFrontIndex >= 0) {
+        _tileMap.setLayerVisibility(planterFrontIndex, visible: false);
+      }
+    }
   }
 
   @override
@@ -268,6 +286,13 @@ class GardenGame extends FlameGame {
       obj.draw(canvas);
     }
 
+    // Raised planters remain entirely authored with Tiled tiles.
+    // Their front-facing wooden walls render after dynamic plants so
+    // foliage emerges from inside the box while the wall hides its base.
+    if (zone == ZoneType.potager) {
+      _renderTiledLayerOnly(canvas, 'planter_edges_front');
+    }
+
     // Touch targets drawn on top.
     if (showTouchTargets) {
       for (var slot = 0; slot < purchased.length; slot++) {
@@ -284,6 +309,39 @@ class GardenGame extends FlameGame {
     }
     if (_debugComposition && zone == ZoneType.potager) {
       _drawCompositionDebug(canvas, anchors, purchased.length);
+    }
+  }
+
+  void _renderTiledLayerOnly(Canvas canvas, String layerName) {
+    final target = _findTileLayer(layerName);
+
+    if (target == null) {
+      return;
+    }
+
+    final targetIndex = _tileMap.map.layers.indexOf(target);
+
+    if (targetIndex < 0) {
+      return;
+    }
+
+    // RenderableTiledMap visibility APIs operate on the position in
+    // map.layers, not Tiled's persisted Layer.id.
+    final visibility = <int, bool>{};
+
+    for (var index = 0; index < _tileMap.map.layers.length; index++) {
+      visibility[index] = _tileMap.getLayerVisibility(index);
+
+      _tileMap.setLayerVisibility(index, visible: index == targetIndex);
+    }
+
+    canvas.save();
+    canvas.translate(_tileMapOffset.dx, _tileMapOffset.dy);
+    _tileMap.render(canvas);
+    canvas.restore();
+
+    for (final entry in visibility.entries) {
+      _tileMap.setLayerVisibility(entry.key, visible: entry.value);
     }
   }
 

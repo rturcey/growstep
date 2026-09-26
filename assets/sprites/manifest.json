@@ -483,10 +483,10 @@
     "width": 164,
     "height": 116,
     "bbox": [
-      20,
       16,
-      138,
-      88
+      16,
+      145,
+      104
     ],
     "anchor": [
       82,
@@ -501,7 +501,7 @@
       16,
       16,
       146,
-      90
+      106
     ],
     "anchor": [
       82,
@@ -516,7 +516,7 @@
       16,
       16,
       156,
-      92
+      107
     ],
     "anchor": [
       86,
@@ -528,10 +528,10 @@
     "width": 168,
     "height": 120,
     "bbox": [
-      17,
+      16,
       16,
       149,
-      90
+      106
     ],
     "anchor": [
       84,
@@ -545,8 +545,8 @@
     "bbox": [
       16,
       16,
-      139,
-      87
+      146,
+      100
     ],
     "anchor": [
       82,
@@ -558,10 +558,10 @@
     "width": 164,
     "height": 116,
     "bbox": [
-      18,
       16,
-      134,
-      88
+      16,
+      145,
+      101
     ],
     "anchor": [
       82,
@@ -749,6 +749,36 @@
     ],
     "shadow": "separate_contact"
   },
+  "potager_decor_arche_diagonale_statique_ordinaire_00.png": {
+    "width": 320,
+    "height": 320,
+    "bbox": [
+      47,
+      7,
+      272,
+      308
+    ],
+    "anchor": [
+      160,
+      307
+    ],
+    "shadow": "separate_contact"
+  },
+  "potager_decor_arche_grille_statique_ordinaire_00.png": {
+    "width": 320,
+    "height": 320,
+    "bbox": [
+      55,
+      7,
+      265,
+      308
+    ],
+    "anchor": [
+      160,
+      307
+    ],
+    "shadow": "separate_contact"
+  },
   "potager_decor_arrosoir_metal_statique_ordinaire_00.png": {
     "width": 156,
     "height": 136,
@@ -824,14 +854,29 @@
     ],
     "shadow": "separate_contact"
   },
+  "potager_decor_banc_bois_statique_ordinaire_00.png": {
+    "width": 224,
+    "height": 136,
+    "bbox": [
+      43,
+      33,
+      149,
+      118
+    ],
+    "anchor": [
+      112,
+      123
+    ],
+    "shadow": "separate_contact"
+  },
   "potager_decor_cadre_culture_arriere_statique_ordinaire_00.png": {
     "width": 852,
     "height": 360,
     "bbox": [
-      16,
-      16,
-      836,
-      344
+      98,
+      136,
+      845,
+      360
     ],
     "anchor": [
       426,
@@ -843,10 +888,10 @@
     "width": 852,
     "height": 312,
     "bbox": [
-      16,
-      16,
-      836,
-      296
+      19,
+      112,
+      764,
+      307
     ],
     "anchor": [
       426,
@@ -858,10 +903,10 @@
     "width": 572,
     "height": 592,
     "bbox": [
-      16,
-      16,
-      556,
-      576
+      256,
+      100,
+      570,
+      568
     ],
     "anchor": [
       286,
@@ -873,14 +918,29 @@
     "width": 612,
     "height": 528,
     "bbox": [
-      16,
-      16,
-      596,
-      512
+      185,
+      24,
+      591,
+      509
     ],
     "anchor": [
       306,
       515
+    ],
+    "shadow": "separate_contact"
+  },
+  "potager_decor_cagette_legumes_statique_ordinaire_00.png": {
+    "width": 208,
+    "height": 168,
+    "bbox": [
+      23,
+      32,
+      185,
+      156
+    ],
+    "anchor": [
+      104,
+      155
     ],
     "shadow": "separate_contact"
   },
@@ -896,6 +956,21 @@
     "anchor": [
       86,
       131
+    ],
+    "shadow": "separate_contact"
+  },
+  "potager_decor_coeur_cultive_statique_ordinaire_00.png": {
+    "width": 1560,
+    "height": 1800,
+    "bbox": [
+      165,
+      452,
+      1407,
+      1447
+    ],
+    "anchor": [
+      780,
+      920
     ],
     "shadow": "separate_contact"
   },
@@ -926,6 +1001,21 @@
     "anchor": [
       316,
       323
+    ],
+    "shadow": "separate_contact"
+  },
+  "potager_decor_fontaine_pierre_statique_ordinaire_00.png": {
+    "width": 208,
+    "height": 272,
+    "bbox": [
+      46,
+      65,
+      161,
+      252
+    ],
+    "anchor": [
+      104,
+      259
     ],
     "shadow": "separate_contact"
   },
@@ -1196,6 +1286,36 @@
     "anchor": [
       256,
       514
+    ],
+    "shadow": "separate_contact"
+  },
+  "potager_decor_banc_jardin_statique_ordinaire_00.png": {
+    "width": 288,
+    "height": 208,
+    "bbox": [
+      36,
+      54,
+      203,
+      189
+    ],
+    "anchor": [
+      144,
+      195
+    ],
+    "shadow": "separate_contact"
+  },
+  "potager_decor_etagere_jardin_statique_ordinaire_00.png": {
+    "width": 272,
+    "height": 240,
+    "bbox": [
+      16,
+      56,
+      256,
+      228
+    ],
+    "anchor": [
+      136,
+      227
     ],
     "shadow": "separate_contact"
   }

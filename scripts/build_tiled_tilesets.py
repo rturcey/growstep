@@ -11,9 +11,10 @@ from pathlib import Path
 
 
 ROOT = Path(__file__).resolve().parents[1]
-GROUPS = ("ground", "paths", "paths_anchored", "floor_decor", "vegetation", "rocks", "structures", "props")
+GROUPS = ('ground', 'paths', 'paths_anchored', 'floor_decor', 'vegetation', 'rocks', 'structures', 'props')
 CANDIDATE_GROUP = "diorama"
-CANDIDATE_SURFACE_GROUPS = ("paths_diorama",)
+CANDIDATE_CANOPY_GROUP = "diorama_canopy"
+CANDIDATE_SURFACE_GROUPS = ('paths_diorama', 'bed_edges', 'planter_edges')
 STATUSES = {"included", "excluded", "other_island", "runtime_only", "outside_tiled", "deprecated"}
 
 
@@ -58,12 +59,41 @@ def expected_tilesets(root: Path) -> dict[str, bytes]:
         metadata = manifest[name]
         if "anchor" not in metadata:
             raise ValueError(f"{name}: missing manifest anchor")
-        delta = (metadata["anchor"][0] - metadata["width"] / 2, metadata["anchor"][1] - metadata["height"])
-        # The existing source pack has one shared family: rock (0,-13),
-        # barrel (-1,-13), trellis (0,-13), and later sprites (0,-12).
+        delta = (
+            metadata["anchor"][0] - metadata["width"] / 2,
+            metadata["anchor"][1] - metadata["height"],
+        )
+
+        # Candidate diorama sprites may use distinct preview-offset families.
+        # Tiled tileoffset belongs to a whole TSX, therefore sprites with
+        # different contact offsets cannot safely share one palette.
+        if category == CANDIDATE_GROUP:
+            if abs(delta[0]) <= 1 and abs(delta[1] + 13) <= 1:
+                grouped[CANDIDATE_GROUP].append(
+                    (name, metadata["width"], metadata["height"])
+                )
+                continue
+
+            if abs(delta[0]) <= 1 and abs(delta[1] + 28) <= 1:
+                grouped[CANDIDATE_CANOPY_GROUP].append(
+                    (name, metadata["width"], metadata["height"])
+                )
+                continue
+
+            raise ValueError(
+                f"{name}: candidate anchor delta {delta} "
+                "has no preview family"
+            )
+
+        # Production anchored palettes retain their established -13 family.
         if abs(delta[0]) > 1 or abs(delta[1] + 13) > 1:
-            raise ValueError(f"{name}: anchor delta {delta} has no preview family")
-        grouped[category].append((name, metadata["width"], metadata["height"]))
+            raise ValueError(
+                f"{name}: anchor delta {delta} has no preview family"
+            )
+
+        grouped[category].append(
+            (name, metadata["width"], metadata["height"])
+        )
     result = {}
     for group in GROUPS:
         images = sorted(grouped[group])
@@ -83,10 +113,30 @@ def expected_tilesets(root: Path) -> dict[str, bytes]:
                 tile_size=(80, 40),
             )
 
+    # Candidate-only transparent surface palettes.
+    for group in CANDIDATE_SURFACE_GROUPS:
+        images = sorted(grouped[group])
+        if images:
+            result[f"{group}.tsx"] = _xml(
+                group,
+                images,
+                tile_size=(80, 40),
+            )
+
     candidate_images = sorted(grouped[CANDIDATE_GROUP])
     if candidate_images:
         result[f"{CANDIDATE_GROUP}.tsx"] = _xml(
-            CANDIDATE_GROUP, candidate_images, (0, -13)
+            CANDIDATE_GROUP,
+            candidate_images,
+            (0, -13),
+        )
+
+    candidate_canopies = sorted(grouped[CANDIDATE_CANOPY_GROUP])
+    if candidate_canopies:
+        result[f"{CANDIDATE_CANOPY_GROUP}.tsx"] = _xml(
+            CANDIDATE_CANOPY_GROUP,
+            candidate_canopies,
+            (0, -28),
         )
     # Archived PoC maps still reference growstep.tsx with rock at gid 7.
     # Keep that compatibility collection generated as well.

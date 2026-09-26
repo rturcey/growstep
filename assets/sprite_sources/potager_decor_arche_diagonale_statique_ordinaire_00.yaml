@@ -1,0 +1,22 @@
+id: potager_decor_arche_diagonale_statique_ordinaire_00
+canvas_1x:
+- 80
+- 80
+anchor_4x:
+- 160
+- 307
+footprint_grid:
+- 1.0
+- 0.5
+size_class: small_decor
+projection: isometric_80x40
+light: upper_left
+shadow: separate_contact
+palette_roles:
+- bois_chaud
+- feuillage_sauge
+- rose
+- blanc_floral
+state: statique
+variant: ordinaire
+frames: 1

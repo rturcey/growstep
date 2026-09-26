@@ -7,6 +7,10 @@ import 'package:growstep/garden/garden_game.dart';
 import 'package:growstep/garden/garden_state.dart';
 
 const captureDirectory = String.fromEnvironment('GROWSTEP_CAPTURE_DIR');
+const potagerMapFile = String.fromEnvironment(
+  'GROWSTEP_POTAGER_MAP',
+  defaultValue: 'potager_diorama_v1.tmx',
+);
 const captureFullScreen = bool.fromEnvironment('GROWSTEP_CAPTURE_FULL_SCREEN');
 
 GardenSnapshot _fixture(String state) {
@@ -78,7 +82,7 @@ void main() {
     ]) {
       for (final state in ['initial', 'intermediaire', 'sature']) {
         for (final zone in ZoneType.values) {
-          final game = GardenGame()
+          final game = GardenGame(potagerMapFile: potagerMapFile)
             ..snapshot = _fixture(state)
             ..currentZone = zone;
           await game.onLoad();

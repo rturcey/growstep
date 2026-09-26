@@ -87,7 +87,7 @@ Les 8 plots sont à des coordonnées demi-entières (`potager_scene.dart:52-61`)
 Tiled editor (desktop)
   ↓ .tmx + .tsx committed
 GardenGame.onLoad()
-  ↓ RenderableTiledMap.fromFile("assets/maps/potager.tmx", ...)
+  ↓ RenderableTiledMap.fromFile("assets/maps/potager_diorama_v1.tmx", ...)
   ↓ RenderableTiledMap held as GardenGame member (NOT a Flame child)
   ↓ TiledMap parsed → objects extracted → GardenSpriteObject list
   ↓
@@ -108,7 +108,7 @@ Le tout sous le même `GardenArtboardTransform`. Pas de `TiledComponent` enfant.
 - **tilewidth** : 80, **tileheight** : 40
 - **Dimensions** : 14×14 tuiles (voir §4)
 - **Format** : TMX (XML), diffable en git
-- **Fichier** : `assets/maps/potager.tmx`
+- **Fichier** : `assets/maps/potager_diorama_v1.tmx`
 - **Tileset externe** : `assets/maps/growstep.tsx`, type collection-of-images, `objectalignment: bottom`
 
 ### 3.3 Couches du PoC
@@ -263,7 +263,7 @@ Les sprites d'objets existants (`commun_decor_*.png`, `potager_decor_*.png`) son
 ```dart
 // GardenGame.onLoad()
 _tileMap = await RenderableTiledMap.fromFile(
-  'assets/maps/potager.tmx',
+  'assets/maps/potager_diorama_v1.tmx',
   Vector2(80.0, 40.0),  // destTileSize = tile size
   bundle: rootBundle,
   imagesDirectory: 'assets/sprites/',
@@ -341,7 +341,7 @@ Prouver que Tiled + grille isométrique 80×40 peut devenir proprement la source
 
 ### 7.2 Périmètre du PoC
 
-1. Créer `assets/maps/potager.tmx` : carte isométrique 14×14, `tilewidth=80, tileheight=40`
+1. Créer `assets/maps/potager_diorama_v1.tmx` : carte isométrique 14×14, `tilewidth=80, tileheight=40`
 2. Créer `assets/maps/growstep.tsx` : tileset collection-of-images avec les 6 tuiles de pas japonais 80×40 et 1 sprite d'objet (rocher)
 3. Peindre quelques tuiles de pas japonais dans la couche `path`
 4. Placer le rocher comme tile object dans la couche `props`

@@ -46,7 +46,7 @@ flutter test test/visual_capture_test.dart \
 ```
 
 The eight linked PNGs were selected from this final run. The candidate loads
-through the real `GardenGame`; normal play still defaults to `potager.tmx`.
+through the real `GardenGame`; normal play still defaults to `potager_diorama_v1.tmx`.
 That production map and all production TSX files remain unchanged. Existing
 production GID ranges are fixed, and the candidate-only `diorama.tsx` starts
 at GID 76. All eight saved plot identities and contacts remain unchanged.

@@ -67,6 +67,20 @@
       "tileset": "paths_diorama",
       "transparent": true,
       "custom_authoring": true
+    },
+    "potager_bed_edges": {
+      "prefix": "potager_sol_bordure_parcelle_bois_tile_",
+      "count": 12,
+      "tileset": "bed_edges",
+      "transparent": true,
+      "custom_authoring": true
+    },
+    "potager_planter_edges": {
+      "prefix": "potager_sol_bordure_bac_bois_tile_",
+      "count": 12,
+      "tileset": "planter_edges",
+      "transparent": true,
+      "custom_authoring": true
     }
   }
 }

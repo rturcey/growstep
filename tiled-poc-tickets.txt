@@ -17,7 +17,7 @@ Créer les fichiers Tiled de base et les tuiles de pas japonais, puis prouver qu
 
 ## Acceptance criteria
 
-- [ ] `assets/maps/potager.tmx` existe : carte isométrique 80×40, 14×14 tuiles
+- [ ] `assets/maps/potager_diorama_v1.tmx` existe : carte isométrique 80×40, 14×14 tuiles
 - [ ] `assets/maps/growstep.tsx` existe : tileset collection-of-images, `objectalignment: bottom`, référençant les PNG de `assets/sprites/` via chemins relatifs
 - [ ] Les 6 sprites `commun_sol_pas_pierre_*.png` existants sont placés sur un canvas transparent 80×40, correctement ancrés dans la cellule, sans redessiner les pierres. Noms : `commun_sol_pas_pierre_tile_00.png`…`_05.png`
 - [ ] La couche tile layer `path` contient quelques tuiles de pas japonais peintes
@@ -69,7 +69,7 @@ Isoler la conversion `(gridCol, gridRow)` → `IsoGrid.toScreen()` → contact a
 
 ## What to build
 
-Charger le `RenderableTiledMap` depuis `potager.tmx` dans `GardenGame.onLoad()` et le rendre manuellement entre le terrain Canvas existant et la scène dynamique. Pas de `TiledComponent` enfant Flame. Le `RenderableTiledMap` est un membre de `GardenGame`.
+Charger le `RenderableTiledMap` depuis `potager_diorama_v1.tmx` dans `GardenGame.onLoad()` et le rendre manuellement entre le terrain Canvas existant et la scène dynamique. Pas de `TiledComponent` enfant Flame. Le `RenderableTiledMap` est un membre de `GardenGame`.
 
 ## Acceptance criteria
 
@@ -110,7 +110,7 @@ east_upper_rock position → Dart
 
 Après ce ticket :
 ```
-east_upper_rock position → potager.tmx exclusivement
+east_upper_rock position → potager_diorama_v1.tmx exclusivement
 Dart  → asset / anchor / depth / rendering
 Tiled → gridCol / gridRow
 ```
