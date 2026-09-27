@@ -66,8 +66,15 @@ flutter:
   uses-material-design: true
 
   assets:
+    - assets/sprites/fantasy_farm_free/
+    - assets/sprites/fantasy_farm_free/crops2/
+    - assets/sprites/fantasy_farm_free/trees4_grid/
     - assets/maps/
+    - assets/maps/fantasy_farm/
     - assets/sprites/
+    - assets/sprites/sunnyside/crops/
+    - assets/sprites/sunnyside/tileset/
+    - assets/sprites/sunnyside/ui/
 
   # To add assets to your application, add an assets section, like this:
   # assets:

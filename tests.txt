@@ -1,0 +1,748 @@
+Resolving dependencies...
+Downloading packages...
+  cli_util 0.5.2 (0.6.0 available)
+  code_assets 1.2.1 (2.1.0 available)
+  hooks 2.0.2 (2.2.0 available)
+  material_color_utilities 0.13.0 (0.13.1 available)
+  meta 1.18.3 (1.19.0 available)
+  native_toolchain_c 0.19.2 (0.19.5 available)
+  objective_c 9.5.0 (9.6.0 available)
+  record_use 0.6.0 (1.1.1 available)
+  sqlite3 3.5.2 (3.6.0 available)
+  test_api 0.7.12 (0.7.14 available)
+  tiled 0.11.1 (0.12.0 available)
+  vector_math 2.4.0 (2.4.3 available)
+  xml 6.6.1 (7.0.1 available)
+Got dependencies!
+13 packages have newer versions incompatible with dependency constraints.
+Try `flutter pub outdated` for more information.
+00:00 +0: loading /home/rturcey/perso/refactor_potager/test/starter_plants_test.dart
+00:00 +0: /home/rturcey/perso/refactor_potager/test/starter_plants_test.dart: nouvelle sauvegarde la tomate offerte est proche de 70 % à l’arrière gauche
+00:00 +1: /home/rturcey/perso/refactor_potager/test/starter_plants_test.dart: nouvelle sauvegarde la carotte offerte est proche de 30 % au milieu droit
+00:00 +2: /home/rturcey/perso/refactor_potager/test/starter_plants_test.dart: nouvelle sauvegarde les emplacements avant gauche et avant droit sont vides
+00:00 +3: /home/rturcey/perso/refactor_potager/test/starter_plants_test.dart: nouvelle sauvegarde seul le potager est possédé au démarrage
+00:00 +4: /home/rturcey/perso/refactor_potager/test/starter_plants_test.dart: plantation guidée plante dans l’emplacement avant gauche sans retirer les offrandes
+00:00 +5: /home/rturcey/perso/refactor_potager/test/starter_plants_test.dart: migration d’une sauvegarde ancienne préserve espèces, progression et ressources
+00:00 +6: /home/rturcey/perso/refactor_potager/test/starter_plants_test.dart: migration d’une sauvegarde ancienne préserve l’accès aux îlots contenant des plantes
+00:00 +7: /home/rturcey/perso/refactor_potager/test/starter_plants_test.dart: migration d’une sauvegarde ancienne une sauvegarde sans plante dans un îlot fermé ne l’ouvre pas
+00:00 +8: /home/rturcey/perso/refactor_potager/test/starter_plants_test.dart: migration d’une sauvegarde ancienne les plantes offertes ne sont pas ajoutées lors d’une reprise
+00:00 +9: /home/rturcey/perso/refactor_potager/test/garden_scene_test.dart: artboard and viewport use one reversible transform on both phones
+00:00 +9 ~1: /home/rturcey/perso/refactor_potager/test/garden_scene_test.dart: artboard and viewport use one reversible transform on both phones
+00:00 +10 ~1: /home/rturcey/perso/refactor_potager/test/garden_scene_test.dart: Dart pilot composition keeps the barrel and its known asset
+00:00 +11 ~1: /home/rturcey/perso/refactor_potager/test/garden_scene_test.dart: depth uses ground Y, z bias, ID and stable legacy order
+00:00 +12 ~1: /home/rturcey/perso/refactor_potager/test/garden_scene_test.dart: fixed layers precede the shared depth phase
+00:00 +13 ~1: /home/rturcey/perso/refactor_potager/test/garden_scene_test.dart: contact shadow is painted once directly before its sprite
+00:00 +14 ~1: /home/rturcey/perso/refactor_potager/test/garden_scene_test.dart: flat path sprites do not receive a second contact shadow
+00:00 +15 ~1: /home/rturcey/perso/refactor_potager/test/garden_scene_test.dart: eight saved plot indexes retain their historical grid contacts
+00:00 +16 ~1: /home/rturcey/perso/refactor_potager/test/garden_scene_test.dart: Potager grid adapter projects representative cells
+00:00 +17 ~1: /home/rturcey/perso/refactor_potager/test/garden_scene_test.dart: purchased states reveal exactly 4, 6, or 8 soil plots
+00:00 +18 ~1: /home/rturcey/perso/refactor_potager/test/garden_scene_test.dart: every flat footprint uses the same inset 2:1 grid geometry
+00:00 +19 ~1: /home/rturcey/perso/refactor_potager/test/visual_capture_test.dart: potager capture fixtures purchase exactly 4, 6, or 8 plots
+00:00 +20 ~1: /home/rturcey/perso/refactor_potager/test/visual_capture_test.dart: captures déterministes des trois îlots
+00:01 +20 ~2: /home/rturcey/perso/refactor_potager/test/boutique_tab_test.dart: les trois raretés de graines affichent leur prix
+00:03 +21 ~2: /home/rturcey/perso/refactor_potager/test/boutique_tab_test.dart: les trois raretés de graines affichent leur prix
+00:03 +21 ~2 -1: /home/rturcey/perso/refactor_potager/test/boutique_tab_test.dart: les trois raretés de graines affichent leur prix
+00:03 +21 ~2 -1: /home/rturcey/perso/refactor_potager/test/potager_tmx_test.dart: runtime tile layers contain only 80x40 surface tiles [E]
+  PathNotFoundException: Cannot open file, path = 'assets/maps/potager_diorama_v1.tmx' (OS Error: No such file or directory, errno = 2)
+  dart:io                           _File.readAsStringSync
+  test/potager_tmx_test.dart 64:56  _loadMap
+  test/potager_tmx_test.dart 94:23  main.<fn>
+  
+00:03 +21 ~2 -2: /home/rturcey/perso/refactor_potager/test/boutique_tab_test.dart: les trois raretés de graines affichent leur prix
+00:03 +21 ~2 -2: /home/rturcey/perso/refactor_potager/test/potager_tmx_test.dart: runtime painted props retain their cells as anchored objects [E]
+  PathNotFoundException: Cannot open file, path = 'assets/maps/potager_diorama_v1.tmx' (OS Error: No such file or directory, errno = 2)
+  dart:io                            _File.readAsStringSync
+  test/potager_tmx_test.dart 64:56   _loadMap
+  test/potager_tmx_test.dart 122:25  main.<fn>
+  
+00:03 +21 ~2 -3: /home/rturcey/perso/refactor_potager/test/boutique_tab_test.dart: les trois raretés de graines affichent leur prix
+00:03 +21 ~2 -3: /home/rturcey/perso/refactor_potager/test/potager_tmx_test.dart: TMX rock and shadow plots project through the sprite manifest [E]
+  PathNotFoundException: Cannot open file, path = 'assets/maps/potager_diorama_v1.tmx' (OS Error: No such file or directory, errno = 2)
+  dart:io                            _File.readAsStringSync
+  test/potager_tmx_test.dart 64:56   _loadMap
+  test/potager_tmx_test.dart 146:25  main.<fn>
+  
+00:03 +21 ~2 -4: /home/rturcey/perso/refactor_potager/test/boutique_tab_test.dart: les trois raretés de graines affichent leur prix
+00:03 +21 ~2 -4: /home/rturcey/perso/refactor_potager/test/potager_tmx_test.dart: TMX plots preserve the eight historical contacts by stable name [E]
+  PathNotFoundException: Cannot open file, path = 'assets/maps/potager_diorama_v1.tmx' (OS Error: No such file or directory, errno = 2)
+  dart:io                            _File.readAsStringSync
+  test/potager_tmx_test.dart 64:56   _loadMap
+  test/potager_tmx_test.dart 207:25  main.<fn>
+  
+00:03 +21 ~2 -5: /home/rturcey/perso/refactor_potager/test/boutique_tab_test.dart: les trois raretés de graines affichent leur prix
+00:03 +21 ~2 -5: /home/rturcey/perso/refactor_potager/test/potager_tmx_test.dart: TMX prop identifies the existing rock and its grid contact [E]
+  PathNotFoundException: Cannot open file, path = 'assets/maps/potager_diorama_v1.tmx' (OS Error: No such file or directory, errno = 2)
+  dart:io                            _File.readAsStringSync
+  test/potager_tmx_test.dart 64:56   _loadMap
+  test/potager_tmx_test.dart 307:23  main.<fn>
+  
+00:03 +21 ~2 -6: /home/rturcey/perso/refactor_potager/test/boutique_tab_test.dart: les trois raretés de graines affichent leur prix
+00:03 +21 ~2 -6: /home/rturcey/perso/refactor_potager/test/potager_tmx_test.dart: TMX path contains painted stone tiles at named grid cells [E]
+  PathNotFoundException: Cannot open file, path = 'assets/maps/potager_diorama_v1.tmx' (OS Error: No such file or directory, errno = 2)
+  dart:io                            _File.readAsStringSync
+  test/potager_tmx_test.dart 64:56   _loadMap
+  test/potager_tmx_test.dart 333:23  main.<fn>
+  
+00:03 +21 ~2 -7: /home/rturcey/perso/refactor_potager/test/boutique_tab_test.dart: les trois raretés de graines affichent leur prix
+00:03 +21 ~2 -7: /home/rturcey/perso/refactor_potager/test/potager_tmx_test.dart: TMX accepts half-cell floats and validates shadow overrides [E]
+  PathNotFoundException: Cannot open file, path = 'assets/sprites/manifest.json' (OS Error: No such file or directory, errno = 2)
+  dart:io                            _File.readAsStringSync
+  test/potager_tmx_test.dart 393:44  main.<fn>
+  
+00:04 +22 ~2 -7: /home/rturcey/perso/refactor_potager/test/boutique_tab_test.dart: les trois raretés de graines affichent leur prix
+00:05 +23 ~2 -7: /home/rturcey/perso/refactor_potager/test/jardin_tab_test.dart: un îlot verrouillé affiche son prix et ouvre le dialogue d’achat
+00:05 +24 ~2 -7: /home/rturcey/perso/refactor_potager/test/widget_test.dart: le jardin tient dans une fenêtre de référence portrait
+00:05 +25 ~2 -7: /home/rturcey/perso/refactor_potager/test/island_scene_acceptance_test.dart: Potager : contact et index conservés à Size(390.0, 844.0)
+00:05 +26 ~2 -7: /home/rturcey/perso/refactor_potager/test/island_scene_acceptance_test.dart: Potager : contact et index conservés à Size(390.0, 844.0)
+00:06 +27 ~2 -7: /home/rturcey/perso/refactor_potager/test/island_scene_acceptance_test.dart: Potager : contact et index conservés à Size(390.0, 844.0)
+00:06 +28 ~2 -7: /home/rturcey/perso/refactor_potager/test/island_scene_acceptance_test.dart: Potager : contact et index conservés à Size(390.0, 844.0)
+00:06 +29 ~2 -7: /home/rturcey/perso/refactor_potager/test/island_scene_acceptance_test.dart: Potager : contact et index conservés à Size(390.0, 844.0)
+00:07 +30 ~2 -7: /home/rturcey/perso/refactor_potager/test/island_scene_acceptance_test.dart: Potager : contact et index conservés à Size(390.0, 844.0)
+00:07 +31 ~2 -7: /home/rturcey/perso/refactor_potager/test/island_scene_acceptance_test.dart: Potager : contact et index conservés à Size(390.0, 844.0)
+00:07 +32 ~2 -7: /home/rturcey/perso/refactor_potager/test/island_scene_acceptance_test.dart: Potager : contact et index conservés à Size(390.0, 844.0)
+══╡ EXCEPTION CAUGHT BY GESTURE ╞═══════════════════════════════════════════════════════════════════
+The following LateError was thrown while handling a gesture:
+LateInitializationError: Field '_terrainOwnsPlots@25198969' has not been initialized.
+
+When the exception was thrown, this was the stack:
+#0      GardenGame._terrainOwnsPlots (package:growstep/garden/garden_game.dart)
+#1      GardenGame._runtimeAnchorsFor (package:growstep/garden/garden_game.dart:129:38)
+#2      GardenGame.hitTestSlot (package:growstep/garden/garden_game.dart:159:21)
+#3      _JardinTabState._tapGarden (package:growstep/ui/jardin_tab.dart:82:24)
+#4      TapGestureRecognizer.handleTapDown.<anonymous closure> (package:flutter/src/gestures/tap.dart:730:61)
+#5      GestureRecognizer.invokeCallback (package:flutter/src/gestures/recognizer.dart:362:24)
+#6      TapGestureRecognizer.handleTapDown (package:flutter/src/gestures/tap.dart:730:11)
+#7      BaseTapGestureRecognizer._checkDown (package:flutter/src/gestures/tap.dart:374:5)
+#8      BaseTapGestureRecognizer.acceptGesture (package:flutter/src/gestures/tap.dart:351:7)
+#9      GestureArenaManager.sweep (package:flutter/src/gestures/arena.dart:173:27)
+#10     GestureBinding.handleEvent (package:flutter/src/gestures/binding.dart:542:20)
+#11     GestureBinding.dispatchEvent (package:flutter/src/gestures/binding.dart:508:22)
+#12     RendererBinding.dispatchEvent (package:flutter/src/rendering/binding.dart:473:11)
+#13     GestureBinding._handlePointerEventImmediately (package:flutter/src/gestures/binding.dart:447:7)
+#14     GestureBinding.handlePointerEvent (package:flutter/src/gestures/binding.dart:404:5)
+#15     TestWidgetsFlutterBinding.handlePointerEventForSource.<anonymous closure> (package:flutter_test/src/binding.dart:1571:42)
+#16     TestWidgetsFlutterBinding.withPointerEventSource (package:flutter_test/src/binding.dart:1581:11)
+#17     TestWidgetsFlutterBinding.handlePointerEventForSource (package:flutter_test/src/binding.dart:1571:5)
+#18     WidgetTester.sendEventToBinding.<anonymous closure> (package:flutter_test/src/widget_tester.dart:869:15)
+#21     TestAsyncUtils.guard (package:flutter_test/src/test_async_utils.dart:74:41)
+#22     WidgetTester.sendEventToBinding (package:flutter_test/src/widget_tester.dart:868:27)
+#23     TestGesture.up.<anonymous closure> (package:flutter_test/src/test_pointer.dart:587:26)
+#26     TestAsyncUtils.guard (package:flutter_test/src/test_async_utils.dart:74:41)
+#27     TestGesture.up (package:flutter_test/src/test_pointer.dart:580:27)
+#28     WidgetController.tapAt.<anonymous closure> (package:flutter_test/src/controller.dart:1155:21)
+<asynchronous suspension>
+#29     TestAsyncUtils.guard.<anonymous closure> (package:flutter_test/src/test_async_utils.dart:130:27)
+<asynchronous suspension>
+#30     main.<anonymous closure> (file:///home/rturcey/perso/refactor_potager/test/island_scene_acceptance_test.dart:55:11)
+<asynchronous suspension>
+#31     testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#32     TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1953:5)
+<asynchronous suspension>
+<asynchronous suspension>
+(elided 5 frames from dart:async and package:stack_trace)
+
+Handler: "onTapDown"
+Recognizer:
+  TapGestureRecognizer#24504
+════════════════════════════════════════════════════════════════════════════════════════════════════
+══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞════════════════════════════════════════════════════
+The following TestFailure was thrown running a test:
+Expected: exactly one matching candidate
+  Actual: _TextWidgetFinder:<Found 0 widgets with text "Emplacement 1": []>
+   Which: means none were found but one was expected
+
+When the exception was thrown, this was the stack:
+#4      main.<anonymous closure> (file:///home/rturcey/perso/refactor_potager/test/island_scene_acceptance_test.dart:57:11)
+<asynchronous suspension>
+#5      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#6      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1953:5)
+<asynchronous suspension>
+<asynchronous suspension>
+(elided one frame from package:stack_trace)
+
+This was caught by the test expectation on the following line:
+  file:///home/rturcey/perso/refactor_potager/test/island_scene_acceptance_test.dart line 57
+The test description was:
+  Potager : contact et index conservés à Size(390.0, 844.0)
+════════════════════════════════════════════════════════════════════════════════════════════════════
+══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞════════════════════════════════════════════════════
+The following message was thrown:
+Multiple exceptions (2) were detected during the running of the current test, and at least one was
+unexpected.
+════════════════════════════════════════════════════════════════════════════════════════════════════
+00:07 +32 ~2 -8: /home/rturcey/perso/refactor_potager/test/potager_scene_test.dart: l'îlot potager est cadré et un emplacement est sélectionnable
+00:07 +32 ~2 -8: /home/rturcey/perso/refactor_potager/test/island_scene_acceptance_test.dart: Potager : contact et index conservés à Size(390.0, 844.0) [E]
+  Test failed. See exception logs above.
+  The test description was: Potager : contact et index conservés à Size(390.0, 844.0)
+  
+00:07 +33 ~2 -8: /home/rturcey/perso/refactor_potager/test/potager_scene_test.dart: l'îlot potager est cadré et un emplacement est sélectionnable
+00:08 +34 ~2 -8: /home/rturcey/perso/refactor_potager/test/potager_scene_test.dart: l'îlot potager est cadré et un emplacement est sélectionnable
+00:08 +35 ~2 -8: /home/rturcey/perso/refactor_potager/test/potager_scene_test.dart: l'îlot potager est cadré et un emplacement est sélectionnable
+00:08 +36 ~2 -8: /home/rturcey/perso/refactor_potager/test/potager_scene_test.dart: l'îlot potager est cadré et un emplacement est sélectionnable
+00:08 +37 ~2 -8: /home/rturcey/perso/refactor_potager/test/potager_scene_test.dart: l'îlot potager est cadré et un emplacement est sélectionnable
+00:09 +38 ~2 -8: /home/rturcey/perso/refactor_potager/test/potager_scene_test.dart: l'îlot potager est cadré et un emplacement est sélectionnable
+00:09 +39 ~2 -8: /home/rturcey/perso/refactor_potager/test/potager_scene_test.dart: l'îlot potager est cadré et un emplacement est sélectionnable
+00:09 +40 ~2 -8: /home/rturcey/perso/refactor_potager/test/potager_scene_test.dart: l'îlot potager est cadré et un emplacement est sélectionnable
+00:09 +41 ~2 -8: /home/rturcey/perso/refactor_potager/test/potager_scene_test.dart: l'îlot potager est cadré et un emplacement est sélectionnable
+00:09 +42 ~2 -8: /home/rturcey/perso/refactor_potager/test/potager_scene_test.dart: l'îlot potager est cadré et un emplacement est sélectionnable
+00:09 +42 ~2 -9: /home/rturcey/perso/refactor_potager/test/potager_scene_test.dart: l'îlot potager est cadré et un emplacement est sélectionnable
+00:09 +42 ~2 -9: /home/rturcey/perso/refactor_potager/test/potager_path_test.dart: les pierres déclarées sont déterministes, espacées et hors des sols [E]
+  PathNotFoundException: Cannot open file, path = 'assets/sprites/manifest.json' (OS Error: No such file or directory, errno = 2)
+  dart:io                            _File.readAsStringSync
+  test/potager_path_test.dart 95:46  main.<fn>
+  
+00:09 +43 ~2 -9: /home/rturcey/perso/refactor_potager/test/potager_scene_test.dart: l'îlot potager est cadré et un emplacement est sélectionnable
+00:10 +44 ~2 -9: /home/rturcey/perso/refactor_potager/test/potager_scene_test.dart: l'îlot potager est cadré et un emplacement est sélectionnable
+00:10 +45 ~2 -9: /home/rturcey/perso/refactor_potager/test/potager_scene_test.dart: l'îlot potager est cadré et un emplacement est sélectionnable
+00:10 +46 ~2 -9: /home/rturcey/perso/refactor_potager/test/potager_scene_test.dart: l'îlot potager est cadré et un emplacement est sélectionnable
+══╡ EXCEPTION CAUGHT BY GESTURE ╞═══════════════════════════════════════════════════════════════════
+The following LateError was thrown while handling a gesture:
+LateInitializationError: Field '_terrainOwnsPlots@25198969' has not been initialized.
+
+When the exception was thrown, this was the stack:
+#0      GardenGame._terrainOwnsPlots (package:growstep/garden/garden_game.dart)
+#1      GardenGame._runtimeAnchorsFor (package:growstep/garden/garden_game.dart:129:38)
+#2      GardenGame.hitTestSlot (package:growstep/garden/garden_game.dart:159:21)
+#3      _JardinTabState._tapGarden (package:growstep/ui/jardin_tab.dart:82:24)
+#4      TapGestureRecognizer.handleTapDown.<anonymous closure> (package:flutter/src/gestures/tap.dart:730:61)
+#5      GestureRecognizer.invokeCallback (package:flutter/src/gestures/recognizer.dart:362:24)
+#6      TapGestureRecognizer.handleTapDown (package:flutter/src/gestures/tap.dart:730:11)
+#7      BaseTapGestureRecognizer._checkDown (package:flutter/src/gestures/tap.dart:374:5)
+#8      BaseTapGestureRecognizer.acceptGesture (package:flutter/src/gestures/tap.dart:351:7)
+#9      GestureArenaManager.sweep (package:flutter/src/gestures/arena.dart:173:27)
+#10     GestureBinding.handleEvent (package:flutter/src/gestures/binding.dart:542:20)
+#11     GestureBinding.dispatchEvent (package:flutter/src/gestures/binding.dart:508:22)
+#12     RendererBinding.dispatchEvent (package:flutter/src/rendering/binding.dart:473:11)
+#13     GestureBinding._handlePointerEventImmediately (package:flutter/src/gestures/binding.dart:447:7)
+#14     GestureBinding.handlePointerEvent (package:flutter/src/gestures/binding.dart:404:5)
+#15     TestWidgetsFlutterBinding.handlePointerEventForSource.<anonymous closure> (package:flutter_test/src/binding.dart:1571:42)
+#16     TestWidgetsFlutterBinding.withPointerEventSource (package:flutter_test/src/binding.dart:1581:11)
+#17     TestWidgetsFlutterBinding.handlePointerEventForSource (package:flutter_test/src/binding.dart:1571:5)
+#18     WidgetTester.sendEventToBinding.<anonymous closure> (package:flutter_test/src/widget_tester.dart:869:15)
+#21     TestAsyncUtils.guard (package:flutter_test/src/test_async_utils.dart:74:41)
+#22     WidgetTester.sendEventToBinding (package:flutter_test/src/widget_tester.dart:868:27)
+#23     TestGesture.up.<anonymous closure> (package:flutter_test/src/test_pointer.dart:587:26)
+#26     TestAsyncUtils.guard (package:flutter_test/src/test_async_utils.dart:74:41)
+#27     TestGesture.up (package:flutter_test/src/test_pointer.dart:580:27)
+#28     WidgetController.tapAt.<anonymous closure> (package:flutter_test/src/controller.dart:1155:21)
+<asynchronous suspension>
+#29     TestAsyncUtils.guard.<anonymous closure> (package:flutter_test/src/test_async_utils.dart:130:27)
+<asynchronous suspension>
+#30     main.<anonymous closure> (file:///home/rturcey/perso/refactor_potager/test/potager_scene_test.dart:72:5)
+<asynchronous suspension>
+#31     testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#32     TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1953:5)
+<asynchronous suspension>
+<asynchronous suspension>
+(elided 5 frames from dart:async and package:stack_trace)
+
+Handler: "onTapDown"
+Recognizer:
+  TapGestureRecognizer#e5022
+════════════════════════════════════════════════════════════════════════════════════════════════════
+00:10 +47 ~2 -9: /home/rturcey/perso/refactor_potager/test/potager_scene_test.dart: l'îlot potager est cadré et un emplacement est sélectionnable
+══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞════════════════════════════════════════════════════
+The following TestFailure was thrown running a test:
+Expected: exactly one matching candidate
+  Actual: _TextWidgetFinder:<Found 0 widgets with text "Emplacement 3": []>
+   Which: means none were found but one was expected
+
+When the exception was thrown, this was the stack:
+#4      main.<anonymous closure> (file:///home/rturcey/perso/refactor_potager/test/potager_scene_test.dart:74:5)
+<asynchronous suspension>
+#5      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#6      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1953:5)
+<asynchronous suspension>
+<asynchronous suspension>
+(elided one frame from package:stack_trace)
+
+This was caught by the test expectation on the following line:
+  file:///home/rturcey/perso/refactor_potager/test/potager_scene_test.dart line 74
+The test description was:
+  l'îlot potager est cadré et un emplacement est sélectionnable
+════════════════════════════════════════════════════════════════════════════════════════════════════
+══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞════════════════════════════════════════════════════
+The following message was thrown:
+Multiple exceptions (2) were detected during the running of the current test, and at least one was
+unexpected.
+════════════════════════════════════════════════════════════════════════════════════════════════════
+00:10 +47 ~2 -10: /home/rturcey/perso/refactor_potager/test/living_potager_test.dart: une nouvelle partie montre le potager vivant
+00:10 +47 ~2 -10: /home/rturcey/perso/refactor_potager/test/potager_scene_test.dart: l'îlot potager est cadré et un emplacement est sélectionnable [E]
+  Test failed. See exception logs above.
+  The test description was: l'îlot potager est cadré et un emplacement est sélectionnable
+  
+00:11 +48 ~2 -10: /home/rturcey/perso/refactor_potager/test/living_potager_test.dart: une nouvelle partie montre le potager vivant
+00:11 +49 ~2 -10: /home/rturcey/perso/refactor_potager/test/living_potager_test.dart: une nouvelle partie montre le potager vivant
+00:11 +49 ~2 -11: loading /home/rturcey/perso/refactor_potager/test/potager_diorama_candidate_test.dart [E]
+  Failed to load "/home/rturcey/perso/refactor_potager/test/potager_diorama_candidate_test.dart": Cannot open file, path = 'assets/sprites/manifest.json' (OS Error: No such file or directory, errno = 2)
+  dart:io                                          _File.readAsStringSync
+  test/potager_diorama_candidate_test.dart 57:42   _manifest
+  test/potager_diorama_candidate_test.dart 107:20  main
+  
+00:11 +50 ~2 -11: /home/rturcey/perso/refactor_potager/test/living_potager_test.dart: une nouvelle partie montre le potager vivant
+00:12 +51 ~2 -11: /home/rturcey/perso/refactor_potager/test/living_potager_test.dart: une nouvelle partie montre le potager vivant
+00:12 +52 ~2 -11: /home/rturcey/perso/refactor_potager/test/island_scene_acceptance_test.dart: Potager : contact et index conservés à Size(375.0, 667.0)
+00:12 +53 ~2 -11: /home/rturcey/perso/refactor_potager/test/island_scene_acceptance_test.dart: Potager : contact et index conservés à Size(375.0, 667.0)
+00:13 +54 ~2 -11: /home/rturcey/perso/refactor_potager/test/island_scene_acceptance_test.dart: Potager : contact et index conservés à Size(375.0, 667.0)
+00:13 +55 ~2 -11: /home/rturcey/perso/refactor_potager/test/island_scene_acceptance_test.dart: Potager : contact et index conservés à Size(375.0, 667.0)
+00:13 +56 ~2 -11: /home/rturcey/perso/refactor_potager/test/island_scene_acceptance_test.dart: Potager : contact et index conservés à Size(375.0, 667.0)
+00:13 +57 ~2 -11: /home/rturcey/perso/refactor_potager/test/island_scene_acceptance_test.dart: Potager : contact et index conservés à Size(375.0, 667.0)
+00:13 +58 ~2 -11: /home/rturcey/perso/refactor_potager/test/island_scene_acceptance_test.dart: Potager : contact et index conservés à Size(375.0, 667.0)
+00:13 +59 ~2 -11: /home/rturcey/perso/refactor_potager/test/island_scene_acceptance_test.dart: Potager : contact et index conservés à Size(375.0, 667.0)
+00:13 +60 ~2 -11: /home/rturcey/perso/refactor_potager/test/island_scene_acceptance_test.dart: Potager : contact et index conservés à Size(375.0, 667.0)
+00:13 +61 ~2 -11: /home/rturcey/perso/refactor_potager/test/island_scene_acceptance_test.dart: Potager : contact et index conservés à Size(375.0, 667.0)
+00:13 +62 ~2 -11: /home/rturcey/perso/refactor_potager/test/island_scene_acceptance_test.dart: Potager : contact et index conservés à Size(375.0, 667.0)
+00:13 +63 ~2 -11: /home/rturcey/perso/refactor_potager/test/island_scene_acceptance_test.dart: Potager : contact et index conservés à Size(375.0, 667.0)
+00:13 +64 ~2 -11: /home/rturcey/perso/refactor_potager/test/island_scene_acceptance_test.dart: Potager : contact et index conservés à Size(375.0, 667.0)
+00:13 +65 ~2 -11: /home/rturcey/perso/refactor_potager/test/island_scene_acceptance_test.dart: Potager : contact et index conservés à Size(375.0, 667.0)
+00:13 +65 ~2 -11: /home/rturcey/perso/refactor_potager/test/potager_scene_test.dart: le cadrage et l'interaction restent valables sur le petit écran
+══╡ EXCEPTION CAUGHT BY GESTURE ╞═══════════════════════════════════════════════════════════════════
+The following LateError was thrown while handling a gesture:
+LateInitializationError: Field '_terrainOwnsPlots@25198969' has not been initialized.
+
+When the exception was thrown, this was the stack:
+#0      GardenGame._terrainOwnsPlots (package:growstep/garden/garden_game.dart)
+#1      GardenGame._runtimeAnchorsFor (package:growstep/garden/garden_game.dart:129:38)
+#2      GardenGame.hitTestSlot (package:growstep/garden/garden_game.dart:159:21)
+#3      _JardinTabState._tapGarden (package:growstep/ui/jardin_tab.dart:82:24)
+#4      TapGestureRecognizer.handleTapDown.<anonymous closure> (package:flutter/src/gestures/tap.dart:730:61)
+#5      GestureRecognizer.invokeCallback (package:flutter/src/gestures/recognizer.dart:362:24)
+#6      TapGestureRecognizer.handleTapDown (package:flutter/src/gestures/tap.dart:730:11)
+#7      BaseTapGestureRecognizer._checkDown (package:flutter/src/gestures/tap.dart:374:5)
+#8      BaseTapGestureRecognizer.acceptGesture (package:flutter/src/gestures/tap.dart:351:7)
+#9      GestureArenaManager.sweep (package:flutter/src/gestures/arena.dart:173:27)
+#10     GestureBinding.handleEvent (package:flutter/src/gestures/binding.dart:542:20)
+#11     GestureBinding.dispatchEvent (package:flutter/src/gestures/binding.dart:508:22)
+#12     RendererBinding.dispatchEvent (package:flutter/src/rendering/binding.dart:473:11)
+#13     GestureBinding._handlePointerEventImmediately (package:flutter/src/gestures/binding.dart:447:7)
+#14     GestureBinding.handlePointerEvent (package:flutter/src/gestures/binding.dart:404:5)
+#15     TestWidgetsFlutterBinding.handlePointerEventForSource.<anonymous closure> (package:flutter_test/src/binding.dart:1571:42)
+#16     TestWidgetsFlutterBinding.withPointerEventSource (package:flutter_test/src/binding.dart:1581:11)
+#17     TestWidgetsFlutterBinding.handlePointerEventForSource (package:flutter_test/src/binding.dart:1571:5)
+#18     WidgetTester.sendEventToBinding.<anonymous closure> (package:flutter_test/src/widget_tester.dart:869:15)
+#21     TestAsyncUtils.guard (package:flutter_test/src/test_async_utils.dart:74:41)
+#22     WidgetTester.sendEventToBinding (package:flutter_test/src/widget_tester.dart:868:27)
+#23     TestGesture.up.<anonymous closure> (package:flutter_test/src/test_pointer.dart:587:26)
+#26     TestAsyncUtils.guard (package:flutter_test/src/test_async_utils.dart:74:41)
+#27     TestGesture.up (package:flutter_test/src/test_pointer.dart:580:27)
+#28     WidgetController.tapAt.<anonymous closure> (package:flutter_test/src/controller.dart:1155:21)
+<asynchronous suspension>
+#29     TestAsyncUtils.guard.<anonymous closure> (package:flutter_test/src/test_async_utils.dart:130:27)
+<asynchronous suspension>
+#30     main.<anonymous closure> (file:///home/rturcey/perso/refactor_potager/test/potager_scene_test.dart:88:7)
+<asynchronous suspension>
+#31     testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#32     TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1953:5)
+<asynchronous suspension>
+<asynchronous suspension>
+(elided 5 frames from dart:async and package:stack_trace)
+
+Handler: "onTapDown"
+Recognizer:
+  TapGestureRecognizer#2f37d
+════════════════════════════════════════════════════════════════════════════════════════════════════
+══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞════════════════════════════════════════════════════
+The following TestFailure was thrown running a test:
+Expected: exactly one matching candidate
+  Actual: _TextWidgetFinder:<Found 0 widgets with text "Emplacement 3": []>
+   Which: means none were found but one was expected
+
+When the exception was thrown, this was the stack:
+#4      main.<anonymous closure> (file:///home/rturcey/perso/refactor_potager/test/potager_scene_test.dart:90:7)
+<asynchronous suspension>
+#5      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#6      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1953:5)
+<asynchronous suspension>
+<asynchronous suspension>
+(elided one frame from package:stack_trace)
+
+This was caught by the test expectation on the following line:
+  file:///home/rturcey/perso/refactor_potager/test/potager_scene_test.dart line 90
+The test description was:
+  le cadrage et l'interaction restent valables sur le petit écran
+════════════════════════════════════════════════════════════════════════════════════════════════════
+══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞════════════════════════════════════════════════════
+The following message was thrown:
+Multiple exceptions (2) were detected during the running of the current test, and at least one was
+unexpected.
+════════════════════════════════════════════════════════════════════════════════════════════════════
+00:13 +65 ~2 -12: /home/rturcey/perso/refactor_potager/test/island_scene_acceptance_test.dart: Potager : contact et index conservés à Size(375.0, 667.0)
+00:13 +65 ~2 -12: /home/rturcey/perso/refactor_potager/test/potager_scene_test.dart: le cadrage et l'interaction restent valables sur le petit écran [E]
+  Test failed. See exception logs above.
+  The test description was: le cadrage et l'interaction restent valables sur le petit écran
+  
+00:13 +66 ~2 -12: /home/rturcey/perso/refactor_potager/test/island_scene_acceptance_test.dart: Potager : contact et index conservés à Size(375.0, 667.0)
+00:13 +67 ~2 -12: /home/rturcey/perso/refactor_potager/test/island_scene_acceptance_test.dart: Potager : contact et index conservés à Size(375.0, 667.0)
+══╡ EXCEPTION CAUGHT BY GESTURE ╞═══════════════════════════════════════════════════════════════════
+The following LateError was thrown while handling a gesture:
+LateInitializationError: Field '_terrainOwnsPlots@25198969' has not been initialized.
+
+When the exception was thrown, this was the stack:
+#0      GardenGame._terrainOwnsPlots (package:growstep/garden/garden_game.dart)
+#1      GardenGame._runtimeAnchorsFor (package:growstep/garden/garden_game.dart:129:38)
+#2      GardenGame.hitTestSlot (package:growstep/garden/garden_game.dart:159:21)
+#3      _JardinTabState._tapGarden (package:growstep/ui/jardin_tab.dart:82:24)
+#4      TapGestureRecognizer.handleTapDown.<anonymous closure> (package:flutter/src/gestures/tap.dart:730:61)
+#5      GestureRecognizer.invokeCallback (package:flutter/src/gestures/recognizer.dart:362:24)
+#6      TapGestureRecognizer.handleTapDown (package:flutter/src/gestures/tap.dart:730:11)
+#7      BaseTapGestureRecognizer._checkDown (package:flutter/src/gestures/tap.dart:374:5)
+#8      BaseTapGestureRecognizer.acceptGesture (package:flutter/src/gestures/tap.dart:351:7)
+#9      GestureArenaManager.sweep (package:flutter/src/gestures/arena.dart:173:27)
+#10     GestureBinding.handleEvent (package:flutter/src/gestures/binding.dart:542:20)
+#11     GestureBinding.dispatchEvent (package:flutter/src/gestures/binding.dart:508:22)
+#12     RendererBinding.dispatchEvent (package:flutter/src/rendering/binding.dart:473:11)
+#13     GestureBinding._handlePointerEventImmediately (package:flutter/src/gestures/binding.dart:447:7)
+#14     GestureBinding.handlePointerEvent (package:flutter/src/gestures/binding.dart:404:5)
+#15     TestWidgetsFlutterBinding.handlePointerEventForSource.<anonymous closure> (package:flutter_test/src/binding.dart:1571:42)
+#16     TestWidgetsFlutterBinding.withPointerEventSource (package:flutter_test/src/binding.dart:1581:11)
+#17     TestWidgetsFlutterBinding.handlePointerEventForSource (package:flutter_test/src/binding.dart:1571:5)
+#18     WidgetTester.sendEventToBinding.<anonymous closure> (package:flutter_test/src/widget_tester.dart:869:15)
+#21     TestAsyncUtils.guard (package:flutter_test/src/test_async_utils.dart:74:41)
+#22     WidgetTester.sendEventToBinding (package:flutter_test/src/widget_tester.dart:868:27)
+#23     TestGesture.up.<anonymous closure> (package:flutter_test/src/test_pointer.dart:587:26)
+#26     TestAsyncUtils.guard (package:flutter_test/src/test_async_utils.dart:74:41)
+#27     TestGesture.up (package:flutter_test/src/test_pointer.dart:580:27)
+#28     WidgetController.tapAt.<anonymous closure> (package:flutter_test/src/controller.dart:1155:21)
+<asynchronous suspension>
+#29     TestAsyncUtils.guard.<anonymous closure> (package:flutter_test/src/test_async_utils.dart:130:27)
+<asynchronous suspension>
+#30     main.<anonymous closure> (file:///home/rturcey/perso/refactor_potager/test/island_scene_acceptance_test.dart:55:11)
+<asynchronous suspension>
+#31     testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#32     TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1953:5)
+<asynchronous suspension>
+<asynchronous suspension>
+(elided 5 frames from dart:async and package:stack_trace)
+
+Handler: "onTapDown"
+Recognizer:
+  TapGestureRecognizer#8613a
+════════════════════════════════════════════════════════════════════════════════════════════════════
+══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞════════════════════════════════════════════════════
+The following TestFailure was thrown running a test:
+Expected: exactly one matching candidate
+  Actual: _TextWidgetFinder:<Found 0 widgets with text "Emplacement 1": []>
+   Which: means none were found but one was expected
+
+When the exception was thrown, this was the stack:
+#4      main.<anonymous closure> (file:///home/rturcey/perso/refactor_potager/test/island_scene_acceptance_test.dart:57:11)
+<asynchronous suspension>
+#5      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#6      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1953:5)
+<asynchronous suspension>
+<asynchronous suspension>
+(elided one frame from package:stack_trace)
+
+This was caught by the test expectation on the following line:
+  file:///home/rturcey/perso/refactor_potager/test/island_scene_acceptance_test.dart line 57
+The test description was:
+  Potager : contact et index conservés à Size(375.0, 667.0)
+════════════════════════════════════════════════════════════════════════════════════════════════════
+══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞════════════════════════════════════════════════════
+The following message was thrown:
+Multiple exceptions (2) were detected during the running of the current test, and at least one was
+unexpected.
+════════════════════════════════════════════════════════════════════════════════════════════════════
+00:13 +67 ~2 -13: /home/rturcey/perso/refactor_potager/test/living_potager_test.dart: la reprise conserve les plantes offertes
+00:13 +67 ~2 -13: /home/rturcey/perso/refactor_potager/test/island_scene_acceptance_test.dart: Potager : contact et index conservés à Size(375.0, 667.0) [E]
+  Test failed. See exception logs above.
+  The test description was: Potager : contact et index conservés à Size(375.0, 667.0)
+  
+00:13 +68 ~2 -13: /home/rturcey/perso/refactor_potager/test/living_potager_test.dart: la reprise conserve les plantes offertes
+00:13 +69 ~2 -13: /home/rturcey/perso/refactor_potager/test/living_potager_test.dart: la reprise conserve les plantes offertes
+00:13 +70 ~2 -13: /home/rturcey/perso/refactor_potager/test/living_potager_test.dart: la reprise conserve les plantes offertes
+00:13 +71 ~2 -13: /home/rturcey/perso/refactor_potager/test/living_potager_test.dart: la reprise conserve les plantes offertes
+00:13 +72 ~2 -13: /home/rturcey/perso/refactor_potager/test/living_potager_test.dart: la reprise conserve les plantes offertes
+00:13 +72 ~2 -13: /home/rturcey/perso/refactor_potager/test/garden_session_test.dart: fondation — migration et types de base une sauvegarde sans playerSeed génère une graine stable au chargement
+WARNING (drift): It looks like you've created the database class GardenDatabase multiple times. When these two databases use the same QueryExecutor, race conditions will occur and might corrupt the database. 
+Try to follow the advice at https://drift.simonbinder.eu/faq/#using-the-database or, if you know what you're doing, set driftRuntimeOptions.dontWarnAboutMultipleDatabases = true
+Here is the stacktrace from when the database was opened a second time:
+#0      GeneratedDatabase._handleInstantiated (package:drift/src/runtime/api/db_base.dart:96:30)
+#1      GeneratedDatabase._whenConstructed (package:drift/src/runtime/api/db_base.dart:73:12)
+#2      new GeneratedDatabase (package:drift/src/runtime/api/db_base.dart:64:5)
+#3      new _$GardenDatabase (package:growstep/garden/garden_database.g.dart:436:39)
+#4      new GardenDatabase (package:growstep/garden/garden_database.dart:31:7)
+#5      main.<anonymous closure>.<anonymous closure> (file:///home/rturcey/perso/refactor_potager/test/garden_session_test.dart:593:24)
+<asynchronous suspension>
+#6      Declarer.test.<anonymous closure>.<anonymous closure> (package:test_api/src/backend/declarer.dart:253:15)
+<asynchronous suspension>
+#7      Declarer.test.<anonymous closure> (package:test_api/src/backend/declarer.dart:250:11)
+<asynchronous suspension>
+#8      Invoker._waitForOutstandingCallbacks.<anonymous closure> (package:test_api/src/backend/invoker.dart:318:9)
+<asynchronous suspension>
+This warning will only appear on debug builds.
+00:13 +73 ~2 -13: /home/rturcey/perso/refactor_potager/test/living_potager_test.dart: la reprise conserve les plantes offertes
+00:13 +74 ~2 -13: /home/rturcey/perso/refactor_potager/test/living_potager_test.dart: la reprise conserve les plantes offertes
+00:13 +75 ~2 -13: /home/rturcey/perso/refactor_potager/test/living_potager_test.dart: la reprise conserve les plantes offertes
+00:13 +76 ~2 -13: /home/rturcey/perso/refactor_potager/test/living_potager_test.dart: la reprise conserve les plantes offertes
+00:13 +77 ~2 -13: /home/rturcey/perso/refactor_potager/test/living_potager_test.dart: la reprise conserve les plantes offertes
+00:13 +78 ~2 -13: /home/rturcey/perso/refactor_potager/test/living_potager_test.dart: la reprise conserve les plantes offertes
+00:13 +79 ~2 -13: /home/rturcey/perso/refactor_potager/test/living_potager_test.dart: la reprise conserve les plantes offertes
+00:13 +80 ~2 -13: /home/rturcey/perso/refactor_potager/test/potager_scene_test.dart: le changement de taille préserve le cadrage
+00:13 +81 ~2 -13: /home/rturcey/perso/refactor_potager/test/potager_scene_test.dart: le changement de taille préserve le cadrage
+00:13 +82 ~2 -13: /home/rturcey/perso/refactor_potager/test/potager_scene_test.dart: le changement de taille préserve le cadrage
+00:13 +83 ~2 -13: /home/rturcey/perso/refactor_potager/test/potager_scene_test.dart: le changement de taille préserve le cadrage
+00:13 +84 ~2 -13: /home/rturcey/perso/refactor_potager/test/potager_scene_test.dart: le changement de taille préserve le cadrage
+00:13 +85 ~2 -13: /home/rturcey/perso/refactor_potager/test/potager_scene_test.dart: le changement de taille préserve le cadrage
+00:13 +86 ~2 -13: /home/rturcey/perso/refactor_potager/test/potager_scene_test.dart: le changement de taille préserve le cadrage
+00:13 +87 ~2 -13: /home/rturcey/perso/refactor_potager/test/potager_scene_test.dart: le changement de taille préserve le cadrage
+00:13 +88 ~2 -13: /home/rturcey/perso/refactor_potager/test/potager_scene_test.dart: le changement de taille préserve le cadrage
+00:13 +89 ~2 -13: /home/rturcey/perso/refactor_potager/test/potager_scene_test.dart: le changement de taille préserve le cadrage
+00:13 +90 ~2 -13: /home/rturcey/perso/refactor_potager/test/potager_scene_test.dart: le changement de taille préserve le cadrage
+00:13 +91 ~2 -13: /home/rturcey/perso/refactor_potager/test/potager_scene_test.dart: le changement de taille préserve le cadrage
+00:13 +92 ~2 -13: /home/rturcey/perso/refactor_potager/test/potager_scene_test.dart: le changement de taille préserve le cadrage
+00:13 +93 ~2 -13: /home/rturcey/perso/refactor_potager/test/potager_scene_test.dart: le changement de taille préserve le cadrage
+00:13 +94 ~2 -13: /home/rturcey/perso/refactor_potager/test/potager_scene_test.dart: le changement de taille préserve le cadrage
+00:13 +95 ~2 -13: /home/rturcey/perso/refactor_potager/test/potager_scene_test.dart: le changement de taille préserve le cadrage
+00:13 +96 ~2 -13: /home/rturcey/perso/refactor_potager/test/potager_scene_test.dart: le changement de taille préserve le cadrage
+00:13 +97 ~2 -13: /home/rturcey/perso/refactor_potager/test/potager_scene_test.dart: le changement de taille préserve le cadrage
+00:13 +98 ~2 -13: /home/rturcey/perso/refactor_potager/test/potager_scene_test.dart: le changement de taille préserve le cadrage
+00:13 +99 ~2 -13: /home/rturcey/perso/refactor_potager/test/potager_scene_test.dart: le changement de taille préserve le cadrage
+00:13 +100 ~2 -13: /home/rturcey/perso/refactor_potager/test/potager_scene_test.dart: le changement de taille préserve le cadrage
+00:13 +101 ~2 -13: /home/rturcey/perso/refactor_potager/test/potager_scene_test.dart: le changement de taille préserve le cadrage
+00:13 +102 ~2 -13: /home/rturcey/perso/refactor_potager/test/potager_scene_test.dart: le changement de taille préserve le cadrage
+00:13 +103 ~2 -13: /home/rturcey/perso/refactor_potager/test/potager_scene_test.dart: le changement de taille préserve le cadrage
+00:13 +104 ~2 -13: /home/rturcey/perso/refactor_potager/test/potager_scene_test.dart: le changement de taille préserve le cadrage
+00:13 +105 ~2 -13: /home/rturcey/perso/refactor_potager/test/potager_scene_test.dart: le changement de taille préserve le cadrage
+00:13 +106 ~2 -13: /home/rturcey/perso/refactor_potager/test/potager_scene_test.dart: le changement de taille préserve le cadrage
+00:13 +107 ~2 -13: /home/rturcey/perso/refactor_potager/test/potager_scene_test.dart: le changement de taille préserve le cadrage
+00:13 +108 ~2 -13: /home/rturcey/perso/refactor_potager/test/potager_scene_test.dart: le changement de taille préserve le cadrage
+00:13 +108 ~2 -13: /home/rturcey/perso/refactor_potager/test/garden_session_test.dart: paliers quotidiens et lots les lots sont déterministes pour un même joueur et un même jour
+WARNING (drift): It looks like you've created the database class GardenDatabase multiple times. When these two databases use the same QueryExecutor, race conditions will occur and might corrupt the database. 
+Try to follow the advice at https://drift.simonbinder.eu/faq/#using-the-database or, if you know what you're doing, set driftRuntimeOptions.dontWarnAboutMultipleDatabases = true
+Here is the stacktrace from when the database was opened a second time:
+#0      GeneratedDatabase._handleInstantiated (package:drift/src/runtime/api/db_base.dart:96:30)
+#1      GeneratedDatabase._whenConstructed (package:drift/src/runtime/api/db_base.dart:73:12)
+#2      new GeneratedDatabase (package:drift/src/runtime/api/db_base.dart:64:5)
+#3      new _$GardenDatabase (package:growstep/garden/garden_database.g.dart:436:39)
+#4      new GardenDatabase (package:growstep/garden/garden_database.dart:31:7)
+#5      main.<anonymous closure>.<anonymous closure> (file:///home/rturcey/perso/refactor_potager/test/garden_session_test.dart:1262:25)
+<asynchronous suspension>
+#6      Declarer.test.<anonymous closure>.<anonymous closure> (package:test_api/src/backend/declarer.dart:253:15)
+<asynchronous suspension>
+#7      Declarer.test.<anonymous closure> (package:test_api/src/backend/declarer.dart:250:11)
+<asynchronous suspension>
+#8      Invoker._waitForOutstandingCallbacks.<anonymous closure> (package:test_api/src/backend/invoker.dart:318:9)
+<asynchronous suspension>
+This warning will only appear on debug builds.
+00:13 +109 ~2 -13: /home/rturcey/perso/refactor_potager/test/potager_scene_test.dart: le changement de taille préserve le cadrage
+00:13 +110 ~2 -13: /home/rturcey/perso/refactor_potager/test/potager_scene_test.dart: le changement de taille préserve le cadrage
+00:13 +111 ~2 -13: /home/rturcey/perso/refactor_potager/test/potager_scene_test.dart: le changement de taille préserve le cadrage
+00:13 +112 ~2 -13: /home/rturcey/perso/refactor_potager/test/potager_scene_test.dart: le changement de taille préserve le cadrage
+00:13 +113 ~2 -13: /home/rturcey/perso/refactor_potager/test/potager_scene_test.dart: le changement de taille préserve le cadrage
+00:13 +114 ~2 -13: /home/rturcey/perso/refactor_potager/test/potager_scene_test.dart: le changement de taille préserve le cadrage
+00:13 +115 ~2 -13: /home/rturcey/perso/refactor_potager/test/potager_scene_test.dart: le changement de taille préserve le cadrage
+00:13 +116 ~2 -13: /home/rturcey/perso/refactor_potager/test/potager_scene_test.dart: le changement de taille préserve le cadrage
+00:13 +117 ~2 -13: /home/rturcey/perso/refactor_potager/test/potager_scene_test.dart: le changement de taille préserve le cadrage
+00:13 +118 ~2 -13: /home/rturcey/perso/refactor_potager/test/potager_scene_test.dart: le changement de taille préserve le cadrage
+00:13 +119 ~2 -13: /home/rturcey/perso/refactor_potager/test/potager_scene_test.dart: le changement de taille préserve le cadrage
+00:14 +120 ~2 -13: /home/rturcey/perso/refactor_potager/test/potager_scene_test.dart: le changement de taille préserve le cadrage
+00:14 +121 ~2 -13: /home/rturcey/perso/refactor_potager/test/potager_scene_test.dart: le changement de taille préserve le cadrage
+00:14 +122 ~2 -13: /home/rturcey/perso/refactor_potager/test/potager_scene_test.dart: le changement de taille préserve le cadrage
+00:14 +123 ~2 -13: /home/rturcey/perso/refactor_potager/test/potager_scene_test.dart: le changement de taille préserve le cadrage
+00:14 +124 ~2 -13: /home/rturcey/perso/refactor_potager/test/potager_scene_test.dart: le changement de taille préserve le cadrage
+00:14 +125 ~2 -13: /home/rturcey/perso/refactor_potager/test/potager_scene_test.dart: le changement de taille préserve le cadrage
+00:14 +126 ~2 -13: /home/rturcey/perso/refactor_potager/test/potager_scene_test.dart: le changement de taille préserve le cadrage
+00:14 +127 ~2 -13: /home/rturcey/perso/refactor_potager/test/potager_scene_test.dart: le changement de taille préserve le cadrage
+00:14 +128 ~2 -13: /home/rturcey/perso/refactor_potager/test/potager_scene_test.dart: le changement de taille préserve le cadrage
+00:14 +129 ~2 -13: /home/rturcey/perso/refactor_potager/test/potager_scene_test.dart: le changement de taille préserve le cadrage
+00:14 +130 ~2 -13: /home/rturcey/perso/refactor_potager/test/potager_scene_test.dart: le changement de taille préserve le cadrage
+00:14 +131 ~2 -13: /home/rturcey/perso/refactor_potager/test/potager_scene_test.dart: le changement de taille préserve le cadrage
+00:14 +132 ~2 -13: /home/rturcey/perso/refactor_potager/test/potager_scene_test.dart: le changement de taille préserve le cadrage
+00:14 +133 ~2 -13: /home/rturcey/perso/refactor_potager/test/potager_scene_test.dart: le changement de taille préserve le cadrage
+00:14 +134 ~2 -13: /home/rturcey/perso/refactor_potager/test/potager_scene_test.dart: le changement de taille préserve le cadrage
+00:14 +134 ~2 -13: /home/rturcey/perso/refactor_potager/test/garden_session_test.dart: invitations à heures choisies les heures d'invitation se règlent et persistent
+WARNING (drift): It looks like you've created the database class GardenDatabase multiple times. When these two databases use the same QueryExecutor, race conditions will occur and might corrupt the database. 
+Try to follow the advice at https://drift.simonbinder.eu/faq/#using-the-database or, if you know what you're doing, set driftRuntimeOptions.dontWarnAboutMultipleDatabases = true
+Here is the stacktrace from when the database was opened a second time:
+#0      GeneratedDatabase._handleInstantiated (package:drift/src/runtime/api/db_base.dart:96:30)
+#1      GeneratedDatabase._whenConstructed (package:drift/src/runtime/api/db_base.dart:73:12)
+#2      new GeneratedDatabase (package:drift/src/runtime/api/db_base.dart:64:5)
+#3      new _$GardenDatabase (package:growstep/garden/garden_database.g.dart:436:39)
+#4      new GardenDatabase (package:growstep/garden/garden_database.dart:31:7)
+#5      main.<anonymous closure>.<anonymous closure> (file:///home/rturcey/perso/refactor_potager/test/garden_session_test.dart:1874:24)
+<asynchronous suspension>
+#6      Declarer.test.<anonymous closure>.<anonymous closure> (package:test_api/src/backend/declarer.dart:253:15)
+<asynchronous suspension>
+#7      Declarer.test.<anonymous closure> (package:test_api/src/backend/declarer.dart:250:11)
+<asynchronous suspension>
+#8      Invoker._waitForOutstandingCallbacks.<anonymous closure> (package:test_api/src/backend/invoker.dart:318:9)
+<asynchronous suspension>
+This warning will only appear on debug builds.
+00:14 +135 ~2 -13: /home/rturcey/perso/refactor_potager/test/potager_scene_test.dart: le changement de taille préserve le cadrage
+00:14 +136 ~2 -13: /home/rturcey/perso/refactor_potager/test/potager_scene_test.dart: le changement de taille préserve le cadrage
+00:14 +137 ~2 -13: /home/rturcey/perso/refactor_potager/test/potager_scene_test.dart: le changement de taille préserve le cadrage
+00:14 +138 ~2 -13: /home/rturcey/perso/refactor_potager/test/potager_scene_test.dart: le changement de taille préserve le cadrage
+00:14 +139 ~2 -13: /home/rturcey/perso/refactor_potager/test/island_scene_acceptance_test.dart: Jardin fleuri : contact et index conservés à Size(375.0, 667.0)
+00:14 +140 ~2 -13: /home/rturcey/perso/refactor_potager/test/living_potager_test.dart: la plantation guidée utilise l’avant gauche
+00:15 +141 ~2 -13: /home/rturcey/perso/refactor_potager/test/living_potager_test.dart: la plantation guidée utilise l’avant gauche
+00:15 +142 ~2 -13: /home/rturcey/perso/refactor_potager/test/potager_scene_test.dart: les huit contacts historiques restent tapables à Size(390.0, 844.0)
+══╡ EXCEPTION CAUGHT BY GESTURE ╞═══════════════════════════════════════════════════════════════════
+The following LateError was thrown while handling a gesture:
+LateInitializationError: Field '_terrainOwnsPlots@25198969' has not been initialized.
+
+When the exception was thrown, this was the stack:
+#0      GardenGame._terrainOwnsPlots (package:growstep/garden/garden_game.dart)
+#1      GardenGame._runtimeAnchorsFor (package:growstep/garden/garden_game.dart:129:38)
+#2      GardenGame.hitTestSlot (package:growstep/garden/garden_game.dart:159:21)
+#3      _JardinTabState._tapGarden (package:growstep/ui/jardin_tab.dart:82:24)
+#4      TapGestureRecognizer.handleTapDown.<anonymous closure> (package:flutter/src/gestures/tap.dart:730:61)
+#5      GestureRecognizer.invokeCallback (package:flutter/src/gestures/recognizer.dart:362:24)
+#6      TapGestureRecognizer.handleTapDown (package:flutter/src/gestures/tap.dart:730:11)
+#7      BaseTapGestureRecognizer._checkDown (package:flutter/src/gestures/tap.dart:374:5)
+#8      BaseTapGestureRecognizer.acceptGesture (package:flutter/src/gestures/tap.dart:351:7)
+#9      GestureArenaManager.sweep (package:flutter/src/gestures/arena.dart:173:27)
+#10     GestureBinding.handleEvent (package:flutter/src/gestures/binding.dart:542:20)
+#11     GestureBinding.dispatchEvent (package:flutter/src/gestures/binding.dart:508:22)
+#12     RendererBinding.dispatchEvent (package:flutter/src/rendering/binding.dart:473:11)
+#13     GestureBinding._handlePointerEventImmediately (package:flutter/src/gestures/binding.dart:447:7)
+#14     GestureBinding.handlePointerEvent (package:flutter/src/gestures/binding.dart:404:5)
+#15     TestWidgetsFlutterBinding.handlePointerEventForSource.<anonymous closure> (package:flutter_test/src/binding.dart:1571:42)
+#16     TestWidgetsFlutterBinding.withPointerEventSource (package:flutter_test/src/binding.dart:1581:11)
+#17     TestWidgetsFlutterBinding.handlePointerEventForSource (package:flutter_test/src/binding.dart:1571:5)
+#18     WidgetTester.sendEventToBinding.<anonymous closure> (package:flutter_test/src/widget_tester.dart:869:15)
+#21     TestAsyncUtils.guard (package:flutter_test/src/test_async_utils.dart:74:41)
+#22     WidgetTester.sendEventToBinding (package:flutter_test/src/widget_tester.dart:868:27)
+#23     TestGesture.up.<anonymous closure> (package:flutter_test/src/test_pointer.dart:587:26)
+#26     TestAsyncUtils.guard (package:flutter_test/src/test_async_utils.dart:74:41)
+#27     TestGesture.up (package:flutter_test/src/test_pointer.dart:580:27)
+#28     WidgetController.tapAt.<anonymous closure> (package:flutter_test/src/controller.dart:1155:21)
+<asynchronous suspension>
+#29     TestAsyncUtils.guard.<anonymous closure> (package:flutter_test/src/test_async_utils.dart:130:27)
+<asynchronous suspension>
+#30     main.<anonymous closure> (file:///home/rturcey/perso/refactor_potager/test/potager_scene_test.dart:119:9)
+<asynchronous suspension>
+#31     testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#32     TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1953:5)
+<asynchronous suspension>
+<asynchronous suspension>
+(elided 5 frames from dart:async and package:stack_trace)
+
+Handler: "onTapDown"
+Recognizer:
+  TapGestureRecognizer#06cf0
+════════════════════════════════════════════════════════════════════════════════════════════════════
+══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞════════════════════════════════════════════════════
+The following TestFailure was thrown running a test:
+Expected: exactly one matching candidate
+  Actual: _TextWidgetFinder:<Found 0 widgets with text "Emplacement 1": []>
+   Which: means none were found but one was expected
+
+When the exception was thrown, this was the stack:
+#4      main.<anonymous closure> (file:///home/rturcey/perso/refactor_potager/test/potager_scene_test.dart:121:9)
+<asynchronous suspension>
+#5      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#6      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1953:5)
+<asynchronous suspension>
+<asynchronous suspension>
+(elided one frame from package:stack_trace)
+
+This was caught by the test expectation on the following line:
+  file:///home/rturcey/perso/refactor_potager/test/potager_scene_test.dart line 121
+The test description was:
+  les huit contacts historiques restent tapables à Size(390.0, 844.0)
+════════════════════════════════════════════════════════════════════════════════════════════════════
+══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞════════════════════════════════════════════════════
+The following message was thrown:
+Multiple exceptions (2) were detected during the running of the current test, and at least one was
+unexpected.
+════════════════════════════════════════════════════════════════════════════════════════════════════
+00:15 +142 ~2 -14: /home/rturcey/perso/refactor_potager/test/potager_scene_test.dart: les huit contacts historiques restent tapables à Size(390.0, 844.0) [E]
+  Test failed. See exception logs above.
+  The test description was: les huit contacts historiques restent tapables à Size(390.0, 844.0)
+  
+00:15 +142 ~2 -14: /home/rturcey/perso/refactor_potager/test/potager_scene_test.dart: les huit contacts historiques restent tapables à Size(375.0, 667.0)
+══╡ EXCEPTION CAUGHT BY GESTURE ╞═══════════════════════════════════════════════════════════════════
+The following LateError was thrown while handling a gesture:
+LateInitializationError: Field '_terrainOwnsPlots@25198969' has not been initialized.
+
+When the exception was thrown, this was the stack:
+#0      GardenGame._terrainOwnsPlots (package:growstep/garden/garden_game.dart)
+#1      GardenGame._runtimeAnchorsFor (package:growstep/garden/garden_game.dart:129:38)
+#2      GardenGame.hitTestSlot (package:growstep/garden/garden_game.dart:159:21)
+#3      _JardinTabState._tapGarden (package:growstep/ui/jardin_tab.dart:82:24)
+#4      TapGestureRecognizer.handleTapDown.<anonymous closure> (package:flutter/src/gestures/tap.dart:730:61)
+#5      GestureRecognizer.invokeCallback (package:flutter/src/gestures/recognizer.dart:362:24)
+#6      TapGestureRecognizer.handleTapDown (package:flutter/src/gestures/tap.dart:730:11)
+#7      BaseTapGestureRecognizer._checkDown (package:flutter/src/gestures/tap.dart:374:5)
+#8      BaseTapGestureRecognizer.acceptGesture (package:flutter/src/gestures/tap.dart:351:7)
+#9      GestureArenaManager.sweep (package:flutter/src/gestures/arena.dart:173:27)
+#10     GestureBinding.handleEvent (package:flutter/src/gestures/binding.dart:542:20)
+#11     GestureBinding.dispatchEvent (package:flutter/src/gestures/binding.dart:508:22)
+#12     RendererBinding.dispatchEvent (package:flutter/src/rendering/binding.dart:473:11)
+#13     GestureBinding._handlePointerEventImmediately (package:flutter/src/gestures/binding.dart:447:7)
+#14     GestureBinding.handlePointerEvent (package:flutter/src/gestures/binding.dart:404:5)
+#15     TestWidgetsFlutterBinding.handlePointerEventForSource.<anonymous closure> (package:flutter_test/src/binding.dart:1571:42)
+#16     TestWidgetsFlutterBinding.withPointerEventSource (package:flutter_test/src/binding.dart:1581:11)
+#17     TestWidgetsFlutterBinding.handlePointerEventForSource (package:flutter_test/src/binding.dart:1571:5)
+#18     WidgetTester.sendEventToBinding.<anonymous closure> (package:flutter_test/src/widget_tester.dart:869:15)
+#21     TestAsyncUtils.guard (package:flutter_test/src/test_async_utils.dart:74:41)
+#22     WidgetTester.sendEventToBinding (package:flutter_test/src/widget_tester.dart:868:27)
+#23     TestGesture.up.<anonymous closure> (package:flutter_test/src/test_pointer.dart:587:26)
+#26     TestAsyncUtils.guard (package:flutter_test/src/test_async_utils.dart:74:41)
+#27     TestGesture.up (package:flutter_test/src/test_pointer.dart:580:27)
+#28     WidgetController.tapAt.<anonymous closure> (package:flutter_test/src/controller.dart:1155:21)
+<asynchronous suspension>
+#29     TestAsyncUtils.guard.<anonymous closure> (package:flutter_test/src/test_async_utils.dart:130:27)
+<asynchronous suspension>
+#30     main.<anonymous closure> (file:///home/rturcey/perso/refactor_potager/test/potager_scene_test.dart:119:9)
+<asynchronous suspension>
+#31     testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#32     TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1953:5)
+<asynchronous suspension>
+<asynchronous suspension>
+(elided 5 frames from dart:async and package:stack_trace)
+
+Handler: "onTapDown"
+Recognizer:
+  TapGestureRecognizer#ca31f
+════════════════════════════════════════════════════════════════════════════════════════════════════
+══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞════════════════════════════════════════════════════
+The following TestFailure was thrown running a test:
+Expected: exactly one matching candidate
+  Actual: _TextWidgetFinder:<Found 0 widgets with text "Emplacement 1": []>
+   Which: means none were found but one was expected
+
+When the exception was thrown, this was the stack:
+#4      main.<anonymous closure> (file:///home/rturcey/perso/refactor_potager/test/potager_scene_test.dart:121:9)
+<asynchronous suspension>
+#5      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#6      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1953:5)
+<asynchronous suspension>
+<asynchronous suspension>
+(elided one frame from package:stack_trace)
+
+This was caught by the test expectation on the following line:
+  file:///home/rturcey/perso/refactor_potager/test/potager_scene_test.dart line 121
+The test description was:
+  les huit contacts historiques restent tapables à Size(375.0, 667.0)
+════════════════════════════════════════════════════════════════════════════════════════════════════
+══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞════════════════════════════════════════════════════
+The following message was thrown:
+Multiple exceptions (2) were detected during the running of the current test, and at least one was
+unexpected.
+════════════════════════════════════════════════════════════════════════════════════════════════════
+00:17 +142 ~2 -15: /home/rturcey/perso/refactor_potager/test/potager_scene_test.dart: les huit contacts historiques restent tapables à Size(375.0, 667.0) [E]
+  Test failed. See exception logs above.
+  The test description was: les huit contacts historiques restent tapables à Size(375.0, 667.0)
+  
+00:17 +142 ~2 -15: Some tests failed.
+
+Failing tests:
+  /home/rturcey/perso/refactor_potager/test/island_scene_acceptance_test.dart: Potager : contact et index conservés à Size(375.0, 667.0)
+  /home/rturcey/perso/refactor_potager/test/island_scene_acceptance_test.dart: Potager : contact et index conservés à Size(390.0, 844.0)
+  /home/rturcey/perso/refactor_potager/test/potager_diorama_candidate_test.dart: loading /home/rturcey/perso/refactor_potager/test/potager_diorama_candidate_test.dart
+  /home/rturcey/perso/refactor_potager/test/potager_path_test.dart: les pierres déclarées sont déterministes, espacées et hors des sols
+  ... and 11 more

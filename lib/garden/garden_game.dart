@@ -12,11 +12,9 @@ import 'garden_scene_renderer.dart';
 import 'garden_state.dart';
 import 'garden_sprites.dart';
 import 'potager_composition.dart';
-import 'potager_grid_adapter.dart';
-import 'landscape_mass.dart';
 import 'potager_path.dart';
-import 'potager_scene.dart';
-import 'potager_tiled_objects.dart';
+import 'potager_sprites.dart';
+import 'sunnyside_sprites.dart';
 
 /// One renderable scene object with depth sorting and draw dispatch.
 class _SceneObject extends GardenPlacedObject {
@@ -43,16 +41,25 @@ class _PotagerTileImages extends Images {
 
   @override
   Future<ui.Image> load(String fileName, {String? key, String? package}) {
-    const tiledPrefix = '../sprites/';
-    if (!fileName.startsWith(tiledPrefix)) {
+    // External TSX files may live directly in assets/maps/ or in nested
+    // catalog folders. Normalize every path containing `sprites/`
+    // back to the Flutter Images cache root.
+    final normalized = fileName.replaceAll('\\\\', '/');
+    const spritesMarker = 'sprites/';
+    final spritesIndex = normalized.indexOf(spritesMarker);
+
+    if (spritesIndex < 0) {
       throw ArgumentError.value(
         fileName,
         'fileName',
         'Unexpected TSX image path',
       );
     }
+
     return super.load(
-      fileName.substring(tiledPrefix.length),
+      normalized.substring(
+        spritesIndex + spritesMarker.length,
+      ),
       key: key ?? fileName,
       package: package,
     );
@@ -67,16 +74,21 @@ class _PotagerTileImages extends Images {
 /// decoration snaps to the 80 × 40 isometric lattice.
 class GardenGame extends FlameGame {
   final GardenSprites _sprites = GardenSprites();
+  final PotagerSprites _potagerSprites = PotagerSprites();
+  final SunnysideSprites _sunnysideSprites = SunnysideSprites();
   static final Images _tileImages = _PotagerTileImages();
   late final RenderableTiledMap _tileMap;
   late final Offset _tileMapOffset;
-  late final PotagerTiledObjects _tiledObjects;
   late final bool _hasPaintedTiledGround;
-  late final bool _terrainOwnsPlots;
   GardenSnapshot snapshot = GardenSnapshot.initial();
   ZoneType currentZone = ZoneType.potager;
   int? selectedSlot;
   bool showTouchTargets = false;
+
+  static const bool _useSunnysideSprites = bool.fromEnvironment(
+    'GROWSTEP_SUNNYSIDE',
+    defaultValue: false,
+  );
 
   static const zonesInViewOrder = [
     ZoneType.jardinFleuri,
@@ -96,7 +108,7 @@ class GardenGame extends FlameGame {
   /// testing without changing normal play.
   static const _defaultPotagerMapFile = String.fromEnvironment(
     'GROWSTEP_POTAGER_MAP',
-    defaultValue: 'potager.tmx',
+    defaultValue: 'potager_2d_v1.tmx',
   );
 
   final String potagerMapFile;
@@ -120,33 +132,14 @@ class GardenGame extends FlameGame {
   ];
 
   static List<Offset> anchorsFor(ZoneType zone) => switch (zone) {
-    ZoneType.potager => PotagerPlots.contacts,
+    ZoneType.potager => PotagerSprites.plotAnchors,
     ZoneType.jardinFleuri => _flowerAnchors,
     ZoneType.verger => _orchardAnchors,
   };
 
-  List<Offset> _runtimeAnchorsFor(ZoneType zone) {
-    if (zone != ZoneType.potager || !_terrainOwnsPlots) {
-      return anchorsFor(zone);
-    }
+  List<Offset> _runtimeAnchorsFor(ZoneType zone) => anchorsFor(zone);
 
-    final contacts = _tiledObjects.plotContacts;
-
-    if (contacts.length != ZoneType.potager.maxSlots) {
-      return PotagerPlots.contacts;
-    }
-
-    return List<Offset>.generate(
-      ZoneType.potager.maxSlots,
-      (index) => contacts['plot_$index'] ?? PotagerPlots.contacts[index],
-      growable: false,
-    );
-  }
-
-  List<GardenSpriteObject> get _potagerObjects => [
-    _tiledObjects.rock,
-    ...PotagerPilotScene.objects,
-  ];
+  List<GardenSpriteObject> get _potagerObjects => const [];
 
   void moveTo(ZoneType zone) {
     if (zone == currentZone) return;
@@ -185,34 +178,50 @@ class GardenGame extends FlameGame {
   @override
   Future<void> onLoad() async {
     await super.onLoad();
-    final spriteManifest = await _sprites.load();
+
+    await _potagerSprites.load();
+
+    if (_useSunnysideSprites) {
+      await _sunnysideSprites.load();
+    }
+
     _tileMap = await RenderableTiledMap.fromFile(
       potagerMapFile,
-      Vector2(IsoGrid.cellWidth, IsoGrid.cellHeight),
+      Vector2.all(PotagerSprites.renderTileSize),
       prefix: 'assets/maps/',
       images: _tileImages,
       useAtlas: false,
     );
-    _tileMapOffset = const PotagerGridAdapter().tileMapOffset(_tileMap.map);
-    _tiledObjects = PotagerTiledObjects.fromMap(_tileMap.map, spriteManifest);
+
+    if (_tileMap.map.orientation != MapOrientation.orthogonal) {
+      throw FormatException(
+        'The Growstep potager must use an orthogonal Tiled map.',
+      );
+    }
+
+    _tileMapOffset = PotagerSprites.mapOffset;
+
     _hasPaintedTiledGround = (_tileMap.map.layerByName('ground') as TileLayer)
         .data!
         .any((gid) => gid != 0);
-    _terrainOwnsPlots =
-        _tileMap.map.properties.getValue<bool>('terrainOwnsPlots') ?? false;
 
-    final planterFront = _findTileLayer('planter_edges_front');
-    if (planterFront != null) {
-      final planterFrontIndex = _tileMap.map.layers.indexOf(planterFront);
+    // Tiled contains a preview of mature crops for authoring only.
+    // Runtime crops come from GardenSnapshot.
+    final plantsPreview = _findTileLayer('plants_preview');
 
-      if (planterFrontIndex >= 0) {
-        _tileMap.setLayerVisibility(planterFrontIndex, visible: false);
+    if (plantsPreview != null) {
+      final index = _tileMap.map.layers.indexOf(plantsPreview);
+
+      if (index >= 0) {
+        _tileMap.setLayerVisibility(index, visible: false);
       }
     }
   }
 
   @override
   void onRemove() {
+    _potagerSprites.dispose();
+    _sunnysideSprites.dispose();
     _sprites.dispose();
     super.onRemove();
   }
@@ -257,11 +266,6 @@ class GardenGame extends FlameGame {
           GardenSceneRenderer.drawSprite(canvas, stone, _sprites);
         }
       }
-      if (!_terrainOwnsPlots) {
-        for (final plot in PotagerPlots.visible(snapshot.zones[zone]!.length)) {
-          PotagerComposition.drawSoilPlot(canvas, plot.contact);
-        }
-      }
     }
 
     // Environment objects.
@@ -276,11 +280,13 @@ class GardenGame extends FlameGame {
       final point = anchors[slot];
       if (zone == ZoneType.potager) {
         if (purchased[slot] != null) {
+          final draw = (_useSunnysideSprites &&
+                  _sunnysideSprites.canDraw(purchased[slot]!.species))
+              ? (Canvas c) => _drawPlant(c, point, purchased[slot]!)
+              : (Canvas c) =>
+                  _potagerSprites.drawPlant(c, point, purchased[slot]!);
           objects.add(
-            _SceneObject(
-              point.translate(0, 0.1),
-              (c) => _drawPlant(c, point, purchased[slot]!),
-            ),
+            _SceneObject(point.translate(0, 0.1), draw),
           );
         }
       } else {
@@ -700,120 +706,9 @@ class GardenGame extends FlameGame {
   // ─── Environment objects ───────────────────────────────────────────────
 
   List<_SceneObject> _environmentObjects(ZoneType zone) {
+    // The complete static potager environment is authored in Tiled.
     if (zone == ZoneType.potager) {
-      if (_hasPaintedTiledGround) {
-        return [
-          for (final object in _tiledObjects.sceneObjects)
-            _SceneObject(
-              object.contact,
-              (canvas) =>
-                  GardenSceneRenderer.drawSprite(canvas, object, _sprites),
-              id: object.id,
-              zBias: object.zBias,
-            ),
-        ];
-      }
-      return [
-        for (final object in _potagerObjects)
-          _SceneObject(
-            object.contact,
-            (canvas) {
-              if (!GardenSceneRenderer.drawSprite(canvas, object, _sprites)) {
-                if (identical(object, _tiledObjects.rock)) {
-                  LandscapeMassPainter.drawRock(
-                    canvas,
-                    LandscapeRock(object.contact, object.size.height),
-                  );
-                } else {
-                  PotagerComposition.drawBarrel(canvas);
-                }
-              }
-            },
-            id: object.id,
-            zBias: object.zBias,
-          ),
-        for (final mass in PotagerComposition.masses) ...[
-          for (final shrub in mass.shrubs)
-            _SceneObject(shrub.anchor, (canvas) {
-              final upright = shrub.anchor.dy >= 170;
-              final sprite = upright
-                  ? 'commun_decor_bosquet_haut_statique_ordinaire_00.png'
-                  : 'commun_decor_bosquet_bas_statique_ordinaire_00.png';
-              if (!_sprites.draw(
-                canvas,
-                sprite,
-                shrub.anchor,
-                shrub.radius * (upright ? 2.5 : 2.8),
-                shrub.radius * (upright ? 1.75 : 1.4),
-                opacity: 0.9,
-              )) {
-                LandscapeMassPainter.drawShrub(canvas, shrub);
-              }
-            }),
-          for (final rock in mass.rocks)
-            _SceneObject(rock.anchor, (canvas) {
-              if (!_sprites.draw(
-                canvas,
-                'commun_decor_rochers_herbe_statique_ordinaire_00.png',
-                rock.anchor,
-                rock.width * 1.8,
-                rock.width * 1.0,
-                opacity: 0.82,
-              )) {
-                LandscapeMassPainter.drawRock(canvas, rock);
-              }
-            }),
-        ],
-        for (final point in PotagerComposition.rimGrass)
-          _SceneObject(point, (canvas) {
-            if (!_sprites.draw(
-              canvas,
-              'commun_decor_bosquet_bas_statique_ordinaire_00.png',
-              point,
-              29,
-              13,
-              opacity: 0.8,
-            )) {
-              PotagerComposition.drawRimGrass(canvas, point);
-            }
-          }),
-        _SceneObject(PotagerComposition.trellisAnchor, (canvas) {
-          if (!_sprites.draw(
-            canvas,
-            'commun_decor_treillis_bois_statique_ordinaire_00.png',
-            PotagerComposition.trellisAnchor,
-            58,
-            51,
-            opacity: 0.86,
-          )) {
-            PotagerComposition.drawTrellis(canvas);
-          }
-        }),
-        _SceneObject(PotagerComposition.wateringCanAnchor, (canvas) {
-          if (!_sprites.draw(
-            canvas,
-            'potager_decor_arrosoir_metal_statique_ordinaire_00.png',
-            PotagerComposition.wateringCanAnchor,
-            26,
-            22,
-            opacity: 0.86,
-          )) {
-            _drawWateringCan(canvas, PotagerComposition.wateringCanAnchor);
-          }
-        }),
-        _SceneObject(PotagerComposition.nurseryCrateAnchor, (canvas) {
-          if (!_sprites.draw(
-            canvas,
-            'potager_decor_caisse_semis_statique_ordinaire_00.png',
-            PotagerComposition.nurseryCrateAnchor,
-            30,
-            23,
-            opacity: 0.82,
-          )) {
-            _drawNurseryCrate(canvas, PotagerComposition.nurseryCrateAnchor);
-          }
-        }),
-      ];
+      return const [];
     }
 
     final objects = <_SceneObject>[];
@@ -1099,6 +994,20 @@ class GardenGame extends FlameGame {
   // ─── Plants ────────────────────────────────────────────────────────────
 
   void _drawPlant(Canvas canvas, Offset point, Plant plant) {
+    if (_useSunnysideSprites && _sunnysideSprites.canDraw(plant.species)) {
+      if (plant.progressSteps == 0 && plant.completedCycles == 0) {
+        canvas.drawCircle(point, 4, Paint()..color = const Color(0xFF5A3F2E));
+        canvas.drawCircle(
+          point.translate(1, -1),
+          2,
+          Paint()..color = const Color(0xFF6B4D38),
+        );
+        return;
+      }
+      _sunnysideSprites.drawPlant(canvas, point, plant);
+      return;
+    }
+
     if (plant.progressSteps == 0 && plant.completedCycles == 0) {
       // Sown state — small soil mound with a tiny crack.
       canvas.drawCircle(point, 4, Paint()..color = const Color(0xFF5A3F2E));
@@ -1962,109 +1871,6 @@ class GardenGame extends FlameGame {
     );
   }
 
-  void _drawWateringCan(Canvas c, Offset point) {
-    // Shadow.
-    c.drawOval(
-      Rect.fromCenter(center: point.translate(0, 8), width: 32, height: 10),
-      Paint()..color = const Color(0x28715D4D),
-    );
-    // Body — slightly tapered.
-    c.drawRRect(
-      RRect.fromRectAndRadius(
-        Rect.fromCenter(center: point, width: 20, height: 16),
-        const Radius.circular(3),
-      ),
-      Paint()
-        ..shader = const LinearGradient(
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-          colors: [Color(0xFF9FB5AE), Color(0xFF7A948C)],
-        ).createShader(Rect.fromCenter(center: point, width: 20, height: 16)),
-    );
-    // Handle.
-    c.drawArc(
-      Rect.fromCenter(center: point.translate(-8, -4), width: 12, height: 10),
-      math.pi * 0.3,
-      math.pi * 0.9,
-      false,
-      Paint()
-        ..color = const Color(0xFF6E8982)
-        ..style = PaintingStyle.stroke
-        ..strokeWidth = 3,
-    );
-    // Spout.
-    c.drawPath(
-      Path()
-        ..moveTo(point.dx + 8, point.dy - 1)
-        ..lineTo(point.dx + 22, point.dy - 8)
-        ..lineTo(point.dx + 22, point.dy - 5)
-        ..lineTo(point.dx + 8, point.dy + 2)
-        ..close(),
-      Paint()..color = const Color(0xFF78968E),
-    );
-    // Highlight.
-    c.drawLine(
-      point.translate(-6, -5),
-      point.translate(4, -5),
-      Paint()
-        ..color = const Color(0x44D0E0DB)
-        ..strokeWidth = 2,
-    );
-  }
-
-  void _drawNurseryCrate(Canvas c, Offset point) {
-    // Shadow.
-    c.drawOval(
-      Rect.fromCenter(center: point.translate(0, 12), width: 48, height: 14),
-      Paint()..color = const Color(0x335A7045),
-    );
-    const w = 25.0, h = 12.0, fh = 8.0;
-    // Left face.
-    c.drawPath(
-      Path()
-        ..moveTo(point.dx - w, point.dy)
-        ..lineTo(point.dx, point.dy + h)
-        ..lineTo(point.dx, point.dy + h + fh)
-        ..lineTo(point.dx - w, point.dy + fh)
-        ..close(),
-      Paint()..color = const Color(0xFF8B6845),
-    );
-    // Right face.
-    c.drawPath(
-      Path()
-        ..moveTo(point.dx, point.dy + h)
-        ..lineTo(point.dx + w, point.dy)
-        ..lineTo(point.dx + w, point.dy + fh)
-        ..lineTo(point.dx, point.dy + h + fh)
-        ..close(),
-      Paint()..color = const Color(0xFFA07A52),
-    );
-    // Top — wood planks.
-    _diamond(c, point, w, h, const Color(0xFFB08258));
-    for (final dx in [-12.0, -4.0, 4.0, 12.0]) {
-      c.drawLine(
-        point.translate(dx, -h + (dx.abs() * h / w)),
-        point.translate(dx, h - (dx.abs() * h / w)),
-        Paint()
-          ..color = const Color(0xFF8B6845)
-          ..strokeWidth = 1,
-      );
-    }
-    // Sprouts.
-    for (final dx in [-10.0, 0.0, 10.0]) {
-      final sprout = point.translate(dx, -2);
-      _stem(c, sprout, 10, const Color(0xFF547A4B), 1.5);
-      c.drawOval(
-        Rect.fromCenter(center: sprout.translate(-3, -9), width: 9, height: 5),
-        Paint()..color = const Color(0xFF7CA559),
-      );
-      c.drawOval(
-        Rect.fromCenter(center: sprout.translate(3, -10), width: 9, height: 5),
-        Paint()..color = const Color(0xFFA0C46B),
-      );
-    }
-  }
-
   void _drawBirdbath(Canvas c, Offset point) {
     // Shadow.
     c.drawOval(
@@ -2157,6 +1963,20 @@ class GardenGame extends FlameGame {
   }
 
   void _drawSelection(Canvas c, Offset point, ZoneType zone) {
+    if (zone == ZoneType.potager) {
+      c.drawRRect(
+        RRect.fromRectAndRadius(
+          Rect.fromCenter(center: point, width: 36, height: 36),
+          const Radius.circular(3),
+        ),
+        Paint()
+          ..color = const Color(0x001F3122)
+          ..style = PaintingStyle.stroke
+          ..strokeWidth = 2,
+      );
+      return;
+    }
+
     _diamond(
       c,
       point,
