@@ -1170,32 +1170,32 @@
     "shadow": "separate_contact"
   },
   "potager_plante_tomate_jeune_ordinaire_00.png": {
-    "width": 444,
-    "height": 224,
+    "width": 320,
+    "height": 320,
     "bbox": [
-      137,
-      36,
-      330,
-      187
+      27,
+      70,
+      298,
+      300
     ],
     "anchor": [
-      225,
-      185
+      160,
+      302
     ],
     "shadow": "separate_contact"
   },
   "potager_plante_tomate_recoltable_ordinaire_00.png": {
-    "width": 304,
-    "height": 244,
+    "width": 320,
+    "height": 320,
     "bbox": [
-      9,
-      9,
-      295,
-      235
+      24,
+      79,
+      296,
+      303
     ],
     "anchor": [
-      152,
-      234
+      160,
+      305
     ],
     "shadow": "separate_contact"
   },
@@ -1316,6 +1316,411 @@
     "anchor": [
       136,
       227
+    ],
+    "shadow": "separate_contact"
+  },
+  "potager_decor_arche_fleurie_statique_ordinaire_00.png": {
+    "width": 448,
+    "height": 416,
+    "bbox": [
+      65,
+      29,
+      383,
+      408
+    ],
+    "anchor": [
+      224,
+      407
+    ],
+    "shadow": "separate_contact"
+  },
+  "potager_decor_arbre_nichoir_statique_ordinaire_00.png": {
+    "width": 560,
+    "height": 600,
+    "bbox": [
+      51,
+      31,
+      511,
+      586
+    ],
+    "anchor": [
+      280,
+      589
+    ],
+    "shadow": "separate_contact"
+  },
+  "potager_decor_pommier_fruits_statique_ordinaire_00.png": {
+    "width": 560,
+    "height": 600,
+    "bbox": [
+      43,
+      30,
+      516,
+      586
+    ],
+    "anchor": [
+      280,
+      587
+    ],
+    "shadow": "separate_contact"
+  },
+  "potager_decor_banc_parc_statique_ordinaire_00.png": {
+    "width": 416,
+    "height": 288,
+    "bbox": [
+      67,
+      29,
+      349,
+      275
+    ],
+    "anchor": [
+      208,
+      277
+    ],
+    "shadow": "separate_contact"
+  },
+  "potager_decor_bain_oiseaux_statique_ordinaire_00.png": {
+    "width": 320,
+    "height": 320,
+    "bbox": [
+      58,
+      30,
+      264,
+      306
+    ],
+    "anchor": [
+      160,
+      307
+    ],
+    "shadow": "separate_contact"
+  },
+  "potager_decor_arrosoir_bleu_statique_ordinaire_00.png": {
+    "width": 208,
+    "height": 176,
+    "bbox": [
+      18,
+      35,
+      191,
+      162
+    ],
+    "anchor": [
+      104,
+      165
+    ],
+    "shadow": "separate_contact"
+  },
+  "potager_decor_tonneau_pompe_statique_ordinaire_00.png": {
+    "width": 256,
+    "height": 288,
+    "bbox": [
+      32,
+      29,
+      224,
+      274
+    ],
+    "anchor": [
+      128,
+      276
+    ],
+    "shadow": "separate_contact"
+  },
+  "potager_decor_panier_pommes_statique_ordinaire_00.png": {
+    "width": 192,
+    "height": 192,
+    "bbox": [
+      24,
+      22,
+      168,
+      178
+    ],
+    "anchor": [
+      96,
+      179
+    ],
+    "shadow": "separate_contact"
+  },
+  "potager_decor_jardiniere_bois_statique_ordinaire_00.png": {
+    "width": 272,
+    "height": 232,
+    "bbox": [
+      32,
+      29,
+      239,
+      218
+    ],
+    "anchor": [
+      136,
+      220
+    ],
+    "shadow": "separate_contact"
+  },
+  "potager_decor_pot_marguerites_statique_ordinaire_00.png": {
+    "width": 192,
+    "height": 208,
+    "bbox": [
+      25,
+      22,
+      166,
+      194
+    ],
+    "anchor": [
+      96,
+      197
+    ],
+    "shadow": "separate_contact"
+  },
+  "potager_decor_hortensia_rose_statique_ordinaire_00.png": {
+    "width": 288,
+    "height": 240,
+    "bbox": [
+      21,
+      46,
+      267,
+      227
+    ],
+    "anchor": [
+      144,
+      229
+    ],
+    "shadow": "separate_contact"
+  },
+  "potager_decor_lavande_massif_statique_ordinaire_00.png": {
+    "width": 272,
+    "height": 240,
+    "bbox": [
+      22,
+      30,
+      250,
+      227
+    ],
+    "anchor": [
+      136,
+      229
+    ],
+    "shadow": "separate_contact"
+  },
+  "potager_decor_marguerites_massif_statique_ordinaire_00.png": {
+    "width": 272,
+    "height": 232,
+    "bbox": [
+      21,
+      30,
+      250,
+      219
+    ],
+    "anchor": [
+      136,
+      221
+    ],
+    "shadow": "separate_contact"
+  },
+  "potager_decor_fleurs_jaunes_massif_statique_ordinaire_00.png": {
+    "width": 304,
+    "height": 232,
+    "bbox": [
+      21,
+      45,
+      282,
+      218
+    ],
+    "anchor": [
+      152,
+      220
+    ],
+    "shadow": "separate_contact"
+  },
+  "potager_decor_fraisier_massif_statique_ordinaire_00.png": {
+    "width": 288,
+    "height": 240,
+    "bbox": [
+      22,
+      32,
+      267,
+      226
+    ],
+    "anchor": [
+      144,
+      229
+    ],
+    "shadow": "separate_contact"
+  },
+  "potager_decor_tulipes_rouges_statique_ordinaire_00.png": {
+    "width": 240,
+    "height": 256,
+    "bbox": [
+      21,
+      52,
+      218,
+      243
+    ],
+    "anchor": [
+      120,
+      245
+    ],
+    "shadow": "separate_contact"
+  },
+  "potager_decor_buisson_marguerites_statique_ordinaire_00.png": {
+    "width": 304,
+    "height": 240,
+    "bbox": [
+      21,
+      37,
+      283,
+      227
+    ],
+    "anchor": [
+      152,
+      229
+    ],
+    "shadow": "separate_contact"
+  },
+  "potager_decor_rochers_vegetation_00_statique_ordinaire_00.png": {
+    "width": 288,
+    "height": 224,
+    "bbox": [
+      32,
+      51,
+      266,
+      212
+    ],
+    "anchor": [
+      144,
+      213
+    ],
+    "shadow": "separate_contact"
+  },
+  "potager_decor_rochers_vegetation_01_statique_ordinaire_00.png": {
+    "width": 256,
+    "height": 208,
+    "bbox": [
+      22,
+      37,
+      235,
+      195
+    ],
+    "anchor": [
+      128,
+      197
+    ],
+    "shadow": "separate_contact"
+  },
+  "potager_decor_portail_bois_statique_ordinaire_00.png": {
+    "width": 304,
+    "height": 272,
+    "bbox": [
+      18,
+      36,
+      286,
+      262
+    ],
+    "anchor": [
+      152,
+      263
+    ],
+    "shadow": "separate_contact"
+  },
+  "potager_sol_pas_pierre_a_statique_ordinaire_00.png": {
+    "width": 320,
+    "height": 160,
+    "bbox": [
+      83,
+      23,
+      237,
+      146
+    ],
+    "anchor": [
+      160,
+      148
+    ],
+    "shadow": "separate_contact"
+  },
+  "potager_sol_pas_pierre_b_statique_ordinaire_00.png": {
+    "width": 320,
+    "height": 160,
+    "bbox": [
+      75,
+      22,
+      244,
+      146
+    ],
+    "anchor": [
+      160,
+      148
+    ],
+    "shadow": "separate_contact"
+  },
+  "potager_sol_pas_pierre_c_statique_ordinaire_00.png": {
+    "width": 320,
+    "height": 160,
+    "bbox": [
+      74,
+      20,
+      246,
+      147
+    ],
+    "anchor": [
+      160,
+      149
+    ],
+    "shadow": "separate_contact"
+  },
+  "potager_decor_cadre_bac_bois_vide_statique_ordinaire_00.png": {
+    "width": 672,
+    "height": 416,
+    "bbox": [
+      93,
+      42,
+      578,
+      398
+    ],
+    "anchor": [
+      336,
+      403
+    ],
+    "shadow": "separate_contact"
+  },
+  "potager_decor_bac_terre_bois_statique_ordinaire_00.png": {
+    "width": 672,
+    "height": 416,
+    "bbox": [
+      96,
+      43,
+      578,
+      399
+    ],
+    "anchor": [
+      336,
+      403
+    ],
+    "shadow": "separate_contact"
+  },
+  "potager_plante_tomate_graine_germee_ordinaire_00.png": {
+    "width": 320,
+    "height": 320,
+    "bbox": [
+      36,
+      67,
+      290,
+      293
+    ],
+    "anchor": [
+      160,
+      297
+    ],
+    "shadow": "separate_contact"
+  },
+  "potager_plante_tomate_presque_mature_ordinaire_00.png": {
+    "width": 320,
+    "height": 320,
+    "bbox": [
+      26,
+      51,
+      304,
+      312
+    ],
+    "anchor": [
+      160,
+      311
     ],
     "shadow": "separate_contact"
   }

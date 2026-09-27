@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='utf-8'?>
 <map version="1.10" tiledversion="1.11.0" orientation="isometric" renderorder="right-down" width="14" height="14" tilewidth="80" tileheight="40" infinite="0" nextlayerid="14" nextobjectid="44">
-  <tileset firstgid="1" source="ground.tsx" />
+  <tileset firstgid="1" source="ground_new_da.tsx" />
   <tileset firstgid="35" source="paths.tsx" />
   <tileset firstgid="41" source="paths_anchored.tsx" />
   <tileset firstgid="47" source="floor_decor.tsx" />
@@ -14,6 +14,20 @@
   <tileset firstgid="87" source="bed_edges.tsx" />
   <tileset firstgid="102" source="planter_edges.tsx" />
   <tileset firstgid="117" source="diorama_decor.tsx" />
+  <tileset firstgid="123" source="ground.tsx" />
+  <tileset firstgid="157" source="all_sprites.tsx" />
+  <tileset firstgid="397" source="palette_plants_potager.tsx" />
+  <tileset firstgid="424" source="palette_plants_fleurs.tsx" />
+  <tileset firstgid="433" source="palette_plants_verger.tsx" />
+  <tileset firstgid="439" source="palette_cultivation.tsx" />
+  <tileset firstgid="471" source="palette_decor_structures.tsx" />
+  <tileset firstgid="480" source="palette_decor_props.tsx" />
+  <tileset firstgid="492" source="palette_decor_vegetation.tsx" />
+  <tileset firstgid="525" source="palette_decor_rocks.tsx" />
+  <tileset firstgid="534" source="palette_paths.tsx" />
+  <tileset firstgid="557" source="palette_terrain_new_da.tsx" />
+  <tileset firstgid="591" source="palette_terrain_legacy.tsx" />
+  <tileset firstgid="608" source="palette_misc.tsx" />
   <layer id="2" name="skirt" width="14" height="14">
     <data encoding="csv">
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,
@@ -57,14 +71,14 @@
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,8,1,1,1,5,0,0,0,0,0,
-0,0,0,8,1,1,9,5,5,5,0,0,0,0,
-0,0,0,7,14,17,28,21,21,5,5,0,0,0,
-0,0,0,0,12,14,15,15,15,5,5,0,0,0,
-0,0,0,0,7,16,15,15,3,13,5,0,0,0,
-0,0,0,0,0,7,16,14,17,15,6,0,0,0,
-0,0,0,0,0,0,7,11,3,6,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,8,1,1,1,5,30,0,0,0,0,
+0,0,0,8,1,1,9,5,5,5,30,0,0,0,
+0,0,0,7,14,13,13,13,13,5,5,30,0,0,
+0,0,0,0,12,13,13,13,13,13,5,30,0,0,
+0,0,0,0,7,16,13,13,13,13,5,30,0,0,
+0,0,0,0,0,7,16,14,17,15,6,30,0,0,
+0,0,0,0,0,32,7,11,3,6,34,0,0,0,
+0,0,0,0,0,0,32,32,32,32,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0
 </data>
   </layer>

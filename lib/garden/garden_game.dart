@@ -72,6 +72,7 @@ class GardenGame extends FlameGame {
   late final Offset _tileMapOffset;
   late final PotagerTiledObjects _tiledObjects;
   late final bool _hasPaintedTiledGround;
+  late final bool _terrainOwnsPlots;
   GardenSnapshot snapshot = GardenSnapshot.initial();
   ZoneType currentZone = ZoneType.potager;
   int? selectedSlot;
@@ -124,6 +125,24 @@ class GardenGame extends FlameGame {
     ZoneType.verger => _orchardAnchors,
   };
 
+  List<Offset> _runtimeAnchorsFor(ZoneType zone) {
+    if (zone != ZoneType.potager || !_terrainOwnsPlots) {
+      return anchorsFor(zone);
+    }
+
+    final contacts = _tiledObjects.plotContacts;
+
+    if (contacts.length != ZoneType.potager.maxSlots) {
+      return PotagerPlots.contacts;
+    }
+
+    return List<Offset>.generate(
+      ZoneType.potager.maxSlots,
+      (index) => contacts['plot_$index'] ?? PotagerPlots.contacts[index],
+      growable: false,
+    );
+  }
+
   List<GardenSpriteObject> get _potagerObjects => [
     _tiledObjects.rock,
     ...PotagerPilotScene.objects,
@@ -137,7 +156,7 @@ class GardenGame extends FlameGame {
 
   int? hitTestSlot(Offset localPosition) {
     final scenePoint = _artboardTransform.toArtboard(localPosition);
-    final anchors = anchorsFor(currentZone);
+    final anchors = _runtimeAnchorsFor(currentZone);
     for (var slot = 0; slot < snapshot.zones[currentZone]!.length; slot++) {
       final anchor = anchors[slot];
       if ((scenePoint.dx - anchor.dx).abs() <= touchSize / 2 &&
@@ -179,6 +198,8 @@ class GardenGame extends FlameGame {
     _hasPaintedTiledGround = (_tileMap.map.layerByName('ground') as TileLayer)
         .data!
         .any((gid) => gid != 0);
+    _terrainOwnsPlots =
+        _tileMap.map.properties.getValue<bool>('terrainOwnsPlots') ?? false;
 
     final planterFront = _findTileLayer('planter_edges_front');
     if (planterFront != null) {
@@ -236,8 +257,10 @@ class GardenGame extends FlameGame {
           GardenSceneRenderer.drawSprite(canvas, stone, _sprites);
         }
       }
-      for (final plot in PotagerPlots.visible(snapshot.zones[zone]!.length)) {
-        PotagerComposition.drawSoilPlot(canvas, plot.contact);
+      if (!_terrainOwnsPlots) {
+        for (final plot in PotagerPlots.visible(snapshot.zones[zone]!.length)) {
+          PotagerComposition.drawSoilPlot(canvas, plot.contact);
+        }
       }
     }
 
@@ -247,7 +270,7 @@ class GardenGame extends FlameGame {
     }
 
     // Plants share the same authored plot contact used by soil and hit tests.
-    final anchors = anchorsFor(zone);
+    final anchors = _runtimeAnchorsFor(zone);
     final purchased = snapshot.zones[zone]!;
     for (var slot = 0; slot < purchased.length; slot++) {
       final point = anchors[slot];
