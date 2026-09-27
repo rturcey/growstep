@@ -1723,5 +1723,365 @@
       311
     ],
     "shadow": "separate_contact"
+  },
+  "potager_bordure_ilot_01_naturelle_statique_ordinaire_00.png": {
+    "width": 512,
+    "height": 416,
+    "bbox": [
+      0,
+      0,
+      512,
+      416
+    ],
+    "anchor": [
+      256,
+      80
+    ],
+    "shadow": "none"
+  },
+  "potager_bordure_ilot_01_rochers_statique_ordinaire_00.png": {
+    "width": 512,
+    "height": 416,
+    "bbox": [
+      0,
+      0,
+      512,
+      416
+    ],
+    "anchor": [
+      256,
+      80
+    ],
+    "shadow": "none"
+  },
+  "potager_bordure_ilot_01_fleurie_statique_ordinaire_00.png": {
+    "width": 512,
+    "height": 416,
+    "bbox": [
+      0,
+      0,
+      512,
+      416
+    ],
+    "anchor": [
+      256,
+      80
+    ],
+    "shadow": "none"
+  },
+  "potager_bordure_ilot_02_naturelle_statique_ordinaire_00.png": {
+    "width": 512,
+    "height": 416,
+    "bbox": [
+      0,
+      0,
+      512,
+      416
+    ],
+    "anchor": [
+      256,
+      80
+    ],
+    "shadow": "none"
+  },
+  "potager_bordure_ilot_02_rochers_statique_ordinaire_00.png": {
+    "width": 512,
+    "height": 416,
+    "bbox": [
+      0,
+      0,
+      512,
+      416
+    ],
+    "anchor": [
+      256,
+      80
+    ],
+    "shadow": "none"
+  },
+  "potager_bordure_ilot_02_fleurie_statique_ordinaire_00.png": {
+    "width": 512,
+    "height": 416,
+    "bbox": [
+      0,
+      0,
+      512,
+      416
+    ],
+    "anchor": [
+      256,
+      80
+    ],
+    "shadow": "none"
+  },
+  "potager_bordure_ilot_04_naturelle_statique_ordinaire_00.png": {
+    "width": 512,
+    "height": 416,
+    "bbox": [
+      0,
+      0,
+      512,
+      416
+    ],
+    "anchor": [
+      256,
+      80
+    ],
+    "shadow": "none"
+  },
+  "potager_bordure_ilot_04_rochers_statique_ordinaire_00.png": {
+    "width": 512,
+    "height": 416,
+    "bbox": [
+      0,
+      0,
+      512,
+      416
+    ],
+    "anchor": [
+      256,
+      80
+    ],
+    "shadow": "none"
+  },
+  "potager_bordure_ilot_04_fleurie_statique_ordinaire_00.png": {
+    "width": 512,
+    "height": 416,
+    "bbox": [
+      0,
+      0,
+      512,
+      416
+    ],
+    "anchor": [
+      256,
+      80
+    ],
+    "shadow": "none"
+  },
+  "potager_bordure_ilot_08_naturelle_statique_ordinaire_00.png": {
+    "width": 512,
+    "height": 416,
+    "bbox": [
+      0,
+      0,
+      512,
+      416
+    ],
+    "anchor": [
+      256,
+      80
+    ],
+    "shadow": "none"
+  },
+  "potager_bordure_ilot_08_rochers_statique_ordinaire_00.png": {
+    "width": 512,
+    "height": 416,
+    "bbox": [
+      0,
+      0,
+      512,
+      416
+    ],
+    "anchor": [
+      256,
+      80
+    ],
+    "shadow": "none"
+  },
+  "potager_bordure_ilot_08_fleurie_statique_ordinaire_00.png": {
+    "width": 512,
+    "height": 416,
+    "bbox": [
+      0,
+      0,
+      512,
+      416
+    ],
+    "anchor": [
+      256,
+      80
+    ],
+    "shadow": "none"
+  },
+  "potager_bordure_ilot_03_naturelle_statique_ordinaire_00.png": {
+    "width": 512,
+    "height": 416,
+    "bbox": [
+      0,
+      0,
+      512,
+      416
+    ],
+    "anchor": [
+      256,
+      80
+    ],
+    "shadow": "none"
+  },
+  "potager_bordure_ilot_03_rochers_statique_ordinaire_00.png": {
+    "width": 512,
+    "height": 416,
+    "bbox": [
+      0,
+      0,
+      512,
+      416
+    ],
+    "anchor": [
+      256,
+      80
+    ],
+    "shadow": "none"
+  },
+  "potager_bordure_ilot_03_fleurie_statique_ordinaire_00.png": {
+    "width": 512,
+    "height": 416,
+    "bbox": [
+      0,
+      0,
+      512,
+      416
+    ],
+    "anchor": [
+      256,
+      80
+    ],
+    "shadow": "none"
+  },
+  "potager_bordure_ilot_06_naturelle_statique_ordinaire_00.png": {
+    "width": 512,
+    "height": 416,
+    "bbox": [
+      0,
+      0,
+      512,
+      416
+    ],
+    "anchor": [
+      256,
+      80
+    ],
+    "shadow": "none"
+  },
+  "potager_bordure_ilot_06_rochers_statique_ordinaire_00.png": {
+    "width": 512,
+    "height": 416,
+    "bbox": [
+      0,
+      0,
+      512,
+      416
+    ],
+    "anchor": [
+      256,
+      80
+    ],
+    "shadow": "none"
+  },
+  "potager_bordure_ilot_06_fleurie_statique_ordinaire_00.png": {
+    "width": 512,
+    "height": 416,
+    "bbox": [
+      0,
+      0,
+      512,
+      416
+    ],
+    "anchor": [
+      256,
+      80
+    ],
+    "shadow": "none"
+  },
+  "potager_bordure_ilot_09_naturelle_statique_ordinaire_00.png": {
+    "width": 512,
+    "height": 416,
+    "bbox": [
+      0,
+      0,
+      512,
+      416
+    ],
+    "anchor": [
+      256,
+      80
+    ],
+    "shadow": "none"
+  },
+  "potager_bordure_ilot_09_rochers_statique_ordinaire_00.png": {
+    "width": 512,
+    "height": 416,
+    "bbox": [
+      0,
+      0,
+      512,
+      416
+    ],
+    "anchor": [
+      256,
+      80
+    ],
+    "shadow": "none"
+  },
+  "potager_bordure_ilot_09_fleurie_statique_ordinaire_00.png": {
+    "width": 512,
+    "height": 416,
+    "bbox": [
+      0,
+      0,
+      512,
+      416
+    ],
+    "anchor": [
+      256,
+      80
+    ],
+    "shadow": "none"
+  },
+  "potager_bordure_ilot_0c_naturelle_statique_ordinaire_00.png": {
+    "width": 512,
+    "height": 416,
+    "bbox": [
+      0,
+      0,
+      512,
+      416
+    ],
+    "anchor": [
+      256,
+      80
+    ],
+    "shadow": "none"
+  },
+  "potager_bordure_ilot_0c_rochers_statique_ordinaire_00.png": {
+    "width": 512,
+    "height": 416,
+    "bbox": [
+      0,
+      0,
+      512,
+      416
+    ],
+    "anchor": [
+      256,
+      80
+    ],
+    "shadow": "none"
+  },
+  "potager_bordure_ilot_0c_fleurie_statique_ordinaire_00.png": {
+    "width": 512,
+    "height": 416,
+    "bbox": [
+      0,
+      0,
+      512,
+      416
+    ],
+    "anchor": [
+      256,
+      80
+    ],
+    "shadow": "none"
   }
 }

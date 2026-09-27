@@ -1,0 +1,256 @@
+<?xml version='1.0' encoding='utf-8'?>
+<map version="1.10" tiledversion="1.11.2" orientation="orthogonal" renderorder="right-down" width="20" height="20" tilewidth="32" tileheight="32" infinite="0" backgroundcolor="#d8e7b5" nextlayerid="8" nextobjectid="9">
+  <properties>
+    <property name="growstepView" value="orthogonal" />
+    <property name="sourcePack" value="VectoRaith Farming Sim Essentials" />
+  </properties>
+  <tileset firstgid="1" source="vectoraith_terrain.tsx" />
+  <tileset firstgid="257" source="vectoraith_crops.tsx" />
+  <tileset firstgid="513" source="vectoraith_crops_dense.tsx" />
+  <tileset firstgid="769" source="vectoraith_details.tsx" />
+  <tileset firstgid="1025" source="vectoraith_orchard.tsx" />
+  <tileset firstgid="1281" source="vectoraith_buildings.tsx" />
+  <tileset firstgid="1537" source="vectoraith_soil_growstep.tsx" />
+  <layer id="1" name="ground" width="20" height="20">
+    <data encoding="csv">
+2,19,18,17,3,2,2,2,2,2,19,18,17,3,2,2,2,2,2,19,
+2,17,19,2,2,3,18,2,2,2,17,19,2,2,3,18,2,2,2,17,
+19,2,2,3,2,17,2,18,2,19,2,2,3,2,17,2,18,2,19,2,
+2,2,2,2,19,18,17,3,2,2,2,2,2,19,18,17,3,2,2,2,
+18,2,2,2,17,19,2,2,3,18,2,2,2,17,19,2,2,3,18,2,
+2,18,2,19,2,2,3,2,17,2,18,2,19,2,2,3,2,17,2,18,
+17,3,2,2,2,2,2,19,18,17,3,2,2,2,2,2,19,18,17,3,
+2,2,3,18,2,2,2,17,19,2,2,3,18,2,2,2,17,19,2,2,
+3,2,17,2,18,2,19,2,2,3,2,17,2,18,2,19,2,2,3,2,
+2,19,18,17,3,2,2,2,2,2,19,18,17,3,2,2,2,2,2,19,
+2,17,19,2,2,3,18,2,2,2,17,19,2,2,3,18,2,2,2,17,
+19,2,2,3,2,17,2,18,2,19,2,2,3,2,17,2,18,2,19,2,
+2,2,2,2,19,18,17,3,2,2,2,2,2,19,18,17,3,2,2,2,
+18,2,2,2,17,19,2,2,3,18,2,2,2,17,19,2,2,3,18,2,
+2,18,2,19,2,2,3,2,17,2,18,2,19,2,2,3,2,17,2,18,
+17,3,2,2,2,2,2,19,18,17,3,2,2,2,2,2,19,18,17,3,
+2,2,3,18,2,2,2,17,19,2,2,3,18,2,2,2,17,19,2,2,
+3,2,17,2,18,2,19,2,2,3,2,17,2,18,2,19,2,2,3,2,
+2,19,18,17,3,2,2,2,2,2,19,18,17,3,2,2,2,2,2,19,
+2,17,19,2,2,3,18,2,2,2,17,19,2,2,3,18,2,2,2,17
+</data>
+  </layer>
+  <layer id="2" name="paths" width="20" height="20">
+    <data encoding="csv">
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,36,0,0,0,0,36,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,36,0,0,0,0,36,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,36,0,0,0,0,36,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,36,0,0,0,0,36,0,0,0,0,0,0,0,
+0,0,0,36,36,36,36,36,36,36,36,36,36,36,36,36,36,0,0,0,
+0,0,0,0,0,0,0,36,36,36,36,36,36,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,36,36,36,36,36,36,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,36,36,36,36,36,36,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,36,36,36,36,36,36,0,0,0,0,0,0,0,
+0,0,0,36,36,36,36,36,36,36,36,36,36,36,36,36,36,0,0,0,
+0,0,0,0,0,0,0,36,0,0,0,0,36,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,36,0,0,0,0,36,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,36,0,0,0,0,36,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,36,0,0,0,0,36,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+</data>
+  </layer>
+  <layer id="3" name="soil" width="20" height="20">
+    <data encoding="csv">
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,1537,1537,0,0,0,1537,1537,0,0,0,1537,1537,0,0,0,0,
+0,0,0,0,1537,1537,0,0,0,1537,1537,0,0,0,1537,1537,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,1537,1537,0,0,0,0,0,0,0,0,1537,1537,0,0,0,0,
+0,0,0,0,1537,1537,0,0,0,0,0,0,0,0,1537,1537,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,1537,1537,0,0,0,1537,1537,0,0,0,1537,1537,0,0,0,0,
+0,0,0,0,1537,1537,0,0,0,1537,1537,0,0,0,1537,1537,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+</data>
+  </layer>
+  <layer id="4" name="orchard_preview" width="20" height="20">
+    <data encoding="csv">
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,1033,1034,1035,0,0,0,0,0,0,0,0,0,0,0,0,1081,1082,1083,0,
+0,1049,1050,1051,0,0,0,0,0,0,0,0,0,0,0,0,1097,1098,1099,0,
+0,1065,1066,1067,0,0,0,0,0,0,0,0,0,0,0,0,1113,1114,1115,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+</data>
+  </layer>
+  <layer id="5" name="plants_preview" width="20" height="20">
+    <data encoding="csv">
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,540,540,0,0,0,568,568,0,0,0,596,596,0,0,0,0,
+0,0,0,0,540,540,0,0,0,568,568,0,0,0,596,596,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,628,628,0,0,0,0,0,0,0,0,660,660,0,0,0,0,
+0,0,0,0,628,628,0,0,0,0,0,0,0,0,660,660,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,668,668,0,0,0,728,728,0,0,0,756,756,0,0,0,0,
+0,0,0,0,668,668,0,0,0,728,728,0,0,0,756,756,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+</data>
+  </layer>
+  <layer id="6" name="decor" width="20" height="20">
+    <data encoding="csv">
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,873,0,0,0,0,0,0,0,0,0,0,0,0,881,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,834,0,0,0,0,0,0,0,0,0,0,0,0,0,0,835,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,865,0,0,0,0,0,0,0,0,0,0,0,0,0,0,869,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,885,0,0,0,0,0,0,0,0,0,0,0,0,0,0,889,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,836,0,0,0,0,0,0,0,0,0,0,0,0,0,0,849,0,0,
+0,0,0,850,0,0,0,0,0,0,0,0,0,0,0,0,851,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+</data>
+  </layer>
+  <objectgroup id="7" name="plots">
+    <object id="1" name="plot_0" class="plot" x="160" y="160">
+      <point />
+      <properties>
+        <property name="gridX" value="4" type="int" />
+        <property name="gridY" value="4" type="int" />
+        <property name="species" value="corn" />
+        <property name="stage0Tile" value="24" type="int" />
+        <property name="stage1Tile" value="25" type="int" />
+        <property name="stage2Tile" value="26" type="int" />
+        <property name="stage3Tile" value="27" type="int" />
+      </properties>
+    </object>
+    <object id="2" name="plot_1" class="plot" x="320" y="160">
+      <point />
+      <properties>
+        <property name="gridX" value="9" type="int" />
+        <property name="gridY" value="4" type="int" />
+        <property name="species" value="cabbage" />
+        <property name="stage0Tile" value="52" type="int" />
+        <property name="stage1Tile" value="53" type="int" />
+        <property name="stage2Tile" value="54" type="int" />
+        <property name="stage3Tile" value="55" type="int" />
+      </properties>
+    </object>
+    <object id="3" name="plot_2" class="plot" x="480" y="160">
+      <point />
+      <properties>
+        <property name="gridX" value="14" type="int" />
+        <property name="gridY" value="4" type="int" />
+        <property name="species" value="strawberry" />
+        <property name="stage0Tile" value="80" type="int" />
+        <property name="stage1Tile" value="81" type="int" />
+        <property name="stage2Tile" value="82" type="int" />
+        <property name="stage3Tile" value="83" type="int" />
+      </properties>
+    </object>
+    <object id="4" name="plot_3" class="plot" x="160" y="320">
+      <point />
+      <properties>
+        <property name="gridX" value="4" type="int" />
+        <property name="gridY" value="9" type="int" />
+        <property name="species" value="carrot" />
+        <property name="stage0Tile" value="112" type="int" />
+        <property name="stage1Tile" value="113" type="int" />
+        <property name="stage2Tile" value="114" type="int" />
+        <property name="stage3Tile" value="115" type="int" />
+      </properties>
+    </object>
+    <object id="5" name="plot_4" class="plot" x="480" y="320">
+      <point />
+      <properties>
+        <property name="gridX" value="14" type="int" />
+        <property name="gridY" value="9" type="int" />
+        <property name="species" value="tomato" />
+        <property name="stage0Tile" value="144" type="int" />
+        <property name="stage1Tile" value="145" type="int" />
+        <property name="stage2Tile" value="146" type="int" />
+        <property name="stage3Tile" value="147" type="int" />
+      </properties>
+    </object>
+    <object id="6" name="plot_5" class="plot" x="160" y="480">
+      <point />
+      <properties>
+        <property name="gridX" value="4" type="int" />
+        <property name="gridY" value="14" type="int" />
+        <property name="species" value="pepper" />
+        <property name="stage0Tile" value="152" type="int" />
+        <property name="stage1Tile" value="153" type="int" />
+        <property name="stage2Tile" value="154" type="int" />
+        <property name="stage3Tile" value="155" type="int" />
+      </properties>
+    </object>
+    <object id="7" name="plot_6" class="plot" x="320" y="480">
+      <point />
+      <properties>
+        <property name="gridX" value="9" type="int" />
+        <property name="gridY" value="14" type="int" />
+        <property name="species" value="eggplant" />
+        <property name="stage0Tile" value="212" type="int" />
+        <property name="stage1Tile" value="213" type="int" />
+        <property name="stage2Tile" value="214" type="int" />
+        <property name="stage3Tile" value="215" type="int" />
+      </properties>
+    </object>
+    <object id="8" name="plot_7" class="plot" x="480" y="480">
+      <point />
+      <properties>
+        <property name="gridX" value="14" type="int" />
+        <property name="gridY" value="14" type="int" />
+        <property name="species" value="pumpkin" />
+        <property name="stage0Tile" value="240" type="int" />
+        <property name="stage1Tile" value="241" type="int" />
+        <property name="stage2Tile" value="242" type="int" />
+        <property name="stage3Tile" value="243" type="int" />
+      </properties>
+    </object>
+  </objectgroup>
+</map>

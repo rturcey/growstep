@@ -1,0 +1,6119 @@
+{
+  "pack_root": "assets/vendor/vectoraith_farming_raw",
+  "png_count": 426,
+  "most_common_dimensions": [
+    {
+      "size": [
+        512,
+        512
+      ],
+      "count": 81
+    },
+    {
+      "size": [
+        256,
+        256
+      ],
+      "count": 72
+    },
+    {
+      "size": [
+        768,
+        768
+      ],
+      "count": 72
+    },
+    {
+      "size": [
+        144,
+        192
+      ],
+      "count": 36
+    },
+    {
+      "size": [
+        96,
+        128
+      ],
+      "count": 30
+    },
+    {
+      "size": [
+        48,
+        64
+      ],
+      "count": 27
+    },
+    {
+      "size": [
+        384,
+        768
+      ],
+      "count": 24
+    },
+    {
+      "size": [
+        256,
+        512
+      ],
+      "count": 15
+    },
+    {
+      "size": [
+        128,
+        256
+      ],
+      "count": 12
+    },
+    {
+      "size": [
+        72,
+        96
+      ],
+      "count": 9
+    },
+    {
+      "size": [
+        216,
+        288
+      ],
+      "count": 9
+    },
+    {
+      "size": [
+        256,
+        192
+      ],
+      "count": 6
+    },
+    {
+      "size": [
+        512,
+        384
+      ],
+      "count": 6
+    },
+    {
+      "size": [
+        768,
+        576
+      ],
+      "count": 6
+    },
+    {
+      "size": [
+        48,
+        128
+      ],
+      "count": 3
+    },
+    {
+      "size": [
+        192,
+        256
+      ],
+      "count": 3
+    },
+    {
+      "size": [
+        96,
+        256
+      ],
+      "count": 3
+    },
+    {
+      "size": [
+        512,
+        1024
+      ],
+      "count": 3
+    },
+    {
+      "size": [
+        288,
+        384
+      ],
+      "count": 3
+    },
+    {
+      "size": [
+        144,
+        384
+      ],
+      "count": 3
+    },
+    {
+      "size": [
+        768,
+        1536
+      ],
+      "count": 3
+    }
+  ],
+  "files": [
+    {
+      "path": "Original/16x16/RPG Maker autotiles/vectoraith_tileset_farmingsims_terrains_A1_RPGMaker.png",
+      "width": 256,
+      "height": 192,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        0,
+        96,
+        192
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "Original/16x16/RPG Maker autotiles/vectoraith_tileset_farmingsims_terrains_A2_RPGMaker.png",
+      "width": 256,
+      "height": 192,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        0,
+        64,
+        192
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "Original/16x16/Sprites/!$farmer_plowing.png",
+      "width": 96,
+      "height": 128,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        7,
+        6,
+        93,
+        122
+      ],
+      "likely_tilesheet": false
+    },
+    {
+      "path": "Original/16x16/Sprites/$calf_brown.png",
+      "width": 48,
+      "height": 64,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        1,
+        48,
+        64
+      ],
+      "likely_tilesheet": false
+    },
+    {
+      "path": "Original/16x16/Sprites/$calf_holstein.png",
+      "width": 48,
+      "height": 64,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        1,
+        48,
+        64
+      ],
+      "likely_tilesheet": false
+    },
+    {
+      "path": "Original/16x16/Sprites/$calf_white.png",
+      "width": 48,
+      "height": 64,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        1,
+        48,
+        64
+      ],
+      "likely_tilesheet": false
+    },
+    {
+      "path": "Original/16x16/Sprites/$cat_orange.png",
+      "width": 48,
+      "height": 64,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        2,
+        48,
+        64
+      ],
+      "likely_tilesheet": false
+    },
+    {
+      "path": "Original/16x16/Sprites/$chicken_chick.png",
+      "width": 48,
+      "height": 64,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        3,
+        8,
+        45,
+        64
+      ],
+      "likely_tilesheet": false
+    },
+    {
+      "path": "Original/16x16/Sprites/$chicken_hen.png",
+      "width": 48,
+      "height": 64,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        2,
+        2,
+        46,
+        64
+      ],
+      "likely_tilesheet": false
+    },
+    {
+      "path": "Original/16x16/Sprites/$cow_brown.png",
+      "width": 72,
+      "height": 96,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        3,
+        72,
+        96
+      ],
+      "likely_tilesheet": false
+    },
+    {
+      "path": "Original/16x16/Sprites/$cow_holstein.png",
+      "width": 72,
+      "height": 96,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        3,
+        72,
+        96
+      ],
+      "likely_tilesheet": false
+    },
+    {
+      "path": "Original/16x16/Sprites/$cow_white.png",
+      "width": 72,
+      "height": 96,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        3,
+        72,
+        96
+      ],
+      "likely_tilesheet": false
+    },
+    {
+      "path": "Original/16x16/Sprites/$farmer.png",
+      "width": 48,
+      "height": 128,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        2,
+        12,
+        46,
+        128
+      ],
+      "likely_tilesheet": false
+    },
+    {
+      "path": "Original/16x16/Sprites/$goat.png",
+      "width": 48,
+      "height": 64,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        0,
+        48,
+        64
+      ],
+      "likely_tilesheet": false
+    },
+    {
+      "path": "Original/16x16/Sprites/$lamb.png",
+      "width": 48,
+      "height": 64,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        1,
+        3,
+        47,
+        64
+      ],
+      "likely_tilesheet": false
+    },
+    {
+      "path": "Original/16x16/Sprites/$sheep.png",
+      "width": 48,
+      "height": 64,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        0,
+        48,
+        64
+      ],
+      "likely_tilesheet": false
+    },
+    {
+      "path": "Original/16x16/Tilesets (Compact)/vectoraith_tileset_farmingsims_buildings.png",
+      "width": 256,
+      "height": 256,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        0,
+        256,
+        256
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "Original/16x16/Tilesets (Compact)/vectoraith_tileset_farmingsims_buildings_winter.png",
+      "width": 256,
+      "height": 256,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        0,
+        256,
+        256
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "Original/16x16/Tilesets (Compact)/vectoraith_tileset_farmingsims_crops.png",
+      "width": 256,
+      "height": 256,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        2,
+        6,
+        255,
+        252
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "Original/16x16/Tilesets (Compact)/vectoraith_tileset_farmingsims_crops_dense.png",
+      "width": 256,
+      "height": 256,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        1,
+        1,
+        256,
+        254
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "Original/16x16/Tilesets (Compact)/vectoraith_tileset_farmingsims_details.png",
+      "width": 256,
+      "height": 256,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        0,
+        256,
+        253
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "Original/16x16/Tilesets (Compact)/vectoraith_tileset_farmingsims_orchard.png",
+      "width": 256,
+      "height": 256,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        2,
+        1,
+        221,
+        96
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "Original/16x16/Tilesets (Compact)/vectoraith_tileset_farmingsims_terrain_fall_expanded.png",
+      "width": 256,
+      "height": 256,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        0,
+        256,
+        256
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "Original/16x16/Tilesets (Compact)/vectoraith_tileset_farmingsims_terrain_spring_expanded.png",
+      "width": 256,
+      "height": 256,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        0,
+        256,
+        256
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "Original/16x16/Tilesets (Compact)/vectoraith_tileset_farmingsims_terrain_summer_expanded.png",
+      "width": 256,
+      "height": 256,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        0,
+        256,
+        256
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "Original/16x16/Tilesets (Compact)/vectoraith_tileset_farmingsims_terrain_winter_expanded.png",
+      "width": 256,
+      "height": 256,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        0,
+        256,
+        256
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "Original/16x16/Tilesets (Compact)/vectoraith_tileset_farmingsims_terrains.png",
+      "width": 256,
+      "height": 512,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        0,
+        256,
+        512
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "Original/16x16/Tilesets (Modular)/vectoraith_tileset_farmingsims_buildings.png",
+      "width": 256,
+      "height": 256,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        0,
+        256,
+        256
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "Original/16x16/Tilesets (Modular)/vectoraith_tileset_farmingsims_buildings_winter.png",
+      "width": 256,
+      "height": 256,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        0,
+        256,
+        256
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "Original/16x16/Tilesets (Modular)/vectoraith_tileset_farmingsims_crops_dense_fall.png",
+      "width": 256,
+      "height": 256,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        3,
+        7,
+        128,
+        126
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "Original/16x16/Tilesets (Modular)/vectoraith_tileset_farmingsims_crops_dense_spring.png",
+      "width": 256,
+      "height": 256,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        2,
+        11,
+        128,
+        126
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "Original/16x16/Tilesets (Modular)/vectoraith_tileset_farmingsims_crops_dense_summer.png",
+      "width": 256,
+      "height": 256,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        0,
+        128,
+        158
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "Original/16x16/Tilesets (Modular)/vectoraith_tileset_farmingsims_details_fall.png",
+      "width": 256,
+      "height": 256,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        0,
+        256,
+        253
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "Original/16x16/Tilesets (Modular)/vectoraith_tileset_farmingsims_details_spring.png",
+      "width": 256,
+      "height": 256,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        0,
+        255,
+        253
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "Original/16x16/Tilesets (Modular)/vectoraith_tileset_farmingsims_details_summer.png",
+      "width": 256,
+      "height": 256,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        0,
+        256,
+        253
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "Original/16x16/Tilesets (Modular)/vectoraith_tileset_farmingsims_details_winter.png",
+      "width": 256,
+      "height": 256,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        0,
+        123,
+        253
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "Original/16x16/Tilesets (Modular)/vectoraith_tileset_farmingsims_orchard.png",
+      "width": 256,
+      "height": 256,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        2,
+        1,
+        221,
+        96
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "Original/16x16/Tilesets (Modular)/vectoraith_tileset_farmingsims_terrain_A5_fall.png",
+      "width": 128,
+      "height": 256,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        0,
+        128,
+        256
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "Original/16x16/Tilesets (Modular)/vectoraith_tileset_farmingsims_terrain_A5_spring.png",
+      "width": 128,
+      "height": 256,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        0,
+        128,
+        256
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "Original/16x16/Tilesets (Modular)/vectoraith_tileset_farmingsims_terrain_A5_summer.png",
+      "width": 128,
+      "height": 256,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        0,
+        128,
+        256
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "Original/16x16/Tilesets (Modular)/vectoraith_tileset_farmingsims_terrain_A5_winter.png",
+      "width": 128,
+      "height": 256,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        0,
+        128,
+        256
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "Original/16x16/Tilesets (Modular)/vectoraith_tileset_farmingsims_terrain_fall_expanded.png",
+      "width": 256,
+      "height": 256,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        0,
+        256,
+        256
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "Original/16x16/Tilesets (Modular)/vectoraith_tileset_farmingsims_terrain_spring_expanded.png",
+      "width": 256,
+      "height": 256,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        0,
+        256,
+        256
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "Original/16x16/Tilesets (Modular)/vectoraith_tileset_farmingsims_terrain_summer_expanded.png",
+      "width": 256,
+      "height": 256,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        0,
+        256,
+        256
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "Original/16x16/Tilesets (Modular)/vectoraith_tileset_farmingsims_terrain_winter_expanded.png",
+      "width": 256,
+      "height": 256,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        0,
+        256,
+        256
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "Original/32x32/RPG Maker autotiles/vectoraith_tileset_farmingsims_terrains_A1_RPGMaker_32x32.png",
+      "width": 512,
+      "height": 384,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        0,
+        192,
+        384
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "Original/32x32/RPG Maker autotiles/vectoraith_tileset_farmingsims_terrains_A2_RPGMaker_32x32.png",
+      "width": 512,
+      "height": 384,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        0,
+        128,
+        384
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "Original/32x32/Sprites/!$farmer_plowing_32x32.png",
+      "width": 192,
+      "height": 256,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        14,
+        12,
+        186,
+        244
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "Original/32x32/Sprites/$calf_brown_32x32.png",
+      "width": 96,
+      "height": 128,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        2,
+        96,
+        128
+      ],
+      "likely_tilesheet": false
+    },
+    {
+      "path": "Original/32x32/Sprites/$calf_holstein_32x32.png",
+      "width": 96,
+      "height": 128,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        2,
+        96,
+        128
+      ],
+      "likely_tilesheet": false
+    },
+    {
+      "path": "Original/32x32/Sprites/$calf_white_32x32.png",
+      "width": 96,
+      "height": 128,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        2,
+        96,
+        128
+      ],
+      "likely_tilesheet": false
+    },
+    {
+      "path": "Original/32x32/Sprites/$cat_orange_32x32.png",
+      "width": 96,
+      "height": 128,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        4,
+        96,
+        128
+      ],
+      "likely_tilesheet": false
+    },
+    {
+      "path": "Original/32x32/Sprites/$chicken_chick_32x32.png",
+      "width": 96,
+      "height": 128,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        6,
+        16,
+        90,
+        128
+      ],
+      "likely_tilesheet": false
+    },
+    {
+      "path": "Original/32x32/Sprites/$chicken_hen_32x32.png",
+      "width": 96,
+      "height": 128,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        4,
+        4,
+        92,
+        128
+      ],
+      "likely_tilesheet": false
+    },
+    {
+      "path": "Original/32x32/Sprites/$cow_brown_32x32.png",
+      "width": 144,
+      "height": 192,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        6,
+        144,
+        192
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "Original/32x32/Sprites/$cow_holstein_32x32.png",
+      "width": 144,
+      "height": 192,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        6,
+        144,
+        192
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "Original/32x32/Sprites/$cow_white_32x32.png",
+      "width": 144,
+      "height": 192,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        6,
+        144,
+        192
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "Original/32x32/Sprites/$farmer_32x32.png",
+      "width": 96,
+      "height": 256,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        4,
+        24,
+        92,
+        256
+      ],
+      "likely_tilesheet": false
+    },
+    {
+      "path": "Original/32x32/Sprites/$goat_32x32.png",
+      "width": 96,
+      "height": 128,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        0,
+        96,
+        128
+      ],
+      "likely_tilesheet": false
+    },
+    {
+      "path": "Original/32x32/Sprites/$lamb_32x32.png",
+      "width": 96,
+      "height": 128,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        2,
+        6,
+        94,
+        128
+      ],
+      "likely_tilesheet": false
+    },
+    {
+      "path": "Original/32x32/Sprites/$sheep_32x32.png",
+      "width": 96,
+      "height": 128,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        0,
+        96,
+        128
+      ],
+      "likely_tilesheet": false
+    },
+    {
+      "path": "Original/32x32/Tilesets (Compact)/vectoraith_tileset_farmingsims_buildings_32x32.png",
+      "width": 512,
+      "height": 512,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        0,
+        512,
+        512
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "Original/32x32/Tilesets (Compact)/vectoraith_tileset_farmingsims_buildings_winter_32x32.png",
+      "width": 512,
+      "height": 512,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        0,
+        512,
+        512
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "Original/32x32/Tilesets (Compact)/vectoraith_tileset_farmingsims_crops_32x32.png",
+      "width": 512,
+      "height": 512,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        4,
+        12,
+        510,
+        504
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "Original/32x32/Tilesets (Compact)/vectoraith_tileset_farmingsims_crops_dense_32x32.png",
+      "width": 512,
+      "height": 512,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        2,
+        2,
+        512,
+        508
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "Original/32x32/Tilesets (Compact)/vectoraith_tileset_farmingsims_details_32x32.png",
+      "width": 512,
+      "height": 512,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        0,
+        512,
+        506
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "Original/32x32/Tilesets (Compact)/vectoraith_tileset_farmingsims_orchard_32x32.png",
+      "width": 512,
+      "height": 512,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        4,
+        2,
+        442,
+        192
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "Original/32x32/Tilesets (Compact)/vectoraith_tileset_farmingsims_terrain_fall_expanded_32x32.png",
+      "width": 512,
+      "height": 512,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        0,
+        512,
+        512
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "Original/32x32/Tilesets (Compact)/vectoraith_tileset_farmingsims_terrain_spring_expanded_32x32.png",
+      "width": 512,
+      "height": 512,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        0,
+        512,
+        512
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "Original/32x32/Tilesets (Compact)/vectoraith_tileset_farmingsims_terrain_summer_expanded_32x32.png",
+      "width": 512,
+      "height": 512,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        0,
+        512,
+        512
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "Original/32x32/Tilesets (Compact)/vectoraith_tileset_farmingsims_terrain_winter_expanded_32x32.png",
+      "width": 512,
+      "height": 512,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        0,
+        512,
+        512
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "Original/32x32/Tilesets (Compact)/vectoraith_tileset_farmingsims_terrains_32x32.png",
+      "width": 512,
+      "height": 1024,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        0,
+        512,
+        1024
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "Original/32x32/Tilesets (Modular)/vectoraith_tileset_farmingsims_buildings_32x32.png",
+      "width": 512,
+      "height": 512,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        0,
+        512,
+        512
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "Original/32x32/Tilesets (Modular)/vectoraith_tileset_farmingsims_buildings_winter_32x32.png",
+      "width": 512,
+      "height": 512,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        0,
+        512,
+        512
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "Original/32x32/Tilesets (Modular)/vectoraith_tileset_farmingsims_crops_dense_fall_32x32.png",
+      "width": 512,
+      "height": 512,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        6,
+        14,
+        256,
+        252
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "Original/32x32/Tilesets (Modular)/vectoraith_tileset_farmingsims_crops_dense_spring_32x32.png",
+      "width": 512,
+      "height": 512,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        4,
+        22,
+        256,
+        252
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "Original/32x32/Tilesets (Modular)/vectoraith_tileset_farmingsims_crops_dense_summer_32x32.png",
+      "width": 512,
+      "height": 512,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        0,
+        256,
+        316
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "Original/32x32/Tilesets (Modular)/vectoraith_tileset_farmingsims_details_fall_32x32.png",
+      "width": 512,
+      "height": 512,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        0,
+        512,
+        506
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "Original/32x32/Tilesets (Modular)/vectoraith_tileset_farmingsims_details_spring_32x32.png",
+      "width": 512,
+      "height": 512,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        0,
+        510,
+        506
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "Original/32x32/Tilesets (Modular)/vectoraith_tileset_farmingsims_details_summer_32x32.png",
+      "width": 512,
+      "height": 512,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        0,
+        512,
+        506
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "Original/32x32/Tilesets (Modular)/vectoraith_tileset_farmingsims_details_winter_32x32.png",
+      "width": 512,
+      "height": 512,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        0,
+        246,
+        506
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "Original/32x32/Tilesets (Modular)/vectoraith_tileset_farmingsims_orchard_32x32.png",
+      "width": 512,
+      "height": 512,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        4,
+        2,
+        442,
+        192
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "Original/32x32/Tilesets (Modular)/vectoraith_tileset_farmingsims_terrain_A5_fall_32x32.png",
+      "width": 256,
+      "height": 512,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        0,
+        256,
+        512
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "Original/32x32/Tilesets (Modular)/vectoraith_tileset_farmingsims_terrain_A5_spring_32x32.png",
+      "width": 256,
+      "height": 512,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        0,
+        256,
+        512
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "Original/32x32/Tilesets (Modular)/vectoraith_tileset_farmingsims_terrain_A5_summer_32x32.png",
+      "width": 256,
+      "height": 512,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        0,
+        256,
+        512
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "Original/32x32/Tilesets (Modular)/vectoraith_tileset_farmingsims_terrain_A5_winter_32x32.png",
+      "width": 256,
+      "height": 512,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        0,
+        256,
+        512
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "Original/32x32/Tilesets (Modular)/vectoraith_tileset_farmingsims_terrain_fall_expanded_32x32.png",
+      "width": 512,
+      "height": 512,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        0,
+        512,
+        512
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "Original/32x32/Tilesets (Modular)/vectoraith_tileset_farmingsims_terrain_spring_expanded_32x32.png",
+      "width": 512,
+      "height": 512,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        0,
+        512,
+        512
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "Original/32x32/Tilesets (Modular)/vectoraith_tileset_farmingsims_terrain_summer_expanded_32x32.png",
+      "width": 512,
+      "height": 512,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        0,
+        512,
+        512
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "Original/32x32/Tilesets (Modular)/vectoraith_tileset_farmingsims_terrain_winter_expanded_32x32.png",
+      "width": 512,
+      "height": 512,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        0,
+        512,
+        512
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "Original/48x48/RPG Maker autotiles/vectoraith_tileset_farmingsims_terrains_A1_RPGMaker_48x48.png",
+      "width": 768,
+      "height": 576,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        0,
+        288,
+        576
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "Original/48x48/RPG Maker autotiles/vectoraith_tileset_farmingsims_terrains_A2_RPGMaker_48x48.png",
+      "width": 768,
+      "height": 576,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        0,
+        192,
+        576
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "Original/48x48/Sprites/!$farmer_plowing_48x48.png",
+      "width": 288,
+      "height": 384,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        21,
+        18,
+        279,
+        366
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "Original/48x48/Sprites/$calf_brown_48x48.png",
+      "width": 144,
+      "height": 192,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        3,
+        144,
+        192
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "Original/48x48/Sprites/$calf_holstein_48x48.png",
+      "width": 144,
+      "height": 192,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        3,
+        144,
+        192
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "Original/48x48/Sprites/$calf_white_48x48.png",
+      "width": 144,
+      "height": 192,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        3,
+        144,
+        192
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "Original/48x48/Sprites/$cat_orange_48x48.png",
+      "width": 144,
+      "height": 192,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        6,
+        144,
+        192
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "Original/48x48/Sprites/$chicken_chick_48x48.png",
+      "width": 144,
+      "height": 192,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        9,
+        24,
+        135,
+        192
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "Original/48x48/Sprites/$chicken_hen_48x48.png",
+      "width": 144,
+      "height": 192,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        6,
+        6,
+        138,
+        192
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "Original/48x48/Sprites/$cow_brown_48x48.png",
+      "width": 216,
+      "height": 288,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        9,
+        216,
+        288
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "Original/48x48/Sprites/$cow_holstein_48x48.png",
+      "width": 216,
+      "height": 288,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        9,
+        216,
+        288
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "Original/48x48/Sprites/$cow_white_48x48.png",
+      "width": 216,
+      "height": 288,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        9,
+        216,
+        288
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "Original/48x48/Sprites/$farmer_48x48.png",
+      "width": 144,
+      "height": 384,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        6,
+        36,
+        138,
+        384
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "Original/48x48/Sprites/$goat_48x48.png",
+      "width": 144,
+      "height": 192,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        0,
+        144,
+        192
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "Original/48x48/Sprites/$lamb_48x48.png",
+      "width": 144,
+      "height": 192,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        3,
+        9,
+        141,
+        192
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "Original/48x48/Sprites/$sheep_48x48.png",
+      "width": 144,
+      "height": 192,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        0,
+        144,
+        192
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "Original/48x48/Tilesets (Compact)/vectoraith_tileset_farmingsims_buildings_48x48.png",
+      "width": 768,
+      "height": 768,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        0,
+        768,
+        768
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "Original/48x48/Tilesets (Compact)/vectoraith_tileset_farmingsims_buildings_winter_48x48.png",
+      "width": 768,
+      "height": 768,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        0,
+        768,
+        768
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "Original/48x48/Tilesets (Compact)/vectoraith_tileset_farmingsims_crops_48x48.png",
+      "width": 768,
+      "height": 768,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        6,
+        18,
+        765,
+        756
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "Original/48x48/Tilesets (Compact)/vectoraith_tileset_farmingsims_crops_dense_48x48.png",
+      "width": 768,
+      "height": 768,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        3,
+        3,
+        768,
+        762
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "Original/48x48/Tilesets (Compact)/vectoraith_tileset_farmingsims_details_48x48.png",
+      "width": 768,
+      "height": 768,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        0,
+        768,
+        759
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "Original/48x48/Tilesets (Compact)/vectoraith_tileset_farmingsims_orchard_48x48.png",
+      "width": 768,
+      "height": 768,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        6,
+        3,
+        663,
+        288
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "Original/48x48/Tilesets (Compact)/vectoraith_tileset_farmingsims_terrain_fall_expanded_48x48.png",
+      "width": 768,
+      "height": 768,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        0,
+        768,
+        768
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "Original/48x48/Tilesets (Compact)/vectoraith_tileset_farmingsims_terrain_spring_expanded_48x48.png",
+      "width": 768,
+      "height": 768,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        0,
+        768,
+        768
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "Original/48x48/Tilesets (Compact)/vectoraith_tileset_farmingsims_terrain_summer_expanded_48x48.png",
+      "width": 768,
+      "height": 768,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        0,
+        768,
+        768
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "Original/48x48/Tilesets (Compact)/vectoraith_tileset_farmingsims_terrain_winter_expanded_48x48.png",
+      "width": 768,
+      "height": 768,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        0,
+        768,
+        768
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "Original/48x48/Tilesets (Compact)/vectoraith_tileset_farmingsims_terrains_48x48.png",
+      "width": 768,
+      "height": 1536,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        0,
+        768,
+        1536
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "Original/48x48/Tilesets (Modular)/vectoraith_tileset_farmingsims_buildings_48x48.png",
+      "width": 768,
+      "height": 768,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        0,
+        768,
+        768
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "Original/48x48/Tilesets (Modular)/vectoraith_tileset_farmingsims_buildings_winter_48x48.png",
+      "width": 768,
+      "height": 768,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        0,
+        768,
+        768
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "Original/48x48/Tilesets (Modular)/vectoraith_tileset_farmingsims_crops_dense_fall_48x48.png",
+      "width": 768,
+      "height": 768,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        9,
+        21,
+        384,
+        378
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "Original/48x48/Tilesets (Modular)/vectoraith_tileset_farmingsims_crops_dense_spring_48x48.png",
+      "width": 768,
+      "height": 768,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        6,
+        33,
+        384,
+        378
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "Original/48x48/Tilesets (Modular)/vectoraith_tileset_farmingsims_crops_dense_summer_48x48.png",
+      "width": 768,
+      "height": 768,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        0,
+        384,
+        474
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "Original/48x48/Tilesets (Modular)/vectoraith_tileset_farmingsims_details_fall_48x48.png",
+      "width": 768,
+      "height": 768,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        0,
+        768,
+        759
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "Original/48x48/Tilesets (Modular)/vectoraith_tileset_farmingsims_details_spring_32x32.png",
+      "width": 512,
+      "height": 512,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        0,
+        510,
+        506
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "Original/48x48/Tilesets (Modular)/vectoraith_tileset_farmingsims_details_spring_48x48.png",
+      "width": 768,
+      "height": 768,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        0,
+        765,
+        759
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "Original/48x48/Tilesets (Modular)/vectoraith_tileset_farmingsims_details_summer_32x32.png",
+      "width": 512,
+      "height": 512,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        0,
+        512,
+        506
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "Original/48x48/Tilesets (Modular)/vectoraith_tileset_farmingsims_details_summer_48x48.png",
+      "width": 768,
+      "height": 768,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        0,
+        768,
+        759
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "Original/48x48/Tilesets (Modular)/vectoraith_tileset_farmingsims_details_winter_32x32.png",
+      "width": 512,
+      "height": 512,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        0,
+        246,
+        506
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "Original/48x48/Tilesets (Modular)/vectoraith_tileset_farmingsims_details_winter_48x48.png",
+      "width": 768,
+      "height": 768,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        0,
+        369,
+        759
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "Original/48x48/Tilesets (Modular)/vectoraith_tileset_farmingsims_orchard_48x48.png",
+      "width": 768,
+      "height": 768,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        6,
+        3,
+        663,
+        288
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "Original/48x48/Tilesets (Modular)/vectoraith_tileset_farmingsims_terrain_A5_fall_48x48.png",
+      "width": 384,
+      "height": 768,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        0,
+        384,
+        768
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "Original/48x48/Tilesets (Modular)/vectoraith_tileset_farmingsims_terrain_A5_spring_48x48.png",
+      "width": 384,
+      "height": 768,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        0,
+        384,
+        768
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "Original/48x48/Tilesets (Modular)/vectoraith_tileset_farmingsims_terrain_A5_summer_48x48.png",
+      "width": 384,
+      "height": 768,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        0,
+        384,
+        768
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "Original/48x48/Tilesets (Modular)/vectoraith_tileset_farmingsims_terrain_A5_winter_48x48.png",
+      "width": 384,
+      "height": 768,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        0,
+        384,
+        768
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "Original/48x48/Tilesets (Modular)/vectoraith_tileset_farmingsims_terrain_fall_48x48.png",
+      "width": 384,
+      "height": 768,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        0,
+        384,
+        768
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "Original/48x48/Tilesets (Modular)/vectoraith_tileset_farmingsims_terrain_fall_expanded_48x48.png",
+      "width": 768,
+      "height": 768,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        0,
+        768,
+        768
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "Original/48x48/Tilesets (Modular)/vectoraith_tileset_farmingsims_terrain_spring_48x48.png",
+      "width": 384,
+      "height": 768,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        0,
+        384,
+        768
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "Original/48x48/Tilesets (Modular)/vectoraith_tileset_farmingsims_terrain_spring_expanded_48x48.png",
+      "width": 768,
+      "height": 768,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        0,
+        768,
+        768
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "Original/48x48/Tilesets (Modular)/vectoraith_tileset_farmingsims_terrain_summer_48x48.png",
+      "width": 384,
+      "height": 768,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        0,
+        384,
+        768
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "Original/48x48/Tilesets (Modular)/vectoraith_tileset_farmingsims_terrain_summer_expanded_48x48.png",
+      "width": 768,
+      "height": 768,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        0,
+        768,
+        768
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "Original/48x48/Tilesets (Modular)/vectoraith_tileset_farmingsims_terrain_winter_48x48.png",
+      "width": 384,
+      "height": 768,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        0,
+        384,
+        768
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "Original/48x48/Tilesets (Modular)/vectoraith_tileset_farmingsims_terrain_winter_expanded_48x48.png",
+      "width": 768,
+      "height": 768,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        0,
+        768,
+        768
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "ReColor/16x16/RPG Maker autotiles/vectoraith_tileset_farmingsims_terrains_A1_RPGMaker_recolor.png",
+      "width": 256,
+      "height": 192,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        0,
+        96,
+        192
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "ReColor/16x16/RPG Maker autotiles/vectoraith_tileset_farmingsims_terrains_A2_RPGMaker_recolor.png",
+      "width": 256,
+      "height": 192,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        0,
+        64,
+        192
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "ReColor/16x16/Sprites/!$farmer_plowing_recolor.png",
+      "width": 96,
+      "height": 128,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        7,
+        6,
+        93,
+        122
+      ],
+      "likely_tilesheet": false
+    },
+    {
+      "path": "ReColor/16x16/Sprites/$calf_brown_recolor.png",
+      "width": 48,
+      "height": 64,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        1,
+        48,
+        64
+      ],
+      "likely_tilesheet": false
+    },
+    {
+      "path": "ReColor/16x16/Sprites/$calf_holstein_recolor.png",
+      "width": 48,
+      "height": 64,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        1,
+        48,
+        64
+      ],
+      "likely_tilesheet": false
+    },
+    {
+      "path": "ReColor/16x16/Sprites/$calf_white_recolor.png",
+      "width": 48,
+      "height": 64,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        1,
+        48,
+        64
+      ],
+      "likely_tilesheet": false
+    },
+    {
+      "path": "ReColor/16x16/Sprites/$cat_orange_recolor.png",
+      "width": 48,
+      "height": 64,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        2,
+        48,
+        64
+      ],
+      "likely_tilesheet": false
+    },
+    {
+      "path": "ReColor/16x16/Sprites/$chicken_chick_recolor.png",
+      "width": 48,
+      "height": 64,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        3,
+        8,
+        45,
+        64
+      ],
+      "likely_tilesheet": false
+    },
+    {
+      "path": "ReColor/16x16/Sprites/$chicken_hen_recolor.png",
+      "width": 48,
+      "height": 64,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        2,
+        2,
+        46,
+        64
+      ],
+      "likely_tilesheet": false
+    },
+    {
+      "path": "ReColor/16x16/Sprites/$cow_brown_recolor.png",
+      "width": 72,
+      "height": 96,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        3,
+        72,
+        96
+      ],
+      "likely_tilesheet": false
+    },
+    {
+      "path": "ReColor/16x16/Sprites/$cow_holstein_recolor.png",
+      "width": 72,
+      "height": 96,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        3,
+        72,
+        96
+      ],
+      "likely_tilesheet": false
+    },
+    {
+      "path": "ReColor/16x16/Sprites/$cow_white_recolor.png",
+      "width": 72,
+      "height": 96,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        3,
+        72,
+        96
+      ],
+      "likely_tilesheet": false
+    },
+    {
+      "path": "ReColor/16x16/Sprites/$farmer_recolor.png",
+      "width": 48,
+      "height": 128,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        2,
+        12,
+        46,
+        128
+      ],
+      "likely_tilesheet": false
+    },
+    {
+      "path": "ReColor/16x16/Sprites/$goat_recolor.png",
+      "width": 48,
+      "height": 64,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        0,
+        48,
+        64
+      ],
+      "likely_tilesheet": false
+    },
+    {
+      "path": "ReColor/16x16/Sprites/$lamb_recolor.png",
+      "width": 48,
+      "height": 64,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        1,
+        3,
+        47,
+        64
+      ],
+      "likely_tilesheet": false
+    },
+    {
+      "path": "ReColor/16x16/Sprites/$sheep_recolor.png",
+      "width": 48,
+      "height": 64,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        0,
+        48,
+        64
+      ],
+      "likely_tilesheet": false
+    },
+    {
+      "path": "ReColor/16x16/Tilesets (Compact)/vectoraith_tileset_farmingsims_buildings_recolor.png",
+      "width": 256,
+      "height": 256,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        0,
+        256,
+        256
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "ReColor/16x16/Tilesets (Compact)/vectoraith_tileset_farmingsims_buildings_winter_recolor.png",
+      "width": 256,
+      "height": 256,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        0,
+        256,
+        256
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "ReColor/16x16/Tilesets (Compact)/vectoraith_tileset_farmingsims_crops_dense_recolor.png",
+      "width": 256,
+      "height": 256,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        1,
+        1,
+        256,
+        254
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "ReColor/16x16/Tilesets (Compact)/vectoraith_tileset_farmingsims_crops_recolor.png",
+      "width": 256,
+      "height": 256,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        2,
+        6,
+        255,
+        252
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "ReColor/16x16/Tilesets (Compact)/vectoraith_tileset_farmingsims_details_recolor.png",
+      "width": 256,
+      "height": 256,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        0,
+        256,
+        253
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "ReColor/16x16/Tilesets (Compact)/vectoraith_tileset_farmingsims_orchard_recolor.png",
+      "width": 256,
+      "height": 256,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        2,
+        1,
+        221,
+        96
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "ReColor/16x16/Tilesets (Compact)/vectoraith_tileset_farmingsims_terrain_fall_expanded_recolor.png",
+      "width": 256,
+      "height": 256,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        0,
+        256,
+        256
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "ReColor/16x16/Tilesets (Compact)/vectoraith_tileset_farmingsims_terrain_spring_expanded_recolor.png",
+      "width": 256,
+      "height": 256,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        0,
+        256,
+        256
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "ReColor/16x16/Tilesets (Compact)/vectoraith_tileset_farmingsims_terrain_summer_expanded_recolor.png",
+      "width": 256,
+      "height": 256,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        0,
+        256,
+        256
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "ReColor/16x16/Tilesets (Compact)/vectoraith_tileset_farmingsims_terrain_winter_expanded_recolor.png",
+      "width": 256,
+      "height": 256,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        0,
+        256,
+        256
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "ReColor/16x16/Tilesets (Compact)/vectoraith_tileset_farmingsims_terrains_recolor.png",
+      "width": 256,
+      "height": 512,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        0,
+        256,
+        512
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "ReColor/16x16/Tilesets (Modular)/vectoraith_tileset_farmingsims_buildings_recolor.png",
+      "width": 256,
+      "height": 256,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        0,
+        256,
+        256
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "ReColor/16x16/Tilesets (Modular)/vectoraith_tileset_farmingsims_buildings_winter_recolor.png",
+      "width": 256,
+      "height": 256,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        0,
+        256,
+        256
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "ReColor/16x16/Tilesets (Modular)/vectoraith_tileset_farmingsims_crops_dense_fall_recolor.png",
+      "width": 256,
+      "height": 256,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        3,
+        7,
+        128,
+        126
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "ReColor/16x16/Tilesets (Modular)/vectoraith_tileset_farmingsims_crops_dense_spring_recolor.png",
+      "width": 256,
+      "height": 256,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        2,
+        11,
+        128,
+        126
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "ReColor/16x16/Tilesets (Modular)/vectoraith_tileset_farmingsims_crops_dense_summer_recolor.png",
+      "width": 256,
+      "height": 256,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        0,
+        128,
+        158
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "ReColor/16x16/Tilesets (Modular)/vectoraith_tileset_farmingsims_details_fall_recolor.png",
+      "width": 256,
+      "height": 256,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        0,
+        256,
+        253
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "ReColor/16x16/Tilesets (Modular)/vectoraith_tileset_farmingsims_details_spring_recolor.png",
+      "width": 256,
+      "height": 256,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        0,
+        255,
+        253
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "ReColor/16x16/Tilesets (Modular)/vectoraith_tileset_farmingsims_details_summer_recolor.png",
+      "width": 256,
+      "height": 256,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        0,
+        256,
+        253
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "ReColor/16x16/Tilesets (Modular)/vectoraith_tileset_farmingsims_details_winter_recolor.png",
+      "width": 256,
+      "height": 256,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        0,
+        123,
+        253
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "ReColor/16x16/Tilesets (Modular)/vectoraith_tileset_farmingsims_orchard_recolor.png",
+      "width": 256,
+      "height": 256,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        2,
+        1,
+        221,
+        96
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "ReColor/16x16/Tilesets (Modular)/vectoraith_tileset_farmingsims_terrain_A5_fall_recolor.png",
+      "width": 128,
+      "height": 256,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        0,
+        128,
+        256
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "ReColor/16x16/Tilesets (Modular)/vectoraith_tileset_farmingsims_terrain_A5_spring_recolor.png",
+      "width": 128,
+      "height": 256,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        0,
+        128,
+        256
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "ReColor/16x16/Tilesets (Modular)/vectoraith_tileset_farmingsims_terrain_A5_summer_recolor.png",
+      "width": 128,
+      "height": 256,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        0,
+        128,
+        256
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "ReColor/16x16/Tilesets (Modular)/vectoraith_tileset_farmingsims_terrain_A5_winter_recolor.png",
+      "width": 128,
+      "height": 256,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        0,
+        128,
+        256
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "ReColor/16x16/Tilesets (Modular)/vectoraith_tileset_farmingsims_terrain_fall_expanded_recolor.png",
+      "width": 256,
+      "height": 256,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        0,
+        256,
+        256
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "ReColor/16x16/Tilesets (Modular)/vectoraith_tileset_farmingsims_terrain_spring_expanded_recolor.png",
+      "width": 256,
+      "height": 256,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        0,
+        256,
+        256
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "ReColor/16x16/Tilesets (Modular)/vectoraith_tileset_farmingsims_terrain_summer_expanded_recolor.png",
+      "width": 256,
+      "height": 256,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        0,
+        256,
+        256
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "ReColor/16x16/Tilesets (Modular)/vectoraith_tileset_farmingsims_terrain_winter_expanded_recolor.png",
+      "width": 256,
+      "height": 256,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        0,
+        256,
+        256
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "ReColor/32x32/RPG Maker autotiles/vectoraith_tileset_farmingsims_terrains_A1_RPGMaker_32x32_recolor.png",
+      "width": 512,
+      "height": 384,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        0,
+        192,
+        384
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "ReColor/32x32/RPG Maker autotiles/vectoraith_tileset_farmingsims_terrains_A2_RPGMaker_32x32_recolor.png",
+      "width": 512,
+      "height": 384,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        0,
+        128,
+        384
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "ReColor/32x32/Sprites/!$farmer_plowing_32x32_recolor.png",
+      "width": 192,
+      "height": 256,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        14,
+        12,
+        186,
+        244
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "ReColor/32x32/Sprites/$calf_brown_32x32_recolor.png",
+      "width": 96,
+      "height": 128,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        2,
+        96,
+        128
+      ],
+      "likely_tilesheet": false
+    },
+    {
+      "path": "ReColor/32x32/Sprites/$calf_holstein_32x32_recolor.png",
+      "width": 96,
+      "height": 128,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        2,
+        96,
+        128
+      ],
+      "likely_tilesheet": false
+    },
+    {
+      "path": "ReColor/32x32/Sprites/$calf_white_32x32_recolor.png",
+      "width": 96,
+      "height": 128,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        2,
+        96,
+        128
+      ],
+      "likely_tilesheet": false
+    },
+    {
+      "path": "ReColor/32x32/Sprites/$cat_orange_32x32_recolor.png",
+      "width": 96,
+      "height": 128,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        4,
+        96,
+        128
+      ],
+      "likely_tilesheet": false
+    },
+    {
+      "path": "ReColor/32x32/Sprites/$chicken_chick_32x32_recolor.png",
+      "width": 96,
+      "height": 128,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        6,
+        16,
+        90,
+        128
+      ],
+      "likely_tilesheet": false
+    },
+    {
+      "path": "ReColor/32x32/Sprites/$chicken_hen_32x32_recolor.png",
+      "width": 96,
+      "height": 128,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        4,
+        4,
+        92,
+        128
+      ],
+      "likely_tilesheet": false
+    },
+    {
+      "path": "ReColor/32x32/Sprites/$cow_brown_32x32_recolor.png",
+      "width": 144,
+      "height": 192,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        6,
+        144,
+        192
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "ReColor/32x32/Sprites/$cow_holstein_32x32_recolor.png",
+      "width": 144,
+      "height": 192,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        6,
+        144,
+        192
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "ReColor/32x32/Sprites/$cow_white_32x32_recolor.png",
+      "width": 144,
+      "height": 192,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        6,
+        144,
+        192
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "ReColor/32x32/Sprites/$farmer_32x32_recolor.png",
+      "width": 96,
+      "height": 256,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        4,
+        24,
+        92,
+        256
+      ],
+      "likely_tilesheet": false
+    },
+    {
+      "path": "ReColor/32x32/Sprites/$goat_32x32_recolor.png",
+      "width": 96,
+      "height": 128,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        0,
+        96,
+        128
+      ],
+      "likely_tilesheet": false
+    },
+    {
+      "path": "ReColor/32x32/Sprites/$lamb_32x32_recolor.png",
+      "width": 96,
+      "height": 128,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        2,
+        6,
+        94,
+        128
+      ],
+      "likely_tilesheet": false
+    },
+    {
+      "path": "ReColor/32x32/Sprites/$sheep_32x32_recolor.png",
+      "width": 96,
+      "height": 128,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        0,
+        96,
+        128
+      ],
+      "likely_tilesheet": false
+    },
+    {
+      "path": "ReColor/32x32/Tilesets (Compact)/vectoraith_tileset_farmingsims_buildings_32x32_recolor.png",
+      "width": 512,
+      "height": 512,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        0,
+        512,
+        512
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "ReColor/32x32/Tilesets (Compact)/vectoraith_tileset_farmingsims_buildings_winter_32x32_recolor.png",
+      "width": 512,
+      "height": 512,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        0,
+        512,
+        512
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "ReColor/32x32/Tilesets (Compact)/vectoraith_tileset_farmingsims_crops_32x32_recolor.png",
+      "width": 512,
+      "height": 512,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        4,
+        12,
+        510,
+        504
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "ReColor/32x32/Tilesets (Compact)/vectoraith_tileset_farmingsims_crops_dense_32x32_recolor.png",
+      "width": 512,
+      "height": 512,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        2,
+        2,
+        512,
+        508
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "ReColor/32x32/Tilesets (Compact)/vectoraith_tileset_farmingsims_details_32x32_recolor.png",
+      "width": 512,
+      "height": 512,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        0,
+        512,
+        506
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "ReColor/32x32/Tilesets (Compact)/vectoraith_tileset_farmingsims_orchard_32x32_recolor.png",
+      "width": 512,
+      "height": 512,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        4,
+        2,
+        442,
+        192
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "ReColor/32x32/Tilesets (Compact)/vectoraith_tileset_farmingsims_terrain_fall_expanded_32x32_recolor.png",
+      "width": 512,
+      "height": 512,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        0,
+        512,
+        512
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "ReColor/32x32/Tilesets (Compact)/vectoraith_tileset_farmingsims_terrain_spring_expanded_32x32_recolor.png",
+      "width": 512,
+      "height": 512,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        0,
+        512,
+        512
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "ReColor/32x32/Tilesets (Compact)/vectoraith_tileset_farmingsims_terrain_summer_expanded_32x32_recolor.png",
+      "width": 512,
+      "height": 512,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        0,
+        512,
+        512
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "ReColor/32x32/Tilesets (Compact)/vectoraith_tileset_farmingsims_terrain_winter_expanded_32x32_recolor.png",
+      "width": 512,
+      "height": 512,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        0,
+        512,
+        512
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "ReColor/32x32/Tilesets (Compact)/vectoraith_tileset_farmingsims_terrains_32x32_recolor.png",
+      "width": 512,
+      "height": 1024,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        0,
+        512,
+        1024
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "ReColor/32x32/Tilesets (Modular)/vectoraith_tileset_farmingsims_buildings_32x32_recolor.png",
+      "width": 512,
+      "height": 512,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        0,
+        512,
+        512
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "ReColor/32x32/Tilesets (Modular)/vectoraith_tileset_farmingsims_buildings_winter_32x32_recolor.png",
+      "width": 512,
+      "height": 512,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        0,
+        512,
+        512
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "ReColor/32x32/Tilesets (Modular)/vectoraith_tileset_farmingsims_crops_dense_fall_32x32_recolor.png",
+      "width": 512,
+      "height": 512,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        6,
+        14,
+        256,
+        252
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "ReColor/32x32/Tilesets (Modular)/vectoraith_tileset_farmingsims_crops_dense_spring_32x32_recolor.png",
+      "width": 512,
+      "height": 512,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        4,
+        22,
+        256,
+        252
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "ReColor/32x32/Tilesets (Modular)/vectoraith_tileset_farmingsims_crops_dense_summer_32x32_recolor.png",
+      "width": 512,
+      "height": 512,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        0,
+        256,
+        316
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "ReColor/32x32/Tilesets (Modular)/vectoraith_tileset_farmingsims_details_fall_32x32_recolor.png",
+      "width": 512,
+      "height": 512,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        0,
+        512,
+        506
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "ReColor/32x32/Tilesets (Modular)/vectoraith_tileset_farmingsims_details_spring_32x32_recolor.png",
+      "width": 512,
+      "height": 512,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        0,
+        510,
+        506
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "ReColor/32x32/Tilesets (Modular)/vectoraith_tileset_farmingsims_details_summer_32x32_recolor.png",
+      "width": 512,
+      "height": 512,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        0,
+        512,
+        506
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "ReColor/32x32/Tilesets (Modular)/vectoraith_tileset_farmingsims_details_winter_32x32_recolor.png",
+      "width": 512,
+      "height": 512,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        0,
+        246,
+        506
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "ReColor/32x32/Tilesets (Modular)/vectoraith_tileset_farmingsims_orchard_32x32_recolor.png",
+      "width": 512,
+      "height": 512,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        4,
+        2,
+        442,
+        192
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "ReColor/32x32/Tilesets (Modular)/vectoraith_tileset_farmingsims_terrain_A5_fall_32x32_recolor.png",
+      "width": 256,
+      "height": 512,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        0,
+        256,
+        512
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "ReColor/32x32/Tilesets (Modular)/vectoraith_tileset_farmingsims_terrain_A5_spring_32x32_recolor.png",
+      "width": 256,
+      "height": 512,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        0,
+        256,
+        512
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "ReColor/32x32/Tilesets (Modular)/vectoraith_tileset_farmingsims_terrain_A5_summer_32x32_recolor.png",
+      "width": 256,
+      "height": 512,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        0,
+        256,
+        512
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "ReColor/32x32/Tilesets (Modular)/vectoraith_tileset_farmingsims_terrain_A5_winter_32x32_recolor.png",
+      "width": 256,
+      "height": 512,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        0,
+        256,
+        512
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "ReColor/32x32/Tilesets (Modular)/vectoraith_tileset_farmingsims_terrain_fall_expanded_32x32_recolor.png",
+      "width": 512,
+      "height": 512,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        0,
+        512,
+        512
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "ReColor/32x32/Tilesets (Modular)/vectoraith_tileset_farmingsims_terrain_spring_expanded_32x32_recolor.png",
+      "width": 512,
+      "height": 512,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        0,
+        512,
+        512
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "ReColor/32x32/Tilesets (Modular)/vectoraith_tileset_farmingsims_terrain_summer_expanded_32x32_recolor.png",
+      "width": 512,
+      "height": 512,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        0,
+        512,
+        512
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "ReColor/32x32/Tilesets (Modular)/vectoraith_tileset_farmingsims_terrain_winter_expanded_32x32_recolor.png",
+      "width": 512,
+      "height": 512,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        0,
+        512,
+        512
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "ReColor/48x48/RPG Maker autotiles/vectoraith_tileset_farmingsims_terrains_A1_RPGMaker_48x48_recolor.png",
+      "width": 768,
+      "height": 576,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        0,
+        288,
+        576
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "ReColor/48x48/RPG Maker autotiles/vectoraith_tileset_farmingsims_terrains_A2_RPGMaker_48x48_recolor.png",
+      "width": 768,
+      "height": 576,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        0,
+        192,
+        576
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "ReColor/48x48/Sprites/!$farmer_plowing_48x48_recolor.png",
+      "width": 288,
+      "height": 384,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        21,
+        18,
+        279,
+        366
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "ReColor/48x48/Sprites/$calf_brown_48x48_recolor.png",
+      "width": 144,
+      "height": 192,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        3,
+        144,
+        192
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "ReColor/48x48/Sprites/$calf_holstein_48x48_recolor.png",
+      "width": 144,
+      "height": 192,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        3,
+        144,
+        192
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "ReColor/48x48/Sprites/$calf_white_48x48_recolor.png",
+      "width": 144,
+      "height": 192,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        3,
+        144,
+        192
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "ReColor/48x48/Sprites/$cat_orange_48x48_recolor.png",
+      "width": 144,
+      "height": 192,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        6,
+        144,
+        192
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "ReColor/48x48/Sprites/$chicken_chick_48x48_recolor.png",
+      "width": 144,
+      "height": 192,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        9,
+        24,
+        135,
+        192
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "ReColor/48x48/Sprites/$chicken_hen_48x48_recolor.png",
+      "width": 144,
+      "height": 192,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        6,
+        6,
+        138,
+        192
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "ReColor/48x48/Sprites/$cow_brown_48x48_recolor.png",
+      "width": 216,
+      "height": 288,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        9,
+        216,
+        288
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "ReColor/48x48/Sprites/$cow_holstein_48x48_recolor.png",
+      "width": 216,
+      "height": 288,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        9,
+        216,
+        288
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "ReColor/48x48/Sprites/$cow_white_48x48_recolor.png",
+      "width": 216,
+      "height": 288,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        9,
+        216,
+        288
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "ReColor/48x48/Sprites/$farmer_48x48_recolor.png",
+      "width": 144,
+      "height": 384,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        6,
+        36,
+        138,
+        384
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "ReColor/48x48/Sprites/$goat_48x48_recolor.png",
+      "width": 144,
+      "height": 192,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        0,
+        144,
+        192
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "ReColor/48x48/Sprites/$lamb_48x48_recolor.png",
+      "width": 144,
+      "height": 192,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        3,
+        9,
+        141,
+        192
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "ReColor/48x48/Sprites/$sheep_48x48_recolor.png",
+      "width": 144,
+      "height": 192,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        0,
+        144,
+        192
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "ReColor/48x48/Tilesets (Compact)/vectoraith_tileset_farmingsims_buildings_48x48_recolor.png",
+      "width": 768,
+      "height": 768,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        0,
+        768,
+        768
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "ReColor/48x48/Tilesets (Compact)/vectoraith_tileset_farmingsims_buildings_winter_48x48_recolor.png",
+      "width": 768,
+      "height": 768,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        0,
+        768,
+        768
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "ReColor/48x48/Tilesets (Compact)/vectoraith_tileset_farmingsims_crops_48x48_recolor.png",
+      "width": 768,
+      "height": 768,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        6,
+        18,
+        765,
+        756
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "ReColor/48x48/Tilesets (Compact)/vectoraith_tileset_farmingsims_crops_dense_48x48_recolor.png",
+      "width": 768,
+      "height": 768,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        3,
+        3,
+        768,
+        762
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "ReColor/48x48/Tilesets (Compact)/vectoraith_tileset_farmingsims_details_48x48_recolor.png",
+      "width": 768,
+      "height": 768,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        0,
+        768,
+        759
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "ReColor/48x48/Tilesets (Compact)/vectoraith_tileset_farmingsims_orchard_48x48_recolor.png",
+      "width": 768,
+      "height": 768,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        6,
+        3,
+        663,
+        288
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "ReColor/48x48/Tilesets (Compact)/vectoraith_tileset_farmingsims_terrain_fall_expanded_48x48_recolor.png",
+      "width": 768,
+      "height": 768,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        0,
+        768,
+        768
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "ReColor/48x48/Tilesets (Compact)/vectoraith_tileset_farmingsims_terrain_spring_expanded_48x48_recolor.png",
+      "width": 768,
+      "height": 768,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        0,
+        768,
+        768
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "ReColor/48x48/Tilesets (Compact)/vectoraith_tileset_farmingsims_terrain_summer_expanded_48x48_recolor.png",
+      "width": 768,
+      "height": 768,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        0,
+        768,
+        768
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "ReColor/48x48/Tilesets (Compact)/vectoraith_tileset_farmingsims_terrain_winter_expanded_48x48_recolor.png",
+      "width": 768,
+      "height": 768,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        0,
+        768,
+        768
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "ReColor/48x48/Tilesets (Compact)/vectoraith_tileset_farmingsims_terrains_48x48_recolor.png",
+      "width": 768,
+      "height": 1536,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        0,
+        768,
+        1536
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "ReColor/48x48/Tilesets (Modular)/vectoraith_tileset_farmingsims_buildings_48x48_recolor.png",
+      "width": 768,
+      "height": 768,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        0,
+        768,
+        768
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "ReColor/48x48/Tilesets (Modular)/vectoraith_tileset_farmingsims_buildings_winter_48x48_recolor.png",
+      "width": 768,
+      "height": 768,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        0,
+        768,
+        768
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "ReColor/48x48/Tilesets (Modular)/vectoraith_tileset_farmingsims_crops_dense_fall_48x48_recolor.png",
+      "width": 768,
+      "height": 768,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        9,
+        21,
+        384,
+        378
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "ReColor/48x48/Tilesets (Modular)/vectoraith_tileset_farmingsims_crops_dense_spring_48x48_recolor.png",
+      "width": 768,
+      "height": 768,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        6,
+        33,
+        384,
+        378
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "ReColor/48x48/Tilesets (Modular)/vectoraith_tileset_farmingsims_crops_dense_summer_48x48_recolor.png",
+      "width": 768,
+      "height": 768,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        0,
+        384,
+        474
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "ReColor/48x48/Tilesets (Modular)/vectoraith_tileset_farmingsims_details_fall_48x48_recolor.png",
+      "width": 768,
+      "height": 768,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        0,
+        768,
+        759
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "ReColor/48x48/Tilesets (Modular)/vectoraith_tileset_farmingsims_details_spring_32x32_recolor.png",
+      "width": 512,
+      "height": 512,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        0,
+        510,
+        506
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "ReColor/48x48/Tilesets (Modular)/vectoraith_tileset_farmingsims_details_spring_48x48_recolor.png",
+      "width": 768,
+      "height": 768,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        0,
+        765,
+        759
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "ReColor/48x48/Tilesets (Modular)/vectoraith_tileset_farmingsims_details_summer_32x32_recolor.png",
+      "width": 512,
+      "height": 512,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        0,
+        512,
+        506
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "ReColor/48x48/Tilesets (Modular)/vectoraith_tileset_farmingsims_details_summer_48x48_recolor.png",
+      "width": 768,
+      "height": 768,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        0,
+        768,
+        759
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "ReColor/48x48/Tilesets (Modular)/vectoraith_tileset_farmingsims_details_winter_32x32_recolor.png",
+      "width": 512,
+      "height": 512,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        0,
+        246,
+        506
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "ReColor/48x48/Tilesets (Modular)/vectoraith_tileset_farmingsims_details_winter_48x48_recolor.png",
+      "width": 768,
+      "height": 768,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        0,
+        369,
+        759
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "ReColor/48x48/Tilesets (Modular)/vectoraith_tileset_farmingsims_orchard_48x48_recolor.png",
+      "width": 768,
+      "height": 768,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        6,
+        3,
+        663,
+        288
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "ReColor/48x48/Tilesets (Modular)/vectoraith_tileset_farmingsims_terrain_A5_fall_48x48_recolor.png",
+      "width": 384,
+      "height": 768,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        0,
+        384,
+        768
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "ReColor/48x48/Tilesets (Modular)/vectoraith_tileset_farmingsims_terrain_A5_spring_48x48_recolor.png",
+      "width": 384,
+      "height": 768,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        0,
+        384,
+        768
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "ReColor/48x48/Tilesets (Modular)/vectoraith_tileset_farmingsims_terrain_A5_summer_48x48_recolor.png",
+      "width": 384,
+      "height": 768,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        0,
+        384,
+        768
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "ReColor/48x48/Tilesets (Modular)/vectoraith_tileset_farmingsims_terrain_A5_winter_48x48_recolor.png",
+      "width": 384,
+      "height": 768,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        0,
+        384,
+        768
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "ReColor/48x48/Tilesets (Modular)/vectoraith_tileset_farmingsims_terrain_fall_48x48_recolor.png",
+      "width": 384,
+      "height": 768,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        0,
+        384,
+        768
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "ReColor/48x48/Tilesets (Modular)/vectoraith_tileset_farmingsims_terrain_fall_expanded_48x48_recolor.png",
+      "width": 768,
+      "height": 768,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        0,
+        768,
+        768
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "ReColor/48x48/Tilesets (Modular)/vectoraith_tileset_farmingsims_terrain_spring_48x48_recolor.png",
+      "width": 384,
+      "height": 768,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        0,
+        384,
+        768
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "ReColor/48x48/Tilesets (Modular)/vectoraith_tileset_farmingsims_terrain_spring_expanded_48x48_recolor.png",
+      "width": 768,
+      "height": 768,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        0,
+        768,
+        768
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "ReColor/48x48/Tilesets (Modular)/vectoraith_tileset_farmingsims_terrain_summer_48x48_recolor.png",
+      "width": 384,
+      "height": 768,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        0,
+        384,
+        768
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "ReColor/48x48/Tilesets (Modular)/vectoraith_tileset_farmingsims_terrain_summer_expanded_48x48_recolor.png",
+      "width": 768,
+      "height": 768,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        0,
+        768,
+        768
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "ReColor/48x48/Tilesets (Modular)/vectoraith_tileset_farmingsims_terrain_winter_48x48_recolor.png",
+      "width": 384,
+      "height": 768,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        0,
+        384,
+        768
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "ReColor/48x48/Tilesets (Modular)/vectoraith_tileset_farmingsims_terrain_winter_expanded_48x48_recolor.png",
+      "width": 768,
+      "height": 768,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        0,
+        768,
+        768
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "ReShade/16x16/RPG Maker autotiles/vectoraith_tileset_farmingsims_terrains_A1_RPGMaker_reshade.png",
+      "width": 256,
+      "height": 192,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        0,
+        96,
+        192
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "ReShade/16x16/RPG Maker autotiles/vectoraith_tileset_farmingsims_terrains_A2_RPGMaker_reshade.png",
+      "width": 256,
+      "height": 192,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        0,
+        64,
+        192
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "ReShade/16x16/Sprites/!$farmer_plowing_reshade.png",
+      "width": 96,
+      "height": 128,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        7,
+        6,
+        93,
+        122
+      ],
+      "likely_tilesheet": false
+    },
+    {
+      "path": "ReShade/16x16/Sprites/$calf_brown_reshade.png",
+      "width": 48,
+      "height": 64,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        1,
+        48,
+        64
+      ],
+      "likely_tilesheet": false
+    },
+    {
+      "path": "ReShade/16x16/Sprites/$calf_holstein_reshade.png",
+      "width": 48,
+      "height": 64,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        1,
+        48,
+        64
+      ],
+      "likely_tilesheet": false
+    },
+    {
+      "path": "ReShade/16x16/Sprites/$calf_white_reshade.png",
+      "width": 48,
+      "height": 64,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        1,
+        48,
+        64
+      ],
+      "likely_tilesheet": false
+    },
+    {
+      "path": "ReShade/16x16/Sprites/$cat_orange_reshade.png",
+      "width": 48,
+      "height": 64,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        2,
+        48,
+        64
+      ],
+      "likely_tilesheet": false
+    },
+    {
+      "path": "ReShade/16x16/Sprites/$chicken_chick_reshade.png",
+      "width": 48,
+      "height": 64,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        3,
+        8,
+        45,
+        64
+      ],
+      "likely_tilesheet": false
+    },
+    {
+      "path": "ReShade/16x16/Sprites/$chicken_hen_reshade.png",
+      "width": 48,
+      "height": 64,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        2,
+        2,
+        46,
+        64
+      ],
+      "likely_tilesheet": false
+    },
+    {
+      "path": "ReShade/16x16/Sprites/$cow_brown_reshade.png",
+      "width": 72,
+      "height": 96,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        3,
+        72,
+        96
+      ],
+      "likely_tilesheet": false
+    },
+    {
+      "path": "ReShade/16x16/Sprites/$cow_holstein_reshade.png",
+      "width": 72,
+      "height": 96,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        3,
+        72,
+        96
+      ],
+      "likely_tilesheet": false
+    },
+    {
+      "path": "ReShade/16x16/Sprites/$cow_white_reshade.png",
+      "width": 72,
+      "height": 96,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        3,
+        72,
+        96
+      ],
+      "likely_tilesheet": false
+    },
+    {
+      "path": "ReShade/16x16/Sprites/$farmer_reshade.png",
+      "width": 48,
+      "height": 128,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        2,
+        12,
+        46,
+        128
+      ],
+      "likely_tilesheet": false
+    },
+    {
+      "path": "ReShade/16x16/Sprites/$goat_reshade.png",
+      "width": 48,
+      "height": 64,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        0,
+        48,
+        64
+      ],
+      "likely_tilesheet": false
+    },
+    {
+      "path": "ReShade/16x16/Sprites/$lamb_reshade.png",
+      "width": 48,
+      "height": 64,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        1,
+        3,
+        47,
+        64
+      ],
+      "likely_tilesheet": false
+    },
+    {
+      "path": "ReShade/16x16/Sprites/$sheep_reshade.png",
+      "width": 48,
+      "height": 64,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        0,
+        48,
+        64
+      ],
+      "likely_tilesheet": false
+    },
+    {
+      "path": "ReShade/16x16/Tilesets (Compact)/vectoraith_tileset_farmingsims_buildings_reshade.png",
+      "width": 256,
+      "height": 256,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        0,
+        256,
+        256
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "ReShade/16x16/Tilesets (Compact)/vectoraith_tileset_farmingsims_buildings_winter_reshade.png",
+      "width": 256,
+      "height": 256,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        0,
+        256,
+        256
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "ReShade/16x16/Tilesets (Compact)/vectoraith_tileset_farmingsims_crops_dense_reshade.png",
+      "width": 256,
+      "height": 256,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        1,
+        1,
+        256,
+        254
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "ReShade/16x16/Tilesets (Compact)/vectoraith_tileset_farmingsims_crops_reshade.png",
+      "width": 256,
+      "height": 256,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        2,
+        6,
+        255,
+        252
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "ReShade/16x16/Tilesets (Compact)/vectoraith_tileset_farmingsims_details_reshade.png",
+      "width": 256,
+      "height": 256,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        0,
+        256,
+        253
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "ReShade/16x16/Tilesets (Compact)/vectoraith_tileset_farmingsims_orchard_reshade.png",
+      "width": 256,
+      "height": 256,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        2,
+        1,
+        221,
+        96
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "ReShade/16x16/Tilesets (Compact)/vectoraith_tileset_farmingsims_terrain_fall_expanded_reshade.png",
+      "width": 256,
+      "height": 256,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        0,
+        256,
+        256
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "ReShade/16x16/Tilesets (Compact)/vectoraith_tileset_farmingsims_terrain_spring_expanded_reshade.png",
+      "width": 256,
+      "height": 256,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        0,
+        256,
+        256
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "ReShade/16x16/Tilesets (Compact)/vectoraith_tileset_farmingsims_terrain_summer_expanded_reshade.png",
+      "width": 256,
+      "height": 256,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        0,
+        256,
+        256
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "ReShade/16x16/Tilesets (Compact)/vectoraith_tileset_farmingsims_terrain_winter_expanded_reshade.png",
+      "width": 256,
+      "height": 256,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        0,
+        256,
+        256
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "ReShade/16x16/Tilesets (Compact)/vectoraith_tileset_farmingsims_terrains_reshade.png",
+      "width": 256,
+      "height": 512,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        0,
+        256,
+        512
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "ReShade/16x16/Tilesets (Modular)/vectoraith_tileset_farmingsims_buildings_reshade.png",
+      "width": 256,
+      "height": 256,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        0,
+        256,
+        256
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "ReShade/16x16/Tilesets (Modular)/vectoraith_tileset_farmingsims_buildings_winter_reshade.png",
+      "width": 256,
+      "height": 256,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        0,
+        256,
+        256
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "ReShade/16x16/Tilesets (Modular)/vectoraith_tileset_farmingsims_crops_dense_fall_reshade.png",
+      "width": 256,
+      "height": 256,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        3,
+        7,
+        128,
+        126
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "ReShade/16x16/Tilesets (Modular)/vectoraith_tileset_farmingsims_crops_dense_spring_reshade.png",
+      "width": 256,
+      "height": 256,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        2,
+        11,
+        128,
+        126
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "ReShade/16x16/Tilesets (Modular)/vectoraith_tileset_farmingsims_crops_dense_summer_reshade.png",
+      "width": 256,
+      "height": 256,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        0,
+        128,
+        158
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "ReShade/16x16/Tilesets (Modular)/vectoraith_tileset_farmingsims_details_fall_reshade.png",
+      "width": 256,
+      "height": 256,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        0,
+        256,
+        253
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "ReShade/16x16/Tilesets (Modular)/vectoraith_tileset_farmingsims_details_spring_reshade.png",
+      "width": 256,
+      "height": 256,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        0,
+        255,
+        253
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "ReShade/16x16/Tilesets (Modular)/vectoraith_tileset_farmingsims_details_summer_reshade.png",
+      "width": 256,
+      "height": 256,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        0,
+        256,
+        253
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "ReShade/16x16/Tilesets (Modular)/vectoraith_tileset_farmingsims_details_winter_reshade.png",
+      "width": 256,
+      "height": 256,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        0,
+        123,
+        253
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "ReShade/16x16/Tilesets (Modular)/vectoraith_tileset_farmingsims_orchard_reshade.png",
+      "width": 256,
+      "height": 256,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        2,
+        1,
+        221,
+        96
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "ReShade/16x16/Tilesets (Modular)/vectoraith_tileset_farmingsims_terrain_A5_fall_reshade.png",
+      "width": 128,
+      "height": 256,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        0,
+        128,
+        256
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "ReShade/16x16/Tilesets (Modular)/vectoraith_tileset_farmingsims_terrain_A5_spring_reshade.png",
+      "width": 128,
+      "height": 256,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        0,
+        128,
+        256
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "ReShade/16x16/Tilesets (Modular)/vectoraith_tileset_farmingsims_terrain_A5_summer_reshade.png",
+      "width": 128,
+      "height": 256,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        0,
+        128,
+        256
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "ReShade/16x16/Tilesets (Modular)/vectoraith_tileset_farmingsims_terrain_A5_winter_reshade.png",
+      "width": 128,
+      "height": 256,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        0,
+        128,
+        256
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "ReShade/16x16/Tilesets (Modular)/vectoraith_tileset_farmingsims_terrain_fall_expanded_reshade.png",
+      "width": 256,
+      "height": 256,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        0,
+        256,
+        256
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "ReShade/16x16/Tilesets (Modular)/vectoraith_tileset_farmingsims_terrain_spring_expanded_reshade.png",
+      "width": 256,
+      "height": 256,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        0,
+        256,
+        256
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "ReShade/16x16/Tilesets (Modular)/vectoraith_tileset_farmingsims_terrain_summer_expanded_reshade.png",
+      "width": 256,
+      "height": 256,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        0,
+        256,
+        256
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "ReShade/16x16/Tilesets (Modular)/vectoraith_tileset_farmingsims_terrain_winter_expanded_reshade.png",
+      "width": 256,
+      "height": 256,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        0,
+        256,
+        256
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "ReShade/32x32/RPG Maker autotiles/vectoraith_tileset_farmingsims_terrains_A1_RPGMaker_32x32_reshade.png",
+      "width": 512,
+      "height": 384,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        0,
+        192,
+        384
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "ReShade/32x32/RPG Maker autotiles/vectoraith_tileset_farmingsims_terrains_A2_RPGMaker_32x32_reshade.png",
+      "width": 512,
+      "height": 384,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        0,
+        128,
+        384
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "ReShade/32x32/Sprites/!$farmer_plowing_32x32_reshade.png",
+      "width": 192,
+      "height": 256,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        14,
+        12,
+        186,
+        244
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "ReShade/32x32/Sprites/$calf_brown_32x32_reshade.png",
+      "width": 96,
+      "height": 128,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        2,
+        96,
+        128
+      ],
+      "likely_tilesheet": false
+    },
+    {
+      "path": "ReShade/32x32/Sprites/$calf_holstein_32x32_reshade.png",
+      "width": 96,
+      "height": 128,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        2,
+        96,
+        128
+      ],
+      "likely_tilesheet": false
+    },
+    {
+      "path": "ReShade/32x32/Sprites/$calf_white_32x32_reshade.png",
+      "width": 96,
+      "height": 128,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        2,
+        96,
+        128
+      ],
+      "likely_tilesheet": false
+    },
+    {
+      "path": "ReShade/32x32/Sprites/$cat_orange_32x32_reshade.png",
+      "width": 96,
+      "height": 128,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        4,
+        96,
+        128
+      ],
+      "likely_tilesheet": false
+    },
+    {
+      "path": "ReShade/32x32/Sprites/$chicken_chick_32x32_reshade.png",
+      "width": 96,
+      "height": 128,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        6,
+        16,
+        90,
+        128
+      ],
+      "likely_tilesheet": false
+    },
+    {
+      "path": "ReShade/32x32/Sprites/$chicken_hen_32x32_reshade.png",
+      "width": 96,
+      "height": 128,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        4,
+        4,
+        92,
+        128
+      ],
+      "likely_tilesheet": false
+    },
+    {
+      "path": "ReShade/32x32/Sprites/$cow_brown_32x32_reshade.png",
+      "width": 144,
+      "height": 192,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        6,
+        144,
+        192
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "ReShade/32x32/Sprites/$cow_holstein_32x32_reshade.png",
+      "width": 144,
+      "height": 192,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        6,
+        144,
+        192
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "ReShade/32x32/Sprites/$cow_white_32x32_reshade.png",
+      "width": 144,
+      "height": 192,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        6,
+        144,
+        192
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "ReShade/32x32/Sprites/$farmer_32x32_reshade.png",
+      "width": 96,
+      "height": 256,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        4,
+        24,
+        92,
+        256
+      ],
+      "likely_tilesheet": false
+    },
+    {
+      "path": "ReShade/32x32/Sprites/$goat_32x32_reshade.png",
+      "width": 96,
+      "height": 128,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        0,
+        96,
+        128
+      ],
+      "likely_tilesheet": false
+    },
+    {
+      "path": "ReShade/32x32/Sprites/$lamb_32x32_reshade.png",
+      "width": 96,
+      "height": 128,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        2,
+        6,
+        94,
+        128
+      ],
+      "likely_tilesheet": false
+    },
+    {
+      "path": "ReShade/32x32/Sprites/$sheep_32x32_reshade.png",
+      "width": 96,
+      "height": 128,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        0,
+        96,
+        128
+      ],
+      "likely_tilesheet": false
+    },
+    {
+      "path": "ReShade/32x32/Tilesets (Compact)/vectoraith_tileset_farmingsims_buildings_32x32_reshade.png",
+      "width": 512,
+      "height": 512,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        0,
+        512,
+        512
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "ReShade/32x32/Tilesets (Compact)/vectoraith_tileset_farmingsims_buildings_winter_32x32_reshade.png",
+      "width": 512,
+      "height": 512,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        0,
+        512,
+        512
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "ReShade/32x32/Tilesets (Compact)/vectoraith_tileset_farmingsims_crops_32x32_reshade.png",
+      "width": 512,
+      "height": 512,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        4,
+        12,
+        510,
+        504
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "ReShade/32x32/Tilesets (Compact)/vectoraith_tileset_farmingsims_crops_dense_32x32_reshade.png",
+      "width": 512,
+      "height": 512,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        2,
+        2,
+        512,
+        508
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "ReShade/32x32/Tilesets (Compact)/vectoraith_tileset_farmingsims_details_32x32_reshade.png",
+      "width": 512,
+      "height": 512,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        0,
+        512,
+        506
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "ReShade/32x32/Tilesets (Compact)/vectoraith_tileset_farmingsims_orchard_32x32_reshade.png",
+      "width": 512,
+      "height": 512,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        4,
+        2,
+        442,
+        192
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "ReShade/32x32/Tilesets (Compact)/vectoraith_tileset_farmingsims_terrain_fall_expanded_32x32_reshade.png",
+      "width": 512,
+      "height": 512,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        0,
+        512,
+        512
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "ReShade/32x32/Tilesets (Compact)/vectoraith_tileset_farmingsims_terrain_spring_expanded_32x32_reshade.png",
+      "width": 512,
+      "height": 512,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        0,
+        512,
+        512
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "ReShade/32x32/Tilesets (Compact)/vectoraith_tileset_farmingsims_terrain_summer_expanded_32x32_reshade.png",
+      "width": 512,
+      "height": 512,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        0,
+        512,
+        512
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "ReShade/32x32/Tilesets (Compact)/vectoraith_tileset_farmingsims_terrain_winter_expanded_32x32_reshade.png",
+      "width": 512,
+      "height": 512,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        0,
+        512,
+        512
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "ReShade/32x32/Tilesets (Compact)/vectoraith_tileset_farmingsims_terrains_32x32_reshade.png",
+      "width": 512,
+      "height": 1024,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        0,
+        512,
+        1024
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "ReShade/32x32/Tilesets (Modular)/vectoraith_tileset_farmingsims_buildings_32x32_reshade.png",
+      "width": 512,
+      "height": 512,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        0,
+        512,
+        512
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "ReShade/32x32/Tilesets (Modular)/vectoraith_tileset_farmingsims_buildings_winter_32x32_reshade.png",
+      "width": 512,
+      "height": 512,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        0,
+        512,
+        512
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "ReShade/32x32/Tilesets (Modular)/vectoraith_tileset_farmingsims_crops_dense_fall_32x32_reshade.png",
+      "width": 512,
+      "height": 512,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        6,
+        14,
+        256,
+        252
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "ReShade/32x32/Tilesets (Modular)/vectoraith_tileset_farmingsims_crops_dense_spring_32x32_reshade.png",
+      "width": 512,
+      "height": 512,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        4,
+        22,
+        256,
+        252
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "ReShade/32x32/Tilesets (Modular)/vectoraith_tileset_farmingsims_crops_dense_summer_32x32_reshade.png",
+      "width": 512,
+      "height": 512,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        0,
+        256,
+        316
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "ReShade/32x32/Tilesets (Modular)/vectoraith_tileset_farmingsims_details_fall_32x32_reshade.png",
+      "width": 512,
+      "height": 512,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        0,
+        512,
+        506
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "ReShade/32x32/Tilesets (Modular)/vectoraith_tileset_farmingsims_details_spring_32x32_reshade.png",
+      "width": 512,
+      "height": 512,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        0,
+        510,
+        506
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "ReShade/32x32/Tilesets (Modular)/vectoraith_tileset_farmingsims_details_summer_32x32_reshade.png",
+      "width": 512,
+      "height": 512,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        0,
+        512,
+        506
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "ReShade/32x32/Tilesets (Modular)/vectoraith_tileset_farmingsims_details_winter_32x32_reshade.png",
+      "width": 512,
+      "height": 512,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        0,
+        246,
+        506
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "ReShade/32x32/Tilesets (Modular)/vectoraith_tileset_farmingsims_orchard_32x32_reshade.png",
+      "width": 512,
+      "height": 512,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        4,
+        2,
+        442,
+        192
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "ReShade/32x32/Tilesets (Modular)/vectoraith_tileset_farmingsims_terrain_A5_fall_32x32_reshade.png",
+      "width": 256,
+      "height": 512,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        0,
+        256,
+        512
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "ReShade/32x32/Tilesets (Modular)/vectoraith_tileset_farmingsims_terrain_A5_spring_32x32_reshade.png",
+      "width": 256,
+      "height": 512,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        0,
+        256,
+        512
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "ReShade/32x32/Tilesets (Modular)/vectoraith_tileset_farmingsims_terrain_A5_summer_32x32_reshade.png",
+      "width": 256,
+      "height": 512,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        0,
+        256,
+        512
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "ReShade/32x32/Tilesets (Modular)/vectoraith_tileset_farmingsims_terrain_A5_winter_32x32_reshade.png",
+      "width": 256,
+      "height": 512,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        0,
+        256,
+        512
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "ReShade/32x32/Tilesets (Modular)/vectoraith_tileset_farmingsims_terrain_fall_expanded_32x32_reshade.png",
+      "width": 512,
+      "height": 512,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        0,
+        512,
+        512
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "ReShade/32x32/Tilesets (Modular)/vectoraith_tileset_farmingsims_terrain_spring_expanded_32x32_reshade.png",
+      "width": 512,
+      "height": 512,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        0,
+        512,
+        512
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "ReShade/32x32/Tilesets (Modular)/vectoraith_tileset_farmingsims_terrain_summer_expanded_32x32_reshade.png",
+      "width": 512,
+      "height": 512,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        0,
+        512,
+        512
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "ReShade/32x32/Tilesets (Modular)/vectoraith_tileset_farmingsims_terrain_winter_expanded_32x32_reshade.png",
+      "width": 512,
+      "height": 512,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        0,
+        512,
+        512
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "ReShade/48x48/RPG Maker autotiles/vectoraith_tileset_farmingsims_terrains_A1_RPGMaker_48x48_reshade.png",
+      "width": 768,
+      "height": 576,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        0,
+        288,
+        576
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "ReShade/48x48/RPG Maker autotiles/vectoraith_tileset_farmingsims_terrains_A2_RPGMaker_48x48_reshade.png",
+      "width": 768,
+      "height": 576,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        0,
+        192,
+        576
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "ReShade/48x48/Sprites/!$farmer_plowing_48x48_reshade.png",
+      "width": 288,
+      "height": 384,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        21,
+        18,
+        279,
+        366
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "ReShade/48x48/Sprites/$calf_brown_48x48_reshade.png",
+      "width": 144,
+      "height": 192,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        3,
+        144,
+        192
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "ReShade/48x48/Sprites/$calf_holstein_48x48_reshade.png",
+      "width": 144,
+      "height": 192,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        3,
+        144,
+        192
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "ReShade/48x48/Sprites/$calf_white_48x48_reshade.png",
+      "width": 144,
+      "height": 192,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        3,
+        144,
+        192
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "ReShade/48x48/Sprites/$cat_orange_48x48_reshade.png",
+      "width": 144,
+      "height": 192,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        6,
+        144,
+        192
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "ReShade/48x48/Sprites/$chicken_chick_48x48_reshade.png",
+      "width": 144,
+      "height": 192,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        9,
+        24,
+        135,
+        192
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "ReShade/48x48/Sprites/$chicken_hen_48x48_reshade.png",
+      "width": 144,
+      "height": 192,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        6,
+        6,
+        138,
+        192
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "ReShade/48x48/Sprites/$cow_brown_48x48_reshade.png",
+      "width": 216,
+      "height": 288,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        9,
+        216,
+        288
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "ReShade/48x48/Sprites/$cow_holstein_48x48_reshade.png",
+      "width": 216,
+      "height": 288,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        9,
+        216,
+        288
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "ReShade/48x48/Sprites/$cow_white_48x48_reshade.png",
+      "width": 216,
+      "height": 288,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        9,
+        216,
+        288
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "ReShade/48x48/Sprites/$farmer_48x48_reshade.png",
+      "width": 144,
+      "height": 384,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        6,
+        36,
+        138,
+        384
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "ReShade/48x48/Sprites/$goat_48x48_reshade.png",
+      "width": 144,
+      "height": 192,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        0,
+        144,
+        192
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "ReShade/48x48/Sprites/$lamb_48x48_reshade.png",
+      "width": 144,
+      "height": 192,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        3,
+        9,
+        141,
+        192
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "ReShade/48x48/Sprites/$sheep_48x48_reshade.png",
+      "width": 144,
+      "height": 192,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        0,
+        144,
+        192
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "ReShade/48x48/Tilesets (Compact)/vectoraith_tileset_farmingsims_buildings_48x48_reshade.png",
+      "width": 768,
+      "height": 768,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        0,
+        768,
+        768
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "ReShade/48x48/Tilesets (Compact)/vectoraith_tileset_farmingsims_buildings_winter_48x48_reshade.png",
+      "width": 768,
+      "height": 768,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        0,
+        768,
+        768
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "ReShade/48x48/Tilesets (Compact)/vectoraith_tileset_farmingsims_crops_48x48_reshade.png",
+      "width": 768,
+      "height": 768,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        6,
+        18,
+        765,
+        756
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "ReShade/48x48/Tilesets (Compact)/vectoraith_tileset_farmingsims_crops_dense_48x48_reshade.png",
+      "width": 768,
+      "height": 768,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        3,
+        3,
+        768,
+        762
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "ReShade/48x48/Tilesets (Compact)/vectoraith_tileset_farmingsims_details_48x48_reshade.png",
+      "width": 768,
+      "height": 768,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        0,
+        768,
+        759
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "ReShade/48x48/Tilesets (Compact)/vectoraith_tileset_farmingsims_orchard_48x48_reshade.png",
+      "width": 768,
+      "height": 768,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        6,
+        3,
+        663,
+        288
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "ReShade/48x48/Tilesets (Compact)/vectoraith_tileset_farmingsims_terrain_fall_expanded_48x48_reshade.png",
+      "width": 768,
+      "height": 768,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        0,
+        768,
+        768
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "ReShade/48x48/Tilesets (Compact)/vectoraith_tileset_farmingsims_terrain_spring_expanded_48x48_reshade.png",
+      "width": 768,
+      "height": 768,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        0,
+        768,
+        768
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "ReShade/48x48/Tilesets (Compact)/vectoraith_tileset_farmingsims_terrain_summer_expanded_48x48_reshade.png",
+      "width": 768,
+      "height": 768,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        0,
+        768,
+        768
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "ReShade/48x48/Tilesets (Compact)/vectoraith_tileset_farmingsims_terrain_winter_expanded_48x48_reshade.png",
+      "width": 768,
+      "height": 768,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        0,
+        768,
+        768
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "ReShade/48x48/Tilesets (Compact)/vectoraith_tileset_farmingsims_terrains_48x48_reshade.png",
+      "width": 768,
+      "height": 1536,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        0,
+        768,
+        1536
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "ReShade/48x48/Tilesets (Modular)/vectoraith_tileset_farmingsims_buildings_48x48_reshade.png",
+      "width": 768,
+      "height": 768,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        0,
+        768,
+        768
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "ReShade/48x48/Tilesets (Modular)/vectoraith_tileset_farmingsims_buildings_winter_48x48_reshade.png",
+      "width": 768,
+      "height": 768,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        0,
+        768,
+        768
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "ReShade/48x48/Tilesets (Modular)/vectoraith_tileset_farmingsims_crops_dense_fall_48x48_reshade.png",
+      "width": 768,
+      "height": 768,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        9,
+        21,
+        384,
+        378
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "ReShade/48x48/Tilesets (Modular)/vectoraith_tileset_farmingsims_crops_dense_spring_48x48_reshade.png",
+      "width": 768,
+      "height": 768,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        6,
+        33,
+        384,
+        378
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "ReShade/48x48/Tilesets (Modular)/vectoraith_tileset_farmingsims_crops_dense_summer_48x48_reshade.png",
+      "width": 768,
+      "height": 768,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        0,
+        384,
+        474
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "ReShade/48x48/Tilesets (Modular)/vectoraith_tileset_farmingsims_details_fall_48x48_reshade.png",
+      "width": 768,
+      "height": 768,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        0,
+        768,
+        759
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "ReShade/48x48/Tilesets (Modular)/vectoraith_tileset_farmingsims_details_spring_32x32_reshade.png",
+      "width": 512,
+      "height": 512,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        0,
+        510,
+        506
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "ReShade/48x48/Tilesets (Modular)/vectoraith_tileset_farmingsims_details_spring_48x48_reshade.png",
+      "width": 768,
+      "height": 768,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        0,
+        765,
+        759
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "ReShade/48x48/Tilesets (Modular)/vectoraith_tileset_farmingsims_details_summer_32x32_reshade.png",
+      "width": 512,
+      "height": 512,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        0,
+        512,
+        506
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "ReShade/48x48/Tilesets (Modular)/vectoraith_tileset_farmingsims_details_summer_48x48_reshade.png",
+      "width": 768,
+      "height": 768,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        0,
+        768,
+        759
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "ReShade/48x48/Tilesets (Modular)/vectoraith_tileset_farmingsims_details_winter_32x32_reshade.png",
+      "width": 512,
+      "height": 512,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        0,
+        246,
+        506
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "ReShade/48x48/Tilesets (Modular)/vectoraith_tileset_farmingsims_details_winter_48x48_reshade.png",
+      "width": 768,
+      "height": 768,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        0,
+        369,
+        759
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "ReShade/48x48/Tilesets (Modular)/vectoraith_tileset_farmingsims_orchard_48x48_reshade.png",
+      "width": 768,
+      "height": 768,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        6,
+        3,
+        663,
+        288
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "ReShade/48x48/Tilesets (Modular)/vectoraith_tileset_farmingsims_terrain_A5_fall_48x48_reshade.png",
+      "width": 384,
+      "height": 768,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        0,
+        384,
+        768
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "ReShade/48x48/Tilesets (Modular)/vectoraith_tileset_farmingsims_terrain_A5_spring_48x48_reshade.png",
+      "width": 384,
+      "height": 768,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        0,
+        384,
+        768
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "ReShade/48x48/Tilesets (Modular)/vectoraith_tileset_farmingsims_terrain_A5_summer_48x48_reshade.png",
+      "width": 384,
+      "height": 768,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        0,
+        384,
+        768
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "ReShade/48x48/Tilesets (Modular)/vectoraith_tileset_farmingsims_terrain_A5_winter_48x48_reshade.png",
+      "width": 384,
+      "height": 768,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        0,
+        384,
+        768
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "ReShade/48x48/Tilesets (Modular)/vectoraith_tileset_farmingsims_terrain_fall_48x48_reshade.png",
+      "width": 384,
+      "height": 768,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        0,
+        384,
+        768
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "ReShade/48x48/Tilesets (Modular)/vectoraith_tileset_farmingsims_terrain_fall_expanded_48x48_reshade.png",
+      "width": 768,
+      "height": 768,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        0,
+        768,
+        768
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "ReShade/48x48/Tilesets (Modular)/vectoraith_tileset_farmingsims_terrain_spring_48x48_reshade.png",
+      "width": 384,
+      "height": 768,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        0,
+        384,
+        768
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "ReShade/48x48/Tilesets (Modular)/vectoraith_tileset_farmingsims_terrain_spring_expanded_48x48_reshade.png",
+      "width": 768,
+      "height": 768,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        0,
+        768,
+        768
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "ReShade/48x48/Tilesets (Modular)/vectoraith_tileset_farmingsims_terrain_summer_48x48_reshade.png",
+      "width": 384,
+      "height": 768,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        0,
+        384,
+        768
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "ReShade/48x48/Tilesets (Modular)/vectoraith_tileset_farmingsims_terrain_summer_expanded_48x48_reshade.png",
+      "width": 768,
+      "height": 768,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        0,
+        768,
+        768
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "ReShade/48x48/Tilesets (Modular)/vectoraith_tileset_farmingsims_terrain_winter_48x48_reshade.png",
+      "width": 384,
+      "height": 768,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        0,
+        384,
+        768
+      ],
+      "likely_tilesheet": true
+    },
+    {
+      "path": "ReShade/48x48/Tilesets (Modular)/vectoraith_tileset_farmingsims_terrain_winter_expanded_48x48_reshade.png",
+      "width": 768,
+      "height": 768,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "alpha_bbox": [
+        0,
+        0,
+        768,
+        768
+      ],
+      "likely_tilesheet": true
+    }
+  ]
+}

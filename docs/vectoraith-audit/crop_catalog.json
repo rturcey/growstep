@@ -1,0 +1,74 @@
+{
+  "corn": {
+    "tileset": "crops_dense",
+    "stages": [
+      24,
+      25,
+      26,
+      27
+    ]
+  },
+  "cabbage": {
+    "tileset": "crops_dense",
+    "stages": [
+      52,
+      53,
+      54,
+      55
+    ]
+  },
+  "strawberry": {
+    "tileset": "crops_dense",
+    "stages": [
+      80,
+      81,
+      82,
+      83
+    ]
+  },
+  "carrot": {
+    "tileset": "crops_dense",
+    "stages": [
+      112,
+      113,
+      114,
+      115
+    ]
+  },
+  "tomato": {
+    "tileset": "crops_dense",
+    "stages": [
+      144,
+      145,
+      146,
+      147
+    ]
+  },
+  "pepper": {
+    "tileset": "crops_dense",
+    "stages": [
+      152,
+      153,
+      154,
+      155
+    ]
+  },
+  "eggplant": {
+    "tileset": "crops_dense",
+    "stages": [
+      212,
+      213,
+      214,
+      215
+    ]
+  },
+  "pumpkin": {
+    "tileset": "crops_dense",
+    "stages": [
+      240,
+      241,
+      242,
+      243
+    ]
+  }
+}
