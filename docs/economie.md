@@ -17,8 +17,8 @@
 8. **Invariant terrain** : l'expansion visuelle ne modifie jamais la capacité productive ; seuls les emplacements agricoles achetés le font.
 9. **Échelle de prix montante** : facile en début, sommet multi-semaines ; gros achats mesurés en jours/semaines de revenu marché ; catalogue alimenté par le contenu ; abondance tardive = victoire.
 10. **Rendements décroissants (soft cap) par espèce** : quota quotidien à plein tarif, surplus à tarif réduit (30 %). **Le revenu total n'est pas borné** : au-delà du quota, chaque vente supplémentaire rapporte 30 % — c'est un **rendement marginal réduit/contrôlé**, pas un plafond dur. Chaque pas conserve une valeur ; le spam n'explose jamais.
-11. **Frontière monétaire** : l'euro n'achète que le cosmétique et la QoL. Jamais pas, florins, emplacements, expansions, engrais, brillantes, ni contenu fonctionnel exclusif.
-12. **Format commercial ouvert aux tests** : à la carte, packs, DLC cosmétiques saisonniers, abonnement esthétique — sous l'invariant « aucun euro n'augmente la capacité productive ». La boutique à la carte est le point de départ.
+11. **Frontière monétaire** : aucun achat en euros n'existe dans la v3. Les florins sont gagnés exclusivement par la marche (vente des récoltes au marché). Le jeu est 100 % gratuit, aucune partie n'est paywalled.
+12. **Format commercial** : aucun achat en euros dans la v3. La monétisation est reportée à une décision ultérieure, sous l'invariant « aucun euro n'augmente la capacité productive ». Le jeu est entièrement gratuit.
 13. **Engrais = accélération pure**, achetable + gagnable, **ROI en florins mathématiquement négatif** (prix 25/45/70, tous strictement supérieurs au gain marginal maximal de 21 florins).
 14. **La rareté est intrinsèque à l'espèce** ; modèle produit `Y × P` par récolte ; **anti-méta avec ±5-10 % de variance assumée**.
 15. **Arbres = production persistante** (exception au modèle récolte/suppression).

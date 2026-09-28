@@ -1,0 +1,3 @@
+# Récolte = suppression + replantation, graine garantie
+
+Récolter une culture ordinaire retire la plante et libère l'emplacement : le joueur doit replanter. La récolte rend toujours une graine de la même espèce garantie (1 graine), et les produits sont vendus automatiquement au marché. Un arbre récolté reste en place et relance un cycle de production. Ce choix rend chaque récolte un acte délibéré de replantation, éliminant les plantes « permanentes » qui produisent sans intervention. La graine garantie empêche toute perte d'espèce découverte : une espèce acquise ne se perd jamais, même en cas de suppression prématurée (qui rend aussi la graine).

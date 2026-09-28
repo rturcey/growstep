@@ -1,3 +1,3 @@
-# Permettre les achats sans contenu exclusif
+# Frontière monétaire : aucune monétisation en euros
 
-Les florins peuvent être gagnés par la marche ou achetés en euros, et l'abonnement augmente le quota quotidien de florins des récoltes. Ces achats accélèrent l'aménagement et la croissance, mais tous les emplacements, graines ordinaires, engrais et décors restent accessibles gratuitement ; les variantes brillantes et les tirages des lots quotidiens ne s'achètent pas. Ce compromis donne une voie de monétisation sans rendre une partie du jardin inaccessible au joueur gratuit, tout en assumant qu'un joueur payant peut l'aménager plus vite.
+**Révisé (v3)** : les florins ne s'achètent plus en euros et l'abonnement n'existe plus. Le marché (vente des récoltes) est le seul générateur de florins, gagnés exclusivement par la marche. Tous les emplacements, graines ordinaires, engrais et décors restent accessibles gratuitement ; les variantes brillantes et les tirages des lots quotidiens ne s'achètent pas. Ce compromis garantit que le jardin n'a aucune partie paywalled et que la progression repose uniquement sur l'activité physique.

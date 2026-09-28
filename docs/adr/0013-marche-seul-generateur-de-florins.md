@@ -1,0 +1,3 @@
+# Le marché comme seul générateur de florins
+
+Les florins sont gagnés **exclusivement** par la vente automatique des récoltes au marché. Les pas quotidiens ne créditent pas de florins ; les lots quotidiens n'en contiennent pas ; aucun achat en euros n'existe. Le marché applique une courbe de prix par espèce : plein tarif sous le quota quotidien de l'espèce, puis 30 % du plein tarif au-delà (rendement marginal réduit, jamais un plafond dur). Ce choix fait de la marche le seul moteur économique — marcher fait pousser, pousser permet de récolter, récolter génère des florins — et élimine toute source parasite de monnaie. La courbe de prix évite que masser un seul type de culture soit dominant.

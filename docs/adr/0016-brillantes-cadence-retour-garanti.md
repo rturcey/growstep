@@ -1,0 +1,3 @@
+# Brillantes ciblées par cadence (retour garanti)
+
+Les brillantes sont 1 par espèce, jamais achetables. Leur découverte est cadencée : ~0,3 % par récolte d'une plante ordinaire, ~3 % au palier quotidien 10k (espèce non découverte), garanties ponctuelles aux paliers de pas cumulés (100k+), et un pity invisible multiplie la chance par 3 après ~25 jours sans découverte. Récolter une brillante rend sa graine brillante garantie (on ne détruit jamais l'objet rare). Ce choix rend les brillantes des objets de collection à cadence contrôlée : un joueur actif en découvre environ une toutes les 1-3 semaines, sans RNG punissant (le pity empêche les séquences de malchance extrêmes).
