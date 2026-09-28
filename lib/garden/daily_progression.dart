@@ -14,18 +14,14 @@ const shinySeedChances = [0.02, 0.03, 0.04, 0.05];
 class DailyLot {
   const DailyLot({
     required this.threshold,
-    required this.florins,
     this.seedSpecies,
-    this.seedTier,
     this.fertilizerType,
     this.decorationId,
     this.shinySeedSpecies,
   });
 
   final int threshold;
-  final int florins;
   final Species? seedSpecies;
-  final GrowthTier? seedTier;
   final FertilizerType? fertilizerType;
   final String? decorationId;
   final Species? shinySeedSpecies;
@@ -70,13 +66,13 @@ class DailyProgression {
     for (var i = 0; i < dailyThresholds.length; i++) {
       final threshold = dailyThresholds[i];
       final isShinyThreshold = threshold == shinyThreshold;
-      lots.add(_drawLot(
-        rng: rng,
-        threshold: threshold,
-        rank: i,
-        shinySeedSpecies:
-            isShinyThreshold ? shinySpecies : null,
-      ));
+      lots.add(
+        _drawLot(
+          rng: rng,
+          threshold: threshold,
+          shinySeedSpecies: isShinyThreshold ? shinySpecies : null,
+        ),
+      );
     }
     return lots;
   }
@@ -95,18 +91,11 @@ class DailyProgression {
   DailyLot _drawLot({
     required Random rng,
     required int threshold,
-    required int rank,
     required Species? shinySeedSpecies,
   }) {
-    final firstNoFlorins =
-        rng.nextDouble() < config.dailyLotFirstNoFlorinsChance;
-
-    final range = config.dailyLotFlorinRanges[rank];
-    final florins = firstNoFlorins && rank == 0
-        ? 0
-        : range[0] + rng.nextInt(range[1] - range[0] + 1);
-
-    final rewardType = rng.nextInt(4);
+    // Les lots ne contiennent plus jamais de florins : le marché est le seul
+    // générateur. Chaque lot accorde graines, engrais ou décor.
+    final rewardType = rng.nextInt(3);
     final commonSpecies = [
       Species.tomate,
       Species.carotte,
@@ -118,15 +107,13 @@ class DailyProgression {
 
     return DailyLot(
       threshold: threshold,
-      florins: florins,
-      seedSpecies: rewardType == 1
+      seedSpecies: rewardType == 0
           ? commonSpecies[rng.nextInt(commonSpecies.length)]
           : null,
-      seedTier: rewardType == 1 ? GrowthTier.commune : null,
-      fertilizerType: rewardType == 2
+      fertilizerType: rewardType == 1
           ? FertilizerType.values[rng.nextInt(FertilizerType.values.length)]
           : null,
-      decorationId: rewardType == 3 ? 'pot' : null,
+      decorationId: rewardType == 2 ? 'pot' : null,
       shinySeedSpecies: shinySeedSpecies,
     );
   }

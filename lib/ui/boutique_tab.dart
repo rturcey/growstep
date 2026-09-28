@@ -325,7 +325,6 @@ class _BoutiqueTabState extends State<BoutiqueTab> {
 
   String _lotDescription(DailyLot lot) {
     final parts = <String>[];
-    if (lot.florins > 0) parts.add('+${lot.florins} florins');
     if (lot.seedSpecies != null) {
       parts.add('1 graine ${lot.seedSpecies!.label}');
     }

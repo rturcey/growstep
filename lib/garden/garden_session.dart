@@ -144,20 +144,10 @@ class GardenSession {
     };
     zones = _prepareHarvests(zones) ?? zones;
 
-    final isSameWalkDay = snapshot.walkFlorinsDay == todayLocal.toIsoString();
-    final alreadyClaimedWalk = isSameWalkDay ? snapshot.walkFlorinsClaimed : 0;
-    final walkFlorins = _economyRules.walkFlorinsFromSteps(
-      steps,
-      alreadyClaimedWalk,
-    );
-
     snapshot = snapshot.copyWith(
       zones: zones,
       creditedDay: today,
       creditedSteps: max(steps, previouslyCredited),
-      florins: snapshot.florins + walkFlorins,
-      walkFlorinsDay: todayLocal.toIsoString(),
-      walkFlorinsClaimed: alreadyClaimedWalk + walkFlorins,
     );
 
     snapshot = _creditDailyLots(snapshot, todayLocal, steps);
@@ -178,7 +168,6 @@ class GardenSession {
     final lots = _dailyProgression.lotsFor(current.playerSeed, day);
     final reachedThresholds = _dailyProgression.reachedThresholds(stepsToday);
 
-    var florins = current.florins;
     var seeds = {...current.seeds};
     var brilliantSeeds = {...current.brilliantSeeds};
     var fertilizers = {...current.fertilizers};
@@ -192,7 +181,6 @@ class GardenSession {
       final rewardId = DailyRewardId(day, lot.threshold);
       if (claimed.contains(rewardId)) continue;
 
-      florins += lot.florins;
       if (lot.seedSpecies != null) {
         seeds[lot.seedSpecies!] = (seeds[lot.seedSpecies!] ?? 0) + 1;
         discovered.add(lot.seedSpecies!);
@@ -215,7 +203,6 @@ class GardenSession {
 
     if (!changed) return current;
     return current.copyWith(
-      florins: florins,
       seeds: seeds,
       brilliantSeeds: brilliantSeeds,
       fertilizers: fertilizers,
@@ -356,22 +343,6 @@ class GardenSession {
   Future<GardenSnapshot> applyLateSteps(LocalDate pastDay) async {
     final steps = max(0, await stepProvider.stepsOnDay(pastDay));
     if (steps <= 0) return snapshot;
-
-    final dayKey = pastDay.toIsoString();
-    final isSameWalkDay = snapshot.walkFlorinsDay == dayKey;
-    final alreadyClaimedWalk = isSameWalkDay ? snapshot.walkFlorinsClaimed : 0;
-    final walkFlorins = _economyRules.walkFlorinsFromSteps(
-      steps,
-      alreadyClaimedWalk,
-    );
-
-    if (walkFlorins > 0) {
-      snapshot = snapshot.copyWith(
-        florins: snapshot.florins + walkFlorins,
-        walkFlorinsDay: dayKey,
-        walkFlorinsClaimed: alreadyClaimedWalk + walkFlorins,
-      );
-    }
 
     snapshot = _creditDailyLots(snapshot, pastDay, steps);
     await _store.save(snapshot);

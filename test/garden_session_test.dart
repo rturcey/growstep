@@ -392,61 +392,56 @@ void main() {
     expect(garden.snapshot.seeds[Species.tournesol], 1);
   });
 
-  test(
-    'la courbe de prix du marché vend à plein tarif puis à 30 %',
-    () async {
-      final directory = await Directory.systemTemp.createTemp(
-        'growstep-market-',
+  test('la courbe de prix du marché vend à plein tarif puis à 30 %', () async {
+    final directory = await Directory.systemTemp.createTemp('growstep-market-');
+    addTearDown(() => directory.delete(recursive: true));
+    final file = File('${directory.path}/garden.sqlite');
+    final database = GardenDatabase(NativeDatabase(file));
+    final initial = GardenSnapshot.initial();
+    final zones = {
+      for (final entry in initial.zones.entries) entry.key: [...entry.value],
+    };
+    // 10 tomates prêtes (quota commune = 8).
+    for (var slot = 0; slot < 4; slot++) {
+      zones[ZoneType.potager]![slot] = const Plant(
+        species: Species.tomate,
+        progressSteps: 1000,
+        pendingHarvest: HarvestReward(ordinarySeeds: 1),
       );
-      addTearDown(() => directory.delete(recursive: true));
-      final file = File('${directory.path}/garden.sqlite');
-      final database = GardenDatabase(NativeDatabase(file));
-      final initial = GardenSnapshot.initial();
-      final zones = {
-        for (final entry in initial.zones.entries) entry.key: [...entry.value],
-      };
-      // 10 tomates prêtes (quota commune = 8).
-      for (var slot = 0; slot < 4; slot++) {
-        zones[ZoneType.potager]![slot] = const Plant(
-          species: Species.tomate,
-          progressSteps: 1000,
-          pendingHarvest: HarvestReward(ordinarySeeds: 1),
-        );
-      }
-      await database.save(initial.copyWith(zones: zones, florins: 100));
-      var now = DateTime(2026, 9, 22, 23, 59);
-      final garden = GardenSession(
-        database: database,
-        stepProvider: FakeStepProvider(),
-        now: () => now,
-      );
-      await garden.load();
+    }
+    await database.save(initial.copyWith(zones: zones, florins: 100));
+    var now = DateTime(2026, 9, 22, 23, 59);
+    final garden = GardenSession(
+      database: database,
+      stepProvider: FakeStepProvider(),
+      now: () => now,
+    );
+    await garden.load();
 
-      // 4 récoltes le premier jour : toutes à plein tarif (5 × 4 = 20).
-      final preview = garden.previewReadyHarvests();
-      expect(preview.florins, 20);
-      await garden.harvestAll(preview.locations);
-      expect(garden.snapshot.florins, 120);
-      expect(garden.snapshot.soldToday[Species.tomate], 4);
-      expect(garden.snapshot.salesDay, '2026-09-22');
+    // 4 récoltes le premier jour : toutes à plein tarif (5 × 4 = 20).
+    final preview = garden.previewReadyHarvests();
+    expect(preview.florins, 20);
+    await garden.harvestAll(preview.locations);
+    expect(garden.snapshot.florins, 120);
+    expect(garden.snapshot.soldToday[Species.tomate], 4);
+    expect(garden.snapshot.salesDay, '2026-09-22');
 
-      await database.close();
-      final reopenedDatabase = GardenDatabase(NativeDatabase(file));
-      addTearDown(reopenedDatabase.close);
-      final reopened = GardenSession(
-        database: reopenedDatabase,
-        stepProvider: FakeStepProvider(),
-        now: () => now,
-      );
-      await reopened.load();
-      // Les compteurs de ventes survivent au redémarrage (même jour).
-      expect(reopened.snapshot.soldToday[Species.tomate], 4);
+    await database.close();
+    final reopenedDatabase = GardenDatabase(NativeDatabase(file));
+    addTearDown(reopenedDatabase.close);
+    final reopened = GardenSession(
+      database: reopenedDatabase,
+      stepProvider: FakeStepProvider(),
+      now: () => now,
+    );
+    await reopened.load();
+    // Les compteurs de ventes survivent au redémarrage (même jour).
+    expect(reopened.snapshot.soldToday[Species.tomate], 4);
 
-      // Changement de jour : les compteurs se réinitialisent.
-      now = DateTime(2026, 9, 23, 0, 1);
-      expect(reopened.salesToday[Species.tomate] ?? 0, 0);
-    },
-  );
+    // Changement de jour : les compteurs se réinitialisent.
+    now = DateTime(2026, 9, 23, 0, 1);
+    expect(reopened.salesToday[Species.tomate] ?? 0, 0);
+  });
 
   test('le surplus se vend à 30 % sans plafond dur', () async {
     final database = GardenDatabase(NativeDatabase.memory());
@@ -471,11 +466,13 @@ void main() {
         pendingHarvest: HarvestReward(ordinarySeeds: 1),
       );
     }
-    await database.save(initial.copyWith(
-      zones: zones,
-      florins: 0,
-      ownedZones: {ZoneType.potager, ZoneType.jardinFleuri},
-    ));
+    await database.save(
+      initial.copyWith(
+        zones: zones,
+        florins: 0,
+        ownedZones: {ZoneType.potager, ZoneType.jardinFleuri},
+      ),
+    );
     final garden = GardenSession(
       database: database,
       stepProvider: FakeStepProvider(),
@@ -654,8 +651,6 @@ void main() {
         );
         await garden.load();
         expect(garden.snapshot.claimedDailyRewards, isEmpty);
-        expect(garden.snapshot.walkFlorinsDay, isNull);
-        expect(garden.snapshot.walkFlorinsClaimed, 0);
         expect(garden.snapshot.ownedDecorations, isEmpty);
         expect(garden.snapshot.placedDecorations, isEmpty);
       },
@@ -690,8 +685,6 @@ void main() {
 
     test('EconomyConfig a les valeurs de test par défaut', () {
       final config = EconomyConfig.defaults();
-      expect(config.florinsPerWalkStep, 1 / 500);
-      expect(config.walkFlorinDailyCap, 30);
       expect(config.slotPrices[ZoneType.potager], [30, 45, 60, 75]);
       expect(config.slotPrices[ZoneType.verger], [30, 45]);
       expect(config.seedPrices[GrowthTier.commune], 20);
@@ -715,37 +708,17 @@ void main() {
     });
   });
 
-  group('florins de marche', () {
-    test('la marche rapporte des florins à raison de 1 pour 500 pas', () async {
+  group('marché seul générateur : la marche ne donne plus de florins', () {
+    test('marcher ne crédite aucun florin', () async {
       final database = GardenDatabase(NativeDatabase.memory());
       addTearDown(database.close);
       final steps = FakeStepProvider();
       final garden = GardenSession(database: database, stepProvider: steps);
       await garden.load();
 
-      steps.addSteps(499);
+      steps.addSteps(10000);
       await garden.refreshSteps();
       expect(garden.snapshot.florins, 0);
-
-      steps.addSteps(1);
-      await garden.refreshSteps();
-      expect(garden.snapshot.florins, 1);
-    });
-
-    test('le plafond quotidien de florins de marche est respecté', () async {
-      final database = GardenDatabase(NativeDatabase.memory());
-      addTearDown(database.close);
-      final steps = FakeStepProvider();
-      final garden = GardenSession(database: database, stepProvider: steps);
-      await garden.load();
-
-      steps.addSteps(500 * 30);
-      await garden.refreshSteps();
-      expect(garden.snapshot.walkFlorinsClaimed, 30);
-
-      steps.addSteps(500);
-      await garden.refreshSteps();
-      expect(garden.snapshot.walkFlorinsClaimed, 30);
     });
 
     test('une relecture sans nouveau pas ne crédite rien', () async {
@@ -755,54 +728,37 @@ void main() {
       final garden = GardenSession(database: database, stepProvider: steps);
       await garden.load();
 
-      steps.addSteps(500);
-      await garden.refreshSteps();
-      expect(garden.snapshot.florins, 1);
-
-      await garden.refreshSteps();
-      expect(garden.snapshot.florins, 1);
-    });
-
-    test('une correction à la baisse ne retire pas les florins', () async {
-      final database = GardenDatabase(NativeDatabase.memory());
-      addTearDown(database.close);
-      final steps = FakeStepProvider();
-      final garden = GardenSession(database: database, stepProvider: steps);
-      await garden.load();
-
       steps.addSteps(1000);
       await garden.refreshSteps();
-      final florinsAfterFirst = garden.snapshot.florins;
+      expect(garden.snapshot.florins, 0);
 
-      steps.setSteps(500);
       await garden.refreshSteps();
-      expect(garden.snapshot.florins, florinsAfterFirst);
+      expect(garden.snapshot.florins, 0);
     });
 
-    test(
-      'le changement de jour réinitialise le compteur des florins de marche',
-      () async {
-        var now = DateTime(2026, 9, 25, 12);
-        final database = GardenDatabase(NativeDatabase.memory());
-        addTearDown(database.close);
-        final steps = FakeStepProvider(now: () => now);
-        final garden = GardenSession(
-          database: database,
-          stepProvider: steps,
-          now: () => now,
+    test('les lots quotidiens ne contiennent jamais de florins', () async {
+      final database = GardenDatabase(NativeDatabase.memory());
+      addTearDown(database.close);
+      final garden = GardenSession(
+        database: database,
+        stepProvider: FakeStepProvider(),
+      );
+      await garden.load();
+
+      final lots = garden.previewDailyLots(
+        LocalDate.fromDateTime(DateTime.now()),
+      );
+      for (final lot in lots) {
+        // Un lot accorde au moins une récompense non-florins.
+        expect(
+          lot.seedSpecies != null ||
+              lot.fertilizerType != null ||
+              lot.decorationId != null ||
+              lot.shinySeedSpecies != null,
+          isTrue,
         );
-        await garden.load();
-
-        steps.addSteps(500);
-        await garden.refreshSteps();
-        expect(garden.snapshot.florins, 1);
-
-        now = DateTime(2026, 9, 26, 12);
-        steps.addSteps(500);
-        await garden.refreshSteps();
-        expect(garden.snapshot.florins, 2);
-      },
-    );
+      }
+    });
   });
 
   group('achat d\'emplacements', () {
@@ -1739,7 +1695,7 @@ void main() {
     });
 
     test(
-      'les pas tardifs créditent aussi les florins de marche manqués',
+      'les pas tardifs créditent les paliers manqués sans florins',
       () async {
         var now = DateTime(2026, 9, 26, 12);
         final database = GardenDatabase(NativeDatabase.memory());
@@ -1753,16 +1709,18 @@ void main() {
         await garden.load();
 
         final pastDay = LocalDate(2026, 9, 25);
-        steps.setStepsOnDay(pastDay, 500);
-        final florinsBefore = garden.snapshot.florins;
+        steps.setStepsOnDay(pastDay, 1000);
         await garden.applyLateSteps(pastDay);
-        expect(garden.snapshot.florins, florinsBefore + 1);
-        expect(garden.snapshot.walkFlorinsDay, pastDay.toIsoString());
-        expect(garden.snapshot.walkFlorinsClaimed, 1);
+        // Aucun florin crédité (le marché est le seul générateur).
+        expect(garden.snapshot.florins, 0);
+        expect(
+          garden.snapshot.claimedDailyRewards,
+          contains(DailyRewardId(pastDay, 1000)),
+        );
       },
     );
 
-    test('un re-crédit tardif des florins de marche ne double pas', () async {
+    test('un re-crédit tardif des paliers ne double pas', () async {
       var now = DateTime(2026, 9, 26, 12);
       final database = GardenDatabase(NativeDatabase.memory());
       addTearDown(database.close);
@@ -1775,12 +1733,12 @@ void main() {
       await garden.load();
 
       final pastDay = LocalDate(2026, 9, 25);
-      steps.setStepsOnDay(pastDay, 500);
+      steps.setStepsOnDay(pastDay, 1000);
       await garden.applyLateSteps(pastDay);
-      final florinsAfterFirst = garden.snapshot.florins;
+      final rewardsAfterFirst = garden.snapshot.claimedDailyRewards.length;
 
       await garden.applyLateSteps(pastDay);
-      expect(garden.snapshot.florins, florinsAfterFirst);
+      expect(garden.snapshot.claimedDailyRewards.length, rewardsAfterFirst);
     });
   });
 

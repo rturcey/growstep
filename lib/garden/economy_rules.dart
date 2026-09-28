@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'economy_config.dart';
 import 'garden_state.dart';
 
@@ -52,15 +50,4 @@ class EconomyRules {
   /// Returns the price of a decoration identified by [decorationId].
   int decorationPrice(String decorationId) =>
       config.decorationPrices[decorationId]!;
-
-  /// Calculates florins to credit from [totalDailySteps] walked today, given
-  /// [alreadyClaimed] florins already credited for the day.
-  ///
-  /// Returns the delta to credit, never negative (no revocation).
-  /// Respects [EconomyConfig.walkFlorinDailyCap].
-  int walkFlorinsFromSteps(int totalDailySteps, int alreadyClaimed) {
-    final raw = (totalDailySteps * config.florinsPerWalkStep).floor();
-    final capped = raw.clamp(0, config.walkFlorinDailyCap);
-    return max(0, capped - alreadyClaimed);
-  }
 }

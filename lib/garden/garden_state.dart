@@ -321,13 +321,9 @@ class GardenSnapshot {
     this.discoveredSpecies = const {},
     this.soldToday = const {},
     this.salesDay,
-    this.harvestFlorinsDay,
-    this.harvestFlorinsClaimed = 0,
     this.starterFertilizerGranted = false,
     this.playerSeed = 0,
     this.claimedDailyRewards = const {},
-    this.walkFlorinsDay,
-    this.walkFlorinsClaimed = 0,
     this.ownedDecorations = const {},
     this.placedDecorations = const [],
     this.pauseRewardsDay,
@@ -364,13 +360,9 @@ class GardenSnapshot {
     creditedSteps: 0,
     florins: 0,
     fertilizers: {},
-    harvestFlorinsDay: null,
-    harvestFlorinsClaimed: 0,
     starterFertilizerGranted: false,
     playerSeed: 0,
     claimedDailyRewards: {},
-    walkFlorinsDay: null,
-    walkFlorinsClaimed: 0,
     ownedDecorations: {},
     placedDecorations: [],
     pauseRewardsDay: null,
@@ -393,13 +385,9 @@ class GardenSnapshot {
   final int creditedSteps;
   final int florins;
   final Map<FertilizerType, int> fertilizers;
-  final String? harvestFlorinsDay;
-  final int harvestFlorinsClaimed;
   final bool starterFertilizerGranted;
   final int playerSeed;
   final Set<DailyRewardId> claimedDailyRewards;
-  final String? walkFlorinsDay;
-  final int walkFlorinsClaimed;
   final Map<String, int> ownedDecorations;
   final List<PlacedDecoration> placedDecorations;
   final String? pauseRewardsDay;
@@ -427,13 +415,9 @@ class GardenSnapshot {
     int? creditedSteps,
     int? florins,
     Map<FertilizerType, int>? fertilizers,
-    String? harvestFlorinsDay,
-    int? harvestFlorinsClaimed,
     bool? starterFertilizerGranted,
     int? playerSeed,
     Set<DailyRewardId>? claimedDailyRewards,
-    String? walkFlorinsDay,
-    int? walkFlorinsClaimed,
     Map<String, int>? ownedDecorations,
     List<PlacedDecoration>? placedDecorations,
     String? pauseRewardsDay,
@@ -456,14 +440,10 @@ class GardenSnapshot {
     creditedSteps: creditedSteps ?? this.creditedSteps,
     florins: florins ?? this.florins,
     fertilizers: fertilizers ?? this.fertilizers,
-    harvestFlorinsDay: harvestFlorinsDay ?? this.harvestFlorinsDay,
-    harvestFlorinsClaimed: harvestFlorinsClaimed ?? this.harvestFlorinsClaimed,
     starterFertilizerGranted:
         starterFertilizerGranted ?? this.starterFertilizerGranted,
     playerSeed: playerSeed ?? this.playerSeed,
     claimedDailyRewards: claimedDailyRewards ?? this.claimedDailyRewards,
-    walkFlorinsDay: walkFlorinsDay ?? this.walkFlorinsDay,
-    walkFlorinsClaimed: walkFlorinsClaimed ?? this.walkFlorinsClaimed,
     ownedDecorations: ownedDecorations ?? this.ownedDecorations,
     placedDecorations: placedDecorations ?? this.placedDecorations,
     pauseRewardsDay: pauseRewardsDay ?? this.pauseRewardsDay,
@@ -501,16 +481,12 @@ class GardenSnapshot {
     'fertilizers': {
       for (final entry in fertilizers.entries) entry.key.name: entry.value,
     },
-    'harvestFlorinsDay': harvestFlorinsDay,
-    'harvestFlorinsClaimed': harvestFlorinsClaimed,
     'starterFertilizerGranted': starterFertilizerGranted,
     'playerSeed': playerSeed,
     'claimedDailyRewards': [
       for (final id in claimedDailyRewards)
         {'day': id.day.toIsoString(), 'threshold': id.threshold},
     ],
-    'walkFlorinsDay': walkFlorinsDay,
-    'walkFlorinsClaimed': walkFlorinsClaimed,
     'ownedDecorations': ownedDecorations,
     'placedDecorations': [for (final d in placedDecorations) d.toJson()],
     'pauseRewardsDay': pauseRewardsDay,
@@ -607,14 +583,10 @@ class GardenSnapshot {
         for (final entry in rawFertilizers.entries)
           FertilizerType.values.byName(entry.key): entry.value as int,
       },
-      harvestFlorinsDay: json['harvestFlorinsDay'] as String?,
-      harvestFlorinsClaimed: json['harvestFlorinsClaimed'] as int? ?? 0,
       starterFertilizerGranted:
           json['starterFertilizerGranted'] as bool? ?? false,
       playerSeed: json['playerSeed'] as int? ?? 0,
       claimedDailyRewards: claimedDailyRewards,
-      walkFlorinsDay: json['walkFlorinsDay'] as String?,
-      walkFlorinsClaimed: json['walkFlorinsClaimed'] as int? ?? 0,
       ownedDecorations: migratedOwnedDecorations,
       placedDecorations: [
         for (final d in rawPlacedDecorations)
