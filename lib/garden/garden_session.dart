@@ -148,9 +148,11 @@ class GardenSession {
       zones: zones,
       creditedDay: today,
       creditedSteps: max(steps, previouslyCredited),
+      totalSteps: snapshot.totalSteps + newSteps,
     );
 
     snapshot = _creditDailyLots(snapshot, todayLocal, steps);
+    snapshot = _creditMilestones(snapshot);
 
     if (steps >= inactivityStepThreshold) {
       snapshot = snapshot.copyWith(lastActivityTime: _now().toIso8601String());
@@ -214,6 +216,57 @@ class GardenSession {
 
   List<DailyLot> previewDailyLots(LocalDate day) =>
       _dailyProgression.lotsFor(snapshot.playerSeed, day);
+
+  /// Seuils de pas cumulés (récompenses cosmétiques/collection, jamais florins).
+  static const cumulativeMilestones = [10000, 50000, 100000, 250000, 500000];
+
+  /// Récompense de chaque palier cumulé : décor spécial ou graine brillante
+  /// garantie ponctuelle. Jamais de florins.
+  Species? _milestoneBrillantSpecies(int threshold) {
+    // Graine brillante garantie aux grands paliers, d'une espèce découverte.
+    if (threshold < 100000) return null;
+    final discovered = snapshot.discoveredSpecies.toList()
+      ..sort((a, b) => a.index.compareTo(b.index));
+    if (discovered.isEmpty) return null;
+    return discovered.first;
+  }
+
+  String _milestoneDecor(int threshold) => switch (threshold) {
+    10000 => 'banc',
+    50000 => 'arche',
+    100000 => 'fontaine',
+    250000 => 'fontaine',
+    _ => 'fontaine',
+  };
+
+  GardenSnapshot _creditMilestones(GardenSnapshot current) {
+    var changed = false;
+    final claimed = {...current.claimedMilestones};
+    final ownedDecorations = {...current.ownedDecorations};
+    final brilliantSeeds = {...current.brilliantSeeds};
+    final discoveredBrilliants = {...current.discoveredBrilliants};
+    for (final threshold in cumulativeMilestones) {
+      if (current.totalSteps < threshold) break;
+      if (claimed.contains(threshold)) continue;
+      ownedDecorations[_milestoneDecor(threshold)] =
+          (ownedDecorations[_milestoneDecor(threshold)] ?? 0) + 1;
+      final brillantSpecies = _milestoneBrillantSpecies(threshold);
+      if (brillantSpecies != null) {
+        brilliantSeeds[brillantSpecies] =
+            (brilliantSeeds[brillantSpecies] ?? 0) + 1;
+        discoveredBrilliants.add(brillantSpecies);
+      }
+      claimed.add(threshold);
+      changed = true;
+    }
+    if (!changed) return current;
+    return current.copyWith(
+      ownedDecorations: ownedDecorations,
+      brilliantSeeds: brilliantSeeds,
+      discoveredBrilliants: discoveredBrilliants,
+      claimedMilestones: claimed,
+    );
+  }
 
   // ─── Pause marche ───────────────────────────────────────────────────
 

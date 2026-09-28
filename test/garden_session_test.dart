@@ -1286,6 +1286,93 @@ void main() {
     });
   });
 
+  group('paliers de pas cumulés', () {
+    test('10 000 pas débloquent un décor cosmétique (banc)', () async {
+      final database = GardenDatabase(NativeDatabase.memory());
+      addTearDown(database.close);
+      final steps = FakeStepProvider(initialSteps: 10000);
+      final garden = GardenSession(database: database, stepProvider: steps);
+      await garden.load();
+      await garden.refreshSteps();
+
+      expect(garden.snapshot.totalSteps, 10000);
+      expect(garden.snapshot.claimedMilestones, contains(10000));
+      expect(garden.snapshot.ownedDecorations['banc'], 1);
+      expect(garden.snapshot.florins, 0);
+    });
+
+    test('50 000 pas débloquent un deuxième décor (arche)', () async {
+      final database = GardenDatabase(NativeDatabase.memory());
+      addTearDown(database.close);
+      final steps = FakeStepProvider(initialSteps: 50000);
+      final garden = GardenSession(database: database, stepProvider: steps);
+      await garden.load();
+      await garden.refreshSteps();
+
+      expect(garden.snapshot.claimedMilestones, containsAll([10000, 50000]));
+      expect(garden.snapshot.ownedDecorations['banc'], 1);
+      expect(garden.snapshot.ownedDecorations['arche'], 1);
+    });
+
+    test('100 000 pas offrent une graine brillante garantie d\'une espèce découverte', () async {
+      final database = GardenDatabase(NativeDatabase.memory());
+      addTearDown(database.close);
+      final initial = GardenSnapshot.initial().copyWith(
+        discoveredSpecies: {Species.tomate, Species.carotte},
+      );
+      await database.save(initial);
+      final steps = FakeStepProvider(initialSteps: 100000);
+      final garden = GardenSession(database: database, stepProvider: steps);
+      await garden.load();
+      await garden.refreshSteps();
+
+      expect(
+        garden.snapshot.claimedMilestones,
+        containsAll([10000, 50000, 100000]),
+      );
+      // Brillante garantie d'une espèce découverte.
+      final brillantCount = garden.snapshot.brilliantSeeds.values.fold(
+        0,
+        (a, b) => a + b,
+      );
+      expect(brillantCount, greaterThanOrEqualTo(1));
+      expect(garden.snapshot.discoveredBrilliants, isNotEmpty);
+      expect(garden.snapshot.florins, 0);
+    });
+
+    test('un palier déjà réclamé ne redonne pas de récompense', () async {
+      final database = GardenDatabase(NativeDatabase.memory());
+      addTearDown(database.close);
+      final steps = FakeStepProvider(initialSteps: 10000);
+      final garden = GardenSession(database: database, stepProvider: steps);
+      await garden.load();
+      await garden.refreshSteps();
+      expect(garden.snapshot.ownedDecorations['banc'], 1);
+
+      // Ajout de pas supplémentaires — le palier 10 000 est déjà réclamé.
+      steps.addSteps(5000);
+      await garden.refreshSteps();
+      expect(garden.snapshot.ownedDecorations['banc'], 1);
+      expect(garden.snapshot.claimedMilestones, isNot(contains(15000)));
+    });
+
+    test('les pas se cumulent à travers plusieurs sessions', () async {
+      final database = GardenDatabase(NativeDatabase.memory());
+      addTearDown(database.close);
+      final steps = FakeStepProvider(initialSteps: 6000);
+      final garden = GardenSession(database: database, stepProvider: steps);
+      await garden.load();
+      await garden.refreshSteps();
+      expect(garden.snapshot.totalSteps, 6000);
+      expect(garden.snapshot.claimedMilestones, isEmpty);
+
+      steps.addSteps(4000);
+      await garden.refreshSteps();
+      expect(garden.snapshot.totalSteps, 10000);
+      expect(garden.snapshot.claimedMilestones, contains(10000));
+    });
+  });
+
   group('brillantes — cadence récolte', () {
     test(
       'une récolte ordinaire peut découvrir une brillante (0,3 %, 1/espèce)',

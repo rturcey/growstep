@@ -321,6 +321,8 @@ class GardenSnapshot {
     required this.fertilizers,
     this.discoveredSpecies = const {},
     this.discoveredBrilliants = const {},
+    this.totalSteps = 0,
+    this.claimedMilestones = const {},
     this.soldToday = const {},
     this.salesDay,
     this.starterFertilizerGranted = false,
@@ -357,6 +359,8 @@ class GardenSnapshot {
     starterChoices: {},
     discoveredSpecies: {Species.tomate, Species.carotte},
     discoveredBrilliants: {},
+    totalSteps: 0,
+    claimedMilestones: {},
     soldToday: {},
     salesDay: null,
     creditedDay: null,
@@ -383,6 +387,8 @@ class GardenSnapshot {
   final Set<ZoneType> starterChoices;
   final Set<Species> discoveredSpecies;
   final Set<Species> discoveredBrilliants;
+  final int totalSteps;
+  final Set<int> claimedMilestones;
   final Map<Species, int> soldToday;
   final String? salesDay;
   final String? creditedDay;
@@ -414,6 +420,8 @@ class GardenSnapshot {
     Set<ZoneType>? starterChoices,
     Set<Species>? discoveredSpecies,
     Set<Species>? discoveredBrilliants,
+    int? totalSteps,
+    Set<int>? claimedMilestones,
     Map<Species, int>? soldToday,
     String? salesDay,
     String? creditedDay,
@@ -440,6 +448,8 @@ class GardenSnapshot {
     starterChoices: starterChoices ?? this.starterChoices,
     discoveredSpecies: discoveredSpecies ?? this.discoveredSpecies,
     discoveredBrilliants: discoveredBrilliants ?? this.discoveredBrilliants,
+    totalSteps: totalSteps ?? this.totalSteps,
+    claimedMilestones: claimedMilestones ?? this.claimedMilestones,
     soldToday: soldToday ?? this.soldToday,
     salesDay: salesDay ?? this.salesDay,
     creditedDay: creditedDay ?? this.creditedDay,
@@ -480,6 +490,8 @@ class GardenSnapshot {
     'discoveredBrilliants': discoveredBrilliants
         .map((species) => species.name)
         .toList(),
+    'totalSteps': totalSteps,
+    'claimedMilestones': claimedMilestones.toList()..sort(),
     'soldToday': {
       for (final entry in soldToday.entries) entry.key.name: entry.value,
     },
@@ -583,6 +595,10 @@ class GardenSnapshot {
           (json['discoveredBrilliants'] as List<dynamic>? ?? [])
               .map((name) => Species.values.byName(name as String))
               .toSet(),
+      totalSteps: json['totalSteps'] as int? ?? 0,
+      claimedMilestones: (json['claimedMilestones'] as List<dynamic>? ?? [])
+          .toSet()
+          .cast<int>(),
       soldToday: {
         for (final entry
             in (json['soldToday'] as Map<String, dynamic>? ?? {}).entries)
