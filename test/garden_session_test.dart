@@ -1411,12 +1411,67 @@ void main() {
         await garden.load();
         expect(garden.snapshot.florins, 500);
         expect(garden.snapshot.seeds[Species.tomate], 3);
-        expect(garden.snapshot.discoveredSpecies, isEmpty);
+        // Backfill : les espèces en stock sont déduites comme découvertes.
+        expect(
+          garden.snapshot.discoveredSpecies,
+          containsAll([Species.tomate, Species.carotte]),
+        );
         expect(garden.snapshot.totalSteps, 0);
         expect(garden.snapshot.claimedMilestones, isEmpty);
         expect(garden.snapshot.soldToday, isEmpty);
         expect(garden.snapshot.discoveredBrilliants, isEmpty);
         expect(garden.snapshot.lastBrillantDiscoveryDay, isNull);
+      },
+    );
+
+    test(
+      'une sauvegarde legacy backfill les espèces des plantes présentes',
+      () async {
+        final database = GardenDatabase(NativeDatabase.memory());
+        addTearDown(database.close);
+        // Sauvegarde sans discoveredSpecies mais avec un tournesol planté :
+        // l'espèce doit être déduite comme découverte.
+        final legacyJson = <String, dynamic>{
+          'zones': {
+            'potager': [
+              {'species': 'tomate', 'tier': 'commune', 'progressSteps': 900},
+              null,
+              null,
+              null,
+            ],
+            'jardinFleuri': [
+              {'species': 'tournesol', 'tier': 'commune', 'progressSteps': 100},
+              null,
+              null,
+              null,
+            ],
+            'verger': [null],
+          },
+          'seeds': {},
+          'brilliantSeeds': {},
+          'starterChoices': [],
+          'creditedDay': null,
+          'creditedSteps': 0,
+          'florins': 0,
+          'fertilizers': {},
+          'playerSeed': 1,
+          'claimedDailyRewards': [],
+          'ownedDecorations': {},
+          'placedDecorations': [],
+          'invitationHours': [],
+          'invitationSentKeys': [],
+          'ownedZones': ['potager', 'jardinFleuri'],
+        };
+        await database.save(GardenSnapshot.fromJson(legacyJson));
+        final garden = GardenSession(
+          database: database,
+          stepProvider: FakeStepProvider(),
+        );
+        await garden.load();
+        expect(
+          garden.snapshot.discoveredSpecies,
+          containsAll([Species.tomate, Species.tournesol]),
+        );
       },
     );
 
@@ -1553,9 +1608,7 @@ void main() {
       () async {
         final database = GardenDatabase(NativeDatabase.memory());
         addTearDown(database.close);
-        final alreadyDiscovered = Species.values
-            .where((s) => !s.isTree)
-            .toSet();
+        final alreadyDiscovered = Species.values.toSet();
         final initial = GardenSnapshot.initial().copyWith(
           discoveredSpecies: Species.values.toSet(),
           discoveredBrilliants: alreadyDiscovered,
@@ -1570,8 +1623,8 @@ void main() {
         );
         await garden.load();
         await garden.refreshSteps();
-        // Toutes les brillantes non-arbres sont déjà découvertes :
-        // le roll ne produit rien.
+        // Toutes les brillantes (y compris celles des arbres) sont déjà
+        // découvertes : le roll ne produit rien.
         expect(
           garden.snapshot.discoveredBrilliants.length,
           alreadyDiscovered.length,
@@ -1740,6 +1793,70 @@ void main() {
           garden.snapshot.discoveredBrilliants,
           contains(Species.tournesol),
         );
+      },
+    );
+
+    test(
+      'récolter une brillante peut rendre une seconde graine (petite chance)',
+      () async {
+        final database = GardenDatabase(NativeDatabase.memory());
+        addTearDown(database.close);
+        final initial = GardenSnapshot.initial().copyWith(florins: 0);
+        final zones = {
+          for (final entry in initial.zones.entries)
+            entry.key: [...entry.value],
+        };
+        zones[ZoneType.jardinFleuri]![0] = const Plant(
+          species: Species.tournesol,
+          tier: GrowthTier.brillante,
+          progressSteps: 15000,
+        );
+        await database.save(initial.copyWith(zones: zones));
+        final garden = GardenSession(
+          database: database,
+          stepProvider: FakeStepProvider(),
+          roll: () => 0.001, // < secondBrilliantSeedChance → 2 graines.
+        );
+        await garden.load();
+        await garden.harvestPlant(ZoneType.jardinFleuri, 0);
+        expect(garden.snapshot.brilliantSeeds[Species.tournesol], 2);
+      },
+    );
+
+    test(
+      'le pity s\'applique aussi à la cadence de récolte (0,3 % → 0,9 %)',
+      () async {
+        final database = GardenDatabase(NativeDatabase.memory());
+        addTearDown(database.close);
+        // 30 jours sans brillante → pity actif (0,003 × 3 = 0,009).
+        final farPast = DateTime.now().subtract(const Duration(days: 30));
+        final farPastKey =
+            '${farPast.year.toString().padLeft(4, '0')}'
+            '-${farPast.month.toString().padLeft(2, '0')}'
+            '-${farPast.day.toString().padLeft(2, '0')}';
+        final initial = GardenSnapshot.initial().copyWith(
+          florins: 0,
+          discoveredBrilliants: const {},
+          lastBrillantDiscoveryDay: farPastKey,
+        );
+        final zones = {
+          for (final entry in initial.zones.entries)
+            entry.key: [...entry.value],
+        };
+        zones[ZoneType.potager]![0] = const Plant(
+          species: Species.carotte,
+          progressSteps: 1000,
+        );
+        await database.save(initial.copyWith(zones: zones));
+        // roll = 0.005 : > 0,003 (normal) mais < 0,009 (avec pity).
+        final garden = GardenSession(
+          database: database,
+          stepProvider: FakeStepProvider(),
+          roll: () => 0.005,
+        );
+        await garden.load();
+        await garden.harvestPlant(ZoneType.potager, 0);
+        expect(garden.snapshot.discoveredBrilliants, contains(Species.carotte));
       },
     );
   });

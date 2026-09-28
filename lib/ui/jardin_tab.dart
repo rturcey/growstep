@@ -3,8 +3,7 @@ import 'package:flutter/material.dart';
 
 import '../garden/garden_game.dart';
 import '../garden/garden_session.dart';
-import '../garden/garden_state.dart'
-    show brilliantSeedChance, extraOrdinarySeedChance, localDayKey;
+import '../garden/garden_state.dart' show localDayKey;
 
 /// Onglet Jardin : segmented control des zones, viewport Flame, gestion des
 /// emplacements (planter, engrais, récolter, supprimer) et récolte groupée.
@@ -509,8 +508,9 @@ class _JardinTabState extends State<JardinTab> {
             value: plant.progressSteps / plant.nextThreshold,
           ),
           Text(
-            'Graine ordinaire garantie · bonus ${(extraOrdinarySeedChance * 100).round()} %'
-            '${plant.tier == GrowthTier.brillante ? ' · graine brillante ${(brilliantSeedChance * 100).round()} %' : ''}',
+            plant.tier == GrowthTier.brillante
+                ? 'Graine brillante garantie à la récolte'
+                : 'Graine ordinaire de la même espèce garantie',
           ),
           if (plant.activeFertilizer != null)
             Text(

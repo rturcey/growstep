@@ -109,8 +109,8 @@ enum GrowthTier {
   final int stepsToMature;
 }
 
-const brilliantSeedChance = 0.05;
-const extraOrdinarySeedChance = 0.5;
+/// Chance de découvrir la brillante d'une espèce à la récolte d'une plante
+/// ordinaire (sans pity).
 const ordinaryBrillantDiscoveryChance = 0.003;
 
 enum FertilizerType {
@@ -555,6 +555,30 @@ class GardenSnapshot {
         if (entry.value.any((plant) => plant != null)) entry.key,
     };
 
+    // Backfill : les anciennes sauvegardes ne possèdent pas discoveredSpecies.
+    // On le déduit des graines en stock et des plantes présentes pour ne jamais
+    // perdre une espèce déjà acquise (invariant : une espèce découverte ne se
+    // perd jamais).
+    final migratedDiscovered = <Species>{
+      for (final entry in rawSeeds.entries)
+        if (Species.values.any((s) => s.name == entry.key))
+          Species.values.byName(entry.key),
+      for (final entry in rawBrilliantSeeds.entries)
+        if (Species.values.any((s) => s.name == entry.key))
+          Species.values.byName(entry.key),
+      for (final list in zones.values)
+        for (final plant in list)
+          if (plant != null) plant.species,
+    };
+    final explicitDiscovered =
+        (json['discoveredSpecies'] as List<dynamic>? ?? [])
+            .map((name) => Species.values.byName(name as String))
+            .toSet();
+    final discoveredSpecies = <Species>{
+      ...migratedDiscovered,
+      ...explicitDiscovered,
+    };
+
     final rawClaimedDailyRewards =
         json['claimedDailyRewards'] as List<dynamic>? ?? [];
     final claimedDailyRewards = <DailyRewardId>{
@@ -595,9 +619,7 @@ class GardenSnapshot {
       starterChoices: (json['starterChoices'] as List<dynamic>)
           .map((name) => ZoneType.values.byName(name as String))
           .toSet(),
-      discoveredSpecies: (json['discoveredSpecies'] as List<dynamic>? ?? [])
-          .map((name) => Species.values.byName(name as String))
-          .toSet(),
+      discoveredSpecies: discoveredSpecies,
       discoveredBrilliants:
           (json['discoveredBrilliants'] as List<dynamic>? ?? [])
               .map((name) => Species.values.byName(name as String))

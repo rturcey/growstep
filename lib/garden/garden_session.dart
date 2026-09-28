@@ -171,6 +171,9 @@ class GardenSession {
   /// Multiplicateur de chance quand le pity est actif.
   static const pityMultiplier = 3.0;
 
+  /// Petite chance d'une seconde graine brillante à la récolte d'une brillante.
+  static const secondBrilliantSeedChance = 0.05;
+
   GardenSnapshot _creditDailyLots(
     GardenSnapshot current,
     LocalDate day,
@@ -228,6 +231,7 @@ class GardenSession {
       if (!claimed.contains(brillantRewardId)) {
         final chance = _brillantChanceWithPity(
           current.lastBrillantDiscoveryDay,
+          dailyBrillantChance,
         );
         if (_roll() < chance) {
           final candidate = _pickUndiscoveredBrillant(discoveredBrilliants);
@@ -257,21 +261,21 @@ class GardenSession {
 
   /// Calcule la chance de brillante avec le pity invisible : ×3 après
   /// [pityThresholdDays] jours sans découverte.
-  double _brillantChanceWithPity(String? lastBrillantDay) {
-    if (lastBrillantDay == null) return dailyBrillantChance;
+  double _brillantChanceWithPity(String? lastBrillantDay, double baseChance) {
+    if (lastBrillantDay == null) return baseChance;
     final last = LocalDate.parse(lastBrillantDay);
     final today = LocalDate.fromDateTime(_now());
     final daysSince = today.daysSince(last);
     if (daysSince >= pityThresholdDays) {
-      return dailyBrillantChance * pityMultiplier;
+      return baseChance * pityMultiplier;
     }
-    return dailyBrillantChance;
+    return baseChance;
   }
 
   /// Choisit une espèce dont la brillante n'est pas encore découverte.
   Species? _pickUndiscoveredBrillant(Set<Species> discoveredBrilliants) {
     final candidates = Species.values
-        .where((s) => !s.isTree && !discoveredBrilliants.contains(s))
+        .where((s) => !discoveredBrilliants.contains(s))
         .toList();
     if (candidates.isEmpty) return null;
     final index = (_roll() * candidates.length).floor();
@@ -286,21 +290,26 @@ class GardenSession {
 
   /// Récompense de chaque palier cumulé : décor spécial ou graine brillante
   /// garantie ponctuelle. Jamais de florins.
-  Species? _milestoneBrillantSpecies(int threshold) {
-    // Graine brillante garantie aux grands paliers, d'une espèce découverte.
+  Species? _milestoneBrillantSpecies(int threshold, GardenSnapshot current) {
     if (threshold < 100000) return null;
-    final discovered = snapshot.discoveredSpecies.toList()
-      ..sort((a, b) => a.index.compareTo(b.index));
-    if (discovered.isEmpty) return null;
-    return discovered.first;
+    // Brillante garantie d'une espèce découverte, non déjà brillante.
+    final candidates =
+        current.discoveredSpecies
+            .where((s) => !current.discoveredBrilliants.contains(s))
+            .toList()
+          ..sort((a, b) => a.index.compareTo(b.index));
+    if (candidates.isEmpty) return null;
+    // Chaque palier pick un candidat différent via modulo.
+    final index = (threshold ~/ 100000 - 1) % candidates.length;
+    return candidates[index];
   }
 
   String _milestoneDecor(int threshold) => switch (threshold) {
     10000 => 'banc',
     50000 => 'arche',
     100000 => 'fontaine',
-    250000 => 'fontaine',
-    _ => 'fontaine',
+    250000 => 'nichoir',
+    _ => 'brouette',
   };
 
   GardenSnapshot _creditMilestones(GardenSnapshot current) {
@@ -314,7 +323,7 @@ class GardenSession {
       if (claimed.contains(threshold)) continue;
       ownedDecorations[_milestoneDecor(threshold)] =
           (ownedDecorations[_milestoneDecor(threshold)] ?? 0) + 1;
-      final brillantSpecies = _milestoneBrillantSpecies(threshold);
+      final brillantSpecies = _milestoneBrillantSpecies(threshold, current);
       if (brillantSpecies != null) {
         brilliantSeeds[brillantSpecies] =
             (brilliantSeeds[brillantSpecies] ?? 0) + 1;
@@ -603,9 +612,6 @@ class GardenSession {
   }
 
   Future<GardenSnapshot> buySeed(Species species) async {
-    if (species.rarity == GrowthTier.brillante) {
-      throw StateError('Brillant seeds cannot be purchased');
-    }
     if (!snapshot.discoveredSpecies.contains(species)) {
       throw StateError('${species.label} is not discovered yet');
     }
@@ -842,15 +848,21 @@ class GardenSession {
       return const HarvestReward();
     }
     if (plant.tier == GrowthTier.brillante) {
-      // Une brillante récoltée rend sa graine brillante (on ne détruit jamais
-      // l'objet rare) ; les produits normaux sont vendus au marché.
-      return const HarvestReward(brilliantSeeds: 1);
+      // Une brillante récoltée rend sa graine brillante garantie (on ne détruit
+      // jamais l'objet rare) ; les produits normaux sont vendus au marché.
+      // Petite chance d'une seconde graine brillante.
+      final seeds = _roll() < secondBrilliantSeedChance ? 2 : 1;
+      return HarvestReward(brilliantSeeds: seeds);
     }
     // Culture ordinaire : graine de la même espèce garantie, pas de bonus.
-    // 0,3 % de chance de découvrir la brillante de l'espèce, uniquement si
-    // elle n'est pas encore découverte.
+    // 0,3 % de chance de découvrir la brillante de l'espèce (×3 sous pity),
+    // uniquement si elle n'est pas encore découverte.
+    final chance = _brillantChanceWithPity(
+      snapshot.lastBrillantDiscoveryDay,
+      ordinaryBrillantDiscoveryChance,
+    );
     if (!snapshot.discoveredBrilliants.contains(plant.species) &&
-        _roll() < ordinaryBrillantDiscoveryChance) {
+        _roll() < chance) {
       return const HarvestReward(ordinarySeeds: 1, brilliantSeeds: 1);
     }
     return const HarvestReward(ordinarySeeds: 1);

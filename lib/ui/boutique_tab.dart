@@ -88,10 +88,13 @@ class _BoutiqueTabState extends State<BoutiqueTab> {
                     ),
                     items: [
                       for (final species in Species.values)
-                        DropdownMenuItem(
-                          value: species,
-                          child: Text(species.label),
-                        ),
+                        if (widget.garden.snapshot.discoveredSpecies.contains(
+                          species,
+                        ))
+                          DropdownMenuItem(
+                            value: species,
+                            child: Text(species.label),
+                          ),
                     ],
                     onChanged: (value) {
                       if (value != null) setState(() => _seedSpecies = value);
