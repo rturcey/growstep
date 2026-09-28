@@ -977,25 +977,22 @@ void main() {
       expect(garden.snapshot.florins, 5);
     });
 
-    test(
-      'un engrais acheté n’a jamais un rendement en florins supérieur à son prix',
-      () {
-        final config = EconomyConfig.defaults();
-        // Gain marginal maximal = prix de la récolte d’une espèce rare (21)
-        // sous quota. Aucune espèce rare n’existe encore, donc le maximum
-        // actuel est le prix commune (5), toujours < 25.
-        final maxMarginalGain = 21;
-        for (final type in FertilizerType.values) {
-          expect(
-            config.fertilizerPrices[type]!,
-            greaterThan(maxMarginalGain),
-            reason:
-                '${type.label} (${config.fertilizerPrices[type]}) doit dépasser '
-                'le gain marginal max ($maxMarginalGain)',
-          );
-        }
-      },
-    );
+    test('un engrais acheté n’a jamais un rendement en florins supérieur à son prix', () {
+      final config = EconomyConfig.defaults();
+      // Gain marginal maximal = prix de la récolte d’une espèce rare (21)
+      // sous quota. Aucune espèce rare n’existe encore, donc le maximum
+      // actuel est le prix commune (5), toujours < 25.
+      final maxMarginalGain = 21;
+      for (final type in FertilizerType.values) {
+        expect(
+          config.fertilizerPrices[type]!,
+          greaterThan(maxMarginalGain),
+          reason:
+              '${type.label} (${config.fertilizerPrices[type]}) doit dépasser '
+              'le gain marginal max ($maxMarginalGain)',
+        );
+      }
+    });
 
     test(
       'supprimer des graines excédentaires ne donne pas de florins',
@@ -1213,6 +1210,79 @@ void main() {
       );
       await reopened.load();
       expect(reopened.snapshot.discoveredSpecies, contains(Species.tournesol));
+    });
+  });
+
+  group('arbres persistants (verger)', () {
+    test(
+      'un arbre mature reste en place et produit des fruits périodiquement',
+      () async {
+        final database = GardenDatabase(NativeDatabase.memory());
+        addTearDown(database.close);
+        final initial = GardenSnapshot.initial().copyWith(
+          florins: 0,
+          ownedZones: {ZoneType.potager, ZoneType.verger},
+          seeds: {Species.pommier: 1},
+        );
+        final zones = {
+          for (final entry in initial.zones.entries)
+            entry.key: [...entry.value],
+        };
+        zones[ZoneType.potager] = List<Plant?>.filled(4, null);
+        zones[ZoneType.verger] = List<Plant?>.filled(1, null);
+        await database.save(initial.copyWith(zones: zones));
+        final steps = FakeStepProvider();
+        final garden = GardenSession(database: database, stepProvider: steps);
+        await garden.load();
+
+        await garden.plantSeed(ZoneType.verger, 0, Species.pommier);
+        // Maturité du tronc : 2000 pas.
+        steps.addSteps(2000);
+        await garden.refreshSteps();
+        expect(garden.previewReadyHarvests().count, 1);
+
+        // Récolte : l’arbre reste, les fruits sont vendus (5 florins), pas de graine.
+        await garden.harvestPlant(ZoneType.verger, 0);
+        expect(garden.snapshot.zones[ZoneType.verger]![0], isNotNull);
+        expect(garden.snapshot.florins, 5);
+        expect(garden.snapshot.seeds[Species.pommier], 0);
+
+        // Cycle de fruit suivant : 1000 pas.
+        steps.addSteps(999);
+        await garden.refreshSteps();
+        expect(garden.previewReadyHarvests().count, 0);
+        steps.addSteps(1);
+        await garden.refreshSteps();
+        expect(garden.previewReadyHarvests().count, 1);
+        await garden.harvestPlant(ZoneType.verger, 0);
+        expect(garden.snapshot.zones[ZoneType.verger]![0], isNotNull);
+        expect(garden.snapshot.florins, 10);
+      },
+    );
+
+    test('supprimer un arbre rend sa graine', () async {
+      final database = GardenDatabase(NativeDatabase.memory());
+      addTearDown(database.close);
+      final initial = GardenSnapshot.initial().copyWith(
+        ownedZones: {ZoneType.potager, ZoneType.verger},
+        seeds: {Species.pommier: 1},
+      );
+      final zones = {
+        for (final entry in initial.zones.entries) entry.key: [...entry.value],
+      };
+      zones[ZoneType.verger] = List<Plant?>.filled(1, null);
+      await database.save(initial.copyWith(zones: zones));
+      final garden = GardenSession(
+        database: database,
+        stepProvider: FakeStepProvider(),
+      );
+      await garden.load();
+
+      await garden.plantSeed(ZoneType.verger, 0, Species.pommier);
+      expect(garden.snapshot.seeds[Species.pommier], 0);
+      await garden.removePlant(ZoneType.verger, 0);
+      expect(garden.snapshot.seeds[Species.pommier], 1);
+      expect(garden.snapshot.zones[ZoneType.verger]![0], isNull);
     });
   });
 
