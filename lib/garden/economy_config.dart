@@ -12,7 +12,6 @@ class EconomyConfig {
     required this.seedPrices,
     required this.fertilizerPrices,
     required this.decorationPrices,
-    required this.harvestFlorinDailyLimit,
     required this.dailyLotFlorinRanges,
     this.dailyLotFirstNoFlorinsChance = 0.2,
   });
@@ -47,7 +46,6 @@ class EconomyConfig {
         'nichoir': 18,
         'brouette': 25,
       },
-      harvestFlorinDailyLimit = 20,
       dailyLotFlorinRanges = const [
         [3, 5],
         [8, 12],
@@ -79,9 +77,6 @@ class EconomyConfig {
 
   /// Decoration prices by decoration id.
   final Map<String, int> decorationPrices;
-
-  /// Maximum florins from harvests per day (without subscription).
-  final int harvestFlorinDailyLimit;
 
   /// Florin amount ranges [min, max] per daily lot rank (0-3).
   final List<List<int>> dailyLotFlorinRanges;

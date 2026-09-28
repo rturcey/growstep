@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import '../garden/garden_game.dart';
 import '../garden/garden_session.dart';
 import '../garden/garden_state.dart'
-    show brilliantSeedChance, extraOrdinarySeedChance;
+    show brilliantSeedChance, extraOrdinarySeedChance, localDayKey;
 
 /// Onglet Jardin : segmented control des zones, viewport Flame, gestion des
 /// emplacements (planter, engrais, récolter, supprimer) et récolte groupée.
@@ -77,6 +77,18 @@ class _JardinTabState extends State<JardinTab> {
         );
       }
     }
+  }
+
+  String _formatSales(GardenSnapshot snapshot) {
+    final today = localDayKey(DateTime.now());
+    if (snapshot.salesDay != today || snapshot.soldToday.isEmpty) {
+      return '0 aujourd’hui';
+    }
+    final parts = <String>[];
+    for (final entry in snapshot.soldToday.entries) {
+      parts.add('${entry.key.label} ×${entry.value}');
+    }
+    return parts.join(', ');
   }
 
   void _tapGarden(TapDownDetails details) {
@@ -329,9 +341,7 @@ class _JardinTabState extends State<JardinTab> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text('Florins : ${snapshot.florins}'),
-                  Text(
-                    'Récoltes aujourd’hui : ${widget.garden.harvestFlorinsToday}/${widget.garden.harvestFlorinLimit} florins',
-                  ),
+                  Text('Ventes au marché : ${_formatSales(snapshot)}'),
                   Text(
                     'Engrais en stock : ${fertilizerStock.isEmpty ? 'aucun' : fertilizerStock}',
                   ),

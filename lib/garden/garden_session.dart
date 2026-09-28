@@ -91,12 +91,12 @@ class GardenSession {
   );
   GardenSnapshot snapshot = GardenSnapshot.initial();
 
-  int get harvestFlorinLimit => economyConfig.harvestFlorinDailyLimit;
-
-  int get harvestFlorinsToday =>
-      snapshot.harvestFlorinsDay == localDayKey(_now())
-      ? snapshot.harvestFlorinsClaimed
-      : 0;
+  /// Ventes de chaque espèce déjà effectuées aujourd'hui (courbe de prix).
+  Map<Species, int> get salesToday {
+    final today = localDayKey(_now());
+    if (snapshot.salesDay == today) return {...snapshot.soldToday};
+    return {};
+  }
 
   Future<GardenSnapshot> load() async {
     snapshot = await _store.load();
@@ -762,6 +762,7 @@ class GardenSession {
     final ordinarySeeds = <Species, int>{};
     final brilliantSeeds = <Species, int>{};
     var requestedFlorins = 0;
+    final salesSoFar = salesToday;
     for (final entry in snapshot.zones.entries) {
       for (var slot = 0; slot < entry.value.length; slot++) {
         final plant = entry.value[slot];
@@ -770,7 +771,9 @@ class GardenSession {
           continue;
         }
         locations.add((zone: entry.key, slot: slot));
-        requestedFlorins += plant.species.pricePerHarvest;
+        final sold = salesSoFar[plant.species] ?? 0;
+        requestedFlorins += _economyRules.marketPrice(plant.species, sold);
+        salesSoFar[plant.species] = sold + 1;
         if (reward.ordinarySeeds > 0) {
           ordinarySeeds[plant.species] =
               (ordinarySeeds[plant.species] ?? 0) + reward.ordinarySeeds;
@@ -785,10 +788,7 @@ class GardenSession {
       locations: List.unmodifiable(locations),
       ordinarySeeds: Map.unmodifiable(ordinarySeeds),
       brilliantSeeds: Map.unmodifiable(brilliantSeeds),
-      florins: min(
-        max(0, harvestFlorinLimit - harvestFlorinsToday),
-        requestedFlorins,
-      ),
+      florins: requestedFlorins,
     );
   }
 
@@ -803,8 +803,12 @@ class GardenSession {
     final ordinarySeeds = {...snapshot.seeds};
     final brilliantSeeds = {...snapshot.brilliantSeeds};
     final discovered = {...snapshot.discoveredSpecies};
+    final today = localDayKey(_now());
+    final sales = snapshot.salesDay == today
+        ? {...snapshot.soldToday}
+        : <Species, int>{};
     var harvested = false;
-    var requestedFlorins = 0;
+    var grantedFlorins = 0;
     for (final location in locations.toSet()) {
       final slots = zones[location.zone]!;
       if (location.slot < 0 || location.slot >= slots.length) {
@@ -820,7 +824,10 @@ class GardenSession {
             (ordinarySeeds[plant.species] ?? 0) + reward.ordinarySeeds;
       }
       discovered.add(plant.species);
-      requestedFlorins += plant.species.pricePerHarvest;
+      // Vente automatique au marché selon la courbe de prix du jour.
+      final sold = sales[plant.species] ?? 0;
+      grantedFlorins += _economyRules.marketPrice(plant.species, sold);
+      sales[plant.species] = sold + 1;
       if (reward.brilliantSeeds > 0) {
         brilliantSeeds[plant.species] =
             (brilliantSeeds[plant.species] ?? 0) + reward.brilliantSeeds;
@@ -831,22 +838,14 @@ class GardenSession {
       harvested = true;
     }
     if (!harvested) return snapshot;
-    final harvestDay = localDayKey(_now());
-    final alreadyClaimed = snapshot.harvestFlorinsDay == harvestDay
-        ? snapshot.harvestFlorinsClaimed
-        : 0;
-    final grantedFlorins = min(
-      max(0, harvestFlorinLimit - alreadyClaimed),
-      requestedFlorins,
-    );
     final next = snapshot.copyWith(
       zones: zones,
       seeds: ordinarySeeds,
       brilliantSeeds: brilliantSeeds,
       discoveredSpecies: discovered,
       florins: snapshot.florins + grantedFlorins,
-      harvestFlorinsDay: harvestDay,
-      harvestFlorinsClaimed: alreadyClaimed + grantedFlorins,
+      soldToday: sales,
+      salesDay: today,
     );
     await _store.save(next);
     snapshot = next;

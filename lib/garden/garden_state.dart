@@ -110,7 +110,6 @@ enum GrowthTier {
 }
 
 const brilliantSeedChance = 0.05;
-const dailyHarvestFlorinLimit = 20;
 const extraOrdinarySeedChance = 0.5;
 
 enum FertilizerType {
@@ -320,6 +319,8 @@ class GardenSnapshot {
     required this.florins,
     required this.fertilizers,
     this.discoveredSpecies = const {},
+    this.soldToday = const {},
+    this.salesDay,
     this.harvestFlorinsDay,
     this.harvestFlorinsClaimed = 0,
     this.starterFertilizerGranted = false,
@@ -357,6 +358,8 @@ class GardenSnapshot {
     brilliantSeeds: {},
     starterChoices: {},
     discoveredSpecies: {Species.tomate, Species.carotte},
+    soldToday: {},
+    salesDay: null,
     creditedDay: null,
     creditedSteps: 0,
     florins: 0,
@@ -384,6 +387,8 @@ class GardenSnapshot {
   final Map<Species, int> brilliantSeeds;
   final Set<ZoneType> starterChoices;
   final Set<Species> discoveredSpecies;
+  final Map<Species, int> soldToday;
+  final String? salesDay;
   final String? creditedDay;
   final int creditedSteps;
   final int florins;
@@ -416,6 +421,8 @@ class GardenSnapshot {
     Map<Species, int>? brilliantSeeds,
     Set<ZoneType>? starterChoices,
     Set<Species>? discoveredSpecies,
+    Map<Species, int>? soldToday,
+    String? salesDay,
     String? creditedDay,
     int? creditedSteps,
     int? florins,
@@ -443,6 +450,8 @@ class GardenSnapshot {
     brilliantSeeds: brilliantSeeds ?? this.brilliantSeeds,
     starterChoices: starterChoices ?? this.starterChoices,
     discoveredSpecies: discoveredSpecies ?? this.discoveredSpecies,
+    soldToday: soldToday ?? this.soldToday,
+    salesDay: salesDay ?? this.salesDay,
     creditedDay: creditedDay ?? this.creditedDay,
     creditedSteps: creditedSteps ?? this.creditedSteps,
     florins: florins ?? this.florins,
@@ -482,6 +491,10 @@ class GardenSnapshot {
     'discoveredSpecies': discoveredSpecies
         .map((species) => species.name)
         .toList(),
+    'soldToday': {
+      for (final entry in soldToday.entries) entry.key.name: entry.value,
+    },
+    'salesDay': salesDay,
     'creditedDay': creditedDay,
     'creditedSteps': creditedSteps,
     'florins': florins,
@@ -581,6 +594,12 @@ class GardenSnapshot {
       discoveredSpecies: (json['discoveredSpecies'] as List<dynamic>? ?? [])
           .map((name) => Species.values.byName(name as String))
           .toSet(),
+      soldToday: {
+        for (final entry
+            in (json['soldToday'] as Map<String, dynamic>? ?? {}).entries)
+          Species.values.byName(entry.key): entry.value as int,
+      },
+      salesDay: json['salesDay'] as String?,
       creditedDay: json['creditedDay'] as String?,
       creditedSteps: json['creditedSteps'] as int,
       florins: json['florins'] as int,

@@ -393,10 +393,10 @@ void main() {
   });
 
   test(
-    'le quota des florins suit le jour du clic et laisse les graines',
+    'la courbe de prix du marché vend à plein tarif puis à 30 %',
     () async {
       final directory = await Directory.systemTemp.createTemp(
-        'growstep-quota-',
+        'growstep-market-',
       );
       addTearDown(() => directory.delete(recursive: true));
       final file = File('${directory.path}/garden.sqlite');
@@ -405,11 +405,11 @@ void main() {
       final zones = {
         for (final entry in initial.zones.entries) entry.key: [...entry.value],
       };
+      // 10 tomates prêtes (quota commune = 8).
       for (var slot = 0; slot < 4; slot++) {
         zones[ZoneType.potager]![slot] = const Plant(
           species: Species.tomate,
-          tier: GrowthTier.rare,
-          progressSteps: 6000,
+          progressSteps: 1000,
           pendingHarvest: HarvestReward(ordinarySeeds: 1),
         );
       }
@@ -422,18 +422,13 @@ void main() {
       );
       await garden.load();
 
-      await garden.harvestPlant(ZoneType.potager, 0);
-      expect(garden.snapshot.florins, 105);
-      expect(garden.harvestFlorinsToday, 5);
-      final remaining = garden.previewReadyHarvests();
-      expect(remaining.florins, 15);
-      await garden.harvestAll(remaining.locations.take(2).toList());
-      expect(garden.snapshot.florins, 115);
-      expect(garden.snapshot.seeds[Species.tomate], 3);
-      expect(garden.harvestFlorinsToday, 15);
-      expect(garden.previewReadyHarvests().florins, 5);
-      await garden.harvestPlant(ZoneType.potager, 0);
-      expect(garden.snapshot.florins, 115);
+      // 4 récoltes le premier jour : toutes à plein tarif (5 × 4 = 20).
+      final preview = garden.previewReadyHarvests();
+      expect(preview.florins, 20);
+      await garden.harvestAll(preview.locations);
+      expect(garden.snapshot.florins, 120);
+      expect(garden.snapshot.soldToday[Species.tomate], 4);
+      expect(garden.snapshot.salesDay, '2026-09-22');
 
       await database.close();
       final reopenedDatabase = GardenDatabase(NativeDatabase(file));
@@ -444,17 +439,63 @@ void main() {
         now: () => now,
       );
       await reopened.load();
-      expect(reopened.harvestFlorinsToday, 15);
-      expect(reopened.snapshot.florins, 115);
+      // Les compteurs de ventes survivent au redémarrage (même jour).
+      expect(reopened.snapshot.soldToday[Species.tomate], 4);
 
+      // Changement de jour : les compteurs se réinitialisent.
       now = DateTime(2026, 9, 23, 0, 1);
-      expect(reopened.harvestFlorinsToday, 0);
-      await reopened.harvestPlant(ZoneType.potager, 3);
-      expect(reopened.snapshot.florins, 120);
-      expect(reopened.harvestFlorinsToday, 5);
-      expect(reopened.snapshot.seeds[Species.tomate], 4);
+      expect(reopened.salesToday[Species.tomate] ?? 0, 0);
     },
   );
+
+  test('le surplus se vend à 30 % sans plafond dur', () async {
+    final database = GardenDatabase(NativeDatabase.memory());
+    addTearDown(database.close);
+    final initial = GardenSnapshot.initial();
+    final zones = {
+      for (final entry in initial.zones.entries) entry.key: [...entry.value],
+    };
+    // 10 tomates prêtes (quota = 8).
+    for (var slot = 0; slot < 4; slot++) {
+      zones[ZoneType.potager]![slot] = const Plant(
+        species: Species.tomate,
+        progressSteps: 1000,
+        pendingHarvest: HarvestReward(ordinarySeeds: 1),
+      );
+    }
+    zones[ZoneType.jardinFleuri] = List<Plant?>.filled(8, null);
+    for (var slot = 0; slot < 6; slot++) {
+      zones[ZoneType.jardinFleuri]![slot] = const Plant(
+        species: Species.tournesol,
+        progressSteps: 1000,
+        pendingHarvest: HarvestReward(ordinarySeeds: 1),
+      );
+    }
+    await database.save(initial.copyWith(
+      zones: zones,
+      florins: 0,
+      ownedZones: {ZoneType.potager, ZoneType.jardinFleuri},
+    ));
+    final garden = GardenSession(
+      database: database,
+      stepProvider: FakeStepProvider(),
+    );
+    await garden.load();
+
+    // 4 tomates : plein tarif (5 × 4 = 20).
+    await garden.harvestAll([
+      for (var s = 0; s < 4; s++) (zone: ZoneType.potager, slot: s),
+    ]);
+    expect(garden.snapshot.florins, 20);
+
+    // 6 tournesols : 8 à plein tarif (5×8=40) puis surplus à 30 %.
+    // Ici seulement 6 ventes → toutes sous quota → 5×6 = 30.
+    await garden.harvestAll([
+      for (var s = 0; s < 6; s++) (zone: ZoneType.jardinFleuri, slot: s),
+    ]);
+    expect(garden.snapshot.florins, 50);
+    expect(garden.snapshot.soldToday[Species.tournesol], 6);
+  });
 
   test(
     'l’engrais accélère seulement les nouveaux pas du cycle courant',
@@ -659,7 +700,6 @@ void main() {
       expect(config.fertilizerPrices[FertilizerType.basique], 10);
       expect(config.fertilizerPrices[FertilizerType.superEngrais], 20);
       expect(config.fertilizerPrices[FertilizerType.mega], 40);
-      expect(config.harvestFlorinDailyLimit, 20);
     });
 
     test('EconomyRules calcule le prix d\'emplacement par zone et rang', () {

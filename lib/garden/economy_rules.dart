@@ -35,6 +35,17 @@ class EconomyRules {
   int seedPriceForSpecies(Species species) =>
       config.seedPrices[species.rarity]!;
 
+  /// Prix de vente d'une récolte de [species] au marché, sachant
+  /// [salesToday] ventes déjà effectuées aujourd'hui pour cette espèce.
+  ///
+  /// Les premières ventes (quota de l'espèce) se vendent à plein tarif ; le
+  /// surplus à 30 % (rendement marginal réduit, jamais un plafond dur).
+  int marketPrice(Species species, int salesToday) {
+    final full = species.pricePerHarvest;
+    if (salesToday < species.dailyQuota) return full;
+    return (full * 0.3).floor();
+  }
+
   /// Returns the price of [type] fertilizer.
   int fertilizerPrice(FertilizerType type) => config.fertilizerPrices[type]!;
 
