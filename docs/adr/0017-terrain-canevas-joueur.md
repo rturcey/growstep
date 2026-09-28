@@ -1,0 +1,3 @@
+# Terrain = canevas posé par le joueur
+
+Le terrain n'évolue plus automatiquement. Il devient un canevas que le joueur compose : les **expansions de surface** (achat en florins) agrandissent la surface construisible d'un îlot — purement esthétique, elles ne modifient jamais la capacité productive ; seuls les **emplacements agricoles** achetés le font (invariant terrain : expansion visuelle ≠ capacité productive). Les **décors** ajoutent la personnalisation. Les achats restent tous accessibles en florins gagnés gratuitement (par le marché). Ce choix sépare trois dépenses distinctes — surface, capacité, personnalisation — et supprime l'embellissement automatique qui ôtait tout choix au joueur.
