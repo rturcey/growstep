@@ -1373,6 +1373,157 @@ void main() {
     });
   });
 
+  group('migration et persistance des anciennes sauvegardes', () {
+    test(
+      'une sauvegarde legacy (champs manquants) charge sans erreur',
+      () async {
+        final database = GardenDatabase(NativeDatabase.memory());
+        addTearDown(database.close);
+        // Simule une ancienne sauvegarde : pas de discoveredSpecies,
+        // pas de totalSteps, pas de claimedMilestones, pas de soldToday,
+        // pas de discoveredBrilliants, pas de lastBrillantDiscoveryDay.
+        final legacyJson = <String, dynamic>{
+          'zones': {
+            'potager': [null, null, null, null],
+            'jardinFleuri': [null, null, null, null],
+            'verger': [null],
+          },
+          'seeds': {'tomate': 3, 'carotte': 2},
+          'brilliantSeeds': {},
+          'starterChoices': [],
+          'creditedDay': null,
+          'creditedSteps': 0,
+          'florins': 500,
+          'fertilizers': {},
+          'playerSeed': 42,
+          'claimedDailyRewards': [],
+          'ownedDecorations': {},
+          'placedDecorations': [],
+          'invitationHours': [],
+          'invitationSentKeys': [],
+          'ownedZones': ['potager'],
+        };
+        await database.save(GardenSnapshot.fromJson(legacyJson));
+        final garden = GardenSession(
+          database: database,
+          stepProvider: FakeStepProvider(),
+        );
+        await garden.load();
+        expect(garden.snapshot.florins, 500);
+        expect(garden.snapshot.seeds[Species.tomate], 3);
+        expect(garden.snapshot.discoveredSpecies, isEmpty);
+        expect(garden.snapshot.totalSteps, 0);
+        expect(garden.snapshot.claimedMilestones, isEmpty);
+        expect(garden.snapshot.soldToday, isEmpty);
+        expect(garden.snapshot.discoveredBrilliants, isEmpty);
+        expect(garden.snapshot.lastBrillantDiscoveryDay, isNull);
+      },
+    );
+
+    test('une sauvegarde legacy avec champs obsolètes (florins de marche) charge sans erreur', () async {
+      final database = GardenDatabase(NativeDatabase.memory());
+      addTearDown(database.close);
+      final legacyJson = <String, dynamic>{
+        'zones': {
+          'potager': [null, null, null, null],
+          'jardinFleuri': [null, null, null, null],
+          'verger': [null],
+        },
+        'seeds': {'tomate': 1},
+        'brilliantSeeds': {},
+        'starterChoices': ['potager'],
+        'discoveredSpecies': ['tomate'],
+        'creditedDay': null,
+        'creditedSteps': 0,
+        'florins': 0,
+        'fertilizers': {},
+        'playerSeed': 7,
+        'claimedDailyRewards': [],
+        'ownedDecorations': {},
+        'placedDecorations': [],
+        'invitationHours': [],
+        'invitationSentKeys': [],
+        'ownedZones': ['potager'],
+        // Champs obsolètes (v2) : doivent être ignorés silencieusement.
+        'walkFlorinsDay': '2020-01-01',
+        'walkFlorinsClaimed': 50,
+        'harvestFlorinsDay': '2020-01-01',
+        'harvestFlorinsClaimed': 30,
+        'harvestFlorinDailyLimit': 100,
+      };
+      await database.save(GardenSnapshot.fromJson(legacyJson));
+      final garden = GardenSession(
+        database: database,
+        stepProvider: FakeStepProvider(),
+      );
+      await garden.load();
+      expect(garden.snapshot.florins, 0);
+      expect(garden.snapshot.discoveredSpecies, contains(Species.tomate));
+    });
+
+    test('les nouveaux états persistent au redémarrage', () async {
+      final database = GardenDatabase(NativeDatabase.memory());
+      addTearDown(database.close);
+      final initial = GardenSnapshot.initial().copyWith(
+        florins: 42,
+        discoveredSpecies: {Species.tomate, Species.carotte, Species.courgette},
+        discoveredBrilliants: {Species.tomate},
+        lastBrillantDiscoveryDay: '2025-06-15',
+        totalSteps: 75000,
+        claimedMilestones: {10000, 50000},
+        soldToday: {Species.tomate: 3},
+        salesDay: '2025-09-28',
+      );
+      await database.save(initial);
+      // Simule un redémarrage : nouvelle session, même base.
+      final garden = GardenSession(
+        database: database,
+        stepProvider: FakeStepProvider(),
+      );
+      await garden.load();
+      expect(garden.snapshot.florins, 42);
+      expect(garden.snapshot.discoveredSpecies.length, 3);
+      expect(garden.snapshot.discoveredBrilliants, contains(Species.tomate));
+      expect(garden.snapshot.lastBrillantDiscoveryDay, '2025-06-15');
+      expect(garden.snapshot.totalSteps, 75000);
+      expect(garden.snapshot.claimedMilestones, containsAll([10000, 50000]));
+      expect(garden.snapshot.soldToday[Species.tomate], 3);
+      expect(garden.snapshot.salesDay, '2025-09-28');
+    });
+
+    test(
+      'revenir après une absence ne fait rien perdre (aucune pénalité)',
+      () async {
+        final database = GardenDatabase(NativeDatabase.memory());
+        addTearDown(database.close);
+        final beforeAbsence = GardenSnapshot.initial().copyWith(
+          florins: 100,
+          seeds: {Species.tomate: 5},
+          discoveredSpecies: {Species.tomate, Species.carotte},
+          totalSteps: 30000,
+          claimedMilestones: {10000},
+          discoveredBrilliants: {Species.tomate},
+          lastBrillantDiscoveryDay: '2025-01-01',
+          ownedZones: {ZoneType.potager},
+        );
+        await database.save(beforeAbsence);
+        // Reprise après « plusieurs semaines d'absence ».
+        final garden = GardenSession(
+          database: database,
+          stepProvider: FakeStepProvider(),
+        );
+        await garden.load();
+        expect(garden.snapshot.florins, 100);
+        expect(garden.snapshot.seeds[Species.tomate], 5);
+        expect(garden.snapshot.discoveredSpecies.length, 2);
+        expect(garden.snapshot.totalSteps, 30000);
+        expect(garden.snapshot.claimedMilestones, contains(10000));
+        expect(garden.snapshot.discoveredBrilliants, contains(Species.tomate));
+        expect(garden.snapshot.lastBrillantDiscoveryDay, '2025-01-01');
+      },
+    );
+  });
+
   group('brillantes — sources complémentaires', () {
     test(
       'le palier quotidien 10k peut découvrir une brillante (~3 %)',

@@ -528,11 +528,11 @@ class GardenSnapshot {
   };
 
   factory GardenSnapshot.fromJson(Map<String, dynamic> json) {
-    final rawZones = json['zones'] as Map<String, dynamic>;
-    final rawSeeds = json['seeds'] as Map<String, dynamic>;
+    final rawZones = (json['zones'] as Map).cast<String, dynamic>();
+    final rawSeeds = (json['seeds'] as Map).cast<String, dynamic>();
     final rawBrilliantSeeds =
-        json['brilliantSeeds'] as Map<String, dynamic>? ?? {};
-    final rawFertilizers = json['fertilizers'] as Map<String, dynamic>;
+        (json['brilliantSeeds'] as Map?)?.cast<String, dynamic>() ?? {};
+    final rawFertilizers = (json['fertilizers'] as Map).cast<String, dynamic>();
     final zones = <ZoneType, List<Plant?>>{
       for (final zone in ZoneType.values)
         zone: (rawZones[zone.name] as List<dynamic>)
@@ -568,7 +568,7 @@ class GardenSnapshot {
     };
 
     final rawOwnedDecorations =
-        json['ownedDecorations'] as Map<String, dynamic>? ?? {};
+        (json['ownedDecorations'] as Map?)?.cast<String, dynamic>() ?? {};
     final rawPlacedDecorations =
         json['placedDecorations'] as List<dynamic>? ?? [];
     final rawLegacyDecorations = json['decorations'] as List<dynamic>?;
@@ -614,8 +614,8 @@ class GardenSnapshot {
       },
       salesDay: json['salesDay'] as String?,
       creditedDay: json['creditedDay'] as String?,
-      creditedSteps: json['creditedSteps'] as int,
-      florins: json['florins'] as int,
+      creditedSteps: json['creditedSteps'] as int? ?? 0,
+      florins: json['florins'] as int? ?? 0,
       fertilizers: {
         for (final entry in rawFertilizers.entries)
           FertilizerType.values.byName(entry.key): entry.value as int,
