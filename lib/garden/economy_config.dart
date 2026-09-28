@@ -18,43 +18,43 @@ class EconomyConfig {
   });
 
   const EconomyConfig._default()
-      : florinsPerWalkStep = 1 / 500,
-        walkFlorinDailyCap = 30,
-        slotPrices = const {
-          ZoneType.potager: [30, 45, 60, 75],
-          ZoneType.jardinFleuri: [30, 45, 60, 75],
-          ZoneType.verger: [30, 45],
-        },
-        seedPrices = const {
-          GrowthTier.commune: 5,
-          GrowthTier.peuCommune: 20,
-          GrowthTier.rare: 60,
-        },
-        fertilizerPrices = const {
-          FertilizerType.basique: 10,
-          FertilizerType.superEngrais: 20,
-          FertilizerType.mega: 40,
-        },
-        decorationPrices = const {
-          'arrosoir': 15,
-          'banc': 20,
-          'fontaine': 50,
-          'caisse_legumes': 15,
-          'arche': 40,
-          'tonneau': 12,
-          'pot': 8,
-          'panneau': 10,
-          'nichoir': 18,
-          'brouette': 25,
-        },
-        harvestFlorinDailyLimit = 20,
-        dailyLotFlorinRanges = const [
-          [3, 5],
-          [8, 12],
-          [15, 20],
-          [30, 50],
-        ],
-        dailyLotFirstNoFlorinsChance = 0.2;
+    : florinsPerWalkStep = 1 / 500,
+      walkFlorinDailyCap = 30,
+      slotPrices = const {
+        ZoneType.potager: [30, 45, 60, 75],
+        ZoneType.jardinFleuri: [30, 45, 60, 75],
+        ZoneType.verger: [30, 45],
+      },
+      seedPrices = const {
+        GrowthTier.commune: 20,
+        GrowthTier.peuCommune: 40,
+        GrowthTier.rare: 80,
+      },
+      fertilizerPrices = const {
+        FertilizerType.basique: 10,
+        FertilizerType.superEngrais: 20,
+        FertilizerType.mega: 40,
+      },
+      decorationPrices = const {
+        'arrosoir': 15,
+        'banc': 20,
+        'fontaine': 50,
+        'caisse_legumes': 15,
+        'arche': 40,
+        'tonneau': 12,
+        'pot': 8,
+        'panneau': 10,
+        'nichoir': 18,
+        'brouette': 25,
+      },
+      harvestFlorinDailyLimit = 20,
+      dailyLotFlorinRanges = const [
+        [3, 5],
+        [8, 12],
+        [15, 20],
+        [30, 50],
+      ],
+      dailyLotFirstNoFlorinsChance = 0.2;
 
   factory EconomyConfig.defaults() => const EconomyConfig._default();
 
@@ -69,7 +69,9 @@ class EconomyConfig {
   /// Slot prices per zone, ordered by purchase rank.
   final Map<ZoneType, List<int>> slotPrices;
 
-  /// Seed prices by growth tier (ordinary only; brillante never sold).
+  /// Seed prices by species rarity (ordinary seeds only; brillante never sold).
+  /// Trees use the commune price (20). The shop sells « additional seeds of a
+  /// discovered species » (sink de florins).
   final Map<GrowthTier, int> seedPrices;
 
   /// Fertilizer prices by type.

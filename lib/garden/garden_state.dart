@@ -11,7 +11,12 @@ enum ZoneType {
   jardinFleuri('Jardin fleuri', 4, 8, 100),
   verger('Verger', 1, 3, 250);
 
-  const ZoneType(this.label, this.initialSlots, this.maxSlots, this.purchasePrice);
+  const ZoneType(
+    this.label,
+    this.initialSlots,
+    this.maxSlots,
+    this.purchasePrice,
+  );
 
   final String label;
   final int initialSlots;
@@ -20,19 +25,75 @@ enum ZoneType {
 }
 
 enum Species {
-  tomate('Tomate', ZoneType.potager),
-  carotte('Carotte', ZoneType.potager),
-  courgette('Courgette', ZoneType.potager),
-  tournesol('Tournesol', ZoneType.jardinFleuri),
-  tulipe('Tulipe', ZoneType.jardinFleuri),
-  lavande('Lavande', ZoneType.jardinFleuri),
-  pommier('Pommier', ZoneType.verger),
-  poirier('Poirier', ZoneType.verger);
+  tomate('Tomate', ZoneType.potager, GrowthTier.commune, 1000, 5, 8, false),
+  carotte('Carotte', ZoneType.potager, GrowthTier.commune, 1000, 5, 8, false),
+  courgette(
+    'Courgette',
+    ZoneType.potager,
+    GrowthTier.commune,
+    1000,
+    5,
+    8,
+    false,
+  ),
+  tournesol(
+    'Tournesol',
+    ZoneType.jardinFleuri,
+    GrowthTier.commune,
+    1000,
+    5,
+    8,
+    false,
+  ),
+  tulipe(
+    'Tulipe',
+    ZoneType.jardinFleuri,
+    GrowthTier.commune,
+    1000,
+    5,
+    8,
+    false,
+  ),
+  lavande(
+    'Lavande',
+    ZoneType.jardinFleuri,
+    GrowthTier.commune,
+    1000,
+    5,
+    8,
+    false,
+  ),
+  pommier('Pommier', ZoneType.verger, GrowthTier.commune, 2000, 5, 3, true),
+  poirier('Poirier', ZoneType.verger, GrowthTier.commune, 2000, 5, 3, true);
 
-  const Species(this.label, this.zone);
+  const Species(
+    this.label,
+    this.zone,
+    this.rarity,
+    this.stepsToMature,
+    this.pricePerHarvest,
+    this.dailyQuota,
+    this.isTree,
+  );
 
   final String label;
   final ZoneType zone;
+
+  /// Rareté intrinsèque à l'espèce. La brillante est un tier posé par-dessus
+  /// (voir [Plant.tier]), jamais une rareté d'espèce.
+  final GrowthTier rarity;
+
+  /// Pas nécessaires à la maturité (arbres : maturité du tronc).
+  final int stepsToMature;
+
+  /// Prix de vente d'une récolte au marché (plein tarif, sous quota).
+  final int pricePerHarvest;
+
+  /// Nombre de ventes à plein tarif par jour (surplus à 30 %).
+  final int dailyQuota;
+
+  /// Les arbres (verger) ont une production persistante.
+  final bool isTree;
 }
 
 enum PlantStage { graineGermee, jeunePlant, presqueMature, mature }
@@ -46,23 +107,11 @@ enum GrowthTier {
   const GrowthTier(this.stepsToMature);
 
   final int stepsToMature;
-
-  // All initial brilliant variants belong to common species.
-  double get extraOrdinarySeedChance => switch (this) {
-    GrowthTier.commune || GrowthTier.brillante => 0.5,
-    GrowthTier.peuCommune => 0.3,
-    GrowthTier.rare => 0.1,
-  };
-
-  int get florinsPerHarvest => switch (this) {
-    GrowthTier.commune => 5,
-    GrowthTier.peuCommune => 8,
-    GrowthTier.rare || GrowthTier.brillante => 12,
-  };
 }
 
 const brilliantSeedChance = 0.05;
 const dailyHarvestFlorinLimit = 20;
+const extraOrdinarySeedChance = 0.5;
 
 enum FertilizerType {
   basique('Basique', 5),
@@ -121,8 +170,12 @@ class Plant {
   final int growthRemainderQuarters;
 
   int get targetSteps => completedCycles == 0
-      ? tier.stepsToMature
-      : (tier.stepsToMature / 2).ceil();
+      ? (tier == GrowthTier.brillante
+            ? tier.stepsToMature
+            : species.stepsToMature)
+      : (tier == GrowthTier.brillante
+            ? (tier.stepsToMature / 2).ceil()
+            : (species.stepsToMature / 2).ceil());
 
   bool get isReadyToHarvest => progressSteps >= targetSteps;
 
@@ -238,11 +291,11 @@ class PlacedDecoration {
   final Offset contact;
 
   Map<String, Object?> toJson() => {
-        'placedId': placedId,
-        'decorationId': decorationId,
-        'zone': zone.name,
-        'contact': {'dx': contact.dx, 'dy': contact.dy},
-      };
+    'placedId': placedId,
+    'decorationId': decorationId,
+    'zone': zone.name,
+    'contact': {'dx': contact.dx, 'dy': contact.dy},
+  };
 
   factory PlacedDecoration.fromJson(Map<String, dynamic> json) =>
       PlacedDecoration(
@@ -401,7 +454,9 @@ class GardenSnapshot {
     placedDecorations: placedDecorations ?? this.placedDecorations,
     pauseRewardsDay: pauseRewardsDay ?? this.pauseRewardsDay,
     pauseRewardsCount: pauseRewardsCount ?? this.pauseRewardsCount,
-    activePause: activePause == _unset ? this.activePause : activePause as ActivePause?,
+    activePause: activePause == _unset
+        ? this.activePause
+        : activePause as ActivePause?,
     invitationHours: invitationHours ?? this.invitationHours,
     invitationSentKeys: invitationSentKeys ?? this.invitationSentKeys,
     lastActivityTime: lastActivityTime ?? this.lastActivityTime,
@@ -436,9 +491,7 @@ class GardenSnapshot {
     'walkFlorinsDay': walkFlorinsDay,
     'walkFlorinsClaimed': walkFlorinsClaimed,
     'ownedDecorations': ownedDecorations,
-    'placedDecorations': [
-      for (final d in placedDecorations) d.toJson(),
-    ],
+    'placedDecorations': [for (final d in placedDecorations) d.toJson()],
     'pauseRewardsDay': pauseRewardsDay,
     'pauseRewardsCount': pauseRewardsCount,
     'activePause': activePause?.toJson(),
@@ -467,7 +520,9 @@ class GardenSnapshot {
     };
     final rawOwnedZones = json['ownedZones'] as List<dynamic>?;
     final explicitOwned = rawOwnedZones != null
-        ? rawOwnedZones.map((name) => ZoneType.values.byName(name as String)).toSet()
+        ? rawOwnedZones
+              .map((name) => ZoneType.values.byName(name as String))
+              .toSet()
         : <ZoneType>{};
     final ownedZones = <ZoneType>{
       ...explicitOwned,
@@ -498,8 +553,7 @@ class GardenSnapshot {
     };
     if (rawLegacyDecorations != null) {
       for (final id in rawLegacyDecorations.cast<String>()) {
-        migratedOwnedDecorations[id] =
-            (migratedOwnedDecorations[id] ?? 0) + 1;
+        migratedOwnedDecorations[id] = (migratedOwnedDecorations[id] ?? 0) + 1;
       }
     }
 
@@ -540,13 +594,12 @@ class GardenSnapshot {
       pauseRewardsCount: json['pauseRewardsCount'] as int? ?? 0,
       activePause: json['activePause'] == null
           ? null
-          : ActivePause.fromJson(
-              json['activePause'] as Map<String, dynamic>,
-            ),
+          : ActivePause.fromJson(json['activePause'] as Map<String, dynamic>),
       invitationHours: (json['invitationHours'] as List<dynamic>? ?? [])
           .cast<int>(),
-      invitationSentKeys:
-          (json['invitationSentKeys'] as List<dynamic>? ?? []).cast<String>().toSet(),
+      invitationSentKeys: (json['invitationSentKeys'] as List<dynamic>? ?? [])
+          .cast<String>()
+          .toSet(),
       lastActivityTime: json['lastActivityTime'] as String?,
       legacyArchive: json['legacyArchive'] as Map<String, dynamic>?,
       ownedZones: ownedZones,

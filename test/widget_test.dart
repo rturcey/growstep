@@ -88,14 +88,14 @@ void main() {
     await tester.pump(const Duration(milliseconds: 200));
     expect(find.textContaining('Tomate ×2'), findsWidgets);
     expect(find.textContaining('Tulipe brillante ×1'), findsWidgets);
-    expect(find.textContaining('17 florins'), findsOneWidget);
+    expect(find.textContaining('10 florins'), findsOneWidget);
 
     await tester.tap(find.text('Confirmer la récolte'));
     await tester.pump(const Duration(milliseconds: 200));
     expect(find.text('Récolter 2 plantes'), findsNothing);
     expect(find.textContaining('Tomate ×2'), findsWidgets);
     expect(find.textContaining('Tulipe brillante ×1'), findsWidgets);
-    expect(find.textContaining('Florins : 17'), findsOneWidget);
+    expect(find.textContaining('Florins : 10'), findsOneWidget);
   });
 
   testWidgets('le joueur applique un engrais et voit le compteur accélérer', (

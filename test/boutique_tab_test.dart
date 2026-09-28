@@ -1,5 +1,4 @@
 import 'package:drift/native.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:growstep/garden/garden_database.dart';
 import 'package:growstep/garden/garden_state.dart';
@@ -10,12 +9,17 @@ import 'package:growstep/steps/fake_step_provider.dart';
 /// graines, engrais et décors, solde insuffisant, suppression de graines et
 /// paliers quotidiens en lecture seule.
 void main() {
-  Future<void> pumpBoutique(WidgetTester tester, {GardenSnapshot? initial}) async {
+  Future<void> pumpBoutique(
+    WidgetTester tester, {
+    GardenSnapshot? initial,
+  }) async {
     tester.view.devicePixelRatio = 1;
     addTearDown(tester.view.resetDevicePixelRatio);
     final database = GardenDatabase(NativeDatabase.memory());
     addTearDown(database.close);
-    await database.save(initial ?? GardenSnapshot.initial().copyWith(florins: 200));
+    await database.save(
+      initial ?? GardenSnapshot.initial().copyWith(florins: 200),
+    );
     await tester.pumpWidget(
       GrowstepApp(database: database, steps: FakeStepProvider()),
     );
@@ -25,13 +29,12 @@ void main() {
     await tester.pump(const Duration(milliseconds: 300));
   }
 
-  testWidgets('les trois raretés de graines affichent leur prix', (tester) async {
+  testWidgets('la graine de l’espèce sélectionnée affiche son prix', (
+    tester,
+  ) async {
     await pumpBoutique(tester);
-    expect(find.text('Graine commune'), findsOneWidget);
-    expect(find.text('Graine peu commune'), findsOneWidget);
-    expect(find.text('Graine rare'), findsOneWidget);
-    expect(find.text('5 florins'), findsOneWidget);
-    expect(find.text('60 florins'), findsOneWidget);
+    expect(find.text('Graine Tomate'), findsOneWidget);
+    expect(find.text('20 florins'), findsOneWidget);
   });
 
   testWidgets('acheter une graine débite les florins et met à jour le stock', (
@@ -39,9 +42,9 @@ void main() {
   ) async {
     await pumpBoutique(tester);
     expect(find.text('200 florins'), findsOneWidget);
-    await tester.tap(find.text('Acheter graine commune'));
+    await tester.tap(find.text('Acheter graine Tomate'));
     await tester.pump(const Duration(milliseconds: 200));
-    expect(find.text('195 florins'), findsOneWidget);
+    expect(find.text('180 florins'), findsOneWidget);
     await tester.ensureVisible(find.text('Tomate ×1'));
     expect(find.text('Tomate ×1'), findsOneWidget);
   });
@@ -68,7 +71,7 @@ void main() {
       tester,
       initial: GardenSnapshot.initial().copyWith(florins: 3),
     );
-    await tester.tap(find.text('Acheter graine commune'));
+    await tester.tap(find.text('Acheter graine Tomate'));
     await tester.pump(const Duration(milliseconds: 200));
     expect(find.text('Pas assez de florins pour cet achat.'), findsOneWidget);
   });
@@ -96,7 +99,9 @@ void main() {
     expect(find.text('Non atteint'), findsNWidgets(2));
   });
 
-  testWidgets('supprimer une graine excédentaire réduit le stock', (tester) async {
+  testWidgets('supprimer une graine excédentaire réduit le stock', (
+    tester,
+  ) async {
     await pumpBoutique(
       tester,
       initial: GardenSnapshot.initial().copyWith(

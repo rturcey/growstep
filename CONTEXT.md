@@ -1,6 +1,6 @@
 # Jardin de marche
 
-Une application iPhone où la marche fait grandir et embellir un jardin virtuel. Les règles et valeurs de test figurent dans [le game design](docs/game-design.md).
+Une application iPhone où la marche fait grandir et embellir un jardin virtuel. Les règles et valeurs de test figurent dans [le game design](docs/game-design.md) ; l'économie de référence détaillée dans [l'économie](docs/economie.md).
 
 ## Language
 
@@ -17,7 +17,10 @@ _Avoid_ : Parcelle
 
 **Platebande** : support de terre surélevé utilisé dans le jardin fleuri. Dans le Potager, un emplacement acheté est matérialisé par une empreinte de terre plate liée à son contact de grille ; le Verger n'a pas de platebande.
 
-**Graine** : ressource d'une espèce donnée qui permet de démarrer une plante dans un emplacement.
+**Espèce découverte** : espèce dont le joueur a obtenu une première graine ; elle reste découverte pour toujours et n'est jamais reperdue. La découverte est la base de la collection.
+
+**Graine** : consommable d'une espèce donnée, nécessaire pour démarrer une plante dans un emplacement. Une graine plantée est consommée puis rendue à la récolte (ou à la suppression prématurée) : une espèce découverte ne se perd jamais. Les copies supplémentaires d'une espèce s'achètent en florins.
+_Avoid_ : graine bonus, graine illimitée
 
 **État semé** : état d'un emplacement contenant une graine plantée avant l'apparition de la première pousse visible.
 
@@ -25,25 +28,31 @@ _Avoid_ : Parcelle
 
 **Étape de croissance** : forme visible d'une plante entre sa germination et sa maturité.
 
-**Plante mature** : plante arrivée à sa forme finale, qui peut être récoltée puis produire à nouveau tout en gardant sa taille.
+**Plante mature** : plante arrivée à sa forme finale, récoltable. Pour une culture, la récolte retire la plante et libère l'emplacement ; pour un arbre, elle garde l'arbre.
 
-**Cycle de production** : période pendant laquelle une plante mature accumule de nouveaux pas jusqu'à pouvoir être récoltée de nouveau.
+**Cycle de production** (arbres uniquement) : période pendant laquelle un arbre mature accumule de nouveaux pas jusqu'à pouvoir être récolté de nouveau, sans retirer l'arbre.
 
-**Récolte** : action du joueur qui reçoit les récompenses d'une plante prête et lance son éventuel cycle suivant sans retirer la plante.
+**Récolte** : action du joueur qui reçoit les récompenses d'une plante prête : produits (vendus au marché) et une graine de la même espèce garantie. Une culture récoltée disparaît ; un arbre reste.
 
-**Variante brillante** : apparence très rare d'une espèce, plus longue à faire pousser que sa forme ordinaire.
+**Produit** : sortie d'une récolte, vendue automatiquement au marché. Pas d'inventaire de produits.
 
-**Florin** : monnaie unique du jardin, gagnée grâce à la marche ou achetée avec des euros.
+**Marché** : unique générateur de florins du jeu. Il achète automatiquement les produits des récoltes selon sa courbe de prix du jour, par espèce.
 
-**Quota quotidien de florins des plantes** : maximum de florins que les récoltes peuvent accorder au cours d'une journée.
+**Courbe de prix du marché** : règle d'achat par espèce : les premières récoltes du jour (quota) se vendent à plein tarif, les suivantes à tarif réduit (30 %). Rendement marginal réduit/contrôlé, jamais un plafond dur.
 
-**Palier quotidien** : seuil de pas d'une journée qui accorde un lot annoncé à l'avance.
+**Variante brillante** : apparence très rare d'une espèce, plus longue à faire pousser que sa forme ordinaire (15 000 pas). Il n'en existe qu'une par espèce ; une brillante récoltée rend une graine brillante de la même espèce garantie. Les brillantes ne sont jamais vendues.
 
-**Palier d'embellissement** : transformation permanente du terrain débloquée par les pas cumulés du joueur.
+**Florin** : monnaie unique du jardin, gagnée **exclusivement** par la vente des récoltes au marché. Jamais achetée en euros, jamais créditée par les pas directs ni par les lots.
 
-**Engrais** : ressource appliquée à une plante pour accélérer sa croissance ou son cycle de production en cours.
+**Palier quotidien** : seuil de pas d'une journée qui accorde un lot annoncé à l'avance, jamais de florins.
+
+**Palier de pas cumulés** : seuil de pas cumulés qui accorde une récompense cosmétique ou de collection, jamais de florins.
+
+**Engrais** : ressource appliquée à une plante pour accélérer son cycle de croissance en cours. Son achat en florins n'a jamais un rendement en florins supérieur à son prix.
 
 **Décor** : objet permanent que le joueur peut placer et déplacer dans son jardin.
+
+**Expansion de surface** : achat en florins qui agrandit la surface construisible d'un îlot, purement esthétique : il ne modifie jamais la capacité productive.
 
 **Invitation à marcher** : rappel qui propose au joueur de lancer une pause marche.
 

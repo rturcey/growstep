@@ -29,12 +29,6 @@ class BoutiqueTab extends StatefulWidget {
 class _BoutiqueTabState extends State<BoutiqueTab> {
   Species _seedSpecies = Species.tomate;
 
-  static const _seedTiers = [
-    GrowthTier.commune,
-    GrowthTier.peuCommune,
-    GrowthTier.rare,
-  ];
-
   Future<void> _buy(Future<GardenSnapshot> Function() action) async {
     try {
       final result = await action();
@@ -65,9 +59,7 @@ class _BoutiqueTabState extends State<BoutiqueTab> {
         children: [
           Text(
             'Boutique & Récompenses',
-            style: Theme.of(context)
-                .textTheme
-                .headlineSmall
+            style: Theme.of(context).textTheme.headlineSmall
                 ?.copyWith(fontWeight: FontWeight.w700),
           ),
           const SizedBox(height: 4),
@@ -83,7 +75,7 @@ class _BoutiqueTabState extends State<BoutiqueTab> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'Choisis une espèce, puis la rareté à acheter.',
+                    'Choisis une espèce, puis achète une graine supplémentaire.',
                     style: Theme.of(context).textTheme.bodySmall,
                   ),
                   const SizedBox(height: 8),
@@ -106,16 +98,14 @@ class _BoutiqueTabState extends State<BoutiqueTab> {
                     },
                   ),
                   const SizedBox(height: 8),
-                  for (final tier in _seedTiers)
-                    _BuyRow(
-                      title: 'Graine ${_tierLabel(tier)}',
-                      subtitle:
-                          '${widget.garden.economyConfig.seedPrices[tier]} florins',
-                      buttonLabel: 'Acheter graine ${_tierLabel(tier)}',
-                      onPressed: () => _buy(
-                        () => widget.garden.buySeed(_seedSpecies, tier),
-                      ),
-                    ),
+                  _BuyRow(
+                    title: 'Graine ${_seedSpecies.label}',
+                    subtitle:
+                        '${widget.garden.economyRules.seedPriceForSpecies(_seedSpecies)} florins',
+                    buttonLabel: 'Acheter graine ${_seedSpecies.label}',
+                    onPressed: () =>
+                        _buy(() => widget.garden.buySeed(_seedSpecies)),
+                  ),
                 ],
               ),
             ),
@@ -134,9 +124,8 @@ class _BoutiqueTabState extends State<BoutiqueTab> {
                           '${widget.garden.economyConfig.fertilizerPrices[type]} florins'
                           ' · en stock : ${snapshot.fertilizers[type] ?? 0}',
                       buttonLabel: 'Acheter engrais ${type.label}',
-                      onPressed: () => _buy(
-                        () => widget.garden.buyFertilizer(type),
-                      ),
+                      onPressed: () =>
+                          _buy(() => widget.garden.buyFertilizer(type)),
                     ),
                 ],
               ),
@@ -158,9 +147,8 @@ class _BoutiqueTabState extends State<BoutiqueTab> {
                           '${widget.garden.economyConfig.decorationPrices[def.id]} florins'
                           ' · en stock : ${snapshot.ownedDecorations[def.id] ?? 0}',
                       buttonLabel: 'Acheter ${def.label}',
-                      onPressed: () => _buy(
-                        () => widget.garden.buyDecoration(def.id),
-                      ),
+                      onPressed: () =>
+                          _buy(() => widget.garden.buyDecoration(def.id)),
                     ),
                 ],
               ),
@@ -240,9 +228,7 @@ class _BoutiqueTabState extends State<BoutiqueTab> {
     padding: const EdgeInsets.only(top: 16, bottom: 8),
     child: Text(
       title,
-      style: Theme.of(context)
-          .textTheme
-          .titleMedium
+      style: Theme.of(context).textTheme.titleMedium
           ?.copyWith(fontWeight: FontWeight.w700),
     ),
   );
@@ -264,10 +250,7 @@ class _BoutiqueTabState extends State<BoutiqueTab> {
         Expanded(
           child: Text(label, style: Theme.of(context).textTheme.bodyMedium),
         ),
-        TextButton(
-          onPressed: onDiscard,
-          child: const Text('Supprimer'),
-        ),
+        TextButton(onPressed: onDiscard, child: const Text('Supprimer')),
       ],
     );
   }
@@ -304,9 +287,7 @@ class _BoutiqueTabState extends State<BoutiqueTab> {
                 Expanded(
                   child: Text(
                     'Palier ${lot.threshold} pas',
-                    style: Theme.of(context)
-                        .textTheme
-                        .titleMedium
+                    style: Theme.of(context).textTheme.titleMedium
                         ?.copyWith(fontWeight: FontWeight.w700),
                   ),
                 ),
@@ -360,13 +341,6 @@ class _BoutiqueTabState extends State<BoutiqueTab> {
     }
     return parts.isEmpty ? '—' : parts.join(', ');
   }
-
-  static String _tierLabel(GrowthTier tier) => switch (tier) {
-    GrowthTier.commune => 'commune',
-    GrowthTier.peuCommune => 'peu commune',
-    GrowthTier.rare => 'rare',
-    GrowthTier.brillante => 'brillante',
-  };
 }
 
 class _BuyRow extends StatelessWidget {
@@ -393,18 +367,12 @@ class _BuyRow extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(title, style: Theme.of(context).textTheme.titleSmall),
-                Text(
-                  subtitle,
-                  style: Theme.of(context).textTheme.bodySmall,
-                ),
+                Text(subtitle, style: Theme.of(context).textTheme.bodySmall),
               ],
             ),
           ),
           const SizedBox(width: 8),
-          FilledButton.tonal(
-            onPressed: onPressed,
-            child: Text(buttonLabel),
-          ),
+          FilledButton.tonal(onPressed: onPressed, child: Text(buttonLabel)),
         ],
       ),
     );

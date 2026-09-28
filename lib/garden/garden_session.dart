@@ -27,7 +27,11 @@ export 'garden_state.dart'
         Species,
         ZoneType;
 export 'notification_intent.dart'
-    show NotificationIntent, ProposeWalkIntent, ReminderWalkIntent, InvitationWalkIntent;
+    show
+        NotificationIntent,
+        ProposeWalkIntent,
+        ReminderWalkIntent,
+        InvitationWalkIntent;
 
 typedef PlantLocation = ({ZoneType zone, int slot});
 
@@ -71,6 +75,7 @@ class GardenSession {
   final double Function() _roll;
   final StepProvider stepProvider;
   final EconomyConfig economyConfig;
+  EconomyRules get economyRules => _economyRules;
   final NotificationScheduler? notificationScheduler;
   final int pauseObjective;
   final int pauseDurationMinutes;
@@ -79,7 +84,9 @@ class GardenSession {
   final int inactivityReminderMinutes;
   final int inactivityStepThreshold;
   late final EconomyRules _economyRules = EconomyRules(economyConfig);
-  late final DailyProgression _dailyProgression = DailyProgression(economyConfig);
+  late final DailyProgression _dailyProgression = DailyProgression(
+    economyConfig,
+  );
   GardenSnapshot snapshot = GardenSnapshot.initial();
 
   int get harvestFlorinLimit => economyConfig.harvestFlorinDailyLimit;
@@ -135,10 +142,8 @@ class GardenSession {
     };
     zones = _prepareHarvests(zones) ?? zones;
 
-    final isSameWalkDay =
-        snapshot.walkFlorinsDay == todayLocal.toIsoString();
-    final alreadyClaimedWalk =
-        isSameWalkDay ? snapshot.walkFlorinsClaimed : 0;
+    final isSameWalkDay = snapshot.walkFlorinsDay == todayLocal.toIsoString();
+    final alreadyClaimedWalk = isSameWalkDay ? snapshot.walkFlorinsClaimed : 0;
     final walkFlorins = _economyRules.walkFlorinsFromSteps(
       steps,
       alreadyClaimedWalk,
@@ -156,9 +161,7 @@ class GardenSession {
     snapshot = _creditDailyLots(snapshot, todayLocal, steps);
 
     if (steps >= inactivityStepThreshold) {
-      snapshot = snapshot.copyWith(
-        lastActivityTime: _now().toIso8601String(),
-      );
+      snapshot = snapshot.copyWith(lastActivityTime: _now().toIso8601String());
     }
 
     await _store.save(snapshot);
@@ -324,7 +327,8 @@ class GardenSession {
     if (snapshot.invitationSentKeys.contains(invitedKey)) return;
 
     final lastActivity = snapshot.lastActivityTime;
-    final recentActivity = lastActivity != null &&
+    final recentActivity =
+        lastActivity != null &&
         now.difference(DateTime.parse(lastActivity)).inMinutes < 30 &&
         snapshot.creditedSteps >= inactivityStepThreshold;
 
@@ -350,8 +354,7 @@ class GardenSession {
 
     final dayKey = pastDay.toIsoString();
     final isSameWalkDay = snapshot.walkFlorinsDay == dayKey;
-    final alreadyClaimedWalk =
-        isSameWalkDay ? snapshot.walkFlorinsClaimed : 0;
+    final alreadyClaimedWalk = isSameWalkDay ? snapshot.walkFlorinsClaimed : 0;
     final walkFlorins = _economyRules.walkFlorinsFromSteps(
       steps,
       alreadyClaimedWalk,
@@ -453,7 +456,7 @@ class GardenSession {
     };
     zones[zone]![slot] = Plant(
       species: species,
-      tier: brilliant ? GrowthTier.brillante : GrowthTier.commune,
+      tier: brilliant ? GrowthTier.brillante : species.rarity,
     );
     final seeds = {...inventory};
     seeds[species] = seeds[species]! - 1;
@@ -478,13 +481,13 @@ class GardenSession {
     return snapshot;
   }
 
-  Future<GardenSnapshot> buySeed(Species species, GrowthTier tier) async {
-    if (tier == GrowthTier.brillante) {
+  Future<GardenSnapshot> buySeed(Species species) async {
+    if (species.rarity == GrowthTier.brillante) {
       throw StateError('Brillant seeds cannot be purchased');
     }
-    final price = _economyRules.seedPrice(tier);
+    final price = _economyRules.seedPriceForSpecies(species);
     if (snapshot.florins < price) {
-      throw StateError('Not enough florins to buy a ${tier.name} seed');
+      throw StateError('Not enough florins to buy a ${species.label} seed');
     }
     final seeds = {...snapshot.seeds};
     seeds[species] = (seeds[species] ?? 0) + 1;
@@ -579,7 +582,11 @@ class GardenSession {
     return placedId;
   }
 
-  void _validateGridContact(Offset contact, String decorationId, ZoneType zone) {
+  void _validateGridContact(
+    Offset contact,
+    String decorationId,
+    ZoneType zone,
+  ) {
     final catalogue = const DecorationCatalogue();
     final def = catalogue.find(decorationId);
     if (def == null) return;
@@ -589,9 +596,7 @@ class GardenSession {
     final snappedDy = (contact.dy / halfCellH).round() * halfCellH;
     if ((snappedDx - contact.dx).abs() > 0.01 ||
         (snappedDy - contact.dy).abs() > 0.01) {
-      throw StateError(
-        'Contact $contact is not aligned on the 80×40 grid',
-      );
+      throw StateError('Contact $contact is not aligned on the 80×40 grid');
     }
     for (final placed in snapshot.placedDecorations) {
       if (placed.zone != zone) continue;
@@ -646,8 +651,7 @@ class GardenSession {
     }
     final removed = placements.removeAt(index);
     final owned = {...snapshot.ownedDecorations};
-    owned[removed.decorationId] =
-        (owned[removed.decorationId] ?? 0) + 1;
+    owned[removed.decorationId] = (owned[removed.decorationId] ?? 0) + 1;
     snapshot = snapshot.copyWith(
       placedDecorations: placements,
       ownedDecorations: owned,
@@ -709,7 +713,7 @@ class GardenSession {
   }
 
   HarvestReward _rollReward(Plant plant) => HarvestReward(
-    ordinarySeeds: 1 + (_roll() < plant.tier.extraOrdinarySeedChance ? 1 : 0),
+    ordinarySeeds: 1 + (_roll() < extraOrdinarySeedChance ? 1 : 0),
     brilliantSeeds:
         plant.tier == GrowthTier.brillante && _roll() < brilliantSeedChance
         ? 1
@@ -729,7 +733,7 @@ class GardenSession {
           continue;
         }
         locations.add((zone: entry.key, slot: slot));
-        requestedFlorins += plant.tier.florinsPerHarvest;
+        requestedFlorins += plant.species.pricePerHarvest;
         ordinarySeeds[plant.species] =
             (ordinarySeeds[plant.species] ?? 0) + reward.ordinarySeeds;
         if (reward.brilliantSeeds > 0) {
@@ -773,7 +777,7 @@ class GardenSession {
       }
       ordinarySeeds[plant.species] =
           (ordinarySeeds[plant.species] ?? 0) + reward.ordinarySeeds;
-      requestedFlorins += plant.tier.florinsPerHarvest;
+      requestedFlorins += plant.species.pricePerHarvest;
       if (reward.brilliantSeeds > 0) {
         brilliantSeeds[plant.species] =
             (brilliantSeeds[plant.species] ?? 0) + reward.brilliantSeeds;

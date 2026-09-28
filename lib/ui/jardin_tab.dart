@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 
 import '../garden/garden_game.dart';
 import '../garden/garden_session.dart';
-import '../garden/garden_state.dart' show brilliantSeedChance;
+import '../garden/garden_state.dart'
+    show brilliantSeedChance, extraOrdinarySeedChance;
 
 /// Onglet Jardin : segmented control des zones, viewport Flame, gestion des
 /// emplacements (planter, engrais, récolter, supprimer) et récolte groupée.
@@ -229,10 +230,7 @@ class _JardinTabState extends State<JardinTab> {
     final snapshot = widget.snapshot;
     return LayoutBuilder(
       builder: (context, constraints) {
-        final worldHeight = (constraints.maxHeight - 76.0).clamp(
-          430.0,
-          570.0,
-        );
+        final worldHeight = (constraints.maxHeight - 76.0).clamp(430.0, 570.0);
         return _buildScrollView(snapshot, worldHeight);
       },
     );
@@ -501,7 +499,7 @@ class _JardinTabState extends State<JardinTab> {
             value: plant.progressSteps / plant.nextThreshold,
           ),
           Text(
-            'Graine ordinaire garantie · bonus ${(plant.tier.extraOrdinarySeedChance * 100).round()} %'
+            'Graine ordinaire garantie · bonus ${(extraOrdinarySeedChance * 100).round()} %'
             '${plant.tier == GrowthTier.brillante ? ' · graine brillante ${(brilliantSeedChance * 100).round()} %' : ''}',
           ),
           if (plant.activeFertilizer != null)
@@ -526,9 +524,8 @@ class _JardinTabState extends State<JardinTab> {
             ),
           if (plant.isReadyToHarvest)
             TextButton.icon(
-              onPressed: () => _perform(
-                () => widget.garden.harvestPlant(zone, slot),
-              ),
+              onPressed: () =>
+                  _perform(() => widget.garden.harvestPlant(zone, slot)),
               icon: const Icon(Icons.spa),
               label: const Text('Récolter'),
             ),
@@ -582,15 +579,11 @@ class _ZoneSelector extends StatelessWidget {
   }) {
     final colorScheme = Theme.of(context).colorScheme;
     return Material(
-      color: selected
-          ? colorScheme.primaryContainer
-          : const Color(0xFFFFFCF5),
+      color: selected ? colorScheme.primaryContainer : const Color(0xFFFFFCF5),
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(14),
         side: BorderSide(
-          color: selected
-              ? colorScheme.primary
-              : const Color(0xFFE9E7DB),
+          color: selected ? colorScheme.primary : const Color(0xFFE9E7DB),
         ),
       ),
       child: InkWell(

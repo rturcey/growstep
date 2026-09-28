@@ -19,9 +19,7 @@ class EconomyRules {
   int slotPrice(ZoneType zone, int alreadyPurchased) {
     final prices = config.slotPrices[zone]!;
     if (alreadyPurchased >= prices.length) {
-      throw StateError(
-        'No more slots available to purchase in ${zone.label}',
-      );
+      throw StateError('No more slots available to purchase in ${zone.label}');
     }
     return prices[alreadyPurchased];
   }
@@ -31,6 +29,11 @@ class EconomyRules {
   /// Brilliant seeds are never sold; callers must reject [GrowthTier.brillante]
   /// before calling this.
   int seedPrice(GrowthTier tier) => config.seedPrices[tier]!;
+
+  /// Returns the price of an additional seed of [species] (sink de florins).
+  /// Brillante is never sold; ordinary species are priced by their rarity.
+  int seedPriceForSpecies(Species species) =>
+      config.seedPrices[species.rarity]!;
 
   /// Returns the price of [type] fertilizer.
   int fertilizerPrice(FertilizerType type) => config.fertilizerPrices[type]!;
