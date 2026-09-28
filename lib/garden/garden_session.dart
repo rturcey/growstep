@@ -162,6 +162,15 @@ class GardenSession {
     return snapshot;
   }
 
+  /// Chance de découvrir une brillante au palier quotidien 10k.
+  static const dailyBrillantChance = 0.03;
+
+  /// Nombre de jours sans brillante avant l'activation du pity.
+  static const pityThresholdDays = 25;
+
+  /// Multiplicateur de chance quand le pity est actif.
+  static const pityMultiplier = 3.0;
+
   GardenSnapshot _creditDailyLots(
     GardenSnapshot current,
     LocalDate day,
@@ -176,6 +185,8 @@ class GardenSession {
     var ownedDecorations = {...current.ownedDecorations};
     var discovered = {...current.discoveredSpecies};
     final claimed = {...current.claimedDailyRewards};
+    var discoveredBrilliants = {...current.discoveredBrilliants};
+    var lastBrillantDay = current.lastBrillantDiscoveryDay;
     var changed = false;
 
     for (final lot in lots) {
@@ -196,11 +207,39 @@ class GardenSession {
             (ownedDecorations[lot.decorationId!] ?? 0) + 1;
       }
       if (lot.shinySeedSpecies != null) {
-        brilliantSeeds[lot.shinySeedSpecies!] =
-            (brilliantSeeds[lot.shinySeedSpecies!] ?? 0) + 1;
+        final species = lot.shinySeedSpecies!;
+        // 1 brillante par espèce : ne pas re-découvrir.
+        if (!discoveredBrilliants.contains(species)) {
+          brilliantSeeds[species] = (brilliantSeeds[species] ?? 0) + 1;
+          discoveredBrilliants.add(species);
+          lastBrillantDay = localDayKey(_now());
+        }
       }
       claimed.add(rewardId);
       changed = true;
+    }
+
+    // Palier quotidien 10k : ~3 % de chance de brillante (espèce non
+    // découverte), avec pity invisible après ~25 jours sans découverte.
+    // Utilise un seuil distinct (-10000) pour ne pas entrer en conflit avec
+    // le lot quotidien normal du palier 10k.
+    if (reachedThresholds.contains(10000)) {
+      final brillantRewardId = DailyRewardId(day, -10000);
+      if (!claimed.contains(brillantRewardId)) {
+        final chance = _brillantChanceWithPity(
+          current.lastBrillantDiscoveryDay,
+        );
+        if (_roll() < chance) {
+          final candidate = _pickUndiscoveredBrillant(discoveredBrilliants);
+          if (candidate != null) {
+            brilliantSeeds[candidate] = (brilliantSeeds[candidate] ?? 0) + 1;
+            discoveredBrilliants.add(candidate);
+            lastBrillantDay = localDayKey(_now());
+            changed = true;
+          }
+        }
+        claimed.add(brillantRewardId);
+      }
     }
 
     if (!changed) return current;
@@ -211,7 +250,32 @@ class GardenSession {
       ownedDecorations: ownedDecorations,
       discoveredSpecies: discovered,
       claimedDailyRewards: claimed,
+      discoveredBrilliants: discoveredBrilliants,
+      lastBrillantDiscoveryDay: lastBrillantDay,
     );
+  }
+
+  /// Calcule la chance de brillante avec le pity invisible : ×3 après
+  /// [pityThresholdDays] jours sans découverte.
+  double _brillantChanceWithPity(String? lastBrillantDay) {
+    if (lastBrillantDay == null) return dailyBrillantChance;
+    final last = LocalDate.parse(lastBrillantDay);
+    final today = LocalDate.fromDateTime(_now());
+    final daysSince = today.daysSince(last);
+    if (daysSince >= pityThresholdDays) {
+      return dailyBrillantChance * pityMultiplier;
+    }
+    return dailyBrillantChance;
+  }
+
+  /// Choisit une espèce dont la brillante n'est pas encore découverte.
+  Species? _pickUndiscoveredBrillant(Set<Species> discoveredBrilliants) {
+    final candidates = Species.values
+        .where((s) => !s.isTree && !discoveredBrilliants.contains(s))
+        .toList();
+    if (candidates.isEmpty) return null;
+    final index = (_roll() * candidates.length).floor();
+    return candidates[index.clamp(0, candidates.length - 1)];
   }
 
   List<DailyLot> previewDailyLots(LocalDate day) =>
@@ -260,11 +324,16 @@ class GardenSession {
       changed = true;
     }
     if (!changed) return current;
+    final today = localDayKey(_now());
     return current.copyWith(
       ownedDecorations: ownedDecorations,
       brilliantSeeds: brilliantSeeds,
       discoveredBrilliants: discoveredBrilliants,
       claimedMilestones: claimed,
+      lastBrillantDiscoveryDay:
+          discoveredBrilliants.length > current.discoveredBrilliants.length
+          ? today
+          : current.lastBrillantDiscoveryDay,
     );
   }
 
@@ -871,12 +940,17 @@ class GardenSession {
       harvested = true;
     }
     if (!harvested) return snapshot;
+    final hadNewBrillant =
+        discoveredBrilliants.length > snapshot.discoveredBrilliants.length;
     final next = snapshot.copyWith(
       zones: zones,
       seeds: ordinarySeeds,
       brilliantSeeds: brilliantSeeds,
       discoveredSpecies: discovered,
       discoveredBrilliants: discoveredBrilliants,
+      lastBrillantDiscoveryDay: hadNewBrillant
+          ? today
+          : snapshot.lastBrillantDiscoveryDay,
       florins: snapshot.florins + grantedFlorins,
       soldToday: sales,
       salesDay: today,

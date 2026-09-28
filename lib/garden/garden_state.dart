@@ -321,6 +321,7 @@ class GardenSnapshot {
     required this.fertilizers,
     this.discoveredSpecies = const {},
     this.discoveredBrilliants = const {},
+    this.lastBrillantDiscoveryDay,
     this.totalSteps = 0,
     this.claimedMilestones = const {},
     this.soldToday = const {},
@@ -359,6 +360,7 @@ class GardenSnapshot {
     starterChoices: {},
     discoveredSpecies: {Species.tomate, Species.carotte},
     discoveredBrilliants: {},
+    lastBrillantDiscoveryDay: null,
     totalSteps: 0,
     claimedMilestones: {},
     soldToday: {},
@@ -387,6 +389,7 @@ class GardenSnapshot {
   final Set<ZoneType> starterChoices;
   final Set<Species> discoveredSpecies;
   final Set<Species> discoveredBrilliants;
+  final String? lastBrillantDiscoveryDay;
   final int totalSteps;
   final Set<int> claimedMilestones;
   final Map<Species, int> soldToday;
@@ -420,6 +423,7 @@ class GardenSnapshot {
     Set<ZoneType>? starterChoices,
     Set<Species>? discoveredSpecies,
     Set<Species>? discoveredBrilliants,
+    String? lastBrillantDiscoveryDay,
     int? totalSteps,
     Set<int>? claimedMilestones,
     Map<Species, int>? soldToday,
@@ -448,6 +452,8 @@ class GardenSnapshot {
     starterChoices: starterChoices ?? this.starterChoices,
     discoveredSpecies: discoveredSpecies ?? this.discoveredSpecies,
     discoveredBrilliants: discoveredBrilliants ?? this.discoveredBrilliants,
+    lastBrillantDiscoveryDay:
+        lastBrillantDiscoveryDay ?? this.lastBrillantDiscoveryDay,
     totalSteps: totalSteps ?? this.totalSteps,
     claimedMilestones: claimedMilestones ?? this.claimedMilestones,
     soldToday: soldToday ?? this.soldToday,
@@ -490,6 +496,7 @@ class GardenSnapshot {
     'discoveredBrilliants': discoveredBrilliants
         .map((species) => species.name)
         .toList(),
+    'lastBrillantDiscoveryDay': lastBrillantDiscoveryDay,
     'totalSteps': totalSteps,
     'claimedMilestones': claimedMilestones.toList()..sort(),
     'soldToday': {
@@ -595,6 +602,7 @@ class GardenSnapshot {
           (json['discoveredBrilliants'] as List<dynamic>? ?? [])
               .map((name) => Species.values.byName(name as String))
               .toSet(),
+      lastBrillantDiscoveryDay: json['lastBrillantDiscoveryDay'] as String?,
       totalSteps: json['totalSteps'] as int? ?? 0,
       claimedMilestones: (json['claimedMilestones'] as List<dynamic>? ?? [])
           .toSet()

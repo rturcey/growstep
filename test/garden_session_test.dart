@@ -1373,6 +1373,136 @@ void main() {
     });
   });
 
+  group('brillantes — sources complémentaires', () {
+    test(
+      'le palier quotidien 10k peut découvrir une brillante (~3 %)',
+      () async {
+        final database = GardenDatabase(NativeDatabase.memory());
+        addTearDown(database.close);
+        final initial = GardenSnapshot.initial().copyWith(
+          discoveredSpecies: Species.values.toSet(),
+        );
+        await database.save(initial);
+        final steps = FakeStepProvider(initialSteps: 10000);
+        // roll < 0.03 → découverte.
+        final garden = GardenSession(
+          database: database,
+          stepProvider: steps,
+          roll: () => 0.001,
+        );
+        await garden.load();
+        await garden.refreshSteps();
+        expect(garden.snapshot.discoveredBrilliants, isNotEmpty);
+        expect(garden.snapshot.lastBrillantDiscoveryDay, isNotNull);
+      },
+    );
+
+    test(
+      'le palier 10k ne redécouvre pas une brillante déjà trouvée',
+      () async {
+        final database = GardenDatabase(NativeDatabase.memory());
+        addTearDown(database.close);
+        final alreadyDiscovered = Species.values
+            .where((s) => !s.isTree)
+            .toSet();
+        final initial = GardenSnapshot.initial().copyWith(
+          discoveredSpecies: Species.values.toSet(),
+          discoveredBrilliants: alreadyDiscovered,
+          lastBrillantDiscoveryDay: '2020-01-01',
+        );
+        await database.save(initial);
+        final steps = FakeStepProvider(initialSteps: 10000);
+        final garden = GardenSession(
+          database: database,
+          stepProvider: steps,
+          roll: () => 0.001,
+        );
+        await garden.load();
+        await garden.refreshSteps();
+        // Toutes les brillantes non-arbres sont déjà découvertes :
+        // le roll ne produit rien.
+        expect(
+          garden.snapshot.discoveredBrilliants.length,
+          alreadyDiscovered.length,
+        );
+      },
+    );
+
+    test('le pity invisible multiplie la chance après 25 jours', () async {
+      final database = GardenDatabase(NativeDatabase.memory());
+      addTearDown(database.close);
+      // 30 jours sans brillante → pity actif (×3, donc 9 %).
+      final farPast = DateTime.now().subtract(const Duration(days: 30));
+      final farPastKey =
+          '${farPast.year.toString().padLeft(4, '0')}'
+          '-${farPast.month.toString().padLeft(2, '0')}'
+          '-${farPast.day.toString().padLeft(2, '0')}';
+      final initial = GardenSnapshot.initial().copyWith(
+        discoveredSpecies: Species.values.toSet(),
+        lastBrillantDiscoveryDay: farPastKey,
+      );
+      await database.save(initial);
+      final steps = FakeStepProvider(initialSteps: 10000);
+      // roll = 0.05 : normalement < 3 % échoue, mais < 9 % réussit.
+      final garden = GardenSession(
+        database: database,
+        stepProvider: steps,
+        roll: () => 0.05,
+      );
+      await garden.load();
+      await garden.refreshSteps();
+      expect(garden.snapshot.discoveredBrilliants, isNotEmpty);
+    });
+
+    test('le pity ne s\'active pas avant 25 jours', () async {
+      final database = GardenDatabase(NativeDatabase.memory());
+      addTearDown(database.close);
+      final recent = DateTime.now().subtract(const Duration(days: 10));
+      final recentKey =
+          '${recent.year.toString().padLeft(4, '0')}'
+          '-${recent.month.toString().padLeft(2, '0')}'
+          '-${recent.day.toString().padLeft(2, '0')}';
+      final initial = GardenSnapshot.initial().copyWith(
+        discoveredSpecies: Species.values.toSet(),
+        lastBrillantDiscoveryDay: recentKey,
+      );
+      await database.save(initial);
+      final steps = FakeStepProvider(initialSteps: 10000);
+      // roll = 0.05 : > 3 %, pas de découverte.
+      final garden = GardenSession(
+        database: database,
+        stepProvider: steps,
+        roll: () => 0.05,
+      );
+      await garden.load();
+      await garden.refreshSteps();
+      expect(garden.snapshot.discoveredBrilliants, isEmpty);
+    });
+
+    test(
+      'les graines brillantes des paliers cumulés marquent la découverte',
+      () async {
+        final database = GardenDatabase(NativeDatabase.memory());
+        addTearDown(database.close);
+        final initial = GardenSnapshot.initial().copyWith(
+          discoveredSpecies: {Species.tomate, Species.carotte},
+        );
+        await database.save(initial);
+        final steps = FakeStepProvider(initialSteps: 100000);
+        final garden = GardenSession(
+          database: database,
+          stepProvider: steps,
+          roll: () => 0.999,
+        );
+        await garden.load();
+        await garden.refreshSteps();
+        // Le palier 100k garantit une brillante.
+        expect(garden.snapshot.discoveredBrilliants, isNotEmpty);
+        expect(garden.snapshot.lastBrillantDiscoveryDay, isNotNull);
+      },
+    );
+  });
+
   group('brillantes — cadence récolte', () {
     test(
       'une récolte ordinaire peut découvrir une brillante (0,3 %, 1/espèce)',
