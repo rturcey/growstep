@@ -894,7 +894,12 @@ void main() {
     test('acheter une graine d’arbre débite le prix commune (20)', () async {
       final database = GardenDatabase(NativeDatabase.memory());
       addTearDown(database.close);
-      await database.save(GardenSnapshot.initial().copyWith(florins: 100));
+      await database.save(
+        GardenSnapshot.initial().copyWith(
+          florins: 100,
+          discoveredSpecies: {Species.tomate, Species.carotte, Species.pommier},
+        ),
+      );
       final garden = GardenSession(
         database: database,
         stepProvider: FakeStepProvider(),
@@ -1045,7 +1050,16 @@ void main() {
       () async {
         final database = GardenDatabase(NativeDatabase.memory());
         addTearDown(database.close);
-        await database.save(GardenSnapshot.initial().copyWith(florins: 100));
+        await database.save(
+          GardenSnapshot.initial().copyWith(
+            florins: 100,
+            discoveredSpecies: {
+              Species.tomate,
+              Species.carotte,
+              Species.pommier,
+            },
+          ),
+        );
         final garden = GardenSession(
           database: database,
           stepProvider: FakeStepProvider(),
@@ -1131,6 +1145,66 @@ void main() {
         expect(garden.snapshot.brilliantSeeds[Species.tomate], 0);
       },
     );
+  });
+
+  group('espèce découverte ≠ graine consommable', () {
+    test('choisir une graine de départ découvre l’espèce', () async {
+      final database = GardenDatabase(NativeDatabase.memory());
+      addTearDown(database.close);
+      final garden = GardenSession(
+        database: database,
+        stepProvider: FakeStepProvider(),
+      );
+      await garden.load();
+
+      expect(
+        garden.snapshot.discoveredSpecies.contains(Species.tournesol),
+        isFalse,
+      );
+      await garden.chooseStarterSeed(Species.tournesol);
+      expect(garden.snapshot.discoveredSpecies, contains(Species.tournesol));
+    });
+
+    test('la boutique refuse une graine d’espèce non découverte', () async {
+      final database = GardenDatabase(NativeDatabase.memory());
+      addTearDown(database.close);
+      await database.save(GardenSnapshot.initial().copyWith(florins: 100));
+      final garden = GardenSession(
+        database: database,
+        stepProvider: FakeStepProvider(),
+      );
+      await garden.load();
+
+      expect(
+        garden.snapshot.discoveredSpecies.contains(Species.tournesol),
+        isFalse,
+      );
+      expect(() => garden.buySeed(Species.tournesol), throwsStateError);
+      expect(garden.snapshot.florins, 100);
+    });
+
+    test('une espèce découverte reste découverte au redémarrage', () async {
+      final directory = await Directory.systemTemp.createTemp('growstep-disc-');
+      addTearDown(() => directory.delete(recursive: true));
+      final file = File('${directory.path}/garden.sqlite');
+      final database = GardenDatabase(NativeDatabase(file));
+      final garden = GardenSession(
+        database: database,
+        stepProvider: FakeStepProvider(),
+      );
+      await garden.load();
+      await garden.chooseStarterSeed(Species.tournesol);
+      await database.close();
+
+      final reopenedDatabase = GardenDatabase(NativeDatabase(file));
+      addTearDown(reopenedDatabase.close);
+      final reopened = GardenSession(
+        database: reopenedDatabase,
+        stepProvider: FakeStepProvider(),
+      );
+      await reopened.load();
+      expect(reopened.snapshot.discoveredSpecies, contains(Species.tournesol));
+    });
   });
 
   group('boutique et inventaire de décors', () {

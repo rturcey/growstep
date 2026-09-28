@@ -319,6 +319,7 @@ class GardenSnapshot {
     required this.creditedSteps,
     required this.florins,
     required this.fertilizers,
+    this.discoveredSpecies = const {},
     this.harvestFlorinsDay,
     this.harvestFlorinsClaimed = 0,
     this.starterFertilizerGranted = false,
@@ -355,6 +356,7 @@ class GardenSnapshot {
     seeds: {},
     brilliantSeeds: {},
     starterChoices: {},
+    discoveredSpecies: {Species.tomate, Species.carotte},
     creditedDay: null,
     creditedSteps: 0,
     florins: 0,
@@ -381,6 +383,7 @@ class GardenSnapshot {
   final Map<Species, int> seeds;
   final Map<Species, int> brilliantSeeds;
   final Set<ZoneType> starterChoices;
+  final Set<Species> discoveredSpecies;
   final String? creditedDay;
   final int creditedSteps;
   final int florins;
@@ -412,6 +415,7 @@ class GardenSnapshot {
     Map<Species, int>? seeds,
     Map<Species, int>? brilliantSeeds,
     Set<ZoneType>? starterChoices,
+    Set<Species>? discoveredSpecies,
     String? creditedDay,
     int? creditedSteps,
     int? florins,
@@ -438,6 +442,7 @@ class GardenSnapshot {
     seeds: seeds ?? this.seeds,
     brilliantSeeds: brilliantSeeds ?? this.brilliantSeeds,
     starterChoices: starterChoices ?? this.starterChoices,
+    discoveredSpecies: discoveredSpecies ?? this.discoveredSpecies,
     creditedDay: creditedDay ?? this.creditedDay,
     creditedSteps: creditedSteps ?? this.creditedSteps,
     florins: florins ?? this.florins,
@@ -474,6 +479,9 @@ class GardenSnapshot {
       for (final entry in brilliantSeeds.entries) entry.key.name: entry.value,
     },
     'starterChoices': starterChoices.map((zone) => zone.name).toList(),
+    'discoveredSpecies': discoveredSpecies
+        .map((species) => species.name)
+        .toList(),
     'creditedDay': creditedDay,
     'creditedSteps': creditedSteps,
     'florins': florins,
@@ -569,6 +577,9 @@ class GardenSnapshot {
       },
       starterChoices: (json['starterChoices'] as List<dynamic>)
           .map((name) => ZoneType.values.byName(name as String))
+          .toSet(),
+      discoveredSpecies: (json['discoveredSpecies'] as List<dynamic>? ?? [])
+          .map((name) => Species.values.byName(name as String))
           .toSet(),
       creditedDay: json['creditedDay'] as String?,
       creditedSteps: json['creditedSteps'] as int,

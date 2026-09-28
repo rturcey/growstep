@@ -181,6 +181,7 @@ class GardenSession {
     var brilliantSeeds = {...current.brilliantSeeds};
     var fertilizers = {...current.fertilizers};
     var ownedDecorations = {...current.ownedDecorations};
+    var discovered = {...current.discoveredSpecies};
     final claimed = {...current.claimedDailyRewards};
     var changed = false;
 
@@ -192,6 +193,7 @@ class GardenSession {
       florins += lot.florins;
       if (lot.seedSpecies != null) {
         seeds[lot.seedSpecies!] = (seeds[lot.seedSpecies!] ?? 0) + 1;
+        discovered.add(lot.seedSpecies!);
       }
       if (lot.fertilizerType != null) {
         fertilizers[lot.fertilizerType!] =
@@ -216,6 +218,7 @@ class GardenSession {
       brilliantSeeds: brilliantSeeds,
       fertilizers: fertilizers,
       ownedDecorations: ownedDecorations,
+      discoveredSpecies: discovered,
       claimedDailyRewards: claimed,
     );
   }
@@ -378,7 +381,12 @@ class GardenSession {
     final choices = {...snapshot.starterChoices, species.zone};
     final seeds = {...snapshot.seeds};
     seeds[species] = (seeds[species] ?? 0) + 1;
-    snapshot = snapshot.copyWith(seeds: seeds, starterChoices: choices);
+    final discovered = {...snapshot.discoveredSpecies, species};
+    snapshot = snapshot.copyWith(
+      seeds: seeds,
+      starterChoices: choices,
+      discoveredSpecies: discovered,
+    );
     await _store.save(snapshot);
     return snapshot;
   }
@@ -484,6 +492,9 @@ class GardenSession {
   Future<GardenSnapshot> buySeed(Species species) async {
     if (species.rarity == GrowthTier.brillante) {
       throw StateError('Brillant seeds cannot be purchased');
+    }
+    if (!snapshot.discoveredSpecies.contains(species)) {
+      throw StateError('${species.label} is not discovered yet');
     }
     final price = _economyRules.seedPriceForSpecies(species);
     if (snapshot.florins < price) {
@@ -763,6 +774,7 @@ class GardenSession {
     };
     final ordinarySeeds = {...snapshot.seeds};
     final brilliantSeeds = {...snapshot.brilliantSeeds};
+    final discovered = {...snapshot.discoveredSpecies};
     var harvested = false;
     var requestedFlorins = 0;
     for (final location in locations.toSet()) {
@@ -777,6 +789,7 @@ class GardenSession {
       }
       ordinarySeeds[plant.species] =
           (ordinarySeeds[plant.species] ?? 0) + reward.ordinarySeeds;
+      discovered.add(plant.species);
       requestedFlorins += plant.species.pricePerHarvest;
       if (reward.brilliantSeeds > 0) {
         brilliantSeeds[plant.species] =
@@ -798,6 +811,7 @@ class GardenSession {
       zones: zones,
       seeds: ordinarySeeds,
       brilliantSeeds: brilliantSeeds,
+      discoveredSpecies: discovered,
       florins: snapshot.florins + grantedFlorins,
       harvestFlorinsDay: harvestDay,
       harvestFlorinsClaimed: alreadyClaimed + grantedFlorins,
