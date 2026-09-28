@@ -134,7 +134,7 @@ String localDayKey(DateTime date) =>
     '${date.year.toString().padLeft(4, '0')}-${date.month.toString().padLeft(2, '0')}-${date.day.toString().padLeft(2, '0')}';
 
 class HarvestReward {
-  const HarvestReward({required this.ordinarySeeds, this.brilliantSeeds = 0});
+  const HarvestReward({this.ordinarySeeds = 0, this.brilliantSeeds = 0});
 
   final int ordinarySeeds;
   final int brilliantSeeds;

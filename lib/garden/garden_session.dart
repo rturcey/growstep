@@ -72,6 +72,8 @@ class GardenSession {
 
   final GardenStore _store;
   final DateTime Function() _now;
+  // Injecté : servira à la cadence des brillantes (T10/T11).
+  // ignore: unused_field
   final double Function() _roll;
   final StepProvider stepProvider;
   final EconomyConfig economyConfig;
@@ -479,12 +481,30 @@ class GardenSession {
     if (slot < 0 || slot >= snapshot.zones[zone]!.length) {
       throw RangeError.index(slot, snapshot.zones[zone]!);
     }
-    if (snapshot.zones[zone]![slot] == null) return snapshot;
+    final plant = snapshot.zones[zone]![slot];
+    if (plant == null) return snapshot;
     final zones = {
       for (final entry in snapshot.zones.entries) entry.key: [...entry.value],
     };
     zones[zone]![slot] = null;
-    snapshot = snapshot.copyWith(zones: zones);
+    // Supprimer une plante rend sa graine (jamais de perte).
+    final isBrilliant = plant.tier == GrowthTier.brillante;
+    final inventory = isBrilliant
+        ? {...snapshot.brilliantSeeds}
+        : {...snapshot.seeds};
+    inventory[plant.species] = (inventory[plant.species] ?? 0) + 1;
+    final discovered = {...snapshot.discoveredSpecies, plant.species};
+    snapshot = isBrilliant
+        ? snapshot.copyWith(
+            zones: zones,
+            brilliantSeeds: inventory,
+            discoveredSpecies: discovered,
+          )
+        : snapshot.copyWith(
+            zones: zones,
+            seeds: inventory,
+            discoveredSpecies: discovered,
+          );
     await _store.save(snapshot);
     return snapshot;
   }
@@ -723,13 +743,19 @@ class GardenSession {
     return changed ? zones : null;
   }
 
-  HarvestReward _rollReward(Plant plant) => HarvestReward(
-    ordinarySeeds: 1 + (_roll() < extraOrdinarySeedChance ? 1 : 0),
-    brilliantSeeds:
-        plant.tier == GrowthTier.brillante && _roll() < brilliantSeedChance
-        ? 1
-        : 0,
-  );
+  HarvestReward _rollReward(Plant plant) {
+    if (plant.species.isTree) {
+      // Un arbre reste en place : on récolte ses fruits, pas de graine.
+      return const HarvestReward();
+    }
+    if (plant.tier == GrowthTier.brillante) {
+      // Une brillante récoltée rend sa graine brillante (on ne détruit jamais
+      // l'objet rare) ; les produits normaux sont vendus au marché.
+      return const HarvestReward(brilliantSeeds: 1);
+    }
+    // Culture ordinaire : graine de la même espèce garantie, pas de bonus.
+    return const HarvestReward(ordinarySeeds: 1);
+  }
 
   HarvestPreview previewReadyHarvests() {
     final locations = <PlantLocation>[];
@@ -745,8 +771,10 @@ class GardenSession {
         }
         locations.add((zone: entry.key, slot: slot));
         requestedFlorins += plant.species.pricePerHarvest;
-        ordinarySeeds[plant.species] =
-            (ordinarySeeds[plant.species] ?? 0) + reward.ordinarySeeds;
+        if (reward.ordinarySeeds > 0) {
+          ordinarySeeds[plant.species] =
+              (ordinarySeeds[plant.species] ?? 0) + reward.ordinarySeeds;
+        }
         if (reward.brilliantSeeds > 0) {
           brilliantSeeds[plant.species] =
               (brilliantSeeds[plant.species] ?? 0) + reward.brilliantSeeds;
@@ -787,15 +815,19 @@ class GardenSession {
       if (plant == null || !plant.isReadyToHarvest || reward == null) {
         continue;
       }
-      ordinarySeeds[plant.species] =
-          (ordinarySeeds[plant.species] ?? 0) + reward.ordinarySeeds;
+      if (reward.ordinarySeeds > 0) {
+        ordinarySeeds[plant.species] =
+            (ordinarySeeds[plant.species] ?? 0) + reward.ordinarySeeds;
+      }
       discovered.add(plant.species);
       requestedFlorins += plant.species.pricePerHarvest;
       if (reward.brilliantSeeds > 0) {
         brilliantSeeds[plant.species] =
             (brilliantSeeds[plant.species] ?? 0) + reward.brilliantSeeds;
       }
-      slots[location.slot] = plant.nextCycle();
+      // Un arbre reste en place (production persistante) ; une culture est
+      // retirée et libère l'emplacement.
+      slots[location.slot] = plant.species.isTree ? plant.nextCycle() : null;
       harvested = true;
     }
     if (!harvested) return snapshot;
