@@ -690,9 +690,9 @@ void main() {
       expect(config.seedPrices[GrowthTier.commune], 20);
       expect(config.seedPrices[GrowthTier.peuCommune], 40);
       expect(config.seedPrices[GrowthTier.rare], 80);
-      expect(config.fertilizerPrices[FertilizerType.basique], 10);
-      expect(config.fertilizerPrices[FertilizerType.superEngrais], 20);
-      expect(config.fertilizerPrices[FertilizerType.mega], 40);
+      expect(config.fertilizerPrices[FertilizerType.basique], 25);
+      expect(config.fertilizerPrices[FertilizerType.superEngrais], 45);
+      expect(config.fertilizerPrices[FertilizerType.mega], 70);
     });
 
     test('EconomyRules calcule le prix d\'emplacement par zone et rang', () {
@@ -915,7 +915,7 @@ void main() {
       expect(garden.snapshot.brilliantSeeds[Species.tomate], isNull);
     });
 
-    test('acheter un engrais basique débite 10 florins', () async {
+    test('acheter un engrais basique débite 25 florins', () async {
       final database = GardenDatabase(NativeDatabase.memory());
       addTearDown(database.close);
       await database.save(
@@ -931,11 +931,11 @@ void main() {
       await garden.load();
 
       await garden.buyFertilizer(FertilizerType.basique);
-      expect(garden.snapshot.florins, 90);
+      expect(garden.snapshot.florins, 75);
       expect(garden.snapshot.fertilizers[FertilizerType.basique], 1);
     });
 
-    test('acheter un engrais méga débite 40 florins', () async {
+    test('acheter un engrais méga débite 70 florins', () async {
       final database = GardenDatabase(NativeDatabase.memory());
       addTearDown(database.close);
       await database.save(
@@ -951,7 +951,7 @@ void main() {
       await garden.load();
 
       await garden.buyFertilizer(FertilizerType.mega);
-      expect(garden.snapshot.florins, 60);
+      expect(garden.snapshot.florins, 30);
       expect(garden.snapshot.fertilizers[FertilizerType.mega], 1);
     });
 
@@ -976,6 +976,26 @@ void main() {
       );
       expect(garden.snapshot.florins, 5);
     });
+
+    test(
+      'un engrais acheté n’a jamais un rendement en florins supérieur à son prix',
+      () {
+        final config = EconomyConfig.defaults();
+        // Gain marginal maximal = prix de la récolte d’une espèce rare (21)
+        // sous quota. Aucune espèce rare n’existe encore, donc le maximum
+        // actuel est le prix commune (5), toujours < 25.
+        final maxMarginalGain = 21;
+        for (final type in FertilizerType.values) {
+          expect(
+            config.fertilizerPrices[type]!,
+            greaterThan(maxMarginalGain),
+            reason:
+                '${type.label} (${config.fertilizerPrices[type]}) doit dépasser '
+                'le gain marginal max ($maxMarginalGain)',
+          );
+        }
+      },
+    );
 
     test(
       'supprimer des graines excédentaires ne donne pas de florins',

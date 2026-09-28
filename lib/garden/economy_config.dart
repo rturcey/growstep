@@ -24,9 +24,9 @@ class EconomyConfig {
         GrowthTier.rare: 80,
       },
       fertilizerPrices = const {
-        FertilizerType.basique: 10,
-        FertilizerType.superEngrais: 20,
-        FertilizerType.mega: 40,
+        FertilizerType.basique: 25,
+        FertilizerType.superEngrais: 45,
+        FertilizerType.mega: 70,
       },
       decorationPrices = const {
         'arrosoir': 15,
