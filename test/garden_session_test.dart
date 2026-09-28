@@ -1286,6 +1286,96 @@ void main() {
     });
   });
 
+  group('brillantes — cadence récolte', () {
+    test(
+      'une récolte ordinaire peut découvrir une brillante (0,3 %, 1/espèce)',
+      () async {
+        final database = GardenDatabase(NativeDatabase.memory());
+        addTearDown(database.close);
+        final initial = GardenSnapshot.initial().copyWith(florins: 0);
+        final zones = {
+          for (final entry in initial.zones.entries)
+            entry.key: [...entry.value],
+        };
+        zones[ZoneType.potager]![0] = const Plant(
+          species: Species.tomate,
+          progressSteps: 1000,
+        );
+        await database.save(initial.copyWith(zones: zones));
+        // roll < 0.003 → découverte.
+        final garden = GardenSession(
+          database: database,
+          stepProvider: FakeStepProvider(),
+          roll: () => 0.001,
+        );
+        await garden.load();
+        await garden.harvestPlant(ZoneType.potager, 0);
+        expect(garden.snapshot.brilliantSeeds[Species.tomate], 1);
+        expect(garden.snapshot.discoveredBrilliants, contains(Species.tomate));
+      },
+    );
+
+    test(
+      'une brillante déjà découverte ne se redécouvre pas à la récolte',
+      () async {
+        final database = GardenDatabase(NativeDatabase.memory());
+        addTearDown(database.close);
+        final initial = GardenSnapshot.initial().copyWith(
+          florins: 0,
+          discoveredBrilliants: {Species.tomate},
+        );
+        final zones = {
+          for (final entry in initial.zones.entries)
+            entry.key: [...entry.value],
+        };
+        zones[ZoneType.potager]![0] = const Plant(
+          species: Species.tomate,
+          progressSteps: 1000,
+        );
+        await database.save(initial.copyWith(zones: zones));
+        final garden = GardenSession(
+          database: database,
+          stepProvider: FakeStepProvider(),
+          roll: () => 0.001,
+        );
+        await garden.load();
+        await garden.harvestPlant(ZoneType.potager, 0);
+        expect(garden.snapshot.brilliantSeeds[Species.tomate], isNull);
+      },
+    );
+
+    test(
+      'récolter une plante brillante rend sa graine brillante garantie',
+      () async {
+        final database = GardenDatabase(NativeDatabase.memory());
+        addTearDown(database.close);
+        final initial = GardenSnapshot.initial().copyWith(florins: 0);
+        final zones = {
+          for (final entry in initial.zones.entries)
+            entry.key: [...entry.value],
+        };
+        zones[ZoneType.jardinFleuri]![0] = const Plant(
+          species: Species.tournesol,
+          tier: GrowthTier.brillante,
+          progressSteps: 15000,
+        );
+        await database.save(initial.copyWith(zones: zones));
+        final garden = GardenSession(
+          database: database,
+          stepProvider: FakeStepProvider(),
+          roll: () => 0.999,
+        );
+        await garden.load();
+        await garden.harvestPlant(ZoneType.jardinFleuri, 0);
+        expect(garden.snapshot.brilliantSeeds[Species.tournesol], 1);
+        expect(
+          garden.snapshot.discoveredBrilliants,
+          contains(Species.tournesol),
+        );
+      },
+    );
+  });
+
   group('boutique et inventaire de décors', () {
     test(
       'acheter un décor ajoute à l\'inventaire et débite les florins',

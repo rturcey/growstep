@@ -725,6 +725,12 @@ class GardenSession {
       return const HarvestReward(brilliantSeeds: 1);
     }
     // Culture ordinaire : graine de la même espèce garantie, pas de bonus.
+    // 0,3 % de chance de découvrir la brillante de l'espèce, uniquement si
+    // elle n'est pas encore découverte.
+    if (!snapshot.discoveredBrilliants.contains(plant.species) &&
+        _roll() < ordinaryBrillantDiscoveryChance) {
+      return const HarvestReward(ordinarySeeds: 1, brilliantSeeds: 1);
+    }
     return const HarvestReward(ordinarySeeds: 1);
   }
 
@@ -774,6 +780,7 @@ class GardenSession {
     final ordinarySeeds = {...snapshot.seeds};
     final brilliantSeeds = {...snapshot.brilliantSeeds};
     final discovered = {...snapshot.discoveredSpecies};
+    final discoveredBrilliants = {...snapshot.discoveredBrilliants};
     final today = localDayKey(_now());
     final sales = snapshot.salesDay == today
         ? {...snapshot.soldToday}
@@ -802,6 +809,8 @@ class GardenSession {
       if (reward.brilliantSeeds > 0) {
         brilliantSeeds[plant.species] =
             (brilliantSeeds[plant.species] ?? 0) + reward.brilliantSeeds;
+        // La brillante de l'espèce est désormais découverte (1 par espèce).
+        discoveredBrilliants.add(plant.species);
       }
       // Un arbre reste en place (production persistante) ; une culture est
       // retirée et libère l'emplacement.
@@ -814,6 +823,7 @@ class GardenSession {
       seeds: ordinarySeeds,
       brilliantSeeds: brilliantSeeds,
       discoveredSpecies: discovered,
+      discoveredBrilliants: discoveredBrilliants,
       florins: snapshot.florins + grantedFlorins,
       soldToday: sales,
       salesDay: today,

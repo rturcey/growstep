@@ -111,6 +111,7 @@ enum GrowthTier {
 
 const brilliantSeedChance = 0.05;
 const extraOrdinarySeedChance = 0.5;
+const ordinaryBrillantDiscoveryChance = 0.003;
 
 enum FertilizerType {
   basique('Basique', 5),
@@ -319,6 +320,7 @@ class GardenSnapshot {
     required this.florins,
     required this.fertilizers,
     this.discoveredSpecies = const {},
+    this.discoveredBrilliants = const {},
     this.soldToday = const {},
     this.salesDay,
     this.starterFertilizerGranted = false,
@@ -354,6 +356,7 @@ class GardenSnapshot {
     brilliantSeeds: {},
     starterChoices: {},
     discoveredSpecies: {Species.tomate, Species.carotte},
+    discoveredBrilliants: {},
     soldToday: {},
     salesDay: null,
     creditedDay: null,
@@ -379,6 +382,7 @@ class GardenSnapshot {
   final Map<Species, int> brilliantSeeds;
   final Set<ZoneType> starterChoices;
   final Set<Species> discoveredSpecies;
+  final Set<Species> discoveredBrilliants;
   final Map<Species, int> soldToday;
   final String? salesDay;
   final String? creditedDay;
@@ -409,6 +413,7 @@ class GardenSnapshot {
     Map<Species, int>? brilliantSeeds,
     Set<ZoneType>? starterChoices,
     Set<Species>? discoveredSpecies,
+    Set<Species>? discoveredBrilliants,
     Map<Species, int>? soldToday,
     String? salesDay,
     String? creditedDay,
@@ -434,6 +439,7 @@ class GardenSnapshot {
     brilliantSeeds: brilliantSeeds ?? this.brilliantSeeds,
     starterChoices: starterChoices ?? this.starterChoices,
     discoveredSpecies: discoveredSpecies ?? this.discoveredSpecies,
+    discoveredBrilliants: discoveredBrilliants ?? this.discoveredBrilliants,
     soldToday: soldToday ?? this.soldToday,
     salesDay: salesDay ?? this.salesDay,
     creditedDay: creditedDay ?? this.creditedDay,
@@ -469,6 +475,9 @@ class GardenSnapshot {
     },
     'starterChoices': starterChoices.map((zone) => zone.name).toList(),
     'discoveredSpecies': discoveredSpecies
+        .map((species) => species.name)
+        .toList(),
+    'discoveredBrilliants': discoveredBrilliants
         .map((species) => species.name)
         .toList(),
     'soldToday': {
@@ -570,6 +579,10 @@ class GardenSnapshot {
       discoveredSpecies: (json['discoveredSpecies'] as List<dynamic>? ?? [])
           .map((name) => Species.values.byName(name as String))
           .toSet(),
+      discoveredBrilliants:
+          (json['discoveredBrilliants'] as List<dynamic>? ?? [])
+              .map((name) => Species.values.byName(name as String))
+              .toSet(),
       soldToday: {
         for (final entry
             in (json['soldToday'] as Map<String, dynamic>? ?? {}).entries)
