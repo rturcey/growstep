@@ -1,6 +1,6 @@
 # Growstep
 
-Application iPhone locale où la marche fait évoluer un jardin isométrique. Le [game design](docs/game-design.md) décrit les règles retenues ; cette tranche implémente les issues [#11](https://github.com/rturcey/growstep/issues/11), [#12](https://github.com/rturcey/growstep/issues/12), [#13](https://github.com/rturcey/growstep/issues/13), [#15](https://github.com/rturcey/growstep/issues/15) et [#17](https://github.com/rturcey/growstep/issues/17).
+Application iPhone locale où la marche fait évoluer un jardin en 2D orthogonale. Le [game design](docs/game-design.md) décrit les règles retenues ; cette tranche implémente les issues [#11](https://github.com/rturcey/growstep/issues/11), [#12](https://github.com/rturcey/growstep/issues/12), [#13](https://github.com/rturcey/growstep/issues/13), [#15](https://github.com/rturcey/growstep/issues/15) et [#17](https://github.com/rturcey/growstep/issues/17).
 
 Le joueur choisit une graine commune offerte dans chaque zone, plante dans le potager, le jardin fleuri ou le verger, puis voit les mêmes nouveaux pas faire progresser toutes ses plantes. Une plante mûre attend la récolte, donne des graines et des florins, puis relance un cycle de production. Un engrais basique offert permet de tester l'accélération d'une plante. Les pas sont encore simulés dans cette tranche ; la lecture iPhone appartient à [#14](https://github.com/rturcey/growstep/issues/14). Les lots quotidiens et les achats seront ajoutés dans les issues suivantes.
 

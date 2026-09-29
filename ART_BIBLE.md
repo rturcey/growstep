@@ -1,5 +1,12 @@
 # Growstep — bible graphique
 
+> **Statut : supersedée pour la direction artistique.** La vue isométrique 80 × 40,
+> le diorama et les surface tiles décrits ci-dessous ne constituent plus la
+> direction du produit. La direction actuelle est la **2D orthogonale top-down**,
+> documentée dans [docs/art-direction.md](docs/art-direction.md). Cette bible reste
+> consultable pour les conventions d'assets et le vocabulaire qui restent valables
+> hors projection.
+
 > Statut : accepté. Cette bible fixe les règles de production des assets Growstep.
 
 ## Autorité et intention
