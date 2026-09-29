@@ -68,8 +68,10 @@ void main() {
     expect(find.text('Potager'), findsWidgets);
     expect(find.text('Votre potager'), findsOneWidget);
 
-    // Tap the front-left planting location (stable anchor 75, 310).
-    await tester.tapAt(slotScreen(tester, const Offset(75, 310)));
+    // Tap stable potager slot 2 from the orthogonal map.
+    await tester.tapAt(
+      slotScreen(tester, GardenGame.anchorsFor(ZoneType.potager)[2]),
+    );
     await tester.pump(const Duration(milliseconds: 200));
     expect(find.text('Emplacement 3'), findsOneWidget);
     expect(tester.takeException(), isNull);
@@ -85,7 +87,9 @@ void main() {
       expect(viewport.height, greaterThanOrEqualTo(430));
       expect(find.text('Potager'), findsWidgets);
 
-      await tester.tapAt(slotScreen(tester, const Offset(75, 310)));
+      await tester.tapAt(
+        slotScreen(tester, GardenGame.anchorsFor(ZoneType.potager)[2]),
+      );
       await tester.pump(const Duration(milliseconds: 200));
       expect(find.text('Emplacement 3'), findsOneWidget);
       expect(tester.takeException(), isNull);
@@ -109,7 +113,7 @@ void main() {
   });
 
   for (final size in [const Size(390, 844), const Size(375, 667)]) {
-    testWidgets('les huit contacts historiques restent tapables à $size', (
+    testWidgets('les huit contacts 2D restent tapables à $size', (
       tester,
     ) async {
       await pumpApp(tester, size: size, allPotagerSlots: true);
