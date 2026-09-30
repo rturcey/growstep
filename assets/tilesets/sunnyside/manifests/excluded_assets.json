@@ -1,0 +1,1681 @@
+{
+  "reason": "Assets deliberately not part of the map tilesets.",
+  "items": [
+    {
+      "reason": "UI (bars, cursors, labels, 9-slice, icons)",
+      "asset": "arrow_left"
+    },
+    {
+      "reason": "UI (bars, cursors, labels, 9-slice, icons)",
+      "asset": "arrow_right"
+    },
+    {
+      "reason": "UI (bars, cursors, labels, 9-slice, icons)",
+      "asset": "arrow_up"
+    },
+    {
+      "reason": "UI (bars, cursors, labels, 9-slice, icons)",
+      "asset": "arrow_up_1"
+    },
+    {
+      "reason": "UI (bars, cursors, labels, 9-slice, icons)",
+      "asset": "axe"
+    },
+    {
+      "reason": "UI (bars, cursors, labels, 9-slice, icons)",
+      "asset": "basket"
+    },
+    {
+      "reason": "UI (bars, cursors, labels, 9-slice, icons)",
+      "asset": "bluebar_00"
+    },
+    {
+      "reason": "UI (bars, cursors, labels, 9-slice, icons)",
+      "asset": "bluebar_01"
+    },
+    {
+      "reason": "UI (bars, cursors, labels, 9-slice, icons)",
+      "asset": "bluebar_02"
+    },
+    {
+      "reason": "UI (bars, cursors, labels, 9-slice, icons)",
+      "asset": "bluebar_03"
+    },
+    {
+      "reason": "UI (bars, cursors, labels, 9-slice, icons)",
+      "asset": "bluebar_04"
+    },
+    {
+      "reason": "UI (bars, cursors, labels, 9-slice, icons)",
+      "asset": "bluebar_05"
+    },
+    {
+      "reason": "UI (bars, cursors, labels, 9-slice, icons)",
+      "asset": "cancel"
+    },
+    {
+      "reason": "UI (bars, cursors, labels, 9-slice, icons)",
+      "asset": "confirm"
+    },
+    {
+      "reason": "UI (bars, cursors, labels, 9-slice, icons)",
+      "asset": "cursor_01"
+    },
+    {
+      "reason": "UI (bars, cursors, labels, 9-slice, icons)",
+      "asset": "cursor_02"
+    },
+    {
+      "reason": "UI (bars, cursors, labels, 9-slice, icons)",
+      "asset": "cursor_03"
+    },
+    {
+      "reason": "UI (bars, cursors, labels, 9-slice, icons)",
+      "asset": "cursor_04"
+    },
+    {
+      "reason": "UI (bars, cursors, labels, 9-slice, icons)",
+      "asset": "cursor_05"
+    },
+    {
+      "reason": "UI (bars, cursors, labels, 9-slice, icons)",
+      "asset": "dt_box_9slice_bc"
+    },
+    {
+      "reason": "UI (bars, cursors, labels, 9-slice, icons)",
+      "asset": "dt_box_9slice_bl"
+    },
+    {
+      "reason": "UI (bars, cursors, labels, 9-slice, icons)",
+      "asset": "dt_box_9slice_br"
+    },
+    {
+      "reason": "UI (bars, cursors, labels, 9-slice, icons)",
+      "asset": "dt_box_9slice_c"
+    },
+    {
+      "reason": "UI (bars, cursors, labels, 9-slice, icons)",
+      "asset": "dt_box_9slice_lc"
+    },
+    {
+      "reason": "UI (bars, cursors, labels, 9-slice, icons)",
+      "asset": "dt_box_9slice_rc"
+    },
+    {
+      "reason": "UI (bars, cursors, labels, 9-slice, icons)",
+      "asset": "dt_box_9slice_tc"
+    },
+    {
+      "reason": "UI (bars, cursors, labels, 9-slice, icons)",
+      "asset": "dt_box_9slice_tl"
+    },
+    {
+      "reason": "UI (bars, cursors, labels, 9-slice, icons)",
+      "asset": "dt_box_9slice_tr"
+    },
+    {
+      "reason": "UI (bars, cursors, labels, 9-slice, icons)",
+      "asset": "expression_alerted"
+    },
+    {
+      "reason": "UI (bars, cursors, labels, 9-slice, icons)",
+      "asset": "expression_attack"
+    },
+    {
+      "reason": "UI (bars, cursors, labels, 9-slice, icons)",
+      "asset": "expression_chat"
+    },
+    {
+      "reason": "UI (bars, cursors, labels, 9-slice, icons)",
+      "asset": "expression_confused"
+    },
+    {
+      "reason": "UI (bars, cursors, labels, 9-slice, icons)",
+      "asset": "expression_confused_1"
+    },
+    {
+      "reason": "UI (bars, cursors, labels, 9-slice, icons)",
+      "asset": "expression_love"
+    },
+    {
+      "reason": "UI (bars, cursors, labels, 9-slice, icons)",
+      "asset": "expression_stress"
+    },
+    {
+      "reason": "UI (bars, cursors, labels, 9-slice, icons)",
+      "asset": "expression_working"
+    },
+    {
+      "reason": "UI (bars, cursors, labels, 9-slice, icons)",
+      "asset": "greenbar_00"
+    },
+    {
+      "reason": "UI (bars, cursors, labels, 9-slice, icons)",
+      "asset": "greenbar_01"
+    },
+    {
+      "reason": "UI (bars, cursors, labels, 9-slice, icons)",
+      "asset": "greenbar_02"
+    },
+    {
+      "reason": "UI (bars, cursors, labels, 9-slice, icons)",
+      "asset": "greenbar_03"
+    },
+    {
+      "reason": "UI (bars, cursors, labels, 9-slice, icons)",
+      "asset": "greenbar_04"
+    },
+    {
+      "reason": "UI (bars, cursors, labels, 9-slice, icons)",
+      "asset": "greenbar_05"
+    },
+    {
+      "reason": "UI (bars, cursors, labels, 9-slice, icons)",
+      "asset": "greenbar_06"
+    },
+    {
+      "reason": "UI (bars, cursors, labels, 9-slice, icons)",
+      "asset": "greenbar_06_1"
+    },
+    {
+      "reason": "UI (bars, cursors, labels, 9-slice, icons)",
+      "asset": "hammer"
+    },
+    {
+      "reason": "UI (bars, cursors, labels, 9-slice, icons)",
+      "asset": "hand_closed_01"
+    },
+    {
+      "reason": "UI (bars, cursors, labels, 9-slice, icons)",
+      "asset": "hand_closed_02"
+    },
+    {
+      "reason": "UI (bars, cursors, labels, 9-slice, icons)",
+      "asset": "hand_open_01"
+    },
+    {
+      "reason": "UI (bars, cursors, labels, 9-slice, icons)",
+      "asset": "hand_open_02"
+    },
+    {
+      "reason": "UI (bars, cursors, labels, 9-slice, icons)",
+      "asset": "happiness_01"
+    },
+    {
+      "reason": "UI (bars, cursors, labels, 9-slice, icons)",
+      "asset": "happiness_02"
+    },
+    {
+      "reason": "UI (bars, cursors, labels, 9-slice, icons)",
+      "asset": "happiness_03"
+    },
+    {
+      "reason": "UI (bars, cursors, labels, 9-slice, icons)",
+      "asset": "happiness_04"
+    },
+    {
+      "reason": "UI (bars, cursors, labels, 9-slice, icons)",
+      "asset": "indicator"
+    },
+    {
+      "reason": "UI (bars, cursors, labels, 9-slice, icons)",
+      "asset": "itemdisc_01"
+    },
+    {
+      "reason": "UI (bars, cursors, labels, 9-slice, icons)",
+      "asset": "itemdisc_02"
+    },
+    {
+      "reason": "UI (bars, cursors, labels, 9-slice, icons)",
+      "asset": "label_left"
+    },
+    {
+      "reason": "UI (bars, cursors, labels, 9-slice, icons)",
+      "asset": "label_middle"
+    },
+    {
+      "reason": "UI (bars, cursors, labels, 9-slice, icons)",
+      "asset": "label_right"
+    },
+    {
+      "reason": "UI (bars, cursors, labels, 9-slice, icons)",
+      "asset": "lt_box_9slice_bc"
+    },
+    {
+      "reason": "UI (bars, cursors, labels, 9-slice, icons)",
+      "asset": "lt_box_9slice_bl"
+    },
+    {
+      "reason": "UI (bars, cursors, labels, 9-slice, icons)",
+      "asset": "lt_box_9slice_br"
+    },
+    {
+      "reason": "UI (bars, cursors, labels, 9-slice, icons)",
+      "asset": "lt_box_9slice_c"
+    },
+    {
+      "reason": "UI (bars, cursors, labels, 9-slice, icons)",
+      "asset": "lt_box_9slice_lc"
+    },
+    {
+      "reason": "UI (bars, cursors, labels, 9-slice, icons)",
+      "asset": "lt_box_9slice_rc"
+    },
+    {
+      "reason": "UI (bars, cursors, labels, 9-slice, icons)",
+      "asset": "lt_box_9slice_tc"
+    },
+    {
+      "reason": "UI (bars, cursors, labels, 9-slice, icons)",
+      "asset": "lt_box_9slice_tl"
+    },
+    {
+      "reason": "UI (bars, cursors, labels, 9-slice, icons)",
+      "asset": "lt_box_9slice_tr"
+    },
+    {
+      "reason": "UI (bars, cursors, labels, 9-slice, icons)",
+      "asset": "pickaxe"
+    },
+    {
+      "reason": "UI (bars, cursors, labels, 9-slice, icons)",
+      "asset": "plan_alt"
+    },
+    {
+      "reason": "UI (bars, cursors, labels, 9-slice, icons)",
+      "asset": "plant"
+    },
+    {
+      "reason": "UI (bars, cursors, labels, 9-slice, icons)",
+      "asset": "playercount"
+    },
+    {
+      "reason": "UI (bars, cursors, labels, 9-slice, icons)",
+      "asset": "redbar_00"
+    },
+    {
+      "reason": "UI (bars, cursors, labels, 9-slice, icons)",
+      "asset": "redbar_01"
+    },
+    {
+      "reason": "UI (bars, cursors, labels, 9-slice, icons)",
+      "asset": "redbar_02"
+    },
+    {
+      "reason": "UI (bars, cursors, labels, 9-slice, icons)",
+      "asset": "redbar_03"
+    },
+    {
+      "reason": "UI (bars, cursors, labels, 9-slice, icons)",
+      "asset": "redbar_04"
+    },
+    {
+      "reason": "UI (bars, cursors, labels, 9-slice, icons)",
+      "asset": "redbar_05"
+    },
+    {
+      "reason": "UI (bars, cursors, labels, 9-slice, icons)",
+      "asset": "redbar_06"
+    },
+    {
+      "reason": "UI (bars, cursors, labels, 9-slice, icons)",
+      "asset": "rod"
+    },
+    {
+      "reason": "UI (bars, cursors, labels, 9-slice, icons)",
+      "asset": "rod_alt"
+    },
+    {
+      "reason": "UI (bars, cursors, labels, 9-slice, icons)",
+      "asset": "sandtimer"
+    },
+    {
+      "reason": "UI (bars, cursors, labels, 9-slice, icons)",
+      "asset": "select_dots"
+    },
+    {
+      "reason": "UI (bars, cursors, labels, 9-slice, icons)",
+      "asset": "select_dots_large"
+    },
+    {
+      "reason": "UI (bars, cursors, labels, 9-slice, icons)",
+      "asset": "selectbox_bl"
+    },
+    {
+      "reason": "UI (bars, cursors, labels, 9-slice, icons)",
+      "asset": "selectbox_br"
+    },
+    {
+      "reason": "UI (bars, cursors, labels, 9-slice, icons)",
+      "asset": "selectbox_tl"
+    },
+    {
+      "reason": "UI (bars, cursors, labels, 9-slice, icons)",
+      "asset": "selectbox_tr"
+    },
+    {
+      "reason": "UI (bars, cursors, labels, 9-slice, icons)",
+      "asset": "shovel"
+    },
+    {
+      "reason": "UI (bars, cursors, labels, 9-slice, icons)",
+      "asset": "stopwatch"
+    },
+    {
+      "reason": "UI (bars, cursors, labels, 9-slice, icons)",
+      "asset": "sword"
+    },
+    {
+      "reason": "UI (bars, cursors, labels, 9-slice, icons)",
+      "asset": "w_box_9slice_bc"
+    },
+    {
+      "reason": "UI (bars, cursors, labels, 9-slice, icons)",
+      "asset": "w_box_9slice_bl"
+    },
+    {
+      "reason": "UI (bars, cursors, labels, 9-slice, icons)",
+      "asset": "w_box_9slice_br"
+    },
+    {
+      "reason": "UI (bars, cursors, labels, 9-slice, icons)",
+      "asset": "w_box_9slice_c"
+    },
+    {
+      "reason": "UI (bars, cursors, labels, 9-slice, icons)",
+      "asset": "w_box_9slice_lc"
+    },
+    {
+      "reason": "UI (bars, cursors, labels, 9-slice, icons)",
+      "asset": "w_box_9slice_rc"
+    },
+    {
+      "reason": "UI (bars, cursors, labels, 9-slice, icons)",
+      "asset": "w_box_9slice_tc"
+    },
+    {
+      "reason": "UI (bars, cursors, labels, 9-slice, icons)",
+      "asset": "w_box_9slice_tl"
+    },
+    {
+      "reason": "UI (bars, cursors, labels, 9-slice, icons)",
+      "asset": "w_box_9slice_tr"
+    },
+    {
+      "reason": "UI (bars, cursors, labels, 9-slice, icons)",
+      "asset": "water"
+    },
+    {
+      "reason": "Human characters (body + hair + held tools)",
+      "asset": "base_attack_strip10"
+    },
+    {
+      "reason": "Human characters (body + hair + held tools)",
+      "asset": "base_axe_strip10"
+    },
+    {
+      "reason": "Human characters (body + hair + held tools)",
+      "asset": "base_carry_strip8"
+    },
+    {
+      "reason": "Human characters (body + hair + held tools)",
+      "asset": "base_casting_strip15"
+    },
+    {
+      "reason": "Human characters (body + hair + held tools)",
+      "asset": "base_caught_strip10"
+    },
+    {
+      "reason": "Human characters (body + hair + held tools)",
+      "asset": "base_death_strip13"
+    },
+    {
+      "reason": "Human characters (body + hair + held tools)",
+      "asset": "base_dig_strip13"
+    },
+    {
+      "reason": "Human characters (body + hair + held tools)",
+      "asset": "base_doing_strip8"
+    },
+    {
+      "reason": "Human characters (body + hair + held tools)",
+      "asset": "base_hamering_strip23"
+    },
+    {
+      "reason": "Human characters (body + hair + held tools)",
+      "asset": "base_hurt_strip8"
+    },
+    {
+      "reason": "Human characters (body + hair + held tools)",
+      "asset": "base_idle_strip9"
+    },
+    {
+      "reason": "Human characters (body + hair + held tools)",
+      "asset": "base_jump_strip9"
+    },
+    {
+      "reason": "Human characters (body + hair + held tools)",
+      "asset": "base_mining_strip10"
+    },
+    {
+      "reason": "Human characters (body + hair + held tools)",
+      "asset": "base_reeling_strip13"
+    },
+    {
+      "reason": "Human characters (body + hair + held tools)",
+      "asset": "base_roll_strip10"
+    },
+    {
+      "reason": "Human characters (body + hair + held tools)",
+      "asset": "base_run_strip8"
+    },
+    {
+      "reason": "Human characters (body + hair + held tools)",
+      "asset": "base_swimming_strip12"
+    },
+    {
+      "reason": "Human characters (body + hair + held tools)",
+      "asset": "base_waiting_strip9"
+    },
+    {
+      "reason": "Human characters (body + hair + held tools)",
+      "asset": "base_walk_strip8"
+    },
+    {
+      "reason": "Human characters (body + hair + held tools)",
+      "asset": "base_watering_strip5"
+    },
+    {
+      "reason": "Human characters (body + hair + held tools)",
+      "asset": "bowlhair_attack_strip10"
+    },
+    {
+      "reason": "Human characters (body + hair + held tools)",
+      "asset": "bowlhair_axe_strip10"
+    },
+    {
+      "reason": "Human characters (body + hair + held tools)",
+      "asset": "bowlhair_carry_strip8"
+    },
+    {
+      "reason": "Human characters (body + hair + held tools)",
+      "asset": "bowlhair_casting_strip15"
+    },
+    {
+      "reason": "Human characters (body + hair + held tools)",
+      "asset": "bowlhair_caught_strip10"
+    },
+    {
+      "reason": "Human characters (body + hair + held tools)",
+      "asset": "bowlhair_death_strip13"
+    },
+    {
+      "reason": "Human characters (body + hair + held tools)",
+      "asset": "bowlhair_dig_strip13"
+    },
+    {
+      "reason": "Human characters (body + hair + held tools)",
+      "asset": "bowlhair_doing_strip8"
+    },
+    {
+      "reason": "Human characters (body + hair + held tools)",
+      "asset": "bowlhair_hamering_strip23"
+    },
+    {
+      "reason": "Human characters (body + hair + held tools)",
+      "asset": "bowlhair_hurt_strip8"
+    },
+    {
+      "reason": "Human characters (body + hair + held tools)",
+      "asset": "bowlhair_idle_strip9"
+    },
+    {
+      "reason": "Human characters (body + hair + held tools)",
+      "asset": "bowlhair_jump_strip9"
+    },
+    {
+      "reason": "Human characters (body + hair + held tools)",
+      "asset": "bowlhair_mining_strip10"
+    },
+    {
+      "reason": "Human characters (body + hair + held tools)",
+      "asset": "bowlhair_reeling_strip13"
+    },
+    {
+      "reason": "Human characters (body + hair + held tools)",
+      "asset": "bowlhair_roll_strip10"
+    },
+    {
+      "reason": "Human characters (body + hair + held tools)",
+      "asset": "bowlhair_run_strip8"
+    },
+    {
+      "reason": "Human characters (body + hair + held tools)",
+      "asset": "bowlhair_swimming_strip12"
+    },
+    {
+      "reason": "Human characters (body + hair + held tools)",
+      "asset": "bowlhair_waiting_strip9"
+    },
+    {
+      "reason": "Human characters (body + hair + held tools)",
+      "asset": "bowlhair_walk_strip8"
+    },
+    {
+      "reason": "Human characters (body + hair + held tools)",
+      "asset": "bowlhair_watering_strip5"
+    },
+    {
+      "reason": "Human characters (body + hair + held tools)",
+      "asset": "curlyhair_attack_strip10"
+    },
+    {
+      "reason": "Human characters (body + hair + held tools)",
+      "asset": "curlyhair_axe_strip10"
+    },
+    {
+      "reason": "Human characters (body + hair + held tools)",
+      "asset": "curlyhair_carry_strip8"
+    },
+    {
+      "reason": "Human characters (body + hair + held tools)",
+      "asset": "curlyhair_casting_strip15"
+    },
+    {
+      "reason": "Human characters (body + hair + held tools)",
+      "asset": "curlyhair_caught_strip10"
+    },
+    {
+      "reason": "Human characters (body + hair + held tools)",
+      "asset": "curlyhair_death_strip13"
+    },
+    {
+      "reason": "Human characters (body + hair + held tools)",
+      "asset": "curlyhair_dig_strip13"
+    },
+    {
+      "reason": "Human characters (body + hair + held tools)",
+      "asset": "curlyhair_doing_strip8"
+    },
+    {
+      "reason": "Human characters (body + hair + held tools)",
+      "asset": "curlyhair_hamering_strip23"
+    },
+    {
+      "reason": "Human characters (body + hair + held tools)",
+      "asset": "curlyhair_hurt_strip8"
+    },
+    {
+      "reason": "Human characters (body + hair + held tools)",
+      "asset": "curlyhair_idle_strip9"
+    },
+    {
+      "reason": "Human characters (body + hair + held tools)",
+      "asset": "curlyhair_jump_strip9"
+    },
+    {
+      "reason": "Human characters (body + hair + held tools)",
+      "asset": "curlyhair_mining_strip10"
+    },
+    {
+      "reason": "Human characters (body + hair + held tools)",
+      "asset": "curlyhair_reeling_strip13"
+    },
+    {
+      "reason": "Human characters (body + hair + held tools)",
+      "asset": "curlyhair_roll_strip10"
+    },
+    {
+      "reason": "Human characters (body + hair + held tools)",
+      "asset": "curlyhair_run_strip8"
+    },
+    {
+      "reason": "Human characters (body + hair + held tools)",
+      "asset": "curlyhair_swimming_strip12"
+    },
+    {
+      "reason": "Human characters (body + hair + held tools)",
+      "asset": "curlyhair_waiting_strip9"
+    },
+    {
+      "reason": "Human characters (body + hair + held tools)",
+      "asset": "curlyhair_walk_strip8"
+    },
+    {
+      "reason": "Human characters (body + hair + held tools)",
+      "asset": "curlyhair_watering_strip5"
+    },
+    {
+      "reason": "Human characters (body + hair + held tools)",
+      "asset": "longhair_attack_strip10"
+    },
+    {
+      "reason": "Human characters (body + hair + held tools)",
+      "asset": "longhair_axe_strip10"
+    },
+    {
+      "reason": "Human characters (body + hair + held tools)",
+      "asset": "longhair_carry_strip8"
+    },
+    {
+      "reason": "Human characters (body + hair + held tools)",
+      "asset": "longhair_casting_strip15"
+    },
+    {
+      "reason": "Human characters (body + hair + held tools)",
+      "asset": "longhair_caught_strip10"
+    },
+    {
+      "reason": "Human characters (body + hair + held tools)",
+      "asset": "longhair_death_strip13"
+    },
+    {
+      "reason": "Human characters (body + hair + held tools)",
+      "asset": "longhair_dig_strip13"
+    },
+    {
+      "reason": "Human characters (body + hair + held tools)",
+      "asset": "longhair_doing_strip8"
+    },
+    {
+      "reason": "Human characters (body + hair + held tools)",
+      "asset": "longhair_hamering_strip23"
+    },
+    {
+      "reason": "Human characters (body + hair + held tools)",
+      "asset": "longhair_hurt_strip8"
+    },
+    {
+      "reason": "Human characters (body + hair + held tools)",
+      "asset": "longhair_idle_strip9"
+    },
+    {
+      "reason": "Human characters (body + hair + held tools)",
+      "asset": "longhair_jump_strip9"
+    },
+    {
+      "reason": "Human characters (body + hair + held tools)",
+      "asset": "longhair_mining_strip10"
+    },
+    {
+      "reason": "Human characters (body + hair + held tools)",
+      "asset": "longhair_reeling_strip13"
+    },
+    {
+      "reason": "Human characters (body + hair + held tools)",
+      "asset": "longhair_roll_strip10"
+    },
+    {
+      "reason": "Human characters (body + hair + held tools)",
+      "asset": "longhair_run_strip8"
+    },
+    {
+      "reason": "Human characters (body + hair + held tools)",
+      "asset": "longhair_swimming_strip12"
+    },
+    {
+      "reason": "Human characters (body + hair + held tools)",
+      "asset": "longhair_waiting_strip9"
+    },
+    {
+      "reason": "Human characters (body + hair + held tools)",
+      "asset": "longhair_walk_strip8"
+    },
+    {
+      "reason": "Human characters (body + hair + held tools)",
+      "asset": "longhair_watering_strip5"
+    },
+    {
+      "reason": "Human characters (body + hair + held tools)",
+      "asset": "mophair_attack_strip10"
+    },
+    {
+      "reason": "Human characters (body + hair + held tools)",
+      "asset": "mophair_axe_strip10"
+    },
+    {
+      "reason": "Human characters (body + hair + held tools)",
+      "asset": "mophair_carry_strip8"
+    },
+    {
+      "reason": "Human characters (body + hair + held tools)",
+      "asset": "mophair_casting_strip15"
+    },
+    {
+      "reason": "Human characters (body + hair + held tools)",
+      "asset": "mophair_caught_strip10"
+    },
+    {
+      "reason": "Human characters (body + hair + held tools)",
+      "asset": "mophair_death_strip13"
+    },
+    {
+      "reason": "Human characters (body + hair + held tools)",
+      "asset": "mophair_dig_strip13"
+    },
+    {
+      "reason": "Human characters (body + hair + held tools)",
+      "asset": "mophair_doing_strip8"
+    },
+    {
+      "reason": "Human characters (body + hair + held tools)",
+      "asset": "mophair_hamering_strip23"
+    },
+    {
+      "reason": "Human characters (body + hair + held tools)",
+      "asset": "mophair_hurt_strip8"
+    },
+    {
+      "reason": "Human characters (body + hair + held tools)",
+      "asset": "mophair_idle_strip9"
+    },
+    {
+      "reason": "Human characters (body + hair + held tools)",
+      "asset": "mophair_jump_strip9"
+    },
+    {
+      "reason": "Human characters (body + hair + held tools)",
+      "asset": "mophair_mining_strip10"
+    },
+    {
+      "reason": "Human characters (body + hair + held tools)",
+      "asset": "mophair_reeling_strip13"
+    },
+    {
+      "reason": "Human characters (body + hair + held tools)",
+      "asset": "mophair_roll_strip10"
+    },
+    {
+      "reason": "Human characters (body + hair + held tools)",
+      "asset": "mophair_run_strip8"
+    },
+    {
+      "reason": "Human characters (body + hair + held tools)",
+      "asset": "mophair_swimming_strip12"
+    },
+    {
+      "reason": "Human characters (body + hair + held tools)",
+      "asset": "mophair_waiting_strip9"
+    },
+    {
+      "reason": "Human characters (body + hair + held tools)",
+      "asset": "mophair_walk_strip8"
+    },
+    {
+      "reason": "Human characters (body + hair + held tools)",
+      "asset": "mophair_watering_strip5"
+    },
+    {
+      "reason": "Human characters (body + hair + held tools)",
+      "asset": "shorthair_attack_strip10"
+    },
+    {
+      "reason": "Human characters (body + hair + held tools)",
+      "asset": "shorthair_axe_strip10"
+    },
+    {
+      "reason": "Human characters (body + hair + held tools)",
+      "asset": "shorthair_carry_strip8"
+    },
+    {
+      "reason": "Human characters (body + hair + held tools)",
+      "asset": "shorthair_casting_strip15"
+    },
+    {
+      "reason": "Human characters (body + hair + held tools)",
+      "asset": "shorthair_caught_strip10"
+    },
+    {
+      "reason": "Human characters (body + hair + held tools)",
+      "asset": "shorthair_death_strip13"
+    },
+    {
+      "reason": "Human characters (body + hair + held tools)",
+      "asset": "shorthair_dig_strip13"
+    },
+    {
+      "reason": "Human characters (body + hair + held tools)",
+      "asset": "shorthair_doing_strip8"
+    },
+    {
+      "reason": "Human characters (body + hair + held tools)",
+      "asset": "shorthair_hamering_strip23"
+    },
+    {
+      "reason": "Human characters (body + hair + held tools)",
+      "asset": "shorthair_hurt_strip8"
+    },
+    {
+      "reason": "Human characters (body + hair + held tools)",
+      "asset": "shorthair_idle_strip9"
+    },
+    {
+      "reason": "Human characters (body + hair + held tools)",
+      "asset": "shorthair_jump_strip9"
+    },
+    {
+      "reason": "Human characters (body + hair + held tools)",
+      "asset": "shorthair_mining_strip10"
+    },
+    {
+      "reason": "Human characters (body + hair + held tools)",
+      "asset": "shorthair_reeling_strip13"
+    },
+    {
+      "reason": "Human characters (body + hair + held tools)",
+      "asset": "shorthair_roll_strip10"
+    },
+    {
+      "reason": "Human characters (body + hair + held tools)",
+      "asset": "shorthair_run_strip8"
+    },
+    {
+      "reason": "Human characters (body + hair + held tools)",
+      "asset": "shorthair_swimming_strip12"
+    },
+    {
+      "reason": "Human characters (body + hair + held tools)",
+      "asset": "shorthair_waiting_strip9"
+    },
+    {
+      "reason": "Human characters (body + hair + held tools)",
+      "asset": "shorthair_walk_strip8"
+    },
+    {
+      "reason": "Human characters (body + hair + held tools)",
+      "asset": "shorthair_watering_strip5"
+    },
+    {
+      "reason": "Human characters (body + hair + held tools)",
+      "asset": "spikeyhair_attack_strip10"
+    },
+    {
+      "reason": "Human characters (body + hair + held tools)",
+      "asset": "spikeyhair_axe_strip10"
+    },
+    {
+      "reason": "Human characters (body + hair + held tools)",
+      "asset": "spikeyhair_carry_strip8"
+    },
+    {
+      "reason": "Human characters (body + hair + held tools)",
+      "asset": "spikeyhair_casting_strip15"
+    },
+    {
+      "reason": "Human characters (body + hair + held tools)",
+      "asset": "spikeyhair_caught_strip10"
+    },
+    {
+      "reason": "Human characters (body + hair + held tools)",
+      "asset": "spikeyhair_death_strip13"
+    },
+    {
+      "reason": "Human characters (body + hair + held tools)",
+      "asset": "spikeyhair_dig_strip13"
+    },
+    {
+      "reason": "Human characters (body + hair + held tools)",
+      "asset": "spikeyhair_doing_strip8"
+    },
+    {
+      "reason": "Human characters (body + hair + held tools)",
+      "asset": "spikeyhair_hamering_strip23"
+    },
+    {
+      "reason": "Human characters (body + hair + held tools)",
+      "asset": "spikeyhair_hurt_strip8"
+    },
+    {
+      "reason": "Human characters (body + hair + held tools)",
+      "asset": "spikeyhair_idle_strip9"
+    },
+    {
+      "reason": "Human characters (body + hair + held tools)",
+      "asset": "spikeyhair_jump_strip9"
+    },
+    {
+      "reason": "Human characters (body + hair + held tools)",
+      "asset": "spikeyhair_mining_strip10"
+    },
+    {
+      "reason": "Human characters (body + hair + held tools)",
+      "asset": "spikeyhair_reeling_strip13"
+    },
+    {
+      "reason": "Human characters (body + hair + held tools)",
+      "asset": "spikeyhair_roll_strip10"
+    },
+    {
+      "reason": "Human characters (body + hair + held tools)",
+      "asset": "spikeyhair_run_strip8"
+    },
+    {
+      "reason": "Human characters (body + hair + held tools)",
+      "asset": "spikeyhair_swimming_strip12"
+    },
+    {
+      "reason": "Human characters (body + hair + held tools)",
+      "asset": "spikeyhair_waiting_strip9"
+    },
+    {
+      "reason": "Human characters (body + hair + held tools)",
+      "asset": "spikeyhair_walk_strip8"
+    },
+    {
+      "reason": "Human characters (body + hair + held tools)",
+      "asset": "spikeyhair_watering_strip5"
+    },
+    {
+      "reason": "Human characters (body + hair + held tools)",
+      "asset": "spr_attack464"
+    },
+    {
+      "reason": "Human characters (body + hair + held tools)",
+      "asset": "spr_axe465"
+    },
+    {
+      "reason": "Human characters (body + hair + held tools)",
+      "asset": "spr_carry474"
+    },
+    {
+      "reason": "Human characters (body + hair + held tools)",
+      "asset": "spr_casting467"
+    },
+    {
+      "reason": "Human characters (body + hair + held tools)",
+      "asset": "spr_caught472"
+    },
+    {
+      "reason": "Human characters (body + hair + held tools)",
+      "asset": "spr_death470"
+    },
+    {
+      "reason": "Human characters (body + hair + held tools)",
+      "asset": "spr_dig468"
+    },
+    {
+      "reason": "Human characters (body + hair + held tools)",
+      "asset": "spr_doing460"
+    },
+    {
+      "reason": "Human characters (body + hair + held tools)",
+      "asset": "spr_hammering463"
+    },
+    {
+      "reason": "Human characters (body + hair + held tools)",
+      "asset": "spr_hurt475"
+    },
+    {
+      "reason": "Human characters (body + hair + held tools)",
+      "asset": "spr_idle473"
+    },
+    {
+      "reason": "Human characters (body + hair + held tools)",
+      "asset": "spr_jump471"
+    },
+    {
+      "reason": "Human characters (body + hair + held tools)",
+      "asset": "spr_mining458"
+    },
+    {
+      "reason": "Human characters (body + hair + held tools)",
+      "asset": "spr_reeling469"
+    },
+    {
+      "reason": "Human characters (body + hair + held tools)",
+      "asset": "spr_roll457"
+    },
+    {
+      "reason": "Human characters (body + hair + held tools)",
+      "asset": "spr_run462"
+    },
+    {
+      "reason": "Human characters (body + hair + held tools)",
+      "asset": "spr_swimming459"
+    },
+    {
+      "reason": "Human characters (body + hair + held tools)",
+      "asset": "spr_waiting466"
+    },
+    {
+      "reason": "Human characters (body + hair + held tools)",
+      "asset": "spr_walking461"
+    },
+    {
+      "reason": "Human characters (body + hair + held tools)",
+      "asset": "spr_watering456"
+    },
+    {
+      "reason": "Human characters (body + hair + held tools)",
+      "asset": "tools_attack_strip10"
+    },
+    {
+      "reason": "Human characters (body + hair + held tools)",
+      "asset": "tools_axe_strip10"
+    },
+    {
+      "reason": "Human characters (body + hair + held tools)",
+      "asset": "tools_carry_strip8"
+    },
+    {
+      "reason": "Human characters (body + hair + held tools)",
+      "asset": "tools_casting_strip15"
+    },
+    {
+      "reason": "Human characters (body + hair + held tools)",
+      "asset": "tools_caught_strip10"
+    },
+    {
+      "reason": "Human characters (body + hair + held tools)",
+      "asset": "tools_death_strip13"
+    },
+    {
+      "reason": "Human characters (body + hair + held tools)",
+      "asset": "tools_dig_strip13"
+    },
+    {
+      "reason": "Human characters (body + hair + held tools)",
+      "asset": "tools_doing_strip8"
+    },
+    {
+      "reason": "Human characters (body + hair + held tools)",
+      "asset": "tools_hamering_strip23"
+    },
+    {
+      "reason": "Human characters (body + hair + held tools)",
+      "asset": "tools_hurt_strip8"
+    },
+    {
+      "reason": "Human characters (body + hair + held tools)",
+      "asset": "tools_idle_strip9"
+    },
+    {
+      "reason": "Human characters (body + hair + held tools)",
+      "asset": "tools_jump_strip9"
+    },
+    {
+      "reason": "Human characters (body + hair + held tools)",
+      "asset": "tools_mining_strip10"
+    },
+    {
+      "reason": "Human characters (body + hair + held tools)",
+      "asset": "tools_reeling_strip13"
+    },
+    {
+      "reason": "Human characters (body + hair + held tools)",
+      "asset": "tools_roll_strip10"
+    },
+    {
+      "reason": "Human characters (body + hair + held tools)",
+      "asset": "tools_run_strip8"
+    },
+    {
+      "reason": "Human characters (body + hair + held tools)",
+      "asset": "tools_swimming_strip12"
+    },
+    {
+      "reason": "Human characters (body + hair + held tools)",
+      "asset": "tools_waiting_strip9"
+    },
+    {
+      "reason": "Human characters (body + hair + held tools)",
+      "asset": "tools_walk_strip8"
+    },
+    {
+      "reason": "Human characters (body + hair + held tools)",
+      "asset": "tools_watering_strip5"
+    },
+    {
+      "reason": "Goblins",
+      "asset": "spr_attack"
+    },
+    {
+      "reason": "Goblins",
+      "asset": "spr_axe"
+    },
+    {
+      "reason": "Goblins",
+      "asset": "spr_carry"
+    },
+    {
+      "reason": "Goblins",
+      "asset": "spr_casting"
+    },
+    {
+      "reason": "Goblins",
+      "asset": "spr_caught"
+    },
+    {
+      "reason": "Goblins",
+      "asset": "spr_death"
+    },
+    {
+      "reason": "Goblins",
+      "asset": "spr_dig"
+    },
+    {
+      "reason": "Goblins",
+      "asset": "spr_doing"
+    },
+    {
+      "reason": "Goblins",
+      "asset": "spr_hammering"
+    },
+    {
+      "reason": "Goblins",
+      "asset": "spr_hurt"
+    },
+    {
+      "reason": "Goblins",
+      "asset": "spr_idle"
+    },
+    {
+      "reason": "Goblins",
+      "asset": "spr_jump"
+    },
+    {
+      "reason": "Goblins",
+      "asset": "spr_mining"
+    },
+    {
+      "reason": "Goblins",
+      "asset": "spr_reeling"
+    },
+    {
+      "reason": "Goblins",
+      "asset": "spr_roll"
+    },
+    {
+      "reason": "Goblins",
+      "asset": "spr_run"
+    },
+    {
+      "reason": "Goblins",
+      "asset": "spr_swimming"
+    },
+    {
+      "reason": "Goblins",
+      "asset": "spr_waiting"
+    },
+    {
+      "reason": "Goblins",
+      "asset": "spr_walking"
+    },
+    {
+      "reason": "Goblins",
+      "asset": "spr_watering"
+    },
+    {
+      "reason": "Skeletons",
+      "asset": "skeleton_attack"
+    },
+    {
+      "reason": "Skeletons",
+      "asset": "skeleton_death"
+    },
+    {
+      "reason": "Skeletons",
+      "asset": "skeleton_hurt"
+    },
+    {
+      "reason": "Skeletons",
+      "asset": "skeleton_idle"
+    },
+    {
+      "reason": "Skeletons",
+      "asset": "skeleton_jump"
+    },
+    {
+      "reason": "Skeletons",
+      "asset": "skeleton_walk"
+    },
+    {
+      "reason": "Character VFX (dust) + character shadows",
+      "asset": "dust_general_strip8"
+    },
+    {
+      "reason": "Character VFX (dust) + character shadows",
+      "asset": "dust_land_sidepuff_strip5"
+    },
+    {
+      "reason": "Character VFX (dust) + character shadows",
+      "asset": "dust_land_single_A_strip4"
+    },
+    {
+      "reason": "Character VFX (dust) + character shadows",
+      "asset": "dust_land_single_B_strip3"
+    },
+    {
+      "reason": "Character VFX (dust) + character shadows",
+      "asset": "dust_land_strip6"
+    },
+    {
+      "reason": "Character VFX (dust) + character shadows",
+      "asset": "dust_run_strip8"
+    },
+    {
+      "reason": "Character VFX (dust) + character shadows",
+      "asset": "spr_deco_charactershadow"
+    },
+    {
+      "reason": "Character VFX (dust) + character shadows",
+      "asset": "spr_deco_shadow"
+    },
+    {
+      "reason": "Source files (.aseprite, example scene)",
+      "asset": "Characters/_Source/sunnyside_world_chatacter_anim_GOBLIN.aseprite"
+    },
+    {
+      "reason": "Source files (.aseprite, example scene)",
+      "asset": "Sunnyside_World_ExampleScene.png"
+    },
+    {
+      "reason": "UI (bars, cursors, labels, 9-slice, icons)",
+      "asset": "Sunnyside_World_ASSET_PACK_V2.1/Sunnyside_World_ASSET_PACK_V2.1/Sunnyside_World_Assets/UI/9slice_box_white/dt_box_9slice_bc.png"
+    },
+    {
+      "reason": "UI (bars, cursors, labels, 9-slice, icons)",
+      "asset": "Sunnyside_World_ASSET_PACK_V2.1/Sunnyside_World_ASSET_PACK_V2.1/Sunnyside_World_Assets/UI/9slice_box_white/dt_box_9slice_bl.png"
+    },
+    {
+      "reason": "UI (bars, cursors, labels, 9-slice, icons)",
+      "asset": "Sunnyside_World_ASSET_PACK_V2.1/Sunnyside_World_ASSET_PACK_V2.1/Sunnyside_World_Assets/UI/9slice_box_white/dt_box_9slice_br.png"
+    },
+    {
+      "reason": "UI (bars, cursors, labels, 9-slice, icons)",
+      "asset": "Sunnyside_World_ASSET_PACK_V2.1/Sunnyside_World_ASSET_PACK_V2.1/Sunnyside_World_Assets/UI/9slice_box_white/dt_box_9slice_c.png"
+    },
+    {
+      "reason": "UI (bars, cursors, labels, 9-slice, icons)",
+      "asset": "Sunnyside_World_ASSET_PACK_V2.1/Sunnyside_World_ASSET_PACK_V2.1/Sunnyside_World_Assets/UI/9slice_box_white/dt_box_9slice_lc.png"
+    },
+    {
+      "reason": "UI (bars, cursors, labels, 9-slice, icons)",
+      "asset": "Sunnyside_World_ASSET_PACK_V2.1/Sunnyside_World_ASSET_PACK_V2.1/Sunnyside_World_Assets/UI/9slice_box_white/dt_box_9slice_rc.png"
+    },
+    {
+      "reason": "UI (bars, cursors, labels, 9-slice, icons)",
+      "asset": "Sunnyside_World_ASSET_PACK_V2.1/Sunnyside_World_ASSET_PACK_V2.1/Sunnyside_World_Assets/UI/9slice_box_white/dt_box_9slice_tc.png"
+    },
+    {
+      "reason": "UI (bars, cursors, labels, 9-slice, icons)",
+      "asset": "Sunnyside_World_ASSET_PACK_V2.1/Sunnyside_World_ASSET_PACK_V2.1/Sunnyside_World_Assets/UI/9slice_box_white/dt_box_9slice_tl.png"
+    },
+    {
+      "reason": "UI (bars, cursors, labels, 9-slice, icons)",
+      "asset": "Sunnyside_World_ASSET_PACK_V2.1/Sunnyside_World_ASSET_PACK_V2.1/Sunnyside_World_Assets/UI/9slice_box_white/dt_box_9slice_tr.png"
+    },
+    {
+      "reason": "UI (bars, cursors, labels, 9-slice, icons)",
+      "asset": "Sunnyside_World_ASSET_PACK_V2.1/Sunnyside_World_ASSET_PACK_V2.1/Sunnyside_World_Assets/UI/9slice_box_white/lt_box_9slice_bc.png"
+    },
+    {
+      "reason": "UI (bars, cursors, labels, 9-slice, icons)",
+      "asset": "Sunnyside_World_ASSET_PACK_V2.1/Sunnyside_World_ASSET_PACK_V2.1/Sunnyside_World_Assets/UI/9slice_box_white/lt_box_9slice_bl.png"
+    },
+    {
+      "reason": "UI (bars, cursors, labels, 9-slice, icons)",
+      "asset": "Sunnyside_World_ASSET_PACK_V2.1/Sunnyside_World_ASSET_PACK_V2.1/Sunnyside_World_Assets/UI/9slice_box_white/lt_box_9slice_br.png"
+    },
+    {
+      "reason": "UI (bars, cursors, labels, 9-slice, icons)",
+      "asset": "Sunnyside_World_ASSET_PACK_V2.1/Sunnyside_World_ASSET_PACK_V2.1/Sunnyside_World_Assets/UI/9slice_box_white/lt_box_9slice_c.png"
+    },
+    {
+      "reason": "UI (bars, cursors, labels, 9-slice, icons)",
+      "asset": "Sunnyside_World_ASSET_PACK_V2.1/Sunnyside_World_ASSET_PACK_V2.1/Sunnyside_World_Assets/UI/9slice_box_white/lt_box_9slice_lc.png"
+    },
+    {
+      "reason": "UI (bars, cursors, labels, 9-slice, icons)",
+      "asset": "Sunnyside_World_ASSET_PACK_V2.1/Sunnyside_World_ASSET_PACK_V2.1/Sunnyside_World_Assets/UI/9slice_box_white/lt_box_9slice_rc.png"
+    },
+    {
+      "reason": "UI (bars, cursors, labels, 9-slice, icons)",
+      "asset": "Sunnyside_World_ASSET_PACK_V2.1/Sunnyside_World_ASSET_PACK_V2.1/Sunnyside_World_Assets/UI/9slice_box_white/lt_box_9slice_tc.png"
+    },
+    {
+      "reason": "UI (bars, cursors, labels, 9-slice, icons)",
+      "asset": "Sunnyside_World_ASSET_PACK_V2.1/Sunnyside_World_ASSET_PACK_V2.1/Sunnyside_World_Assets/UI/9slice_box_white/lt_box_9slice_tl.png"
+    },
+    {
+      "reason": "UI (bars, cursors, labels, 9-slice, icons)",
+      "asset": "Sunnyside_World_ASSET_PACK_V2.1/Sunnyside_World_ASSET_PACK_V2.1/Sunnyside_World_Assets/UI/9slice_box_white/lt_box_9slice_tr.png"
+    },
+    {
+      "reason": "UI (bars, cursors, labels, 9-slice, icons)",
+      "asset": "Sunnyside_World_ASSET_PACK_V2.1/Sunnyside_World_ASSET_PACK_V2.1/Sunnyside_World_Assets/UI/9slice_box_white/w_box_9slice_bc.png"
+    },
+    {
+      "reason": "UI (bars, cursors, labels, 9-slice, icons)",
+      "asset": "Sunnyside_World_ASSET_PACK_V2.1/Sunnyside_World_ASSET_PACK_V2.1/Sunnyside_World_Assets/UI/9slice_box_white/w_box_9slice_bl.png"
+    },
+    {
+      "reason": "UI (bars, cursors, labels, 9-slice, icons)",
+      "asset": "Sunnyside_World_ASSET_PACK_V2.1/Sunnyside_World_ASSET_PACK_V2.1/Sunnyside_World_Assets/UI/9slice_box_white/w_box_9slice_br.png"
+    },
+    {
+      "reason": "UI (bars, cursors, labels, 9-slice, icons)",
+      "asset": "Sunnyside_World_ASSET_PACK_V2.1/Sunnyside_World_ASSET_PACK_V2.1/Sunnyside_World_Assets/UI/9slice_box_white/w_box_9slice_c.png"
+    },
+    {
+      "reason": "UI (bars, cursors, labels, 9-slice, icons)",
+      "asset": "Sunnyside_World_ASSET_PACK_V2.1/Sunnyside_World_ASSET_PACK_V2.1/Sunnyside_World_Assets/UI/9slice_box_white/w_box_9slice_lc.png"
+    },
+    {
+      "reason": "UI (bars, cursors, labels, 9-slice, icons)",
+      "asset": "Sunnyside_World_ASSET_PACK_V2.1/Sunnyside_World_ASSET_PACK_V2.1/Sunnyside_World_Assets/UI/9slice_box_white/w_box_9slice_rc.png"
+    },
+    {
+      "reason": "UI (bars, cursors, labels, 9-slice, icons)",
+      "asset": "Sunnyside_World_ASSET_PACK_V2.1/Sunnyside_World_ASSET_PACK_V2.1/Sunnyside_World_Assets/UI/9slice_box_white/w_box_9slice_tc.png"
+    },
+    {
+      "reason": "UI (bars, cursors, labels, 9-slice, icons)",
+      "asset": "Sunnyside_World_ASSET_PACK_V2.1/Sunnyside_World_ASSET_PACK_V2.1/Sunnyside_World_Assets/UI/9slice_box_white/w_box_9slice_tl.png"
+    },
+    {
+      "reason": "UI (bars, cursors, labels, 9-slice, icons)",
+      "asset": "Sunnyside_World_ASSET_PACK_V2.1/Sunnyside_World_ASSET_PACK_V2.1/Sunnyside_World_Assets/UI/9slice_box_white/w_box_9slice_tr.png"
+    },
+    {
+      "reason": "UI (bars, cursors, labels, 9-slice, icons)",
+      "asset": "Sunnyside_World_ASSET_PACK_V2.1/Sunnyside_World_ASSET_PACK_V2.1/Sunnyside_World_Assets/UI/arrow_left.png"
+    },
+    {
+      "reason": "UI (bars, cursors, labels, 9-slice, icons)",
+      "asset": "Sunnyside_World_ASSET_PACK_V2.1/Sunnyside_World_ASSET_PACK_V2.1/Sunnyside_World_Assets/UI/arrow_right.png"
+    },
+    {
+      "reason": "UI (bars, cursors, labels, 9-slice, icons)",
+      "asset": "Sunnyside_World_ASSET_PACK_V2.1/Sunnyside_World_ASSET_PACK_V2.1/Sunnyside_World_Assets/UI/arrow_up-1.png"
+    },
+    {
+      "reason": "UI (bars, cursors, labels, 9-slice, icons)",
+      "asset": "Sunnyside_World_ASSET_PACK_V2.1/Sunnyside_World_ASSET_PACK_V2.1/Sunnyside_World_Assets/UI/arrow_up.png"
+    },
+    {
+      "reason": "UI (bars, cursors, labels, 9-slice, icons)",
+      "asset": "Sunnyside_World_ASSET_PACK_V2.1/Sunnyside_World_ASSET_PACK_V2.1/Sunnyside_World_Assets/UI/axe.png"
+    },
+    {
+      "reason": "UI (bars, cursors, labels, 9-slice, icons)",
+      "asset": "Sunnyside_World_ASSET_PACK_V2.1/Sunnyside_World_ASSET_PACK_V2.1/Sunnyside_World_Assets/UI/basket.png"
+    },
+    {
+      "reason": "UI (bars, cursors, labels, 9-slice, icons)",
+      "asset": "Sunnyside_World_ASSET_PACK_V2.1/Sunnyside_World_ASSET_PACK_V2.1/Sunnyside_World_Assets/UI/bluebar_00.png"
+    },
+    {
+      "reason": "UI (bars, cursors, labels, 9-slice, icons)",
+      "asset": "Sunnyside_World_ASSET_PACK_V2.1/Sunnyside_World_ASSET_PACK_V2.1/Sunnyside_World_Assets/UI/bluebar_01.png"
+    },
+    {
+      "reason": "UI (bars, cursors, labels, 9-slice, icons)",
+      "asset": "Sunnyside_World_ASSET_PACK_V2.1/Sunnyside_World_ASSET_PACK_V2.1/Sunnyside_World_Assets/UI/bluebar_02.png"
+    },
+    {
+      "reason": "UI (bars, cursors, labels, 9-slice, icons)",
+      "asset": "Sunnyside_World_ASSET_PACK_V2.1/Sunnyside_World_ASSET_PACK_V2.1/Sunnyside_World_Assets/UI/bluebar_03.png"
+    },
+    {
+      "reason": "UI (bars, cursors, labels, 9-slice, icons)",
+      "asset": "Sunnyside_World_ASSET_PACK_V2.1/Sunnyside_World_ASSET_PACK_V2.1/Sunnyside_World_Assets/UI/bluebar_04.png"
+    },
+    {
+      "reason": "UI (bars, cursors, labels, 9-slice, icons)",
+      "asset": "Sunnyside_World_ASSET_PACK_V2.1/Sunnyside_World_ASSET_PACK_V2.1/Sunnyside_World_Assets/UI/bluebar_05.png"
+    },
+    {
+      "reason": "UI (bars, cursors, labels, 9-slice, icons)",
+      "asset": "Sunnyside_World_ASSET_PACK_V2.1/Sunnyside_World_ASSET_PACK_V2.1/Sunnyside_World_Assets/UI/cancel.png"
+    },
+    {
+      "reason": "UI (bars, cursors, labels, 9-slice, icons)",
+      "asset": "Sunnyside_World_ASSET_PACK_V2.1/Sunnyside_World_ASSET_PACK_V2.1/Sunnyside_World_Assets/UI/confirm.png"
+    },
+    {
+      "reason": "UI (bars, cursors, labels, 9-slice, icons)",
+      "asset": "Sunnyside_World_ASSET_PACK_V2.1/Sunnyside_World_ASSET_PACK_V2.1/Sunnyside_World_Assets/UI/cursor_01.png"
+    },
+    {
+      "reason": "UI (bars, cursors, labels, 9-slice, icons)",
+      "asset": "Sunnyside_World_ASSET_PACK_V2.1/Sunnyside_World_ASSET_PACK_V2.1/Sunnyside_World_Assets/UI/cursor_02.png"
+    },
+    {
+      "reason": "UI (bars, cursors, labels, 9-slice, icons)",
+      "asset": "Sunnyside_World_ASSET_PACK_V2.1/Sunnyside_World_ASSET_PACK_V2.1/Sunnyside_World_Assets/UI/cursor_03.png"
+    },
+    {
+      "reason": "UI (bars, cursors, labels, 9-slice, icons)",
+      "asset": "Sunnyside_World_ASSET_PACK_V2.1/Sunnyside_World_ASSET_PACK_V2.1/Sunnyside_World_Assets/UI/cursor_04.png"
+    },
+    {
+      "reason": "UI (bars, cursors, labels, 9-slice, icons)",
+      "asset": "Sunnyside_World_ASSET_PACK_V2.1/Sunnyside_World_ASSET_PACK_V2.1/Sunnyside_World_Assets/UI/cursor_05.png"
+    },
+    {
+      "reason": "UI (bars, cursors, labels, 9-slice, icons)",
+      "asset": "Sunnyside_World_ASSET_PACK_V2.1/Sunnyside_World_ASSET_PACK_V2.1/Sunnyside_World_Assets/UI/expression_alerted.png"
+    },
+    {
+      "reason": "UI (bars, cursors, labels, 9-slice, icons)",
+      "asset": "Sunnyside_World_ASSET_PACK_V2.1/Sunnyside_World_ASSET_PACK_V2.1/Sunnyside_World_Assets/UI/expression_attack.png"
+    },
+    {
+      "reason": "UI (bars, cursors, labels, 9-slice, icons)",
+      "asset": "Sunnyside_World_ASSET_PACK_V2.1/Sunnyside_World_ASSET_PACK_V2.1/Sunnyside_World_Assets/UI/expression_chat.png"
+    },
+    {
+      "reason": "UI (bars, cursors, labels, 9-slice, icons)",
+      "asset": "Sunnyside_World_ASSET_PACK_V2.1/Sunnyside_World_ASSET_PACK_V2.1/Sunnyside_World_Assets/UI/expression_confused-1.png"
+    },
+    {
+      "reason": "UI (bars, cursors, labels, 9-slice, icons)",
+      "asset": "Sunnyside_World_ASSET_PACK_V2.1/Sunnyside_World_ASSET_PACK_V2.1/Sunnyside_World_Assets/UI/expression_confused.png"
+    },
+    {
+      "reason": "UI (bars, cursors, labels, 9-slice, icons)",
+      "asset": "Sunnyside_World_ASSET_PACK_V2.1/Sunnyside_World_ASSET_PACK_V2.1/Sunnyside_World_Assets/UI/expression_love.png"
+    },
+    {
+      "reason": "UI (bars, cursors, labels, 9-slice, icons)",
+      "asset": "Sunnyside_World_ASSET_PACK_V2.1/Sunnyside_World_ASSET_PACK_V2.1/Sunnyside_World_Assets/UI/expression_stress.png"
+    },
+    {
+      "reason": "UI (bars, cursors, labels, 9-slice, icons)",
+      "asset": "Sunnyside_World_ASSET_PACK_V2.1/Sunnyside_World_ASSET_PACK_V2.1/Sunnyside_World_Assets/UI/expression_working.png"
+    },
+    {
+      "reason": "UI (bars, cursors, labels, 9-slice, icons)",
+      "asset": "Sunnyside_World_ASSET_PACK_V2.1/Sunnyside_World_ASSET_PACK_V2.1/Sunnyside_World_Assets/UI/greenbar_00.png"
+    },
+    {
+      "reason": "UI (bars, cursors, labels, 9-slice, icons)",
+      "asset": "Sunnyside_World_ASSET_PACK_V2.1/Sunnyside_World_ASSET_PACK_V2.1/Sunnyside_World_Assets/UI/greenbar_01.png"
+    },
+    {
+      "reason": "UI (bars, cursors, labels, 9-slice, icons)",
+      "asset": "Sunnyside_World_ASSET_PACK_V2.1/Sunnyside_World_ASSET_PACK_V2.1/Sunnyside_World_Assets/UI/greenbar_02.png"
+    },
+    {
+      "reason": "UI (bars, cursors, labels, 9-slice, icons)",
+      "asset": "Sunnyside_World_ASSET_PACK_V2.1/Sunnyside_World_ASSET_PACK_V2.1/Sunnyside_World_Assets/UI/greenbar_03.png"
+    },
+    {
+      "reason": "UI (bars, cursors, labels, 9-slice, icons)",
+      "asset": "Sunnyside_World_ASSET_PACK_V2.1/Sunnyside_World_ASSET_PACK_V2.1/Sunnyside_World_Assets/UI/greenbar_04.png"
+    },
+    {
+      "reason": "UI (bars, cursors, labels, 9-slice, icons)",
+      "asset": "Sunnyside_World_ASSET_PACK_V2.1/Sunnyside_World_ASSET_PACK_V2.1/Sunnyside_World_Assets/UI/greenbar_05.png"
+    },
+    {
+      "reason": "UI (bars, cursors, labels, 9-slice, icons)",
+      "asset": "Sunnyside_World_ASSET_PACK_V2.1/Sunnyside_World_ASSET_PACK_V2.1/Sunnyside_World_Assets/UI/greenbar_06-1.png"
+    },
+    {
+      "reason": "UI (bars, cursors, labels, 9-slice, icons)",
+      "asset": "Sunnyside_World_ASSET_PACK_V2.1/Sunnyside_World_ASSET_PACK_V2.1/Sunnyside_World_Assets/UI/greenbar_06.png"
+    },
+    {
+      "reason": "UI (bars, cursors, labels, 9-slice, icons)",
+      "asset": "Sunnyside_World_ASSET_PACK_V2.1/Sunnyside_World_ASSET_PACK_V2.1/Sunnyside_World_Assets/UI/hammer.png"
+    },
+    {
+      "reason": "UI (bars, cursors, labels, 9-slice, icons)",
+      "asset": "Sunnyside_World_ASSET_PACK_V2.1/Sunnyside_World_ASSET_PACK_V2.1/Sunnyside_World_Assets/UI/hand_closed_01.png"
+    },
+    {
+      "reason": "UI (bars, cursors, labels, 9-slice, icons)",
+      "asset": "Sunnyside_World_ASSET_PACK_V2.1/Sunnyside_World_ASSET_PACK_V2.1/Sunnyside_World_Assets/UI/hand_closed_02.png"
+    },
+    {
+      "reason": "UI (bars, cursors, labels, 9-slice, icons)",
+      "asset": "Sunnyside_World_ASSET_PACK_V2.1/Sunnyside_World_ASSET_PACK_V2.1/Sunnyside_World_Assets/UI/hand_open_01.png"
+    },
+    {
+      "reason": "UI (bars, cursors, labels, 9-slice, icons)",
+      "asset": "Sunnyside_World_ASSET_PACK_V2.1/Sunnyside_World_ASSET_PACK_V2.1/Sunnyside_World_Assets/UI/hand_open_02.png"
+    },
+    {
+      "reason": "UI (bars, cursors, labels, 9-slice, icons)",
+      "asset": "Sunnyside_World_ASSET_PACK_V2.1/Sunnyside_World_ASSET_PACK_V2.1/Sunnyside_World_Assets/UI/happiness_01.png"
+    },
+    {
+      "reason": "UI (bars, cursors, labels, 9-slice, icons)",
+      "asset": "Sunnyside_World_ASSET_PACK_V2.1/Sunnyside_World_ASSET_PACK_V2.1/Sunnyside_World_Assets/UI/happiness_02.png"
+    },
+    {
+      "reason": "UI (bars, cursors, labels, 9-slice, icons)",
+      "asset": "Sunnyside_World_ASSET_PACK_V2.1/Sunnyside_World_ASSET_PACK_V2.1/Sunnyside_World_Assets/UI/happiness_03.png"
+    },
+    {
+      "reason": "UI (bars, cursors, labels, 9-slice, icons)",
+      "asset": "Sunnyside_World_ASSET_PACK_V2.1/Sunnyside_World_ASSET_PACK_V2.1/Sunnyside_World_Assets/UI/happiness_04.png"
+    },
+    {
+      "reason": "UI (bars, cursors, labels, 9-slice, icons)",
+      "asset": "Sunnyside_World_ASSET_PACK_V2.1/Sunnyside_World_ASSET_PACK_V2.1/Sunnyside_World_Assets/UI/indicator.png"
+    },
+    {
+      "reason": "UI (bars, cursors, labels, 9-slice, icons)",
+      "asset": "Sunnyside_World_ASSET_PACK_V2.1/Sunnyside_World_ASSET_PACK_V2.1/Sunnyside_World_Assets/UI/itemdisc_01.png"
+    },
+    {
+      "reason": "UI (bars, cursors, labels, 9-slice, icons)",
+      "asset": "Sunnyside_World_ASSET_PACK_V2.1/Sunnyside_World_ASSET_PACK_V2.1/Sunnyside_World_Assets/UI/itemdisc_02.png"
+    },
+    {
+      "reason": "UI (bars, cursors, labels, 9-slice, icons)",
+      "asset": "Sunnyside_World_ASSET_PACK_V2.1/Sunnyside_World_ASSET_PACK_V2.1/Sunnyside_World_Assets/UI/label_left.png"
+    },
+    {
+      "reason": "UI (bars, cursors, labels, 9-slice, icons)",
+      "asset": "Sunnyside_World_ASSET_PACK_V2.1/Sunnyside_World_ASSET_PACK_V2.1/Sunnyside_World_Assets/UI/label_middle.png"
+    },
+    {
+      "reason": "UI (bars, cursors, labels, 9-slice, icons)",
+      "asset": "Sunnyside_World_ASSET_PACK_V2.1/Sunnyside_World_ASSET_PACK_V2.1/Sunnyside_World_Assets/UI/label_right.png"
+    },
+    {
+      "reason": "UI (bars, cursors, labels, 9-slice, icons)",
+      "asset": "Sunnyside_World_ASSET_PACK_V2.1/Sunnyside_World_ASSET_PACK_V2.1/Sunnyside_World_Assets/UI/pickaxe.png"
+    },
+    {
+      "reason": "UI (bars, cursors, labels, 9-slice, icons)",
+      "asset": "Sunnyside_World_ASSET_PACK_V2.1/Sunnyside_World_ASSET_PACK_V2.1/Sunnyside_World_Assets/UI/plan alt.png"
+    },
+    {
+      "reason": "UI (bars, cursors, labels, 9-slice, icons)",
+      "asset": "Sunnyside_World_ASSET_PACK_V2.1/Sunnyside_World_ASSET_PACK_V2.1/Sunnyside_World_Assets/UI/plant.png"
+    },
+    {
+      "reason": "UI (bars, cursors, labels, 9-slice, icons)",
+      "asset": "Sunnyside_World_ASSET_PACK_V2.1/Sunnyside_World_ASSET_PACK_V2.1/Sunnyside_World_Assets/UI/playercount.png"
+    },
+    {
+      "reason": "UI (bars, cursors, labels, 9-slice, icons)",
+      "asset": "Sunnyside_World_ASSET_PACK_V2.1/Sunnyside_World_ASSET_PACK_V2.1/Sunnyside_World_Assets/UI/redbar_00.png"
+    },
+    {
+      "reason": "UI (bars, cursors, labels, 9-slice, icons)",
+      "asset": "Sunnyside_World_ASSET_PACK_V2.1/Sunnyside_World_ASSET_PACK_V2.1/Sunnyside_World_Assets/UI/redbar_01.png"
+    },
+    {
+      "reason": "UI (bars, cursors, labels, 9-slice, icons)",
+      "asset": "Sunnyside_World_ASSET_PACK_V2.1/Sunnyside_World_ASSET_PACK_V2.1/Sunnyside_World_Assets/UI/redbar_02.png"
+    },
+    {
+      "reason": "UI (bars, cursors, labels, 9-slice, icons)",
+      "asset": "Sunnyside_World_ASSET_PACK_V2.1/Sunnyside_World_ASSET_PACK_V2.1/Sunnyside_World_Assets/UI/redbar_03.png"
+    },
+    {
+      "reason": "UI (bars, cursors, labels, 9-slice, icons)",
+      "asset": "Sunnyside_World_ASSET_PACK_V2.1/Sunnyside_World_ASSET_PACK_V2.1/Sunnyside_World_Assets/UI/redbar_04.png"
+    },
+    {
+      "reason": "UI (bars, cursors, labels, 9-slice, icons)",
+      "asset": "Sunnyside_World_ASSET_PACK_V2.1/Sunnyside_World_ASSET_PACK_V2.1/Sunnyside_World_Assets/UI/redbar_05.png"
+    },
+    {
+      "reason": "UI (bars, cursors, labels, 9-slice, icons)",
+      "asset": "Sunnyside_World_ASSET_PACK_V2.1/Sunnyside_World_ASSET_PACK_V2.1/Sunnyside_World_Assets/UI/redbar_06.png"
+    },
+    {
+      "reason": "UI (bars, cursors, labels, 9-slice, icons)",
+      "asset": "Sunnyside_World_ASSET_PACK_V2.1/Sunnyside_World_ASSET_PACK_V2.1/Sunnyside_World_Assets/UI/rod alt.png"
+    },
+    {
+      "reason": "UI (bars, cursors, labels, 9-slice, icons)",
+      "asset": "Sunnyside_World_ASSET_PACK_V2.1/Sunnyside_World_ASSET_PACK_V2.1/Sunnyside_World_Assets/UI/rod.png"
+    },
+    {
+      "reason": "UI (bars, cursors, labels, 9-slice, icons)",
+      "asset": "Sunnyside_World_ASSET_PACK_V2.1/Sunnyside_World_ASSET_PACK_V2.1/Sunnyside_World_Assets/UI/sandtimer.png"
+    },
+    {
+      "reason": "UI (bars, cursors, labels, 9-slice, icons)",
+      "asset": "Sunnyside_World_ASSET_PACK_V2.1/Sunnyside_World_ASSET_PACK_V2.1/Sunnyside_World_Assets/UI/search.png"
+    },
+    {
+      "reason": "UI (bars, cursors, labels, 9-slice, icons)",
+      "asset": "Sunnyside_World_ASSET_PACK_V2.1/Sunnyside_World_ASSET_PACK_V2.1/Sunnyside_World_Assets/UI/select_dots.png"
+    },
+    {
+      "reason": "UI (bars, cursors, labels, 9-slice, icons)",
+      "asset": "Sunnyside_World_ASSET_PACK_V2.1/Sunnyside_World_ASSET_PACK_V2.1/Sunnyside_World_Assets/UI/select_dots_large.png"
+    },
+    {
+      "reason": "UI (bars, cursors, labels, 9-slice, icons)",
+      "asset": "Sunnyside_World_ASSET_PACK_V2.1/Sunnyside_World_ASSET_PACK_V2.1/Sunnyside_World_Assets/UI/selectbox_bl.png"
+    },
+    {
+      "reason": "UI (bars, cursors, labels, 9-slice, icons)",
+      "asset": "Sunnyside_World_ASSET_PACK_V2.1/Sunnyside_World_ASSET_PACK_V2.1/Sunnyside_World_Assets/UI/selectbox_br.png"
+    },
+    {
+      "reason": "UI (bars, cursors, labels, 9-slice, icons)",
+      "asset": "Sunnyside_World_ASSET_PACK_V2.1/Sunnyside_World_ASSET_PACK_V2.1/Sunnyside_World_Assets/UI/selectbox_tl.png"
+    },
+    {
+      "reason": "UI (bars, cursors, labels, 9-slice, icons)",
+      "asset": "Sunnyside_World_ASSET_PACK_V2.1/Sunnyside_World_ASSET_PACK_V2.1/Sunnyside_World_Assets/UI/selectbox_tr.png"
+    },
+    {
+      "reason": "UI (bars, cursors, labels, 9-slice, icons)",
+      "asset": "Sunnyside_World_ASSET_PACK_V2.1/Sunnyside_World_ASSET_PACK_V2.1/Sunnyside_World_Assets/UI/shovel.png"
+    },
+    {
+      "reason": "UI (bars, cursors, labels, 9-slice, icons)",
+      "asset": "Sunnyside_World_ASSET_PACK_V2.1/Sunnyside_World_ASSET_PACK_V2.1/Sunnyside_World_Assets/UI/stopwatch.png"
+    },
+    {
+      "reason": "UI (bars, cursors, labels, 9-slice, icons)",
+      "asset": "Sunnyside_World_ASSET_PACK_V2.1/Sunnyside_World_ASSET_PACK_V2.1/Sunnyside_World_Assets/UI/sword.png"
+    },
+    {
+      "reason": "UI (bars, cursors, labels, 9-slice, icons)",
+      "asset": "Sunnyside_World_ASSET_PACK_V2.1/Sunnyside_World_ASSET_PACK_V2.1/Sunnyside_World_Assets/UI/water.png"
+    }
+  ]
+}

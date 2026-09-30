@@ -1,0 +1,1521 @@
+{
+  "_meta": {
+    "name": "Sunnyside World V2.1 visual classification",
+    "purpose": "Visual supplement for a non-vision tileset generator.",
+    "source_image": "Sunnyside_World_Assets/Tileset/spr_tileset_sunnysideworld_16px.png",
+    "source_dimensions_px": [
+      1024,
+      1024
+    ],
+    "grid_dimensions": [
+      64,
+      64
+    ],
+    "tile_width": 16,
+    "tile_height": 16,
+    "coordinate_unit": "tile cells",
+    "origin": "top-left",
+    "region_semantics": "Apply only to non-transparent source cells. Higher priority overrides lower priority. GameMaker semantic metadata must still outrank this visual manifest.",
+    "alias_semantics": "Aliases duplicate selected source cells into an additional convenience tileset and do not change primary ownership.",
+    "coverage": {
+      "non_empty_source_cells": 1740,
+      "primary_classified_cells": 1693,
+      "explicitly_excluded_cells": 47,
+      "uncovered_non_empty_cells": 0,
+      "primary_counts": {
+        "buildings": 667,
+        "crops": 104,
+        "farm": 32,
+        "furniture": 206,
+        "outdoor_decor": 36,
+        "paths_fences": 80,
+        "resources": 79,
+        "terrain": 235,
+        "vegetation": 130,
+        "vfx": 4,
+        "water": 120
+      }
+    }
+  },
+  "regions": [
+    {
+      "name": "terrain_northwest",
+      "category": "terrain",
+      "x": 0,
+      "y": 0,
+      "width": 20,
+      "height": 9,
+      "priority": 10
+    },
+    {
+      "name": "water_island_transitions",
+      "category": "water",
+      "x": 20,
+      "y": 1,
+      "width": 7,
+      "height": 6,
+      "priority": 20
+    },
+    {
+      "name": "terrain_mid_strip",
+      "category": "terrain",
+      "x": 20,
+      "y": 7,
+      "width": 12,
+      "height": 2,
+      "priority": 10
+    },
+    {
+      "name": "plants_samples",
+      "category": "vegetation",
+      "x": 27,
+      "y": 1,
+      "width": 5,
+      "height": 6,
+      "priority": 20
+    },
+    {
+      "name": "flowers_samples",
+      "category": "vegetation",
+      "x": 32,
+      "y": 0,
+      "width": 4,
+      "height": 5,
+      "priority": 20
+    },
+    {
+      "name": "wood_fence_bridge",
+      "category": "paths_fences",
+      "x": 36,
+      "y": 0,
+      "width": 6,
+      "height": 8,
+      "priority": 20
+    },
+    {
+      "name": "stone_structure",
+      "category": "buildings",
+      "x": 43,
+      "y": 1,
+      "width": 4,
+      "height": 6,
+      "priority": 20
+    },
+    {
+      "name": "small_particles",
+      "category": "vfx",
+      "x": 47,
+      "y": 1,
+      "width": 1,
+      "height": 6,
+      "priority": 30
+    },
+    {
+      "name": "trees_and_shrubs",
+      "category": "vegetation",
+      "x": 48,
+      "y": 0,
+      "width": 16,
+      "height": 9,
+      "priority": 20
+    },
+    {
+      "name": "paths_and_junctions",
+      "category": "paths_fences",
+      "x": 35,
+      "y": 7,
+      "width": 9,
+      "height": 3,
+      "priority": 20
+    },
+    {
+      "name": "rails_and_bridge_bits",
+      "category": "paths_fences",
+      "x": 44,
+      "y": 7,
+      "width": 4,
+      "height": 3,
+      "priority": 20
+    },
+    {
+      "name": "small_nature_props",
+      "category": "vegetation",
+      "x": 48,
+      "y": 7,
+      "width": 5,
+      "height": 3,
+      "priority": 30
+    },
+    {
+      "name": "brown_building_parts",
+      "category": "buildings",
+      "x": 0,
+      "y": 9,
+      "width": 16,
+      "height": 6,
+      "priority": 10
+    },
+    {
+      "name": "stone_path_parts",
+      "category": "paths_fences",
+      "x": 0,
+      "y": 15,
+      "width": 16,
+      "height": 2,
+      "priority": 20
+    },
+    {
+      "name": "water_foam_and_tiles",
+      "category": "water",
+      "x": 0,
+      "y": 18,
+      "width": 19,
+      "height": 6,
+      "priority": 20
+    },
+    {
+      "name": "terrain_large_samples",
+      "category": "terrain",
+      "x": 0,
+      "y": 28,
+      "width": 16,
+      "height": 8,
+      "priority": 20
+    },
+    {
+      "name": "blue_building_system",
+      "category": "buildings",
+      "x": 16,
+      "y": 9,
+      "width": 19,
+      "height": 7,
+      "priority": 10,
+      "properties": {
+        "building_palette": "blue"
+      }
+    },
+    {
+      "name": "green_building_system",
+      "category": "buildings",
+      "x": 16,
+      "y": 17,
+      "width": 19,
+      "height": 7,
+      "priority": 10,
+      "properties": {
+        "building_palette": "green"
+      }
+    },
+    {
+      "name": "orange_building_system",
+      "category": "buildings",
+      "x": 16,
+      "y": 25,
+      "width": 19,
+      "height": 7,
+      "priority": 10,
+      "properties": {
+        "building_palette": "orange"
+      }
+    },
+    {
+      "name": "red_building_system",
+      "category": "buildings",
+      "x": 16,
+      "y": 33,
+      "width": 19,
+      "height": 7,
+      "priority": 10,
+      "properties": {
+        "building_palette": "red"
+      }
+    },
+    {
+      "name": "purple_building_system",
+      "category": "buildings",
+      "x": 16,
+      "y": 41,
+      "width": 19,
+      "height": 7,
+      "priority": 10,
+      "properties": {
+        "building_palette": "purple"
+      }
+    },
+    {
+      "name": "wood_storage",
+      "category": "farm",
+      "x": 35,
+      "y": 9,
+      "width": 6,
+      "height": 2,
+      "priority": 30
+    },
+    {
+      "name": "tables_ladders",
+      "category": "furniture",
+      "x": 37,
+      "y": 11,
+      "width": 7,
+      "height": 4,
+      "priority": 30
+    },
+    {
+      "name": "benches_and_tables",
+      "category": "furniture",
+      "x": 43,
+      "y": 9,
+      "width": 5,
+      "height": 6,
+      "priority": 30
+    },
+    {
+      "name": "gravestones",
+      "category": "outdoor_decor",
+      "x": 43,
+      "y": 15,
+      "width": 5,
+      "height": 2,
+      "priority": 30
+    },
+    {
+      "name": "indoor_machines",
+      "category": "furniture",
+      "x": 36,
+      "y": 16,
+      "width": 7,
+      "height": 3,
+      "priority": 30
+    },
+    {
+      "name": "wells_and_machines",
+      "category": "farm",
+      "x": 37,
+      "y": 19,
+      "width": 6,
+      "height": 4,
+      "priority": 30
+    },
+    {
+      "name": "barrels",
+      "category": "farm",
+      "x": 43,
+      "y": 17,
+      "width": 5,
+      "height": 1,
+      "priority": 40
+    },
+    {
+      "name": "statues_and_pedestals",
+      "category": "outdoor_decor",
+      "x": 44,
+      "y": 18,
+      "width": 4,
+      "height": 5,
+      "priority": 40
+    },
+    {
+      "name": "crop_atlas",
+      "category": "crops",
+      "x": 48,
+      "y": 10,
+      "width": 16,
+      "height": 8,
+      "priority": 30
+    },
+    {
+      "name": "sea_and_misc_resources",
+      "category": "resources",
+      "x": 48,
+      "y": 19,
+      "width": 16,
+      "height": 2,
+      "priority": 30
+    },
+    {
+      "name": "ore_clusters",
+      "category": "resources",
+      "x": 50,
+      "y": 21,
+      "width": 7,
+      "height": 10,
+      "priority": 30
+    },
+    {
+      "name": "colored_storage",
+      "category": "furniture",
+      "x": 35,
+      "y": 23,
+      "width": 12,
+      "height": 7,
+      "priority": 30
+    },
+    {
+      "name": "chests_and_coins",
+      "category": "outdoor_decor",
+      "x": 35,
+      "y": 30,
+      "width": 7,
+      "height": 2,
+      "priority": 30
+    },
+    {
+      "name": "interior_furniture",
+      "category": "furniture",
+      "x": 38,
+      "y": 32,
+      "width": 17,
+      "height": 11,
+      "priority": 30
+    },
+    {
+      "name": "top_misc_wood",
+      "category": "paths_fences",
+      "x": 42,
+      "y": 1,
+      "width": 1,
+      "height": 2,
+      "priority": 40
+    },
+    {
+      "name": "stump_misc",
+      "category": "outdoor_decor",
+      "x": 32,
+      "y": 5,
+      "width": 1,
+      "height": 1,
+      "priority": 40
+    },
+    {
+      "name": "water_small_transition",
+      "category": "water",
+      "x": 32,
+      "y": 6,
+      "width": 3,
+      "height": 3,
+      "priority": 40
+    },
+    {
+      "name": "crop_top_misc",
+      "category": "crops",
+      "x": 55,
+      "y": 9,
+      "width": 4,
+      "height": 1,
+      "priority": 40
+    },
+    {
+      "name": "small_furniture_fragment",
+      "category": "furniture",
+      "x": 36,
+      "y": 11,
+      "width": 1,
+      "height": 1,
+      "priority": 40
+    },
+    {
+      "name": "small_decor_fragment",
+      "category": "outdoor_decor",
+      "x": 41,
+      "y": 15,
+      "width": 1,
+      "height": 1,
+      "priority": 40
+    },
+    {
+      "name": "left_color_building_fragment_green",
+      "category": "buildings",
+      "x": 15,
+      "y": 17,
+      "width": 1,
+      "height": 1,
+      "priority": 40,
+      "properties": {
+        "building_palette": "green"
+      }
+    },
+    {
+      "name": "ore_left_column",
+      "category": "resources",
+      "x": 49,
+      "y": 21,
+      "width": 1,
+      "height": 10,
+      "priority": 40
+    },
+    {
+      "name": "dark_water_variants",
+      "category": "water",
+      "x": 1,
+      "y": 24,
+      "width": 8,
+      "height": 2,
+      "priority": 40
+    },
+    {
+      "name": "left_color_building_fragment_orange",
+      "category": "buildings",
+      "x": 15,
+      "y": 25,
+      "width": 1,
+      "height": 3,
+      "priority": 40,
+      "properties": {
+        "building_palette": "orange"
+      }
+    },
+    {
+      "name": "resource_misc",
+      "category": "resources",
+      "x": 52,
+      "y": 31,
+      "width": 1,
+      "height": 1,
+      "priority": 40
+    },
+    {
+      "name": "terrain_island_extra",
+      "category": "terrain",
+      "x": 4,
+      "y": 36,
+      "width": 5,
+      "height": 3,
+      "priority": 40
+    },
+    {
+      "name": "left_color_building_fragments_redpurple",
+      "category": "buildings",
+      "x": 15,
+      "y": 36,
+      "width": 1,
+      "height": 13,
+      "priority": 40
+    },
+    {
+      "name": "chair_fragments",
+      "category": "furniture",
+      "x": 37,
+      "y": 37,
+      "width": 1,
+      "height": 6,
+      "priority": 40
+    }
+  ],
+  "aliases": [
+    {
+      "name": "blue_roof_parts",
+      "category": "roofs",
+      "mode": "alias",
+      "properties": {
+        "roof_color": "blue"
+      },
+      "cells": [
+        {
+          "x": 20,
+          "y": 9
+        },
+        {
+          "x": 21,
+          "y": 9
+        },
+        {
+          "x": 22,
+          "y": 9
+        },
+        {
+          "x": 23,
+          "y": 9
+        },
+        {
+          "x": 24,
+          "y": 9
+        },
+        {
+          "x": 25,
+          "y": 9
+        },
+        {
+          "x": 26,
+          "y": 9
+        },
+        {
+          "x": 27,
+          "y": 9
+        },
+        {
+          "x": 28,
+          "y": 9
+        },
+        {
+          "x": 30,
+          "y": 9
+        },
+        {
+          "x": 20,
+          "y": 10
+        },
+        {
+          "x": 21,
+          "y": 10
+        },
+        {
+          "x": 22,
+          "y": 10
+        },
+        {
+          "x": 23,
+          "y": 10
+        },
+        {
+          "x": 24,
+          "y": 10
+        },
+        {
+          "x": 26,
+          "y": 10
+        },
+        {
+          "x": 27,
+          "y": 10
+        },
+        {
+          "x": 28,
+          "y": 10
+        },
+        {
+          "x": 30,
+          "y": 10
+        },
+        {
+          "x": 20,
+          "y": 11
+        },
+        {
+          "x": 21,
+          "y": 11
+        },
+        {
+          "x": 22,
+          "y": 11
+        },
+        {
+          "x": 24,
+          "y": 11
+        },
+        {
+          "x": 26,
+          "y": 11
+        },
+        {
+          "x": 27,
+          "y": 11
+        },
+        {
+          "x": 28,
+          "y": 11
+        },
+        {
+          "x": 30,
+          "y": 11
+        },
+        {
+          "x": 20,
+          "y": 12
+        },
+        {
+          "x": 21,
+          "y": 12
+        },
+        {
+          "x": 22,
+          "y": 12
+        },
+        {
+          "x": 26,
+          "y": 12
+        },
+        {
+          "x": 27,
+          "y": 12
+        },
+        {
+          "x": 28,
+          "y": 12
+        },
+        {
+          "x": 20,
+          "y": 14
+        },
+        {
+          "x": 22,
+          "y": 14
+        },
+        {
+          "x": 26,
+          "y": 14
+        },
+        {
+          "x": 27,
+          "y": 14
+        },
+        {
+          "x": 28,
+          "y": 14
+        },
+        {
+          "x": 30,
+          "y": 14
+        },
+        {
+          "x": 20,
+          "y": 15
+        },
+        {
+          "x": 21,
+          "y": 15
+        },
+        {
+          "x": 22,
+          "y": 15
+        },
+        {
+          "x": 26,
+          "y": 15
+        },
+        {
+          "x": 27,
+          "y": 15
+        },
+        {
+          "x": 28,
+          "y": 15
+        },
+        {
+          "x": 30,
+          "y": 15
+        },
+        {
+          "x": 31,
+          "y": 15
+        }
+      ]
+    },
+    {
+      "name": "green_roof_parts",
+      "category": "roofs",
+      "mode": "alias",
+      "properties": {
+        "roof_color": "green"
+      },
+      "cells": [
+        {
+          "x": 20,
+          "y": 17
+        },
+        {
+          "x": 21,
+          "y": 17
+        },
+        {
+          "x": 22,
+          "y": 17
+        },
+        {
+          "x": 23,
+          "y": 17
+        },
+        {
+          "x": 24,
+          "y": 17
+        },
+        {
+          "x": 25,
+          "y": 17
+        },
+        {
+          "x": 26,
+          "y": 17
+        },
+        {
+          "x": 27,
+          "y": 17
+        },
+        {
+          "x": 28,
+          "y": 17
+        },
+        {
+          "x": 30,
+          "y": 17
+        },
+        {
+          "x": 20,
+          "y": 18
+        },
+        {
+          "x": 21,
+          "y": 18
+        },
+        {
+          "x": 22,
+          "y": 18
+        },
+        {
+          "x": 23,
+          "y": 18
+        },
+        {
+          "x": 24,
+          "y": 18
+        },
+        {
+          "x": 26,
+          "y": 18
+        },
+        {
+          "x": 27,
+          "y": 18
+        },
+        {
+          "x": 28,
+          "y": 18
+        },
+        {
+          "x": 30,
+          "y": 18
+        },
+        {
+          "x": 20,
+          "y": 19
+        },
+        {
+          "x": 21,
+          "y": 19
+        },
+        {
+          "x": 22,
+          "y": 19
+        },
+        {
+          "x": 24,
+          "y": 19
+        },
+        {
+          "x": 26,
+          "y": 19
+        },
+        {
+          "x": 27,
+          "y": 19
+        },
+        {
+          "x": 28,
+          "y": 19
+        },
+        {
+          "x": 30,
+          "y": 19
+        },
+        {
+          "x": 20,
+          "y": 20
+        },
+        {
+          "x": 21,
+          "y": 20
+        },
+        {
+          "x": 22,
+          "y": 20
+        },
+        {
+          "x": 26,
+          "y": 20
+        },
+        {
+          "x": 27,
+          "y": 20
+        },
+        {
+          "x": 28,
+          "y": 20
+        },
+        {
+          "x": 20,
+          "y": 22
+        },
+        {
+          "x": 22,
+          "y": 22
+        },
+        {
+          "x": 26,
+          "y": 22
+        },
+        {
+          "x": 27,
+          "y": 22
+        },
+        {
+          "x": 28,
+          "y": 22
+        },
+        {
+          "x": 30,
+          "y": 22
+        },
+        {
+          "x": 20,
+          "y": 23
+        },
+        {
+          "x": 21,
+          "y": 23
+        },
+        {
+          "x": 22,
+          "y": 23
+        },
+        {
+          "x": 26,
+          "y": 23
+        },
+        {
+          "x": 27,
+          "y": 23
+        },
+        {
+          "x": 28,
+          "y": 23
+        },
+        {
+          "x": 30,
+          "y": 23
+        },
+        {
+          "x": 31,
+          "y": 23
+        }
+      ]
+    },
+    {
+      "name": "orange_roof_parts",
+      "category": "roofs",
+      "mode": "alias",
+      "properties": {
+        "roof_color": "orange"
+      },
+      "cells": [
+        {
+          "x": 20,
+          "y": 25
+        },
+        {
+          "x": 21,
+          "y": 25
+        },
+        {
+          "x": 22,
+          "y": 25
+        },
+        {
+          "x": 23,
+          "y": 25
+        },
+        {
+          "x": 24,
+          "y": 25
+        },
+        {
+          "x": 25,
+          "y": 25
+        },
+        {
+          "x": 26,
+          "y": 25
+        },
+        {
+          "x": 27,
+          "y": 25
+        },
+        {
+          "x": 28,
+          "y": 25
+        },
+        {
+          "x": 30,
+          "y": 25
+        },
+        {
+          "x": 20,
+          "y": 26
+        },
+        {
+          "x": 21,
+          "y": 26
+        },
+        {
+          "x": 22,
+          "y": 26
+        },
+        {
+          "x": 23,
+          "y": 26
+        },
+        {
+          "x": 24,
+          "y": 26
+        },
+        {
+          "x": 26,
+          "y": 26
+        },
+        {
+          "x": 27,
+          "y": 26
+        },
+        {
+          "x": 28,
+          "y": 26
+        },
+        {
+          "x": 30,
+          "y": 26
+        },
+        {
+          "x": 20,
+          "y": 27
+        },
+        {
+          "x": 21,
+          "y": 27
+        },
+        {
+          "x": 22,
+          "y": 27
+        },
+        {
+          "x": 24,
+          "y": 27
+        },
+        {
+          "x": 26,
+          "y": 27
+        },
+        {
+          "x": 27,
+          "y": 27
+        },
+        {
+          "x": 28,
+          "y": 27
+        },
+        {
+          "x": 30,
+          "y": 27
+        },
+        {
+          "x": 20,
+          "y": 28
+        },
+        {
+          "x": 21,
+          "y": 28
+        },
+        {
+          "x": 22,
+          "y": 28
+        },
+        {
+          "x": 26,
+          "y": 28
+        },
+        {
+          "x": 27,
+          "y": 28
+        },
+        {
+          "x": 28,
+          "y": 28
+        },
+        {
+          "x": 20,
+          "y": 30
+        },
+        {
+          "x": 21,
+          "y": 30
+        },
+        {
+          "x": 22,
+          "y": 30
+        },
+        {
+          "x": 26,
+          "y": 30
+        },
+        {
+          "x": 27,
+          "y": 30
+        },
+        {
+          "x": 28,
+          "y": 30
+        },
+        {
+          "x": 30,
+          "y": 30
+        },
+        {
+          "x": 20,
+          "y": 31
+        },
+        {
+          "x": 21,
+          "y": 31
+        },
+        {
+          "x": 22,
+          "y": 31
+        },
+        {
+          "x": 26,
+          "y": 31
+        },
+        {
+          "x": 27,
+          "y": 31
+        },
+        {
+          "x": 28,
+          "y": 31
+        },
+        {
+          "x": 30,
+          "y": 31
+        },
+        {
+          "x": 31,
+          "y": 31
+        }
+      ]
+    },
+    {
+      "name": "red_roof_parts",
+      "category": "roofs",
+      "mode": "alias",
+      "properties": {
+        "roof_color": "red"
+      },
+      "cells": [
+        {
+          "x": 20,
+          "y": 33
+        },
+        {
+          "x": 21,
+          "y": 33
+        },
+        {
+          "x": 22,
+          "y": 33
+        },
+        {
+          "x": 23,
+          "y": 33
+        },
+        {
+          "x": 24,
+          "y": 33
+        },
+        {
+          "x": 25,
+          "y": 33
+        },
+        {
+          "x": 26,
+          "y": 33
+        },
+        {
+          "x": 27,
+          "y": 33
+        },
+        {
+          "x": 28,
+          "y": 33
+        },
+        {
+          "x": 30,
+          "y": 33
+        },
+        {
+          "x": 20,
+          "y": 34
+        },
+        {
+          "x": 21,
+          "y": 34
+        },
+        {
+          "x": 22,
+          "y": 34
+        },
+        {
+          "x": 23,
+          "y": 34
+        },
+        {
+          "x": 24,
+          "y": 34
+        },
+        {
+          "x": 26,
+          "y": 34
+        },
+        {
+          "x": 27,
+          "y": 34
+        },
+        {
+          "x": 28,
+          "y": 34
+        },
+        {
+          "x": 30,
+          "y": 34
+        },
+        {
+          "x": 20,
+          "y": 35
+        },
+        {
+          "x": 21,
+          "y": 35
+        },
+        {
+          "x": 22,
+          "y": 35
+        },
+        {
+          "x": 24,
+          "y": 35
+        },
+        {
+          "x": 26,
+          "y": 35
+        },
+        {
+          "x": 27,
+          "y": 35
+        },
+        {
+          "x": 28,
+          "y": 35
+        },
+        {
+          "x": 30,
+          "y": 35
+        },
+        {
+          "x": 20,
+          "y": 36
+        },
+        {
+          "x": 21,
+          "y": 36
+        },
+        {
+          "x": 22,
+          "y": 36
+        },
+        {
+          "x": 26,
+          "y": 36
+        },
+        {
+          "x": 27,
+          "y": 36
+        },
+        {
+          "x": 28,
+          "y": 36
+        },
+        {
+          "x": 20,
+          "y": 38
+        },
+        {
+          "x": 22,
+          "y": 38
+        },
+        {
+          "x": 26,
+          "y": 38
+        },
+        {
+          "x": 27,
+          "y": 38
+        },
+        {
+          "x": 28,
+          "y": 38
+        },
+        {
+          "x": 30,
+          "y": 38
+        },
+        {
+          "x": 20,
+          "y": 39
+        },
+        {
+          "x": 21,
+          "y": 39
+        },
+        {
+          "x": 22,
+          "y": 39
+        },
+        {
+          "x": 26,
+          "y": 39
+        },
+        {
+          "x": 27,
+          "y": 39
+        },
+        {
+          "x": 28,
+          "y": 39
+        },
+        {
+          "x": 30,
+          "y": 39
+        },
+        {
+          "x": 31,
+          "y": 39
+        }
+      ]
+    },
+    {
+      "name": "purple_roof_parts",
+      "category": "roofs",
+      "mode": "alias",
+      "properties": {
+        "roof_color": "purple"
+      },
+      "cells": [
+        {
+          "x": 20,
+          "y": 41
+        },
+        {
+          "x": 21,
+          "y": 41
+        },
+        {
+          "x": 22,
+          "y": 41
+        },
+        {
+          "x": 23,
+          "y": 41
+        },
+        {
+          "x": 24,
+          "y": 41
+        },
+        {
+          "x": 25,
+          "y": 41
+        },
+        {
+          "x": 26,
+          "y": 41
+        },
+        {
+          "x": 27,
+          "y": 41
+        },
+        {
+          "x": 28,
+          "y": 41
+        },
+        {
+          "x": 30,
+          "y": 41
+        },
+        {
+          "x": 20,
+          "y": 42
+        },
+        {
+          "x": 21,
+          "y": 42
+        },
+        {
+          "x": 22,
+          "y": 42
+        },
+        {
+          "x": 23,
+          "y": 42
+        },
+        {
+          "x": 24,
+          "y": 42
+        },
+        {
+          "x": 26,
+          "y": 42
+        },
+        {
+          "x": 27,
+          "y": 42
+        },
+        {
+          "x": 28,
+          "y": 42
+        },
+        {
+          "x": 30,
+          "y": 42
+        },
+        {
+          "x": 20,
+          "y": 43
+        },
+        {
+          "x": 21,
+          "y": 43
+        },
+        {
+          "x": 22,
+          "y": 43
+        },
+        {
+          "x": 24,
+          "y": 43
+        },
+        {
+          "x": 26,
+          "y": 43
+        },
+        {
+          "x": 27,
+          "y": 43
+        },
+        {
+          "x": 28,
+          "y": 43
+        },
+        {
+          "x": 30,
+          "y": 43
+        },
+        {
+          "x": 20,
+          "y": 44
+        },
+        {
+          "x": 21,
+          "y": 44
+        },
+        {
+          "x": 22,
+          "y": 44
+        },
+        {
+          "x": 26,
+          "y": 44
+        },
+        {
+          "x": 27,
+          "y": 44
+        },
+        {
+          "x": 28,
+          "y": 44
+        },
+        {
+          "x": 20,
+          "y": 46
+        },
+        {
+          "x": 22,
+          "y": 46
+        },
+        {
+          "x": 26,
+          "y": 46
+        },
+        {
+          "x": 27,
+          "y": 46
+        },
+        {
+          "x": 28,
+          "y": 46
+        },
+        {
+          "x": 30,
+          "y": 46
+        },
+        {
+          "x": 20,
+          "y": 47
+        },
+        {
+          "x": 21,
+          "y": 47
+        },
+        {
+          "x": 22,
+          "y": 47
+        },
+        {
+          "x": 26,
+          "y": 47
+        },
+        {
+          "x": 27,
+          "y": 47
+        },
+        {
+          "x": 28,
+          "y": 47
+        },
+        {
+          "x": 30,
+          "y": 47
+        },
+        {
+          "x": 31,
+          "y": 47
+        }
+      ]
+    }
+  ],
+  "exclusions": [
+    {
+      "name": "ui_cursor_and_tool_icons",
+      "reason": "UI/editor/game-control icons; not map decoration.",
+      "regions": [
+        {
+          "x": 37,
+          "y": 44,
+          "width": 7,
+          "height": 7
+        },
+        {
+          "x": 44,
+          "y": 44,
+          "width": 2,
+          "height": 5
+        }
+      ]
+    }
+  ],
+  "uncovered": []
+}
